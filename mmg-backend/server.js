@@ -15,35 +15,36 @@ const STORE_FRONT_ACCESS_TOKEN = "303f6d9b232e2dc8968044165e9e2ac6";
 // Fetch product from Shopify
 const fetchProductFromShopify = async () => {
   const query = `
-{
-  productByHandle(handle: "paneer") {
-    title
-    description
-    images(first: 1) {
-      edges {
-        node {
-          src
-          altText
+  {
+    productByHandle(handle: "paneer") {
+      title
+      description
+      images(first: 1) {
+        edges {
+          node {
+            src
+            altText
+          }
         }
       }
-    }
-    variants(first: 10) {
-      edges {
-        node {
-          id
-          title
-          priceV2 {
-            amount
-            currencyCode
+      variants(first: 10) {
+        edges {
+          node {
+            id
+            title
+            priceV2 {
+              amount
+              currencyCode
+            }
+            availableForSale
+            quantityAvailable
           }
-          availableForSale
         }
       }
     }
   }
-}
   `;
-
+  
   try {
     const response = await axios.post(
       SHOPIFY_BASE_URL,
