@@ -9,15 +9,15 @@ import Preload from './preload';
 
 function App() {
   return (
-    // <Preload />
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/product" element={<ProductPage />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <Preload />
+    // <Router>
+    //   <Header />
+    //   <Routes>
+    //     <Route path="/" element={<Home />} />
+    //     <Route path="/product" element={<ProductPage />} />
+    //   </Routes>
+    //   <Footer />
+    // </Router>
   );
 }
 

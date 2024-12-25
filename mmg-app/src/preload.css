@@ -1,36 +1,64 @@
 .preload-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #FFEDD8; /* Adjust background color */
-    color: #0564F2; /* Adjust text color */
-    font-family: Arial, sans-serif;
-    font-size: 3rem; /* Adjust text size */
-    text-align: center;
-  }
-  
-  .word {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-  }
-  
-  .letter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ffedd8;
+  color: #0564f2;
+  font-family: "Anybody", serif;
+  font-size: 100px;
+  text-align: center;
+  font-style: italic;
+  font-weight: 900;
+  overflow: hidden; /* Prevent ripple from overflowing */
+}
+
+.word {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.letter {
+  opacity: 0;
+  transform: translateY(20px); /* Start slightly below its position */
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
     opacity: 0;
-    transform: translateY(20px); /* Start slightly below its position */
-    animation: fadeInUp 0.5s ease forwards;
+    transform: translateY(20px);
   }
-  
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(
+    circle,
+    #0564f2 50%,
+    rgba(5, 100, 242, 0.2) 85%,
+    rgba(5, 100, 242, 0.2) 95%,
+    rgba(163, 189, 227, 0.5) 100%
+  );
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0); /* Center the ripple and start small */
+  opacity: 1;
+  transition: transform 5s ease-out, opacity 3s ease-out;
+}
+
+.ripple.ripple-animated {
+  transform: translate(-50%, -50%) scale(25); /* Expand to cover the screen */
+  opacity: 1;
+}
