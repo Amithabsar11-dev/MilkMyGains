@@ -5,27 +5,39 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #ffedd8;
-  color: #0564f2;
+  background-color: #ffedd8; 
+  line-height: 1em;
   font-family: "Anybody", serif;
-  font-size: 100px;
+  font-size: 200px;
   text-align: center;
   font-style: italic;
   font-weight: 900;
-  overflow: hidden; /* Prevent ripple from overflowing */
+  overflow: hidden; 
 }
 
 .word {
   display: flex;
   justify-content: center;
   margin: 10px 0;
+  position: relative;
+  z-index: 2; /* Ensure text stays above the ripple */
 }
 
 .letter {
   opacity: 0;
-  transform: translateY(20px); /* Start slightly below its position */
+  transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
+  background: url('./assets/background.png') no-repeat center center/cover; 
+  -webkit-background-clip: text; 
+  background-clip: text; 
+  color: transparent; 
+  -webkit-text-stroke: 0.5px transparent; 
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 1s ease-in;
 }
+
+
 
 @keyframes fadeInUp {
   0% {
@@ -38,7 +50,22 @@
   }
 }
 
-/* Ripple Effect */
+
+.word-alignment {
+  position: relative; 
+  z-index: 4; 
+}
+
+.word-alignment.text-white .letter {
+  background: none; 
+  -webkit-background-clip: none; 
+  background-clip: none; 
+  color: white; 
+  -webkit-text-stroke: 0;
+  transition: color 2s ease-in; 
+}
+
+
 .ripple {
   position: absolute;
   top: 50%;
@@ -56,9 +83,13 @@
   transform: translate(-50%, -50%) scale(0); /* Center the ripple and start small */
   opacity: 1;
   transition: transform 5s ease-out, opacity 3s ease-out;
+  z-index: 3; /* Ensure ripple stays below the text */
 }
 
 .ripple.ripple-animated {
   transform: translate(-50%, -50%) scale(25); /* Expand to cover the screen */
   opacity: 1;
+}
+.ripple.ripple-animated ~ .word-alignment .letter {
+  color: white; /* Change text color to white during ripple animation */
 }

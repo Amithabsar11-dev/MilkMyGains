@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import './home.css';
 import MilkMyGain from './MilkMyGains';
 import { Canvas } from '@react-three/fiber';
@@ -15,29 +15,63 @@ import Protein from './assets/protein.png';
 import Milk from './assets/grains.png';
 
 const Home = () => {
-    const images = [MilkMygains];
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [scrolling, setScrolling] = useState(false);
 
-    const nextImage = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    const handleScroll = (e) => {
+        if (scrolling) return;
+        setScrolling(true);
+
+        const direction = e.deltaY > 0 ? 'down' : 'up';
+        
+        if (direction === 'down') {
+            window.scrollBy(0, window.innerHeight);  // Scroll to next section
+        } else {
+            window.scrollBy(0, -window.innerHeight);  // Scroll to previous section
+        }
+
+        // Reset scrolling state after a short delay to prevent continuous scrolling
+        setTimeout(() => {
+            setScrolling(false);
+        }, 1000);  // 1 second delay
     };
 
-    const prevImage = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? images.length - 1 : prevIndex - 1
-        );
+    const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
+  const scrollRef = useRef(null); // Ref to the scroll container
+
+  const handleScrolls = () => {
+    const container = scrollRef.current;
+    const scrollPosition = container.scrollLeft;
+    const containerWidth = container.offsetWidth;
+    const cardWidth = container.children[0].offsetWidth;
+
+    // Check if the user has scrolled to the right to show the next card
+    if (scrollPosition + containerWidth >= cardWidth * (scrollIndex + 1)) {
+      setScrollIndex((prevIndex) => Math.min(prevIndex + 1, 5)); // Only up to 6 cards
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    container.addEventListener('scroll', handleScrolls);
+    return () => {
+      container.removeEventListener('scroll', handleScrolls);
     };
+  }, [scrollIndex]);
+
 
     return (
-        <div>
+        <div className='home-container'>
             {/* Image Slider Section */}
-            <div className="slider-container text-center" style={{height:"100vh"}}>
-                <button className="arrow left" onClick={prevImage}>&lt;</button>
+            <div
+                className="slider-container text-center"
+                style={{ height: '100vh' }}
+                onWheel={handleScroll}  // Add onWheel event to detect scroll
+            >
                 <Canvas>
                     <MilkMyGain />
                 </Canvas>
-                <button className="arrow right" onClick={nextImage}>&gt;</button>
             </div>
+
             {/* Change the Paradigm */}
             <div className='container-paradigm'>
                 <div className='icon-paradigm'>
@@ -51,59 +85,45 @@ const Home = () => {
                     <h1 className='main-heading'>CHANGING THE <br />PARADIGM</h1>
                 </div>
                 <div className='paradigm-para'>
-                    <p className='main-para'>Transforming Vegetarian Nutrition: Accessible, High-<br />Protein Solutions for an Active Lifestyle</p>
+                    <p className='main-para'>
+                        Transforming Vegetarian Nutrition: Accessible, High-<br />
+                        Protein Solutions for an Active Lifestyle
+                    </p>
                 </div>
                 <a className='link-to-know' href='#'>KNOW MORE</a>
             </div>
 
             {/* Cards Section */}
-            <section className="card-section d-flex justify-content-between ">
-                <div className="card w-25">
-                    <div className="card-inner">
-                        <div className="card-front">
-                            <img src={Card1} alt="card" className="card-image" />
-                            <h3>TRANSPARENCY <br /> IN EVERY DROP</h3>
-                        </div>
-                        <div className="card-back">
-                            <p>Content for Card 1.</p>
-                        </div>
-                    </div>
+            <section className="card-section" ref={scrollRef}>
+        {[...Array(6)].map((_, index) => {
+          const cardContent = index < 3 ? `Card ${index + 1}` : `Card ${index - 2}`;
+          const cardImage = index === 0 ? Card1 : index === 1 ? Card2 : index === 2 ? Card3 : index === 3 ? Card1 : index === 4 ? Card2 : Card3;
+          return (
+            <div className="card" key={index} style={{ opacity: index <= scrollIndex ? 1 : 1 }}>
+              <div className="card-inner">
+                <div className="card-front">
+                  <img src={cardImage} alt={`card-${index}`} className="card-image" />
+                  <h3>{cardContent}</h3>
                 </div>
+                <div className="card-back">
+                  <p>Content for {cardContent}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </section>
 
-                <div className="card w-25">
-                    <div className="card-inner">
-                        <div className="card-front">
-                            <img src={Card2} alt="card" className="card-image" />
-                            <h3>BREAKING THE <br /> PROTEIN MYTH</h3>
-                        </div>
-                        <div className="card-back">
-                            <p>Content for Card 2.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="card w-25">
-                    <div className="card-inner">
-                        <div className="card-front">
-                            <img src={Card3} alt="card" className="card-image" />
-                            <h3>UNLOCKING NEW <br /> POSSIBILITIES</h3>
-                        </div>
-                        <div className="card-back">
-                            <p>Content for Card 3.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
             {/* Proteins Section */}
             <div className='proteins-heading'>
                 <img src={Protein} className='protein-image' alt='protein-pic' />
             </div>
+
             {/* Milk Section */}
             <div className='milk-heading'>
                 <img src={Milk} className='milk-image' alt='milk-pic' />
             </div>
         </div>
-
     );
 };
 

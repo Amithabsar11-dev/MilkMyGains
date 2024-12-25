@@ -27,8 +27,8 @@ const MilkMyGain = (props) => {
   useFrame(() => {
     if (groupRef.current) {
       // Desired rotation based on mouse position
-      const targetX = mousePosition.current.y * 0.5 // Adjust sensitivity (vertical rotation)
-      const targetY = mousePosition.current.x * 0.5 // Adjust sensitivity (horizontal rotation)
+      const targetX = mousePosition.current.y * 0.2 // Adjust sensitivity (vertical rotation)
+      const targetY = mousePosition.current.x * 0.2 // Adjust sensitivity (horizontal rotation)
 
       // Smooth interpolation
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
