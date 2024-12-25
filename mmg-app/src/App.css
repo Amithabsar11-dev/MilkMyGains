@@ -1,38 +1,42 @@
-.App {
-  text-align: center;
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent horizontal scroll during animation */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Prevent overflow during sliding */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.preload-wrapper,
+.home-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 2s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth sliding */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.preload-wrapper {
+  transform: translateX(0); /* Start in view */
+  z-index: 2; /* Ensure preload is above initially */
 }
 
-.App-link {
-  color: #61dafb;
+.preload-wrapper.slide-out {
+  transform: translateX(-100%); /* Slide out to the left */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.home-wrapper {
+  transform: translateX(100%); /* Start off-screen to the right */
+  z-index: 1; /* Ensure it slides in below preload initially */
+  overflow-y: auto; /* Enable scrolling for content */
+}
+
+.home-wrapper.slide-in {
+  transform: translateX(0); /* Slide into view */
+  z-index: 3; /* Ensure it covers the screen when fully in view */
 }
