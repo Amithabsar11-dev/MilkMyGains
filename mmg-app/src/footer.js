@@ -3,7 +3,7 @@ import './footer.css';
 
 const Footer = () => {
   return (
-    <footer className="footer pt-5 row">
+    <footer className="footer pt-5 ">
       <div className="footer-column mt-5 col-4">
         <h1 className='signup'>SIGN UP TO NEWSLETTER</h1>
         <input

@@ -8,47 +8,15 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Shopify Storefront API Details
-const SHOPIFY_BASE_URL =
-  "https://a6f645-75.myshopify.com/api/2024-10/graphql.json";
+const SHOPIFY_BASE_URL = "https://a6f645-75.myshopify.com/api/2024-10/graphql.json";
 const STORE_FRONT_ACCESS_TOKEN = "4d435342247d18a7c3331d1fc544ff53";
 
-// Fetch a single product from Shopify
-const fetchProductFromShopify = async () => {
-  const query = `
-  {
-    productByHandle(handle: "cosmetic-packaging") {
-      title
-      description
-      images(first: 1) {
-        edges {
-          node {
-            src
-            altText
-          }
-        }
-      }
-      variants(first: 10) {
-        edges {
-          node {
-            id
-            title
-            priceV2 {
-              amount
-              currencyCode
-            }
-            availableForSale
-            quantityAvailable
-          }
-        }
-      }
-    }
-  }
-  `;
-
+// Helper to call Shopify Storefront API
+const shopifyRequest = async (query, variables = {}) => {
   try {
     const response = await axios.post(
       SHOPIFY_BASE_URL,
-      { query },
+      { query, variables },
       {
         headers: {
           "X-Shopify-Storefront-Access-Token": STORE_FRONT_ACCESS_TOKEN,
@@ -56,20 +24,19 @@ const fetchProductFromShopify = async () => {
         },
       }
     );
-
     if (response.data.errors) {
-      throw new Error("Error fetching data from Shopify");
+      console.error("Shopify API Errors:", response.data.errors);
+      throw new Error("Shopify API call failed.");
     }
-
-    return response.data.data.productByHandle;
+    return response.data.data;
   } catch (error) {
-    console.error("Error fetching product:", error);
+    console.error("Error in Shopify API request:", error.message);
     throw error;
   }
 };
 
-// Fetch all products from Shopify
-const fetchProductsFromShopify = async () => {
+// Fetch all products
+app.get("/api/products", async (req, res) => {
   const query = `
     {
       products(first: 20) {
@@ -78,6 +45,7 @@ const fetchProductsFromShopify = async () => {
             id
             title
             description
+            handle
             images(first: 1) {
               edges {
                 node {
@@ -96,7 +64,6 @@ const fetchProductsFromShopify = async () => {
                     currencyCode
                   }
                   availableForSale
-                  quantityAvailable
                 }
               }
             }
@@ -105,38 +72,90 @@ const fetchProductsFromShopify = async () => {
       }
     }
   `;
-
   try {
-    const response = await axios.post(
-      SHOPIFY_BASE_URL,
-      { query },
-      {
-        headers: {
-          "X-Shopify-Storefront-Access-Token": STORE_FRONT_ACCESS_TOKEN,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (response.data.errors) {
-      throw new Error("Error fetching products from Shopify");
-    }
-
-    return response.data.data.products.edges.map((edge) => edge.node);
+    const data = await shopifyRequest(query);
+    // Ensure handle is present, or generate one from the title
+    const products = data.products.edges.map((edge) => {
+      const product = edge.node;
+      return {
+        ...product,
+        handle: product.handle || product.title.toLowerCase().replace(/\s+/g, "-"),
+      };
+    });
+    res.status(200).json(products);
   } catch (error) {
-    console.error("Error fetching products:", error);
-    throw error;
+    res.status(500).json({ error: "Failed to fetch products" });
   }
-};
+});
 
-// Create a checkout on Shopify
-const createCheckout = async (variantId, quantity) => {
+// Fetch a single product by handle
+app.get("/api/product/:handle", async (req, res) => {
+  const { handle } = req.params;
   const query = `
-    mutation CreateCheckout($input: CheckoutCreateInput!) {
-      checkoutCreate(input: $input) {
-        checkout {
+    {
+      productByHandle(handle: "${handle}") {
+        title
+        description
+        images(first: 1) {
+          edges {
+            node {
+              src
+              altText
+            }
+          }
+        }
+        variants(first: 10) {
+          edges {
+            node {
+              id
+              title
+              priceV2 {
+                amount
+                currencyCode
+              }
+              availableForSale
+              quantityAvailable 
+            }
+          }
+        }
+      }
+    }
+  `;
+  try {
+    const data = await shopifyRequest(query);
+    res.status(200).json(data.productByHandle);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch product" });
+  }
+});
+
+// Create a cart (and get checkout URL)
+app.post("/api/cart/create", async (req, res) => {
+  const { lines } = req.body; // Array of line items to add to the cart
+  if (!lines || !Array.isArray(lines) || lines.length === 0) {
+    return res.status(400).json({ error: "'lines' array is required." });
+  }
+
+  const query = `
+    mutation CartCreate($input: CartInput!) {
+      cartCreate(input: $input) {
+        cart {
           id
-          webUrl
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                  }
+                }
+                quantity
+              }
+            }
+          }
+          checkoutUrl
         }
         userErrors {
           field
@@ -148,71 +167,156 @@ const createCheckout = async (variantId, quantity) => {
 
   const variables = {
     input: {
-      lineItems: [
-        {
-          variantId,   // Ensure the variantId is correctly formatted
-          quantity,
-        },
-      ],
+      lines: lines.map(line => ({
+        merchandiseId: line.merchandiseId,
+        quantity: line.quantity,
+      })),
     },
   };
 
   try {
-    const response = await axios.post(
-      SHOPIFY_BASE_URL,
-      { query, variables },
-      {
-        headers: {
-          "X-Shopify-Storefront-Access-Token": STORE_FRONT_ACCESS_TOKEN,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const data = await shopifyRequest(query, variables);
 
-    console.log("Response Data: ", JSON.stringify(response.data, null, 2));
+    console.log("Cart Creation Response:", data);
 
-    if (response.data.errors) {
-      console.error("Error in response:", response.data.errors);
-      throw new Error("Error creating checkout on Shopify");
+    if (data.cartCreate.userErrors.length > 0) {
+      throw new Error(data.cartCreate.userErrors.map((e) => e.message).join(", "));
     }
-
-    const checkoutUrl = response.data.data.checkoutCreate.checkout.webUrl;
-    return checkoutUrl;
+    res.status(200).json(data.cartCreate.cart);
   } catch (error) {
-    console.error("Error details: ", error.response?.data || error.message);
-    throw error;
-  }
-};
-
-
-// API Endpoint to serve product data
-app.get("/api/product", async (req, res) => {
-  try {
-    const product = await fetchProductFromShopify();
-    res.status(200).json(product);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to fetch product data" });
+    res.status(500).json({ error: "Failed to create cart" });
   }
 });
 
-// API Endpoint to serve all product data
-app.get("/api/products", async (req, res) => {
+// Add product to cart
+app.post("/api/cart/add", async (req, res) => {
+  const { cartId, variantId, quantity } = req.body;
+  if (!cartId || !variantId || !quantity) {
+    return res.status(400).json({
+      error: "Invalid request. 'cartId', 'variantId', and 'quantity' are required.",
+    });
+  }
+
+  const query = `
+    mutation {
+      cartLinesAdd(
+        cartId: "${cartId}",
+        lines: [{ merchandiseId: "${variantId}", quantity: ${quantity} }]
+      ) {
+        cart {
+          id
+          lines(first: 5) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                  }
+                }
+                quantity
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
   try {
-    const products = await fetchProductsFromShopify();
-    res.status(200).json(products);
+    const data = await shopifyRequest(query);
+    res.status(200).json(data.cartLinesAdd.cart);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch products" });
+    res.status(500).json({ error: "Failed to add product to cart" });
   }
 });
 
-// API Endpoint to create a checkout
-app.post("/api/checkout", async (req, res) => {
-  const { variantId, quantity } = req.body;
+// Update cart item
+app.post("/api/cart/update", async (req, res) => {
+  const { cartId, lineItemId, quantity } = req.body;
+  if (!cartId || !lineItemId || !quantity) {
+    return res.status(400).json({
+      error: "Invalid request. 'cartId', 'lineItemId', and 'quantity' are required.",
+    });
+  }
+
+  const query = `
+    mutation {
+      cartLinesUpdate(
+        cartId: "${cartId}",
+        lines: [{ id: "${lineItemId}", quantity: ${quantity} }]
+      ) {
+        cart {
+          id
+          lines(first: 5) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                  }
+                }
+                quantity
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
   try {
-    const checkoutUrl = await createCheckout(variantId, quantity);
-    res.status(200).json({ checkoutUrl });
+    const data = await shopifyRequest(query);
+    res.status(200).json(data.cartLinesUpdate.cart);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create checkout" });
+    res.status(500).json({ error: "Failed to update cart" });
+  }
+});
+
+// Remove product from cart
+app.post("/api/cart/remove", async (req, res) => {
+  const { cartId, lineItemId } = req.body;
+  if (!cartId || !lineItemId) {
+    return res.status(400).json({
+      error: "Invalid request. 'cartId' and 'lineItemId' are required.",
+    });
+  }
+
+  const query = `
+    mutation {
+      cartLinesRemove(
+        cartId: "${cartId}",
+        lineIds: ["${lineItemId}"]
+      ) {
+        cart {
+          id
+          lines(first: 5) {
+            edges {
+              node {
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                  }
+                }
+                quantity
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const data = await shopifyRequest(query);
+    res.status(200).json(data.cartLinesRemove.cart);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to remove product from cart" });
   }
 });
 
