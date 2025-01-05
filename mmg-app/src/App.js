@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductPage from './products';
+import ProductDetails from './ProductDetails';
 import Header from './header';
 import './App.css';
 import Home from './home';
@@ -27,7 +28,8 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/product" element={<ProductPage />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="/product/:handle" element={<ProductDetails />} />
           </Routes>
           <Footer />
         </Router>

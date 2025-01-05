@@ -1,111 +1,174 @@
-.product-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    position: relative;
-  }
-  
-  .content {
-    width: 100%;
-    transition: filter 0.3s ease;
-  }
-  
-  .blur-content {
-    filter: blur(5px);
-    pointer-events: none;
-  }
-  
-  .product {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .product-image {
-    width: 50%;
-    height: auto;
-  }
-  
-  .product-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .variants {
-    margin-top: 10px;
-  }
-  
-  .quantity {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
-  }
-  
-  .quantity button {
-    padding: 5px 10px;
-    font-size: 16px;
-  }
-  
-  .add-to-cart {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 30%;
-    border-radius: 20px;
-  }
-  
-  .cart-panel {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 40%;
-    height: 100%;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transform: translateX(0);
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .close-cart {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .cart-item {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .cart-image {
-    width: 60%;
-    height: auto;
-  }
-  
-  .checkout {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    width: 50%;
-    border-radius: 20px;
-  }
-  .checkout-option{
-    display: flex;
-    justify-content: center;
-  }
-  
+/* .product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+.content {
+  width: 100%;
+  transition: filter 0.3s ease;
+}
+
+.blur-content {
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.product {
+  display: flex;
+  gap: 20px;
+}
+
+.product-image {
+  width: 50%;
+  height: auto;
+}
+
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.variants {
+  margin-top: 10px;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.quantity button {
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+.add-to-cart {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 30%;
+  border-radius: 20px;
+}
+
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.close-cart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-item {
+  display: flex;
+  gap: 10px;
+}
+
+.cart-image {
+  width: 60%;
+  height: auto;
+}
+
+.checkout {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  border-radius: 20px;
+}
+.checkout-option {
+  display: flex;
+  justify-content: center;
+} */
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three products per row */
+  gap: 20px; /* Space between products */
+  padding: 20px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.product-thumbnail {
+  width: 100%; /* Ensures image scales with card */
+  max-width: 200px; /* Set maximum width for uniformity */
+  height: 200px; /* Fixed height for all images */
+  object-fit: cover; /* Ensures image fits within defined dimensions */
+  border-radius: 8px;
+}
+
+.placeholder {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #888;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+h2 {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
