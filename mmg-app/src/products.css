@@ -114,6 +114,7 @@
   grid-template-columns: repeat(3, 1fr); /* Three products per row */
   gap: 20px; /* Space between products */
   padding: 20px;
+  background-color: #FFFFFF;
 }
 
 .product-card {

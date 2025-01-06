@@ -1,26 +1,54 @@
 .product-details-container {
   display: flex;
-  gap: 20px;
   padding: 20px;
+  padding-left: 0px;
+  padding-right: 0px;
+  background-color: #F5F5F5;
 }
 
 .product-details-left {
-  flex: 1;
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  border-style: dashed;
+  border-left: none;
+  padding: 50px;
+  background-image: url('./assets/milkasset.svg');
+  background-repeat: no-repeat;
+  background-position-x: center;
 }
 
 .product-details-image {
-  width: 100%;
-  max-width: 400px;
+  width: 70%;
   height: auto;
   border-radius: 8px;
   object-fit: cover;
 }
 
 .product-details-right {
-  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border: 1px solid black;
+  border-style: dashed;
+  border-right: none;
+  padding: 50px;
+  border-left: none;
+}
+
+.horizontal-line {
+  margin: 1rem 0;
+  color: inherit;
+  border: 0;
+  border-top: black;
+  border-style: dashed;
+}
+
+.details-title {
+  font-size: 80px;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
 }
 
 .variant-selection,
@@ -47,13 +75,71 @@
   border: none;
   cursor: pointer;
   border-radius: 4px;
-  width: 15%;
+  width: 20%;
 }
 
 .add-to-cart-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.pack-button {
+  box-shadow: -2.88px 4.8px 0px 0px #000000;
+  background-color: #fff;
+  color: #000;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  border-radius: 4.8px;
+  padding-left: 60px;
+  padding-right: 60px;
+  cursor: pointer;
+}
+
+.pack-button:hover {
+  background: #f04e2a;
+}
+
+.pack-button:disabled {
+  background: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.pack-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.quantity {
+  font-size: 20px;
+  font-family: "Chivo Mono", serif;
+}
+
+.purchase-options label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer;
+}
+.purchase-option-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dotted #000; /* Dotted line that extends till the price */
+}
+
+.purchase-options input[type="radio"] {
+  margin-right: 10px;
+}
+
+.price {
+  font-weight: bold;
+  margin-left: auto; /* Push the price to the right */
+}
+
+
 
 /* Cart Panel Styling */
 .cart-panel {

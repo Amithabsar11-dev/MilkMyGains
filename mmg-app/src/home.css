@@ -8,7 +8,7 @@
   .home-container {
     min-height: 100vh; /* Ensure it can grow beyond the viewport */
     box-sizing: border-box;
-    overflow: hidden; /* Prevent horizontal scroll issues */
+
   }
   
   .slider-image {
@@ -46,7 +46,7 @@
   .card-section {
     display: flex;
     justify-content: flex-start;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
     padding: 50px;
     gap: 20px;
     background-color: #FFEBD4;
