@@ -7,7 +7,8 @@ const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
-  const [quantity, setQuantity] = useState(1);
+  const [packQuantity, setPackQuantity] = useState(1); // Default pack quantity
+  const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
   const [error, setError] = useState("");
 
@@ -17,7 +18,6 @@ const ProductDetails = () => {
         const response = await axios.get(
           `http://localhost:3001/api/product/${handle}`
         );
-        console.log("Fetched product:", response.data); // Debug fetched product
 
         setProduct(response.data);
 
@@ -26,7 +26,7 @@ const ProductDetails = () => {
           ({ node }) => node.availableForSale
         )?.node;
         setSelectedVariant(firstAvailableVariant || null);
-        setQuantity(1); // Set initial quantity to 1
+        setPackQuantity(1); // Default to Pack of 1
       } catch (err) {
         console.error("Error fetching product:", err);
         setError("Failed to fetch product details");
@@ -36,52 +36,47 @@ const ProductDetails = () => {
     fetchProduct();
   }, [handle]);
 
-  const handleQuantityChange = (delta) => {
-    if (!selectedVariant) return;
+  const totalPrice =
+    purchaseOption === "subscribe"
+      ? selectedVariant
+        ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2) 
+        : 0
+      : selectedVariant
+      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+      : 0;
 
-    const maxAvailable = selectedVariant.quantityAvailable;
-    const newQuantity = quantity + delta;
+  const handlePackSelection = (quantity) => {
+    setPackQuantity(quantity);
 
-    // Update quantity only within valid range
-    if (newQuantity >= 1 && newQuantity <= maxAvailable) {
-      setQuantity(newQuantity);
-    }
+    // Reset purchase option to "One Time Purchase"
+    setPurchaseOption("oneTime");
   };
-
-  const totalPrice = selectedVariant
-    ? (selectedVariant.priceV2.amount * quantity).toFixed(2)
-    : 0;
 
   const toggleCart = () => {
     setCartVisible(!cartVisible);
   };
 
-  // Create cart and proceed to checkout
   const proceedToPayment = async () => {
     if (!selectedVariant) {
       alert("No product selected.");
       return;
     }
-
+  
     const cartItems = [
       {
         merchandiseId: selectedVariant.id,
-        quantity: quantity,
+        quantity: packQuantity,
+        purchaseOption,
+        price: totalPrice, // Pass the total price (discounted price)
       },
     ];
-
-    console.log("Cart items being sent:", cartItems); 
-
+  
     try {
-      // Send request to backend to create a cart and generate the checkout URL
       const response = await axios.post("http://localhost:3001/api/cart/create", {
         lines: cartItems,
       });
-
-      console.log("Response from backend:", response.data);
-
+  
       if (response.data && response.data.checkoutUrl) {
-        // Redirect to the Shopify checkout page
         window.location.href = response.data.checkoutUrl;
       } else {
         alert("Error creating cart or fetching checkout URL.");
@@ -91,6 +86,7 @@ const ProductDetails = () => {
       alert("There was an error with the checkout process.");
     }
   };
+  
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -104,7 +100,7 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details-container">
-      <div className="product-details-left">
+      <div className="product-details-left col-sm-6">
         {images.edges[0]?.node.src ? (
           <img
             src={images.edges[0].node.src}
@@ -116,48 +112,69 @@ const ProductDetails = () => {
         )}
       </div>
 
-      <div className="product-details-right">
-        <h1>{title}</h1>
-        <p dangerouslySetInnerHTML={{ __html: description }}></p>
+      <div className="product-details-right col-sm-6">
+        <h1 className="details-title">{title}</h1>
+        <hr className="horizontal-line"></hr>
 
-        <div className="variant-selection">
-          <label>Select Variant:</label>
-          <select
-            value={selectedVariant?.id || ""}
-            onChange={(e) => {
-              const variant = variants.edges.find(
-                ({ node }) => node.id === e.target.value
-              )?.node;
-              setSelectedVariant(variant);
-              setQuantity(1); // Reset quantity when changing variant
-            }}
-          >
-            {variants.edges.map(({ node }) => (
-              <option key={node.id} value={node.id}>
-                {node.title}
-              </option>
-            ))}
-          </select>
+        <div className="pack-selection">
+          <h4 className="quantity">Quantity:</h4>
+          <div className="pack-buttons">
+            <button
+              className="pack-button"
+              disabled={selectedVariant?.quantityAvailable < 1}
+              onClick={() => handlePackSelection(1)}
+            >
+              Pack of 1
+            </button>
+            <button
+              className="pack-button"
+              disabled={selectedVariant?.quantityAvailable < 4}
+              onClick={() => handlePackSelection(4)}
+            >
+              Pack of 4
+            </button>
+            <button
+              className="pack-button"
+              disabled={selectedVariant?.quantityAvailable < 6}
+              onClick={() => handlePackSelection(6)}
+            >
+              Pack of 6
+            </button>
+          </div>
         </div>
+        <hr className="horizontal-line"></hr>
 
-        <div className="quantity-control">
-          <button
-            onClick={() => handleQuantityChange(-1)}
-            disabled={quantity <= 1} // Disable if quantity is 1 or less
-          >
-            -
-          </button>
-          <span>{quantity}</span>
-          <button
-            onClick={() => handleQuantityChange(1)}
-            disabled={quantity >= selectedVariant?.quantityAvailable} // Disable if quantity exceeds available stock
-          >
-            +
-          </button>
+        <div className="purchase-options">
+          <div className="purchase-option-row">
+            <label>
+              <input
+                type="radio"
+                value="oneTime"
+                checked={purchaseOption === "oneTime"}
+                onChange={() => setPurchaseOption("oneTime")}
+              />
+              <span>One Time Purchase</span>
+            </label>
+            <span className="price">₹{(selectedVariant?.priceV2.amount * packQuantity).toFixed(2)}</span>
+          </div>
+          {packQuantity > 1 && (
+            <div className="purchase-option-row">
+              <label>
+                <input
+                  type="radio"
+                  value="subscribe"
+                  checked={purchaseOption === "subscribe"}
+                  onChange={() => setPurchaseOption("subscribe")}
+                />
+                <span>Subscribe and Save</span>
+              </label>
+              <span className="price">₹{(selectedVariant?.priceV2.amount * packQuantity * 0.8).toFixed(2)}</span>
+            </div>
+          )}
         </div>
 
         <p className="price">
-          Price: ${selectedVariant?.priceV2.amount} (Total: ${totalPrice})
+          Total: ₹{totalPrice}
         </p>
 
         <button
@@ -169,7 +186,6 @@ const ProductDetails = () => {
         </button>
       </div>
 
-      {/* Cart Panel */}
       {cartVisible && (
         <div className="cart-panel">
           <button className="close-cart" onClick={toggleCart}>
@@ -185,23 +201,9 @@ const ProductDetails = () => {
             <div className="cart-details">
               <h3>{title}</h3>
               <p>Variant: {selectedVariant?.title}</p>
-              <p>Price: ${selectedVariant?.priceV2.amount}</p>
-              <div className="quantity">
-                <button
-                  onClick={() => handleQuantityChange(-1)}
-                  disabled={quantity <= 1}
-                >
-                  -
-                </button>
-                <span>{quantity}</span>
-                <button
-                  onClick={() => handleQuantityChange(1)}
-                  disabled={quantity >= selectedVariant?.quantityAvailable}
-                >
-                  +
-                </button>
-              </div>
-              <p>Total: ${totalPrice}</p>
+              <p>Price: ₹{totalPrice}</p>
+              <p>Quantity: {packQuantity}</p>
+              <p>Purchase Option: {purchaseOption}</p>
             </div>
           </div>
           <div className="checkout-option">

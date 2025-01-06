@@ -152,6 +152,10 @@ app.post("/api/cart/create", async (req, res) => {
                   }
                 }
                 quantity
+                attributes {
+                  key
+                  value
+                }
               }
             }
           }
@@ -167,12 +171,17 @@ app.post("/api/cart/create", async (req, res) => {
 
   const variables = {
     input: {
-      lines: lines.map(line => ({
+      lines: lines.map((line) => ({
         merchandiseId: line.merchandiseId,
         quantity: line.quantity,
+        attributes: [
+          { key: "discountedPrice", value: line.price.toString() }, 
+          { key: "purchaseOption", value: line.purchaseOption },   
+        ],
       })),
     },
   };
+
 
   try {
     const data = await shopifyRequest(query, variables);
