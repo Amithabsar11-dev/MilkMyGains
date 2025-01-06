@@ -114,7 +114,7 @@
   grid-template-columns: repeat(3, 1fr); /* Three products per row */
   gap: 20px; /* Space between products */
   padding: 20px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .product-card {
@@ -130,14 +130,14 @@
 }
 
 .product-card:hover {
-  transform: scale(1.05); /* Slight zoom effect on hover */
+  transform: scale(1.05);
 }
 
 .product-thumbnail {
-  width: 100%; /* Ensures image scales with card */
-  max-width: 200px; /* Set maximum width for uniformity */
-  height: 200px; /* Fixed height for all images */
-  object-fit: cover; /* Ensures image fits within defined dimensions */
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  object-fit: cover;
   border-radius: 8px;
 }
 
@@ -171,5 +171,5 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #fff;
 }
