@@ -289,3 +289,19 @@
 .accordion-close:hover {
   color: #333;
 }
+
+.faq-content {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.faq-content strong {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.faq-content p {
+  margin: 5px 0;
+  color: #555;
+}

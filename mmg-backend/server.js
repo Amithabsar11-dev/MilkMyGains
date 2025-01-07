@@ -96,6 +96,11 @@ app.get("/api/product/:handle", async (req, res) => {
       productByHandle(handle: "${handle}") {
         title
         description
+        metafields(identifiers: [
+          { namespace: "nutritional", key: "highlights" },
+        ]) {
+          value
+        }
         images(first: 1) {
           edges {
             node {
@@ -114,21 +119,49 @@ app.get("/api/product/:handle", async (req, res) => {
                 currencyCode
               }
               availableForSale
-              quantityAvailable 
+              quantityAvailable
             }
           }
         }
       }
     }
   `;
+  
   try {
     const data = await shopifyRequest(query);
-    res.status(200).json(data.productByHandle);
+    const product = data.productByHandle;
+
+    console.log('Raw Metafields:', product.metafields);
+
+    // Parse the metafield value if it exists
+    if (product.metafields && product.metafields.length > 0) {
+      product.metafields = product.metafields
+        .filter(metafield => metafield !== null) // Filter out null entries
+        .map(metafield => {
+          if (metafield.value) {
+            try {
+              metafield.value = JSON.parse(metafield.value); // Parse the JSON string
+            } catch (error) {
+              console.error("Error parsing metafield value:", error);
+              metafield.value = null; // Set to null if parsing fails
+            }
+          }
+          return metafield;
+        });
+    }
+
+    console.log('Parsed Metafields:', product.metafields);
+    console.log('Final Product Data:', product);
+
+    // Add some additional logging to see where the metafields data is being reset
+    console.log('Metafields before sending response:', product.metafields);
+
+    res.status(200).json(product);
   } catch (error) {
+    console.error("Error fetching product:", error);
     res.status(500).json({ error: "Failed to fetch product" });
   }
 });
-
 // Create a cart (and get checkout URL)
 app.post("/api/cart/create", async (req, res) => {
   const { lines } = req.body; // Array of line items to add to the cart
