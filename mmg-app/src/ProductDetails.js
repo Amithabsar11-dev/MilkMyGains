@@ -15,16 +15,31 @@ const ProductDetails = () => {
   const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
   const [error, setError] = useState("");
+  const [faqContent, setFaqContent] = useState(null);
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3001/api/product/${handle}`
-        );
-
+        ); 
+        console.log("Full Response:", response.data); // Log the full response
+        console.log("Metafields:", response.data.metafields); // Log the metafields
+  
+        // Access the metafields data
+        const metafields = response.data.metafields;
+        if (metafields && metafields.length > 0) {
+          const firstMetafield = metafields[0];
+          console.log("First Metafield:", firstMetafield);
+          console.log("First Metafield Value:", firstMetafield.value);
+        }
+  
+        // Add some additional logging to see where the metafields data is being reset
+        console.log('Metafields before setting product:', response.data.metafields);
+  
         setProduct(response.data);
-
+  
         // Automatically select the first available variant
         const firstAvailableVariant = response.data.variants.edges.find(
           ({ node }) => node.availableForSale
@@ -36,9 +51,10 @@ const ProductDetails = () => {
         setError("Failed to fetch product details");
       }
     };
-
+  
     fetchProduct();
   }, [handle]);
+  
 
   const totalPrice =
     purchaseOption === "subscribe"
@@ -46,8 +62,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-      : 0;
+        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+        : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -304,6 +320,22 @@ const ProductDetails = () => {
           title="Comparison"
           content={<p className="accordian-para">Comparison with similar products goes here.</p>}
         />
+        {/* FAQ Accordion Section */}
+        {/* {faqContent && faqContent.length > 0 && (
+          <Accordion
+            title="Frequently Asked Questions"
+            content={
+              <div className="faq-content">
+                {faqContent.map((faqItem, index) => (
+                  <div key={index}>
+                    <strong>{faqItem[0]}</strong>
+                    <p>{faqItem[1]}</p>
+                  </div>
+                ))}
+              </div>
+            }
+          />
+        )} */}
       </div>
     </div>
   );
