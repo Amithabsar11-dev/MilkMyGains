@@ -16,45 +16,87 @@ const ProductDetails = () => {
   const [cartVisible, setCartVisible] = useState(false);
   const [error, setError] = useState("");
   const [faqContent, setFaqContent] = useState(null);
-  
+  const [nutritionalHighlights, setNutritionalHighlights] = useState(null);
+  const [graphData, setGraphData] = useState(null);
+  const [comparisonData, setComparisonData] = useState(null);
+  const [ingredients, setIngredients] = useState(null);
+  const [accordionContent, setAccordionContent] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
           `http://localhost:3001/api/product/${handle}`
-        ); 
-        console.log("Full Response:", response.data); // Log the full response
-        console.log("Metafields:", response.data.metafields); // Log the metafields
-  
-        // Access the metafields data
-        const metafields = response.data.metafields;
-        if (metafields && metafields.length > 0) {
-          const firstMetafield = metafields[0];
-          console.log("First Metafield:", firstMetafield);
-          console.log("First Metafield Value:", firstMetafield.value);
-        }
-  
-        // Add some additional logging to see where the metafields data is being reset
-        console.log('Metafields before setting product:', response.data.metafields);
-  
+        );
+        console.log("Full Response:", response.data);
+
         setProduct(response.data);
-  
+
         // Automatically select the first available variant
         const firstAvailableVariant = response.data.variants.edges.find(
           ({ node }) => node.availableForSale
         )?.node;
         setSelectedVariant(firstAvailableVariant || null);
-        setPackQuantity(1); // Default to Pack of 1
+
+        // Extract FAQ content from metafields
+        const metafields = response.data.metafields || [];
+        const faqMetafield = metafields.find(
+          (metafield) => metafield.key === "list" && metafield.namespace === "faq"
+        );
+        if (faqMetafield) {
+          setFaqContent(faqMetafield.value);
+        }
+
+        // Extract Nutritional Highlights from metafields
+        const nutritionalHighlightsMetafield = metafields.find(
+          (metafield) =>
+            metafield.key === "highlights" && metafield.namespace === "nutritional"
+        );
+        if (nutritionalHighlightsMetafield) {
+          setNutritionalHighlights(nutritionalHighlightsMetafield.value);
+        }
+
+        // Extract Graph Data from metafields
+        const graphDataMetafield = metafields.find(
+          (metafield) => metafield.key === "chart" && metafield.namespace === "graph"
+        );
+        if (graphDataMetafield) {
+          setGraphData(graphDataMetafield.value);
+        }
+
+        // Extract Comparison Data from metafields
+        const comparisonDataMetafield = metafields.find(
+          (metafield) =>
+            metafield.key === "comparison" && metafield.namespace === "product"
+        );
+        if (comparisonDataMetafield) {
+          setComparisonData(comparisonDataMetafield.value);
+        }
+
+        // Extract Ingredients from metafields
+        const ingredientsMetafield = metafields.find(
+          (metafield) =>
+            metafield.key === "ingredients" && metafield.namespace === "product"
+        );
+        if (ingredientsMetafield) {
+          setIngredients(ingredientsMetafield.value);
+        }
+
+        // Extract Accordion Content from metafields
+        const accordionContentMetafield = metafields.find(
+          (metafield) =>
+            metafield.key === "accordion_content" && metafield.namespace === "new"
+        );
+        if (accordionContentMetafield) {
+          setAccordionContent(accordionContentMetafield.value);
+        }
       } catch (err) {
         console.error("Error fetching product:", err);
-        setError("Failed to fetch product details");
       }
     };
-  
+
     fetchProduct();
   }, [handle]);
-  
 
   const totalPrice =
     purchaseOption === "subscribe"
@@ -62,13 +104,11 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-        : 0;
+      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+      : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
-
-    // Reset purchase option to "One Time Purchase"
     setPurchaseOption("oneTime");
   };
 
@@ -87,7 +127,7 @@ const ProductDetails = () => {
         merchandiseId: selectedVariant.id,
         quantity: packQuantity,
         purchaseOption,
-        price: totalPrice, // Pass the total price (discounted price)
+        price: totalPrice,
       },
     ];
 
@@ -127,7 +167,7 @@ const ProductDetails = () => {
       <div className={`accordion-section ${isOpen ? "open" : ""}`}>
         <div className="accordion-title" onClick={() => setIsOpen(!isOpen)}>
           <span className="accordion-text">{title}</span>
-          <span className="accordion-icon">{isOpen ? "" : "+"}</span>
+          <span className="accordion-icon">{isOpen ? "-" : "+"}</span>
         </div>
         {isOpen && (
           <div className="accordion-content">
@@ -219,16 +259,11 @@ const ProductDetails = () => {
                   {(
                     selectedVariant?.priceV2.amount *
                     packQuantity *
-                    0.8
-                  ).toFixed(2)}
+                    0.8 ).toFixed(2)}
                 </span>
               </div>
             )}
           </div>
-
-          {/* <p className="price">
-          Total: ₹{totalPrice}
-        </p> */}
 
           <div className="feature-icons">
             <div className="feature-item">
@@ -298,44 +333,98 @@ const ProductDetails = () => {
       <div className="accordion-container">
         <Accordion
           title="What, Who & How?"
-          content={
-            <p className="accordian-para">
-              Detailed information about what, who, and how to use the product.
-            </p>
-          }
+          content={<p className="accordian-para">{faqContent}</p>}
         />
         <Accordion
           title="Nutritional Highlights"
-          content={<p className="accordian-para">Here are the nutritional highlights of the product.</p>}
+          content={
+            <div>
+              <h4>{nutritionalHighlights?.title}</h4>
+              <ul>
+                {nutritionalHighlights?.summary.map((item, index) => (
+                  <li key={index}>
+                    {item.heading}: {item.subheading}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          }
         />
         <Accordion
-          title="Ingredients"
-          content={<p className="accordian-para">List of ingredients and their description goes here.</p>}
-        />
-        <Accordion
-          title="Ratings & Reviews"
-          content={<p className="accordian-para">Ratings and reviews by customers.</p>}
+          title="Graph"
+          content={
+            <div>
+              <h4>{graphData?.heading}</h4>
+              {/* Render graph data here */}
+              {graphData?.data.map((item, index) => (
+                <div key={index}>
+                  <p>{item.label}: {item.percentage}%</p>
+                  <img src={item.image_url} alt={item.label} />
+                </div>
+              ))}
+            </div>
+          }
         />
         <Accordion
           title="Comparison"
-          content={<p className="accordian-para">Comparison with similar products goes here.</p>}
+          content={
+            <div>
+              <h4>{comparisonData?.title}</h4>
+              <p>{comparisonData?.subheading}</p>
+              <p>{comparisonData?.highlights}</p>
+              {/* Render comparison table here */}
+              <table>
+                <thead>
+                  <tr>
+                    {comparisonData?.table.columns.map((col, index) => (
+                      <th key={index}>
+                        <img src={col.image} alt={col.name} />
+                        {col.name}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {comparisonData?.table.rows.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                      <td>{row.name}</td>
+                      {row.values.map((value, valueIndex) => (
+                        <td key={valueIndex}>{value}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          }
         />
-        {/* FAQ Accordion Section */}
-        {/* {faqContent && faqContent.length > 0 && (
-          <Accordion
-            title="Frequently Asked Questions"
-            content={
-              <div className="faq-content">
-                {faqContent.map((faqItem, index) => (
-                  <div key={index}>
-                    <strong>{faqItem[0]}</strong>
-                    <p>{faqItem[1]}</p>
-                  </div>
-                ))}
-              </div>
-            }
-          />
-        )} */}
+        <Accordion
+          title="Ingredients"
+          content={
+            <div>
+              <h4>{ingredients?.title}</h4>
+              {ingredients?.details .map((item, index) => (
+                <div key={index}>
+                  <h5>{item.heading}</h5>
+                  <p>{item.content}</p>
+                </div>
+              ))}
+            </div>
+          }
+        />
+        <Accordion
+          title="Accordion Content"
+          content={
+            <div>
+              {accordionContent?.map((item, index) => (
+                <div key={index}>
+                  <h5>{item.question}</h5>
+                  <p>{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          }
+        />
       </div>
     </div>
   );
