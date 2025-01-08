@@ -1,43 +1,45 @@
 .header {
-    padding: 10px 0;
-   background-image: url('./assets/background.png');
-   /* position: absolute;
-    z-index: 1;
-    width: 100%; */
-  }
-  .nav-style {
-   display: flex;
-   justify-content: end;
-  }
+  padding: 10px 0;
+  background-image: url('./assets/background.png');
+}
 
-  .logo {
-    width: 10%;
-    height: auto;
-  }
-  
-  .navbar-nav .nav-link {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    font-family: "Fraunces", serif;
-  }
-  
-  .navbar-nav .nav-item {
-    margin-right: 15px;
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: #007bff;
-  }
+.nav-style {
+  display: flex;
+  justify-content: end;
+}
 
-  
-  @media (max-width: 768px) {
-    .navbar-nav {
+.logo {
+  width: 10%;
+  height: auto;
+}
+
+.navbar-nav .nav-link {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  font-family: "Fraunces", serif;
+}
+
+.navbar-nav .nav-item {
+  margin-right: 15px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #007bff;
+}
+
+.cart-icon {
+  width: 50%;
+  height: 100%;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar-nav {
       text-align: center;
-    }
-  
-    .navbar-nav .nav-item {
-      margin-bottom: 10px;
-    }
   }
-  
+
+  .navbar-nav .nav-item {
+      margin-bottom: 10px;
+  }
+}

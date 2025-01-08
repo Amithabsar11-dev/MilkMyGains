@@ -6,6 +6,7 @@ import Cow from "./assets/cow.svg";
 import Protein from "./assets/protein.svg";
 import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
+import Header from "./header"; // Import the Header component
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -21,6 +22,7 @@ const ProductDetails = () => {
   const [comparisonData, setComparisonData] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   const [accordionContent, setAccordionContent] = useState(null);
+  const [cartQuantity, setCartQuantity] = useState(0); // State to manage cart quantity
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -41,7 +43,8 @@ const ProductDetails = () => {
         // Extract FAQ content from metafields
         const metafields = response.data.metafields || [];
         const faqMetafield = metafields.find(
-          (metafield) => metafield.key === "list" && metafield.namespace === "faq"
+          (metafield) =>
+            metafield.key === "list" && metafield.namespace === "faq"
         );
         if (faqMetafield) {
           setFaqContent(faqMetafield.value);
@@ -104,8 +107,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-      : 0;
+        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+        : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -150,6 +153,12 @@ const ProductDetails = () => {
     }
   };
 
+  const handleAddToCart = () => {
+    if (selectedVariant) {
+      setCartQuantity(cartQuantity + packQuantity);
+    }
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -183,6 +192,7 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details-page">
+      <Header cartQuantity={cartQuantity} />
       <div className="product-details-container">
         <div className="product-details-left col-sm-6">
           {images.edges[0]?.node.src ? (
@@ -259,7 +269,8 @@ const ProductDetails = () => {
                   {(
                     selectedVariant?.priceV2.amount *
                     packQuantity *
-                    0.8 ).toFixed(2)}
+                    0.8
+                  ).toFixed(2)}
                 </span>
               </div>
             )}
@@ -291,7 +302,10 @@ const ProductDetails = () => {
             <button
               className="add-to-cart-button"
               disabled={!selectedVariant?.availableForSale}
-              onClick={toggleCart}
+              onClick={() => {
+                handleAddToCart();
+                toggleCart();
+              }}
             >
               Add to Cart
             </button>
@@ -331,9 +345,18 @@ const ProductDetails = () => {
       </div>
       {/* Accordion Section */}
       <div className="accordion-container">
-        <Accordion
+         <Accordion
           title="What, Who & How?"
-          content={<p className="accordian-para">{faqContent}</p>}
+          content={
+            <div>
+              {faqContent?.map((item, index) => (
+                <div key={index}>
+                  <h5>{item.question}</h5>
+                  <p>{item.answer}</p>
+                </div>
+              ))}
+            </div>
+          }
         />
         <Accordion
           title="Nutritional Highlights"
@@ -355,7 +378,6 @@ const ProductDetails = () => {
           content={
             <div>
               <h4>{graphData?.heading}</h4>
-              {/* Render graph data here */}
               {graphData?.data.map((item, index) => (
                 <div key={index}>
                   <p>{item.label}: {item.percentage}%</p>
@@ -372,7 +394,6 @@ const ProductDetails = () => {
               <h4>{comparisonData?.title}</h4>
               <p>{comparisonData?.subheading}</p>
               <p>{comparisonData?.highlights}</p>
-              {/* Render comparison table here */}
               <table>
                 <thead>
                   <tr>
@@ -403,7 +424,7 @@ const ProductDetails = () => {
           content={
             <div>
               <h4>{ingredients?.title}</h4>
-              {ingredients?.details .map((item, index) => (
+              {ingredients?.details.map((item, index) => (
                 <div key={index}>
                   <h5>{item.heading}</h5>
                   <p>{item.content}</p>
@@ -413,7 +434,7 @@ const ProductDetails = () => {
           }
         />
         <Accordion
-          title="Accordion Content"
+          title=" Accordion Content"
           content={
             <div>
               {accordionContent?.map((item, index) => (
