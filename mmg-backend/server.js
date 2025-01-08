@@ -97,10 +97,18 @@ app.get("/api/product/:handle", async (req, res) => {
         title
         description
         metafields(identifiers: [
-          { namespace: "nutritional", key: "highlights" },
-        ]) {
-          value
-        }
+        { namespace: "faq", key: "list" },
+        { namespace: "nutritional", key: "highlights" },
+        { namespace: "product", key: "comparison" },
+        { namespace: "product", key: "ingredients" },
+        { namespace: "graph", key: "chart" }
+        { namespace: "new", key: "accordion_content" }
+      ]) {
+        namespace
+        key
+        value
+        type
+      }
         images(first: 1) {
           edges {
             node {
@@ -135,20 +143,26 @@ app.get("/api/product/:handle", async (req, res) => {
 
     // Parse the metafield value if it exists
     if (product.metafields && product.metafields.length > 0) {
+      console.log('Raw Metafields:', product.metafields);
+    
       product.metafields = product.metafields
-        .filter(metafield => metafield !== null) // Filter out null entries
-        .map(metafield => {
+        .filter((metafield) => metafield !== null)
+        .map((metafield) => {
           if (metafield.value) {
             try {
-              metafield.value = JSON.parse(metafield.value); // Parse the JSON string
+              console.log(`Parsing metafield: ${metafield.namespace}.${metafield.key}`, metafield.value);
+              metafield.value = JSON.parse(metafield.value); // Parse JSON
             } catch (error) {
-              console.error("Error parsing metafield value:", error);
-              metafield.value = null; // Set to null if parsing fails
+              console.error(`Error parsing metafield ${metafield.namespace}.${metafield.key}:`, error);
+              metafield.value = metafield.value; // Keep as raw string if parsing fails
             }
           }
           return metafield;
         });
+    
+      console.log('Parsed Metafields:', product.metafields);
     }
+    
 
     console.log('Parsed Metafields:', product.metafields);
     console.log('Final Product Data:', product);
