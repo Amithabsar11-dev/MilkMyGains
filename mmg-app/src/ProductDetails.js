@@ -6,7 +6,8 @@ import Cow from "./assets/cow.svg";
 import Protein from "./assets/protein.svg";
 import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
-import Header from "./header"; // Import the Header component
+import { useContext } from "react";
+import { CartContext } from "./cartContext";
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -22,7 +23,14 @@ const ProductDetails = () => {
   const [comparisonData, setComparisonData] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   const [accordionContent, setAccordionContent] = useState(null);
-  const [cartQuantity, setCartQuantity] = useState(0); // State to manage cart quantity
+  const {
+    cartItems,
+    cartQuantity,
+    cartTotal,
+    addItemToCart,
+    updateItemQuantity,
+    removeItemFromCart,
+  } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -53,7 +61,8 @@ const ProductDetails = () => {
         // Extract Nutritional Highlights from metafields
         const nutritionalHighlightsMetafield = metafields.find(
           (metafield) =>
-            metafield.key === "highlights" && metafield.namespace === "nutritional"
+            metafield.key === "highlights" &&
+            metafield.namespace === "nutritional"
         );
         if (nutritionalHighlightsMetafield) {
           setNutritionalHighlights(nutritionalHighlightsMetafield.value);
@@ -61,7 +70,8 @@ const ProductDetails = () => {
 
         // Extract Graph Data from metafields
         const graphDataMetafield = metafields.find(
-          (metafield) => metafield.key === "chart" && metafield.namespace === "graph"
+          (metafield) =>
+            metafield.key === "chart" && metafield.namespace === "graph"
         );
         if (graphDataMetafield) {
           setGraphData(graphDataMetafield.value);
@@ -88,7 +98,8 @@ const ProductDetails = () => {
         // Extract Accordion Content from metafields
         const accordionContentMetafield = metafields.find(
           (metafield) =>
-            metafield.key === "accordion_content" && metafield.namespace === "new"
+            metafield.key === "accordion_content" &&
+            metafield.namespace === "new"
         );
         if (accordionContentMetafield) {
           setAccordionContent(accordionContentMetafield.value);
@@ -107,8 +118,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-        : 0;
+      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+      : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -119,29 +130,39 @@ const ProductDetails = () => {
     setCartVisible(!cartVisible);
   };
 
+  const handleAddToCart = () => {
+    if (selectedVariant) {
+      const item = {
+        id: selectedVariant.id,
+        title: product.title,
+        price: parseFloat(totalPrice),
+        quantity: packQuantity,
+        image: images.edges[0]?.node.src, // Store the product image
+      };
+      addItemToCart(item);
+      setCartVisible(true);
+    }
+  };
+
   const proceedToPayment = async () => {
-    if (!selectedVariant) {
-      alert("No product selected.");
+    if (cartItems.length === 0) {
+      alert("No products in cart.");
       return;
     }
-
-    const cartItems = [
-      {
-        merchandiseId: selectedVariant.id,
-        quantity: packQuantity,
-        purchaseOption,
-        price: totalPrice,
-      },
-    ];
-
+  
     try {
       const response = await axios.post(
         "http://localhost:3001/api/cart/create",
         {
-          lines: cartItems,
+          lines: cartItems.map((item) => ({
+            merchandiseId: item.id,
+            quantity: item.quantity,
+            purchaseOption: item.purchaseOption,
+            price: item.price,
+          })),
         }
       );
-
+  
       if (response.data && response.data.checkoutUrl) {
         window.location.href = response.data.checkoutUrl;
       } else {
@@ -153,12 +174,6 @@ const ProductDetails = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    if (selectedVariant) {
-      setCartQuantity(cartQuantity + packQuantity);
-    }
-  };
-
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -166,11 +181,13 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
+  
 
-  const { title, description, images, variants } = product;
+  const { title, description, images } = product;
 
   const Accordion = ({ title, content }) => {
     const [isOpen, setIsOpen] = useState(false);
+    
 
     return (
       <div className={`accordion-section ${isOpen ? "open" : ""}`}>
@@ -192,7 +209,6 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details-page">
-      <Header cartQuantity={cartQuantity} />
       <div className="product-details-container">
         <div className="product-details-left col-sm-6">
           {images.edges[0]?.node.src ? (
@@ -302,10 +318,7 @@ const ProductDetails = () => {
             <button
               className="add-to-cart-button"
               disabled={!selectedVariant?.availableForSale}
-              onClick={() => {
-                handleAddToCart();
-                toggleCart();
-              }}
+              onClick={handleAddToCart}
             >
               Add to Cart
             </button>
@@ -317,25 +330,47 @@ const ProductDetails = () => {
 
         {cartVisible && (
           <div className="cart-panel">
-            <button className="close-cart" onClick={toggleCart}>
-              &times;
-            </button>
-            <h2>Cart</h2>
-            <div className="cart-item">
-              <img
-                src={images.edges[0].node.src}
-                alt={images.edges[0].node.altText || "Product Image"}
-                className="cart-image"
-              />
-              <div className="cart-details">
-                <h3>{title}</h3>
-                <p>Variant: {selectedVariant?.title}</p>
-                <p>Price: ₹{totalPrice}</p>
-                <p>Quantity: {packQuantity}</p>
-                <p>Purchase Option: {purchaseOption}</p>
-              </div>
+            <div className="cart-items-wrapper">
+              <button className="close-cart" onClick={toggleCart}>
+                &times;
+              </button>
+              <h2>Cart</h2>
+              {cartItems.map((item) => (
+                <div key={item.id} className="cart-item">
+                  <img
+                    src={item.image} // Use the stored image for each cart item
+                    alt={item.title || "Product Image"}
+                    className="cart-image"
+                  />
+                  <div className="cart-details">
+                    <h3>{item.title}</h3>
+                    <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <p>Quantity: {item.quantity}</p>
+                    <div className="quantity-controls">
+                      <button
+                        onClick={() =>
+                          updateItemQuantity(item.id, item.quantity + 1)
+                        }
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={() =>
+                          updateItemQuantity(item.id, item.quantity - 1)
+                        }
+                      >
+                        -
+                      </button>
+                      <button onClick={() => removeItemFromCart(item.id)}>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="checkout-option">
+              <p>Total: ₹{cartTotal.toFixed(2)}</p>
               <button className="checkout" onClick={proceedToPayment}>
                 Proceed to Payment
               </button>
@@ -345,7 +380,7 @@ const ProductDetails = () => {
       </div>
       {/* Accordion Section */}
       <div className="accordion-container">
-         <Accordion
+        <Accordion
           title="What, Who & How?"
           content={
             <div>
@@ -380,7 +415,9 @@ const ProductDetails = () => {
               <h4>{graphData?.heading}</h4>
               {graphData?.data.map((item, index) => (
                 <div key={index}>
-                  <p>{item.label}: {item.percentage}%</p>
+                  <p>
+                    {item.label}: {item.percentage}%
+                  </p>
                   <img src={item.image_url} alt={item.label} />
                 </div>
               ))}
@@ -434,7 +471,7 @@ const ProductDetails = () => {
           }
         />
         <Accordion
-          title=" Accordion Content"
+          title="Accordion Content"
           content={
             <div>
               {accordionContent?.map((item, index) => (

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useContext } from 'react';
+import { CartContext } from './cartContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './header.css';
 import Logo from './assets/Logo.png';
 import Cart from './assets/cart.svg';
+import CartPanel from './CartPanel';
 
-const Header = ({ cartQuantity }) => {
+const Header = () => {
+  const { cartQuantity } = useContext(CartContext);
+  const [cartPanelOpen, setCartPanelOpen] = useState(false);
+
   return (
     <header className="header">
       <div className="container">
@@ -41,12 +47,12 @@ const Header = ({ cartQuantity }) => {
                   </li>
                   <li>
                     <div style={{ position: 'relative' }}>
-                      <img src={Cart} alt='cart' className='cart-icon'/>
+                      <img src={Cart} alt='cart' className='cart-icon' onClick={() => setCartPanelOpen(true)}/>
                       {cartQuantity > 0 && (
-                        <span style={{
+                        <span className='cartquantity' style={{
                           position: 'absolute',
                           top: '-10px',
-                          right: '-10px',
+                          right: '40px',
                           backgroundColor: 'red',
                           color: 'white',
                           borderRadius: '50%',
@@ -64,6 +70,7 @@ const Header = ({ cartQuantity }) => {
           </div>
         </div>
       </div>
+      {cartPanelOpen && <CartPanel onClose={() => setCartPanelOpen(false)} />}
     </header>
   );
 };
