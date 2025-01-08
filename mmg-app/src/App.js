@@ -7,7 +7,7 @@ import './App.css';
 import Home from './home';
 import Footer from './footer';
 import Preload from './preload';
-
+import { CartProvider } from './cartContext';
 
 function App() {
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -19,22 +19,24 @@ function App() {
   }, []);
 
   return (
-    <div className="app-wrapper">
-      <div className={`preload-wrapper ${isTransitioning ? 'slide-out' : ''}`}>
-        <Preload />
+    <CartProvider>
+      <div className="app-wrapper">
+        <div className={`preload-wrapper ${isTransitioning ? 'slide-out' : ''}`}>
+          <Preload />
+        </div>
+        <div className={`home-wrapper ${isTransitioning ? 'slide-in' : ''}`}>
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<ProductPage />} />
+              <Route path="/product/:handle" element={<ProductDetails />} />
+            </Routes>
+            <Footer />
+          </Router>
+        </div>
       </div>
-      <div className={`home-wrapper ${isTransitioning ? 'slide-in' : ''}`}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<ProductPage />} />
-            <Route path="/product/:handle" element={<ProductDetails />} />
-          </Routes>
-          <Footer />
-        </Router>
-      </div>
-    </div>
+    </CartProvider>
   );
 }
 

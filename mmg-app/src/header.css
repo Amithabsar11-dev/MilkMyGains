@@ -1,6 +1,6 @@
 .header {
   padding: 10px 0;
-  background-image: url('./assets/background.png');
+  background-image: url("./assets/background.png");
 }
 
 .nav-style {
@@ -36,10 +36,10 @@
 
 @media (max-width: 768px) {
   .navbar-nav {
-      text-align: center;
+    text-align: center;
   }
 
   .navbar-nav .nav-item {
-      margin-bottom: 10px;
+    margin-bottom: 10px;
   }
 }

@@ -189,6 +189,11 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.cart-items-wrapper {
+  overflow-y: auto;
+  flex: 1;
+}
+
 .close-cart {
   position: absolute;
   top: 10px;
