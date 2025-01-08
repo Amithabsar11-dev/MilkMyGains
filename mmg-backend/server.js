@@ -222,12 +222,19 @@ app.post("/api/cart/create", async (req, res) => {
         merchandiseId: line.merchandiseId,
         quantity: line.quantity,
         attributes: [
-          { key: "discountedPrice", value: line.price.toString() }, 
-          { key: "purchaseOption", value: line.purchaseOption },   
+          { 
+            key: "discountedPrice", 
+            value: line?.price ? line.price.toString() : "0" // Default to "0" if price is undefined
+          },
+          { 
+            key: "purchaseOption", 
+            value: line?.purchaseOption || "N/A" // Default to "N/A" if purchaseOption is undefined
+          },
         ],
       })),
     },
   };
+  
 
 
   try {
@@ -287,6 +294,59 @@ app.post("/api/cart/add", async (req, res) => {
     res.status(500).json({ error: "Failed to add product to cart" });
   }
 });
+
+// View All cart item
+app.post("/api/cart/view", async (req, res) => {
+  const { cartId } = req.body;
+  if (!cartId) {
+    return res.status(400).json({
+      error: "Invalid request. 'cartId' is required.",
+    });
+  }
+
+  const query = `
+    query {
+      cart(id: "${cartId}") {
+        id
+        lines(first: 50) {
+          edges {
+            node {
+              id
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  title
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  product {
+                    title
+                  }
+                }
+              }
+              quantity
+            }
+          }
+        }
+        estimatedCost {
+          totalAmount {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const data = await shopifyRequest(query);
+    res.status(200).json(data.cart);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve cart items" });
+  }
+});
+
 
 // Update cart item
 app.post("/api/cart/update", async (req, res) => {
