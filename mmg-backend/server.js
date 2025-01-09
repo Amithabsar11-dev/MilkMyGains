@@ -8,8 +8,11 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Shopify Storefront API Details
-const SHOPIFY_BASE_URL = "https://a6f645-75.myshopify.com/api/2024-10/graphql.json";
-const STORE_FRONT_ACCESS_TOKEN = "4d435342247d18a7c3331d1fc544ff53";
+const SHOPIFY_BASE_URL = "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
+const STORE_FRONT_ACCESS_TOKEN = "b49fae102098a23e7a2b663dbc0e4d48";
+
+//Judgeme API Details 
+// const JUDGE_ME_API_URL = "https://judge.me/";
 
 // Helper to call Shopify Storefront API
 const shopifyRequest = async (query, variables = {}) => {
@@ -22,7 +25,7 @@ const shopifyRequest = async (query, variables = {}) => {
           "X-Shopify-Storefront-Access-Token": STORE_FRONT_ACCESS_TOKEN,
           "Content-Type": "application/json",
         },
-      }
+      } 
     );
     if (response.data.errors) {
       console.error("Shopify API Errors:", response.data.errors);
@@ -34,6 +37,76 @@ const shopifyRequest = async (query, variables = {}) => {
     throw error;
   }
 };
+
+// Fetch reviews for a product
+app.get("/api/reviews/:handle", async (req, res) => {
+  const { handle } = req.params;
+
+  const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw"; 
+  const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
+
+  try {
+    const response = await axios.get(JUDGEME_API_URL, {
+      params: {
+        shop_domain: "milk-my-gains.myshopify.com",
+        api_token: JUDGEME_PRIVATE_TOKEN,
+        handle, 
+      },
+    });
+
+    if (!response.data || !response.data.reviews) {
+      throw new Error("No reviews found or invalid response from Judge.me API.");
+    }
+
+    res.status(200).json(response.data.reviews);
+  } catch (error) {
+    console.error("Error fetching reviews:", error.response?.data || error.message);
+    res.status(500).json({
+      error: error.response?.data || "Failed to fetch reviews",
+    });
+  }
+});
+
+// Post a review
+// Post a review
+app.post("/api/reviews", async (req, res) => {
+  const { productId, reviewTitle, reviewBody, reviewerName, reviewerEmail, rating } = req.body;
+
+  try {
+    const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw"; 
+    const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
+    
+    const response = await axios.post(
+      JUDGEME_API_URL,
+      {
+        product_id: productId,
+        title: reviewTitle,
+        body: reviewBody,
+        reviewer_name: reviewerName,
+        reviewer_email: reviewerEmail,
+        rating,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${JUDGEME_PRIVATE_TOKEN}`,
+        },
+      }
+    );
+
+    if (response.data) {
+      console.log("Review submitted successfully:", response.data);
+      res.status(201).json(response.data);
+    } else {
+      console.error("Failed to submit review:", response.data);
+      res.status(400).json({ error: "Failed to submit review." });
+    }
+  } catch (error) {
+    console.error("Error submitting review:", error.response ? error.response.data : error.message);
+    res.status(500).json({ error: "Failed to submit review." });
+  }
+});
+
 
 // Fetch all products
 app.get("/api/products", async (req, res) => {
@@ -103,6 +176,7 @@ app.get("/api/product/:handle", async (req, res) => {
         { namespace: "product", key: "ingredients" },
         { namespace: "graph", key: "chart" }
         { namespace: "new", key: "accordion_content" }
+        { namespace: "new", key: "faq" },
       ]) {
         namespace
         key
