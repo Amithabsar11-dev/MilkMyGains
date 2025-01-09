@@ -23,6 +23,7 @@ const ProductDetails = () => {
   const [comparisonData, setComparisonData] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   const [accordionContent, setAccordionContent] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const {
     cartItems,
     cartQuantity,
@@ -92,17 +93,17 @@ const ProductDetails = () => {
             metafield.key === "ingredients" && metafield.namespace === "product"
         );
         if (ingredientsMetafield) {
-          setIngredients(ingredientsMetafield.value);
+          const ingredientsData = JSON.parse(ingredientsMetafield.value);
+          setIngredients(ingredientsData);
         }
-
-        // Extract Accordion Content from metafields
+        
         const accordionContentMetafield = metafields.find(
           (metafield) =>
-            metafield.key === "accordion_content" &&
-            metafield.namespace === "new"
+            metafield.key === "accordion_content" && metafield.namespace === "new"
         );
         if (accordionContentMetafield) {
-          setAccordionContent(accordionContentMetafield.value);
+          const accordionContentData = JSON.parse(accordionContentMetafield.value);
+          setAccordionContent(accordionContentData);
         }
       } catch (err) {
         console.error("Error fetching product:", err);
@@ -110,6 +111,17 @@ const ProductDetails = () => {
     };
 
     fetchProduct();
+
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/api/reviews/${handle}`);
+        setReviews(response.data);
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+      }
+    };
+
+    fetchReviews();
   }, [handle]);
 
   const totalPrice =
@@ -118,8 +130,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-      : 0;
+        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+        : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -135,7 +147,9 @@ const ProductDetails = () => {
       const item = {
         id: selectedVariant.id,
         title: product.title,
-        price: parseFloat(totalPrice),
+        price: purchaseOption === "subscribe"
+          ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
+          : parseFloat(selectedVariant.priceV2.amount * packQuantity),
         quantity: packQuantity,
         image: images.edges[0]?.node.src, // Store the product image
       };
@@ -149,7 +163,7 @@ const ProductDetails = () => {
       alert("No products in cart.");
       return;
     }
-  
+
     try {
       const response = await axios.post(
         "http://localhost:3001/api/cart/create",
@@ -157,12 +171,11 @@ const ProductDetails = () => {
           lines: cartItems.map((item) => ({
             merchandiseId: item.id,
             quantity: item.quantity,
-            purchaseOption: item.purchaseOption,
             price: item.price,
           })),
         }
       );
-  
+
       if (response.data && response.data.checkoutUrl) {
         window.location.href = response.data.checkoutUrl;
       } else {
@@ -181,13 +194,11 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
-  
 
   const { title, description, images } = product;
 
   const Accordion = ({ title, content }) => {
     const [isOpen, setIsOpen] = useState(false);
-    
 
     return (
       <div className={`accordion-section ${isOpen ? "open" : ""}`}>
@@ -344,7 +355,7 @@ const ProductDetails = () => {
                   />
                   <div className="cart-details">
                     <h3>{item.title}</h3>
-                    <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <p>Price: ₹{item.price.toFixed(2)}</p> {/* Displaying the total price directly */}
                     <p>Quantity: {item.quantity}</p>
                     <div className="quantity-controls">
                       <button
@@ -370,7 +381,7 @@ const ProductDetails = () => {
               ))}
             </div>
             <div className="checkout-option">
-              <p>Total: ₹{cartTotal.toFixed(2)}</p>
+              <p>Total: ₹{cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</p>
               <button className="checkout" onClick={proceedToPayment}>
                 Proceed to Payment
               </button>
@@ -465,6 +476,23 @@ const ProductDetails = () => {
                 <div key={index}>
                   <h5>{item.heading}</h5>
                   <p>{item.content}</p>
+                </div>
+              ))}
+            </div>
+          }
+        />
+        <Accordion
+          title="Reviews"
+          content={
+            <div>
+              {reviews.map((review) => (
+                <div key={review.id}>
+                  <h5>{review.title} - {review.rating} Stars</h5>
+                  <p>{review.body}</p>
+                  <p><strong>Reviewer:</strong> {review.reviewer.name}</p>
+                  {review.pictures.map((picture, index) => (
+                    <img key={index} className="review-image" src={picture.urls.original} alt="Review" />
+                  ))}
                 </div>
               ))}
             </div>
