@@ -24,6 +24,13 @@ const ProductDetails = () => {
   const [ingredients, setIngredients] = useState(null);
   const [accordionContent, setAccordionContent] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState({
+    review_title: "",
+    review_body: "",
+    reviewer_name: "",
+    reviewer_email: "",
+    rating: 0,
+  });
   const {
     cartItems,
     cartQuantity,
@@ -32,6 +39,7 @@ const ProductDetails = () => {
     updateItemQuantity,
     removeItemFromCart,
   } = useContext(CartContext);
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -96,7 +104,7 @@ const ProductDetails = () => {
           const ingredientsData = JSON.parse(ingredientsMetafield.value);
           setIngredients(ingredientsData);
         }
-        
+
         const accordionContentMetafield = metafields.find(
           (metafield) =>
             metafield.key === "accordion_content" && metafield.namespace === "new"
@@ -151,7 +159,7 @@ const ProductDetails = () => {
           ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
           : parseFloat(selectedVariant.priceV2.amount * packQuantity),
         quantity: packQuantity,
-        image: images.edges[0]?.node.src, // Store the product image
+        image: images.edges[0]?.node.src,
       };
       addItemToCart(item);
       setCartVisible(true);
@@ -484,18 +492,22 @@ const ProductDetails = () => {
         <Accordion
           title="Reviews"
           content={
-            <div>
-              {reviews.map((review) => (
-                <div key={review.id}>
-                  <h5>{review.title} - {review.rating} Stars</h5>
-                  <p>{review.body}</p>
-                  <p><strong>Reviewer:</strong> {review.reviewer.name}</p>
-                  {review.pictures.map((picture, index) => (
-                    <img key={index} className="review-image" src={picture.urls.original} alt="Review" />
-                  ))}
-                </div>
-              ))}
-            </div>
+            reviews.length > 0 ? (
+              <div>
+                {reviews.map((review) => (
+                  <div key={review.id}>
+                    <h5>{review.title} - {review.rating} Stars</h5>
+                    <p>{review.body}</p>
+                    <p><strong>Reviewer:</strong> {review.reviewer.name}</p>
+                    {review.pictures.map((picture, index) => (
+                      <img key={index} className="review-image" src={picture.urls.original} alt="Review" />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No reviews available for this product yet.</p>
+            )
           }
         />
         <Accordion

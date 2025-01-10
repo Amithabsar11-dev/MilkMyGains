@@ -11,8 +11,12 @@ app.use(cors());
 const SHOPIFY_BASE_URL = "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
 const STORE_FRONT_ACCESS_TOKEN = "b49fae102098a23e7a2b663dbc0e4d48";
 
-//Judgeme API Details 
-// const JUDGE_ME_API_URL = "https://judge.me/";
+
+// Judge.me API Details
+const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
+const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw";  // Replace with your actual Judge.me API token
+const SHOP_DOMAIN = "milk-my-gains.myshopify.com";  // Replace with your actual Shopify domain
+
 
 // Helper to call Shopify Storefront API
 const shopifyRequest = async (query, variables = {}) => {
@@ -25,7 +29,7 @@ const shopifyRequest = async (query, variables = {}) => {
           "X-Shopify-Storefront-Access-Token": STORE_FRONT_ACCESS_TOKEN,
           "Content-Type": "application/json",
         },
-      } 
+      }
     );
     if (response.data.errors) {
       console.error("Shopify API Errors:", response.data.errors);
@@ -42,7 +46,7 @@ const shopifyRequest = async (query, variables = {}) => {
 app.get("/api/reviews/:handle", async (req, res) => {
   const { handle } = req.params;
 
-  const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw"; 
+  const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw";
   const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
 
   try {
@@ -50,63 +54,105 @@ app.get("/api/reviews/:handle", async (req, res) => {
       params: {
         shop_domain: "milk-my-gains.myshopify.com",
         api_token: JUDGEME_PRIVATE_TOKEN,
-        handle, 
+        product_handle: handle,
       },
     });
 
-    if (!response.data || !response.data.reviews) {
-      throw new Error("No reviews found or invalid response from Judge.me API.");
+    if (!response.data.reviews?.length) {
+      return res.status(404).json({ message: "No reviews found for this product." });
     }
 
     res.status(200).json(response.data.reviews);
   } catch (error) {
     console.error("Error fetching reviews:", error.response?.data || error.message);
-    res.status(500).json({
-      error: error.response?.data || "Failed to fetch reviews",
-    });
+    res.status(500).json({ error: "Failed to fetch reviews from Judge.me." });
   }
 });
 
-// Post a review
-// Post a review
-app.post("/api/reviews", async (req, res) => {
-  const { productId, reviewTitle, reviewBody, reviewerName, reviewerEmail, rating } = req.body;
+
+// Helper function to get Judge.me product ID using Shopify product ID
+const getJudgeMeProductId = async (shopifyProductId) => {
+  const JUDGEME_API_URL = `https://judge.me/api/v1/products/${shopifyProductId}`;
 
   try {
-    const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw"; 
-    const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
-    
-    const response = await axios.post(
-      JUDGEME_API_URL,
-      {
-        product_id: productId,
-        title: reviewTitle,
-        body: reviewBody,
-        reviewer_name: reviewerName,
-        reviewer_email: reviewerEmail,
-        rating,
+    const response = await axios.get(JUDGEME_API_URL, {
+      params: {
+        api_token: JUDGEME_PRIVATE_TOKEN,
+        shop_domain: SHOP_DOMAIN,
+        shopify_product_id: shopifyProductId,
       },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${JUDGEME_PRIVATE_TOKEN}`,
-        },
-      }
-    );
+    });
 
-    if (response.data) {
-      console.log("Review submitted successfully:", response.data);
-      res.status(201).json(response.data);
+    if (response.data && response.data.product) {
+      console.log("Judge.me Product ID Found:", response.data.product.id);
+      return response.data.product.id;
     } else {
-      console.error("Failed to submit review:", response.data);
-      res.status(400).json({ error: "Failed to submit review." });
+      throw new Error("Product ID not found in Judge.me response.");
     }
   } catch (error) {
-    console.error("Error submitting review:", error.response ? error.response.data : error.message);
+    console.error("Error fetching Judge.me product ID:", error.response?.data || error.message);
+    throw new Error("Failed to fetch Judge.me product ID.");
+  }
+};
+
+// Endpoint to submit a product review
+app.post("/api/reviews", async (req, res) => {
+  const {
+    shopify_product_id,
+    review_title,
+    review_body,
+    reviewer_name,
+    reviewer_email,
+    rating,
+  } = req.body;
+
+  // Validate input fields
+  if (!shopify_product_id || !review_title || !review_body || !reviewer_name || !reviewer_email || !rating) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
+
+  try {
+    // Fetch Judge.me product ID
+    const product_id = await getJudgeMeProductId(shopify_product_id);
+    if (!product_id) {
+      return res.status(500).json({ error: "Unable to map Shopify product to Judge.me product." });
+    }
+
+    const payload = {
+      api_token: JUDGEME_PRIVATE_TOKEN,
+      shop_domain: SHOP_DOMAIN,
+      product_id: String(product_id),
+      title: review_title,
+      body: review_body,
+      name: reviewer_name,
+      email: reviewer_email,
+      rating,
+      review_type: "product",
+    };
+
+    console.log("Payload being sent to Judge.me:", payload);
+
+    const JUDGEME_REVIEW_API_URL = "https://judge.me/api/v1/reviews";
+    const response = await axios.post(JUDGEME_REVIEW_API_URL, payload, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    console.log("Response from Judge.me:", response.data);
+
+    if (response.data && response.data.status === "success") {
+      return res.status(201).json({
+        message: "Review submitted successfully and will be processed shortly.",
+      });
+    }
+
+    return res.status(202).json({
+      message: "Review is being processed and will appear shortly.",
+    });
+  } catch (error) {
+    console.error("Error submitting review:", error.response?.data || error.message);
     res.status(500).json({ error: "Failed to submit review." });
   }
 });
-
 
 // Fetch all products
 app.get("/api/products", async (req, res) => {
@@ -208,7 +254,7 @@ app.get("/api/product/:handle", async (req, res) => {
       }
     }
   `;
-  
+
   try {
     const data = await shopifyRequest(query);
     const product = data.productByHandle;
@@ -218,7 +264,7 @@ app.get("/api/product/:handle", async (req, res) => {
     // Parse the metafield value if it exists
     if (product.metafields && product.metafields.length > 0) {
       console.log('Raw Metafields:', product.metafields);
-    
+
       product.metafields = product.metafields
         .filter((metafield) => metafield !== null)
         .map((metafield) => {
@@ -233,10 +279,10 @@ app.get("/api/product/:handle", async (req, res) => {
           }
           return metafield;
         });
-    
+
       console.log('Parsed Metafields:', product.metafields);
     }
-    
+
 
     console.log('Parsed Metafields:', product.metafields);
     console.log('Final Product Data:', product);
@@ -296,19 +342,19 @@ app.post("/api/cart/create", async (req, res) => {
         merchandiseId: line.merchandiseId,
         quantity: line.quantity,
         attributes: [
-          { 
-            key: "discountedPrice", 
+          {
+            key: "discountedPrice",
             value: line?.price ? line.price.toString() : "0" // Default to "0" if price is undefined
           },
-          { 
-            key: "purchaseOption", 
+          {
+            key: "purchaseOption",
             value: line?.purchaseOption || "N/A" // Default to "N/A" if purchaseOption is undefined
           },
         ],
       })),
     },
   };
-  
+
 
 
   try {
