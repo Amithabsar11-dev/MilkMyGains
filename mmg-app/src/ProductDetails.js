@@ -357,13 +357,13 @@ const ProductDetails = () => {
               {cartItems.map((item) => (
                 <div key={item.id} className="cart-item">
                   <img
-                    src={item.image} // Use the stored image for each cart item
+                    src={item.image} 
                     alt={item.title || "Product Image"}
                     className="cart-image"
                   />
                   <div className="cart-details">
                     <h3>{item.title}</h3>
-                    <p>Price: ₹{item.price.toFixed(2)}</p> {/* Displaying the total price directly */}
+                    <p>Price: ₹{item.price.toFixed(2)}</p> 
                     <p>Quantity: {item.quantity}</p>
                     <div className="quantity-controls">
                       <button
