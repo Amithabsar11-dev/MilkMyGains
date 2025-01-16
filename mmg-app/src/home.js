@@ -23,8 +23,14 @@ import OrderButton2 from "./assets/yogart.svg";
 import OrderButton3 from "./assets/icecream.svg";
 import Words from "./assets/words.svg";
 import ProteinCap from "./assets/protein-cap.svg";
-import Weightlift from './assets/body builder.svg';
-import ProteinSlogan from './assets/protein-slogan.svg'
+import Weightlift from "./assets/body builder.svg";
+import ProteinSlogan from "./assets/protein-slogan.svg";
+import Raisingprotein from "./assets/high-protein.svg";
+import Paneericon from './assets/Panner-icon.svg';
+import Proteins from './assets/proteins.svg';
+import Whey from './assets/whey.svg';
+import Energybar from './assets/energy-bar.svg';
+import Palakpaneer from './assets/palak-paneer.svg';
 
 const Home = () => {
   const [scrolling, setScrolling] = useState(false);
@@ -178,7 +184,7 @@ const Home = () => {
               <br /> compromising on taste.
             </h1>
             <img src={Words} alt="words" className="words" />
-            <button className="shop-now-button">Buy Now</button>
+            <button className="shop-now-button">Shop Now</button>
           </div>
           <div className="col-6">
             <img src={ProteinCap} alt="protein-cap" className="protein-cap" />
@@ -203,12 +209,94 @@ const Home = () => {
           </h1>
           <img src={Weightlift} className="weight-lift" alt="weight-lift" />
           <div className="build-container">
-            <h1 className="build">
-              BUILD MUSCLE
-            </h1>
-            <p className="build-para">Protein builds muscle and bone,<br /> supporting agility and resilience.<br /> It’s essential for vitality and<br /> longevity, fueling an active,<br /> enduring lifestyle.</p>
+            <h1 className="build">BUILD MUSCLE</h1>
+            <p className="build-para">
+              Protein builds muscle and bone,
+              <br /> supporting agility and resilience.
+              <br /> It’s essential for vitality and
+              <br /> longevity, fueling an active,
+              <br /> enduring lifestyle.
+            </p>
           </div>
-          <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
+          <img
+            src={ProteinSlogan}
+            className="protein-slogan"
+            alt="protein-slogan"
+          />
+        </div>
+      </div>
+
+      {/* Raising the star */}
+      <div className="raising-container pt-5">
+        <div className="raising-star">
+          <h1 className="raising-heading"> RAISING </h1>
+          <img
+            className="raising-protein"
+            src={Raisingprotein}
+            alt="raising-protein"
+          />
+          <h1 className="raising-heading"> THE BAR </h1>
+        </div>
+      </div>
+
+      {/* Comparision Table */}
+      <div className="comparison-table">
+        <div className="comparison-column labels">
+          <div className="label">PROTEIN</div>
+          <div className="label">FAT</div>
+          <div className="label">CALORIES</div>
+          <div className="label">PRICE</div>
+        </div>
+
+        <div className="comparison-column highlighted">
+          <div className="product">
+            <img src={Paneericon} alt="Product 1" />
+            {/* <span className="star">★</span> */}
+          </div>
+          <div className="value">31G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">$</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Proteins} alt="Product 2" />
+          </div>
+          <div className="value">18G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Whey} alt="Product 3" />
+          </div>
+          <div className="value">31G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Energybar} alt="Product 4" />
+          </div>
+          <div className="value">25G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹₹</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Palakpaneer} alt="Product 5" />
+          </div>
+          <div className="value">37G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹₹₹</div>
         </div>
       </div>
 
