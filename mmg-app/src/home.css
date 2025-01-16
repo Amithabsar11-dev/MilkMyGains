@@ -149,6 +149,7 @@
 .build-container {
   display: grid;
   justify-content: end;
+  padding-bottom: 3%;
 }
 
 .protein-slogan {
@@ -219,7 +220,6 @@
   border: none;
   display: flex;
   justify-content: center;
-  padding-top: 4%;
 }
 
 .label {
@@ -239,12 +239,66 @@
 }
 
 .icon img {
-  width: 90%;
+  width: 100%;
 }
 
 .value {
   font-size: 16px;
   font-family: "Chivo Mono", Sans-serif;
+}
+
+/* Wholesome */
+.wholesome-container{
+  background-color: white;
+  position: relative;
+}
+.wholesome-heading{
+  text-align: center;
+}
+.protein-packed{
+  color: #FC5E3B;
+  font-size: 25px;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+
+}
+.wholesome-para {
+  font-size: 115px;
+  color: #0051F1;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  line-height: 1em;
+  padding-bottom: 8%;
+}
+.veg-bowl{
+  position: absolute;
+  top: 20%;
+  width: 25%;
+  right: 38%;
+}
+.recepies-button{
+  cursor: pointer;
+}
+.stickers{
+  position: absolute;
+  top: 30%;
+  left: 12%;
+}
+.muscle-para{
+  position: absolute;
+  right: 10%;
+  bottom: 32%;
+  text-align: justify;
+  font-size: 18px;
+  font-family: "Chivo Mono", Sans-serif;
+}
+.arrow-point{
+  position: absolute;
+  bottom: 20%;
 }
 
 .slider-image {
@@ -278,7 +332,7 @@
   color: #007bff;
 }
 
-.card-section {
+/* .card-section {
   display: flex;
   justify-content: flex-start;
   padding: 50px;
@@ -355,7 +409,7 @@
 .card-back p {
   font-size: 1rem;
   text-align: center;
-}
+} */
 
 /* Paradigm */
 .container-paradigm {
@@ -398,25 +452,181 @@
   justify-content: center;
   margin-top: 3%;
   text-align: center;
-  color: #ffebd4;
   font-family: "Chivo Mono", serif;
   font-weight: 800;
+  padding-top: 10%;
 }
 
-/* Proteins */
-.proteins-heading {
+.card-section {
   display: flex;
   justify-content: center;
+  gap: 80px;
+  margin-top: 3%;
+}
+
+.card1, .card2, .card3 {
+  width: 25%;
+  height: 55vh;
+  perspective: 1000px; /* Adds depth effect */
+  box-shadow: -10px 10px  rgba(40, 130, 255, 0.5);
+  border-radius: 20px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card1:hover .card-inner,
+.card2:hover .card-inner,
+.card3:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.card-front {
+  background: #004ef0;
+  color: white;
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  background: white;
+  color: #004ef0;
+  transform: rotateY(180deg);
+  border: 1px solid #004ef0;
+}
+
+.card1 {
+  transform: rotate(-30deg) translateY(100px) translateX(-100px);
+}
+
+.card3 {
+  transform: rotate(30deg) translateY(100px) translateX(100px);
+}
+
+.card1:hover {
+  transform: rotate(-30deg) translateY(90px) translateX(-100px);
+}
+.card2:hover {
+  transform: translateY(-10px);
+}
+.card3:hover {
+  transform: rotate(30deg) translateY(90px) translateX(100px);
+}
+
+.card-icon {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 18px;
+  text-transform: uppercase;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.back-text {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "Chivo Mono", serif;
+}
+.back-heading{
+  color: #004ef0;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+}
+
+
+/* Proteins */
+.proteins-container {
   padding-top: 10%;
-  background-image: url("./assets/background.png");
+  background-image: url("./assets/Backgroundmilk.png");
+  background-size: cover;
+ position: relative;
 }
 .protein-image {
-  width: 90%;
+  width: 100%;
+  padding-top: 10%;
 }
 /* Milk */
 .milk-image {
-  width: 90%;
+  width: 20%;
+  padding-left: 5%;
+  padding-top: 18%;
 }
-.milk-heading {
-  background-color: #ffebd4;
+
+.footers-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 35px;
+  color: white;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
+  padding-right: 14%;
+}
+
+.footers-links li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: text-decoration 0.3s ease;
+}
+
+.footers-links li:hover {
+  text-decoration: underline;
+}
+
+.shop-footers {
+  display: flex;
+  justify-content: center;
+}
+.footers-column{
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.footers{
+  background-color: white;
+}
+.copyright-image{
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.signup-container{
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+}
+.signup-heading{
+  font-size: 35px;
+  color: #004ef0;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
 }
