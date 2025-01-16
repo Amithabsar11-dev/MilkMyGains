@@ -32,7 +32,7 @@ function App() {
               <Route path="/products" element={<ProductPage />} />
               <Route path="/product/:handle" element={<ProductDetails />} />
             </Routes>
-            <Footer />
+            {/* <Footer /> */}
           </Router>
         </div>
       </div>

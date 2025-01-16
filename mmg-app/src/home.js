@@ -12,7 +12,7 @@ import Star from "./assets/staricon.svg";
 import Eye from "./assets/eyeicon.svg";
 import Drop from "./assets/dropicon.svg";
 import Protein from "./assets/protein.png";
-import Milk from "./assets/grains.png";
+import Milk from "./assets/milkmylogo.svg";
 import MilkBg from "./assets/Vector (1).png";
 import MilkBg1 from "./assets/Vector (2).png";
 import MilkBg2 from "./assets/Vector (3).png";
@@ -27,10 +27,19 @@ import Weightlift from "./assets/body builder.svg";
 import ProteinSlogan from "./assets/protein-slogan.svg";
 import Raisingprotein from "./assets/high-protein.svg";
 import Paneericon from './assets/Panner-icon.svg';
-import Proteins from './assets/proteins.svg';
-import Whey from './assets/whey.svg';
-import Energybar from './assets/energy-bar.svg';
-import Palakpaneer from './assets/palak-paneer.svg';
+import Proteins from './assets/meat.svg';
+import Whey from './assets/powder.svg';
+import Energybar from './assets/ricebag.svg';
+import Palakpaneer from './assets/paneercubes.svg';
+import Vegbowl from './assets/vegbowl.svg';
+import Recepiesbutton from './assets/recepiesbutton.svg';
+import Stickers from './assets/Stickers.svg';
+import Arrowpoint from './assets/arrowpoint.svg';
+import Copyright from './assets/copyright.svg';
+import TransparencyIcon from "./assets/transparency.svg";
+import MythIcon from "./assets/myth.svg";
+import PossibilitiesIcon from "./assets/unlockmilk.svg";
+
 
 const Home = () => {
   const [scrolling, setScrolling] = useState(false);
@@ -56,25 +65,25 @@ const Home = () => {
   const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
   const scrollRef = useRef(null); // Ref to the scroll container
 
-  const handleScrolls = () => {
-    const container = scrollRef.current;
-    const scrollPosition = container.scrollLeft;
-    const containerWidth = container.offsetWidth;
-    const cardWidth = container.children[0].offsetWidth;
+  // const handleScrolls = () => {
+  //   const container = scrollRef.current;
+  //   const scrollPosition = container.scrollLeft;
+  //   const containerWidth = container.offsetWidth;
+  //   const cardWidth = container.children[0].offsetWidth;
 
-    // Check if the user has scrolled to the right to show the next card
-    if (scrollPosition + containerWidth >= cardWidth * (scrollIndex + 1)) {
-      setScrollIndex((prevIndex) => Math.min(prevIndex + 1, 5)); // Only up to 6 cards
-    }
-  };
+  //   // Check if the user has scrolled to the right to show the next card
+  //   if (scrollPosition + containerWidth >= cardWidth * (scrollIndex + 1)) {
+  //     setScrollIndex((prevIndex) => Math.min(prevIndex + 1, 5)); // Only up to 6 cards
+  //   }
+  // };
 
-  useEffect(() => {
-    const container = scrollRef.current;
-    container.addEventListener("scroll", handleScrolls);
-    return () => {
-      container.removeEventListener("scroll", handleScrolls);
-    };
-  }, [scrollIndex]);
+  // useEffect(() => {
+  //   const container = scrollRef.current;
+  //   container.addEventListener("scroll", handleScrolls);
+  //   return () => {
+  //     container.removeEventListener("scroll", handleScrolls);
+  //   };
+  // }, [scrollIndex]);
 
   return (
     <div className="home-container">
@@ -129,11 +138,51 @@ const Home = () => {
             <br /> Active Lifestyle
           </p>
         </div>
-        {/* <a className='link-to-know' href='#'>KNOW MORE</a> */}
+        <div className="card-section">
+          <div className="card1">
+            <div className="card-inner">
+              <div className="card-front">
+                <img src={TransparencyIcon} alt="Transparency" className="card-icon" />
+                <p className="card-text">TRANSPARENCY IN EVERY DROP</p>
+              </div>
+              <div className="card-back">
+                <h1 className="back-heading">Transparency<br /> in every drop</h1>
+                <p className="back-text">More details about transparency in every drop...</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="card2">
+            <div className="card-inner">
+              <div className="card-front">
+                <img src={MythIcon} alt="Protein Myth" className="card-icon" />
+                <p className="card-text">BREAKING THE PROTEIN MYTH</p>
+              </div>
+              <div className="card-back">
+                <h1 className="back-heading">Breaking the<br /> Protein Myth</h1>
+                <p className="back-text">We’re challenging the belief<br /> that dairy can’t be high in<br /> protein and low in calories.<br /> MilkMyGains transforms dairy <br />into a nutritional powerhouse,<br /> proving that high-quality<br /> protein doesn’t have to come<br /> with excess fat.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="card3">
+            <div className="card-inner">
+              <div className="card-front">
+                <img src={PossibilitiesIcon} alt="New Possibilities" className="card-icon" />
+                <p className="card-text">UNLOCKING NEW POSSIBILITIES</p>
+              </div>
+              <div className="card-back">
+                <h1 className="back-heading">Unlocking new<br /> possibilities</h1>
+                <p className="back-text">By pushing the boundaries of<br /> dairy science, we’ve crafted<br /> products with exceptional<br /> protein levels that were once<br /> thought impossible. We’re<br /> redefining what’s achievable<br /> using only natural<br /> ingredients.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a className='link-to-know' href='#'>KNOW MORE</a>
       </div>
 
       {/* Cards Section */}
-      <section className="card-section" ref={scrollRef}>
+      {/* <section className="card-section" ref={scrollRef}>
         {[...Array(6)].map((_, index) => {
           const cardContent =
             index < 3 ? `Card ${index + 1}` : `Card ${index - 2}`;
@@ -141,14 +190,14 @@ const Home = () => {
             index === 0
               ? Card1
               : index === 1
-              ? Card2
-              : index === 2
-              ? Card3
-              : index === 3
-              ? Card1
-              : index === 4
-              ? Card2
-              : Card3;
+                ? Card2
+                : index === 2
+                  ? Card3
+                  : index === 3
+                    ? Card1
+                    : index === 4
+                      ? Card2
+                      : Card3;
           return (
             <div
               className="card"
@@ -171,7 +220,7 @@ const Home = () => {
             </div>
           );
         })}
-      </section>
+      </section> */}
 
       {/* Pure Protein Zero */}
       <div className="container-pure">
@@ -300,16 +349,59 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Wholesome Section */}
+      <div className="wholesome-container pt-5 pb-5">
+        <div className="wholesome-heading">
+          <h1 className="protein-packed">Protein-Packed Recipes You’ll Love</h1>
+          <h1 className="wholesome-para">Wholesome <br />Recipes <br />for Your<br /> Gains</h1>
+          <img src={Vegbowl} className="veg-bowl" alt="veg-bowl" />
+          <img src={Recepiesbutton} className="recepies-button pt-5" alt="recepies-button" />
+          <img src={Stickers} className="stickers" alt="stickers" />
+          <p className="muscle-para">Protein builds muscle and<br /> bone, supporting agility<br /> and resilience.</p>
+          <img src={Arrowpoint} className="arrow-point" alt="arrow-point" />
+        </div>
+      </div>
+
       {/* Proteins Section */}
-      <div className="proteins-heading">
+      {/* <div className="proteins-heading">
         <img src={Protein} className="protein-image" alt="protein-pic" />
       </div>
 
-      {/* Milk Section */}
       <div className="milk-heading">
         <img src={Milk} className="milk-image" alt="milk-pic" />
+      </div> */}
+
+      {/* Proteins Section */}
+      <div className="proteins-container pt-5 pb-5">
+        <img src={Protein} className="protein-image" alt="protein-pic" />
+        <div className="milk-div">
+          <img src={Milk} className="milk-image" alt="milk-pic" />
+        </div>
+        <div className="signup-container">
+          <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>
+          <div>
+            <input type="email" placeholder="Enter your email" />
+            <button type="button">Subscribe</button>
+          </div>
+        </div>
+        <div className="footers-column shop-footers mt-5">
+          <ul className="footers-links">
+            <li>SHOP</li>
+            <li>ABOUT US</li>
+            <li>FAQ</li>
+            <li>BLOG</li>
+            <li>CONTACT</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Footer Section */}
+      <div className="footers">
+        <img src={Copyright} className="copyright-image" alt="copyright-pic" />
       </div>
     </div>
+
+
   );
 };
 
