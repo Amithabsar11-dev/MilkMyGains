@@ -40,10 +40,12 @@ import TransparencyIcon from "./assets/transparency.svg";
 import MythIcon from "./assets/myth.svg";
 import PossibilitiesIcon from "./assets/unlockmilk.svg";
 import Object from './assets/OBJECTS.svg';
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
   const [scrolling, setScrolling] = useState(false);
+  const navigate = useNavigate();
 
   const handleScroll = (e) => {
     if (scrolling) return;
@@ -78,7 +80,7 @@ const Home = () => {
         <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
         <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
-        <img src={Object} alt="object-order" className="object-order" />
+        <img src={Object} alt="object-order" className="object-order" onClick={() => navigate("/product/high-protein-paneer")}/>
         <div className="order-buttons">
           <img src={OrderButton} alt="order-button" className="paneer-button" />
           <img src={OrderButton1} alt="order-button" className="milk-button" />
@@ -160,7 +162,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <a className='link-to-know' href='#'>KNOW MORE</a>
+        <a className='link-to-know' href='#' >KNOW MORE</a>
       </div>
       {/* Pure Protein Zero */}
       <div className="container-pure">
