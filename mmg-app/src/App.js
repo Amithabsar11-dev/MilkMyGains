@@ -7,32 +7,57 @@ import './App.css';
 import Home from './home';
 import Footer from './footer';
 import Preload from './preload';
+import FAQ from './faq.js'
 import { CartProvider } from './cartContext';
 
 function App() {
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isPreloadEnabled, setIsPreloadEnabled] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsTransitioning(true), 4000);
+    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    setIsPreloadEnabled(mediaQuery.matches);
 
-    return () => clearTimeout(timer);
+    const listener = (event) => {
+      setIsPreloadEnabled(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', listener);
+
+    return () => {
+      mediaQuery.removeEventListener('change', listener);
+    };
   }, []);
+
+  useEffect(() => {
+    if (isPreloadEnabled) {
+      const timer = setTimeout(() => setIsTransitioning(true), 4000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsTransitioning(true);
+    }
+  }, [isPreloadEnabled]);
 
   return (
     <CartProvider>
       <div className="app-wrapper">
-        <div className={`preload-wrapper ${isTransitioning ? 'slide-out' : ''}`}>
-          <Preload />
-        </div>
-        <div className={`home-wrapper ${isTransitioning ? 'slide-in' : ''}`}>
+        {/* Preload only appears on screens wider than 768px */}
+        {isPreloadEnabled && !isTransitioning && (
+          <div className="preload-wrapper">
+            <Preload />
+          </div>
+        )}
+
+        {/* Ensure the home page always renders */}
+        <div className={`home-wrapper ${isPreloadEnabled ? (isTransitioning ? 'slide-in' : '') : 'visible'}`}>
           <Router>
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/product/:handle" element={<ProductDetails />} />
+              <Route path="/faq" element={<FAQ />} />
             </Routes>
-            {/* <Footer /> */}
           </Router>
         </div>
       </div>

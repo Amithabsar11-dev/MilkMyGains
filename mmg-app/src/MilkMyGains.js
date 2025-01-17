@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useGLTF, Environment } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -9,6 +9,17 @@ const MilkMyGain = (props) => {
 
   // Mouse position state
   const mousePosition = useRef({ x: 0, y: 0 });
+  const [modelScale, setModelScale] = useState(window.innerWidth < 768 ? 10 : 17);
+
+  // Adjust model size based on screen width
+  useEffect(() => {
+    const handleResize = () => {
+      setModelScale(window.innerWidth < 768 ? 10 : 17);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Mouse move event listener
   const handleMouseMove = (event) => {
@@ -67,7 +78,7 @@ const MilkMyGain = (props) => {
         material={materials['Default.001']}
         rotation={[0, 0, -Math.PI / 2]}
         position={[0,0,0]}
-        scale={17} // Adjust scale as needed
+        scale={modelScale}  // Adjust scale as needed
       />
       <Environment files="./small_empty_room_3_2k.exr" background={false} intensity={0.5} />
       <ambientLight intensity={1} />

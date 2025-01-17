@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #ffedd8; 
+  background-color: #ffedd8;
   line-height: 1em;
   font-family: "Anybody", serif;
   font-size: 200px;
@@ -19,19 +19,20 @@
   justify-content: center;
   margin: 10px 0;
   position: relative;
-  z-index: 2; /* Ensure text stays above the ripple */
+  z-index: 2;
+  /* Ensure text stays above the ripple */
 }
 
 .letter {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
-  background: url('./assets/background.png') no-repeat center center/cover; 
-  -webkit-background-clip: text; 
-  background-clip: text; 
-  color: transparent; 
-  -webkit-text-stroke: 0.5px transparent; 
-  -webkit-font-smoothing: antialiased; 
+  background: url('./assets/background.png') no-repeat center center/cover;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0.5px transparent;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: color 1s ease-in;
 }
@@ -43,6 +44,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -51,17 +53,17 @@
 
 
 .word-alignment {
-  position: relative; 
-  z-index: 4; 
+  position: relative;
+  z-index: 4;
 }
 
 .word-alignment.text-white .letter {
-  background: none; 
-  -webkit-background-clip: none; 
-  background-clip: none; 
-  color: white; 
+  background: none;
+  -webkit-background-clip: none;
+  background-clip: none;
+  color: white;
   -webkit-text-stroke: 0;
-  transition: color 2s ease-in; 
+  transition: color 2s ease-in;
 }
 
 
@@ -71,24 +73,31 @@
   left: 50%;
   width: 200px;
   height: 200px;
-  background: radial-gradient(
-    circle,
-    #0564f2 50%,
-    rgba(5, 100, 242, 0.2) 85%,
-    rgba(5, 100, 242, 0.2) 95%,
-    rgba(163, 189, 227, 0.5) 100%
-  );
+  background: radial-gradient(circle,
+      #0564f2 50%,
+      rgba(5, 100, 242, 0.2) 85%,
+      rgba(5, 100, 242, 0.2) 95%,
+      rgba(163, 189, 227, 0.5) 100%);
   border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0); /* Center the ripple and start small */
+  transform: translate(-50%, -50%) scale(0);
+  /* Center the ripple and start small */
   opacity: 1;
   transition: transform 5s ease-out, opacity 3s ease-out;
-  z-index: 3; /* Ensure ripple stays below the text */
+  z-index: 3;
+  /* Ensure ripple stays below the text */
 }
 
 .ripple.ripple-animated {
-  transform: translate(-50%, -50%) scale(25); /* Expand to cover the screen */
+  transform: translate(-50%, -50%) scale(25);
+  /* Expand to cover the screen */
   opacity: 1;
 }
-.ripple.ripple-animated ~ .word-alignment .letter {
-  color: white; /* Change text color to white during ripple animation */
+
+.ripple.ripple-animated~.word-alignment .letter {
+  color: white;
+  /* Change text color to white during ripple animation */
+}
+
+@media only screen and (max-width: 768px) and (min-width: 320px) {
+ 
 }
