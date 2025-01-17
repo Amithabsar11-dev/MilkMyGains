@@ -167,11 +167,6 @@ const ProductDetails = () => {
   };
 
   const proceedToPayment = async () => {
-    if (cartItems.length === 0) {
-      alert("No products in cart.");
-      return;
-    }
-
     try {
       const response = await axios.post(
         "http://localhost:3001/api/cart/create",
@@ -202,7 +197,22 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
-
+  
+  const handleBuyNow = async () => {
+    if (selectedVariant) {
+      const item = {
+        id: selectedVariant.id,
+        title: product.title,
+        price: purchaseOption === "subscribe"
+          ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
+          : parseFloat(selectedVariant.priceV2.amount * packQuantity),
+        quantity: packQuantity,
+        image: images.edges[0]?.node.src,
+      };
+      addItemToCart(item);
+      proceedToPayment();
+    }
+  };
   const { title, description, images } = product;
 
   const Accordion = ({ title, content }) => {
@@ -341,7 +351,7 @@ const ProductDetails = () => {
             >
               Add to Cart
             </button>
-            <button className="buy-now-button" onClick={proceedToPayment}>
+            <button className="buy-now-button" onClick={handleBuyNow}>
               Buy Now
             </button>
           </div>
@@ -365,25 +375,6 @@ const ProductDetails = () => {
                     <h3>{item.title}</h3>
                     <p>Price: ₹{item.price.toFixed(2)}</p> 
                     <p>Quantity: {item.quantity}</p>
-                    <div className="quantity-controls">
-                      <button
-                        onClick={() =>
-                          updateItemQuantity(item.id, item.quantity + 1)
-                        }
-                      >
-                        +
-                      </button>
-                      <button
-                        onClick={() =>
-                          updateItemQuantity(item.id, item.quantity - 1)
-                        }
-                      >
-                        -
-                      </button>
-                      <button onClick={() => removeItemFromCart(item.id)}>
-                        Remove
-                      </button>
-                    </div>
                   </div>
                 </div>
               ))}
