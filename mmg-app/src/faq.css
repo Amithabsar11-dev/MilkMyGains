@@ -1,7 +1,75 @@
-.faq-heading{
-    padding-left: 4%;
-    font-family: "Anybody", serif;
-    font-weight: 900;
-    font-style: italic;
-    padding-top: 4%;
+.faq-container {
+  width: 100%;
+  padding: 20px;
+  font-family: "Anybody", serif;
+}
+
+.faq-heading {
+  padding-left: 4%;
+  font-weight: 900;
+  font-style: italic;
+  padding-top: 4%;
+}
+
+
+.faq-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.faq-title-text {
+  flex-grow: 1;
+  font-family: "Anybody", serif;
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.faq-icon {
+  font-size: 24px;
+  width: 2%;
+}
+
+.faqs-content {
+  padding: 15px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.faq-qna {
+  margin-bottom: 10px;
+}
+
+.faq-question {
+  font-weight: bold;
+  margin-top: 5%;
+  font-family: "Anybody", serif;
+  font-size: 30px;
+}
+
+.faq-answer {
+  font-size: 16px;
+  margin-bottom: 5%;
+  padding: 25px;
+  font-family: "Chivo Mono", serif;
+}
+
+.dashed-line {
+  border-bottom: 1px dashed black;
+  margin: 10px 0;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
