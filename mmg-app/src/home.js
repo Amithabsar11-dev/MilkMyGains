@@ -39,6 +39,7 @@ import Copyright from './assets/copyright.svg';
 import TransparencyIcon from "./assets/transparency.svg";
 import MythIcon from "./assets/myth.svg";
 import PossibilitiesIcon from "./assets/unlockmilk.svg";
+import Object from './assets/OBJECTS.svg';
 
 
 const Home = () => {
@@ -65,26 +66,6 @@ const Home = () => {
   const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
   const scrollRef = useRef(null); // Ref to the scroll container
 
-  // const handleScrolls = () => {
-  //   const container = scrollRef.current;
-  //   const scrollPosition = container.scrollLeft;
-  //   const containerWidth = container.offsetWidth;
-  //   const cardWidth = container.children[0].offsetWidth;
-
-  //   // Check if the user has scrolled to the right to show the next card
-  //   if (scrollPosition + containerWidth >= cardWidth * (scrollIndex + 1)) {
-  //     setScrollIndex((prevIndex) => Math.min(prevIndex + 1, 5)); // Only up to 6 cards
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const container = scrollRef.current;
-  //   container.addEventListener("scroll", handleScrolls);
-  //   return () => {
-  //     container.removeEventListener("scroll", handleScrolls);
-  //   };
-  // }, [scrollIndex]);
-
   return (
     <div className="home-container">
       {/* Image Slider Section */}
@@ -97,6 +78,7 @@ const Home = () => {
         <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
         <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
+        <img src={Object} alt="object-order" className="object-order" />
         <div className="order-buttons">
           <img src={OrderButton} alt="order-button" className="paneer-button" />
           <img src={OrderButton1} alt="order-button" className="milk-button" />
@@ -147,7 +129,7 @@ const Home = () => {
               </div>
               <div className="card-back">
                 <h1 className="back-heading">Transparency<br /> in every drop</h1>
-                <p className="back-text">More details about transparency in every drop...</p>
+                <p className="back-text">No secrets, no surprises.<br /> We’re upfront about every<br /> ingredient and every process,<br /> empowering you to make <br/>informed choices about your<br /> nutrition.</p>
               </div>
             </div>
           </div>
@@ -180,52 +162,10 @@ const Home = () => {
         </div>
         <a className='link-to-know' href='#'>KNOW MORE</a>
       </div>
-
-      {/* Cards Section */}
-      {/* <section className="card-section" ref={scrollRef}>
-        {[...Array(6)].map((_, index) => {
-          const cardContent =
-            index < 3 ? `Card ${index + 1}` : `Card ${index - 2}`;
-          const cardImage =
-            index === 0
-              ? Card1
-              : index === 1
-                ? Card2
-                : index === 2
-                  ? Card3
-                  : index === 3
-                    ? Card1
-                    : index === 4
-                      ? Card2
-                      : Card3;
-          return (
-            <div
-              className="card"
-              key={index}
-              style={{ opacity: index <= scrollIndex ? 1 : 1 }}
-            >
-              <div className="card-inner">
-                <div className="card-front">
-                  <img
-                    src={cardImage}
-                    alt={`card-${index}`}
-                    className="card-image"
-                  />
-                  <h3>{cardContent}</h3>
-                </div>
-                <div className="card-back">
-                  <p>Content for {cardContent}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </section> */}
-
       {/* Pure Protein Zero */}
       <div className="container-pure">
         <div className="row row-pure">
-          <div className="col-6">
+          <div className="col-sm-6">
             <h1 className="crafted-pure">
               crafted with a purpose: it’s
               <br /> high in protein, low in fat,
@@ -233,9 +173,9 @@ const Home = () => {
               <br /> compromising on taste.
             </h1>
             <img src={Words} alt="words" className="words" />
-            <button className="shop-now-button">Shop Now</button>
+            {/* <button className="shop-now-button">Shop Now</button> */}
           </div>
-          <div className="col-6">
+          <div className="col-sm-6">
             <img src={ProteinCap} alt="protein-cap" className="protein-cap" />
             <h1 className="pure-heading">
               PURE
@@ -361,16 +301,6 @@ const Home = () => {
           <img src={Arrowpoint} className="arrow-point" alt="arrow-point" />
         </div>
       </div>
-
-      {/* Proteins Section */}
-      {/* <div className="proteins-heading">
-        <img src={Protein} className="protein-image" alt="protein-pic" />
-      </div>
-
-      <div className="milk-heading">
-        <img src={Milk} className="milk-image" alt="milk-pic" />
-      </div> */}
-
       {/* Proteins Section */}
       <div className="proteins-container pt-5 pb-5">
         <img src={Protein} className="protein-image" alt="protein-pic" />
@@ -380,8 +310,8 @@ const Home = () => {
         <div className="signup-container">
           <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>
           <div>
-            <input type="email" placeholder="Enter your email" />
-            <button type="button">Subscribe</button>
+            <input type="email" placeholder="YOUR EMAIL" className="email-placing"/>
+            <button type="button" className="subscribe">Subscribe</button>
           </div>
         </div>
         <div className="footers-column shop-footers mt-5">

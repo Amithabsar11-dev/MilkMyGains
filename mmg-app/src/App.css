@@ -40,3 +40,16 @@ body {
   transform: translateX(0); /* Slide into view */
   z-index: 3; /* Ensure it covers the screen when fully in view */
 }
+
+@media (max-width: 767px) {
+  .home-wrapper {
+    transform: none !important;
+    position: relative !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .preload-wrapper {
+    display: none !important;
+  }
+}

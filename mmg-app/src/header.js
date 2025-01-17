@@ -1,38 +1,54 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CartContext } from './cartContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './header.css';
 import Logo from './assets/Logo.png';
 import Cart from './assets/cart.svg';
 import CartPanel from './CartPanel';
+import StarTop from './assets/startop.svg';
 
 const Header = () => {
   const { cartQuantity } = useContext(CartContext);
   const [cartPanelOpen, setCartPanelOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth > 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <header className="header">
+      <div className='free-shipping'>
+        <img src={StarTop} className='star-top' alt='startop' />
+       <h1 className='free-heading'>FREE SHIPPING ON ORDERS ABOVE 500/-</h1>
+       <img src={StarTop} className='star-top' alt='startop' />
+      </div>
+      <hr className='border-line'></hr>
       <div className="container">
         <div className="row align-items-center">
           <div className="col-4">
             <img src={Logo} alt="Logo" className="logo" />
           </div>
           <div className="col-8 nav-style">
-            <nav className="navbar navbar-expand-lg navbar-light">
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav"
-                aria-controls="navbarNav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse navbar-style" id="navbarNav">
-                <ul className="navbar-nav ml-auto">
+            <nav className="navbar">
+              {/* Toggle Button (Hidden on Desktop) */}
+              {!isDesktop && (
+                <button
+                  className={`navbar-toggler ${isNavOpen ? 'open' : ''}`}
+                  onClick={() => setIsNavOpen(!isNavOpen)}
+                >
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                  <div className="bar"></div>
+                </button>
+              )}
+
+              {/* Navigation Menu */}
+              <div className={`navbar-menu ${isNavOpen || isDesktop ? 'active' : ''}`}>
+                <ul className="navbar-nav">
                   <li className="nav-item">
                     <a className="nav-link" href="#subscribe">Subscribe</a>
                   </li>
@@ -47,18 +63,9 @@ const Header = () => {
                   </li>
                   <li>
                     <div style={{ position: 'relative' }}>
-                      <img src={Cart} alt='cart' className='cart-icon' onClick={() => setCartPanelOpen(true)}/>
+                      <img src={Cart} alt="cart" className="cart-icon" onClick={() => setCartPanelOpen(true)} />
                       {cartQuantity > 0 && (
-                        <span className='cartquantity' style={{
-                          position: 'absolute',
-                          top: '-10px',
-                          right: '40px',
-                          backgroundColor: 'red',
-                          color: 'white',
-                          borderRadius: '50%',
-                          padding: '2px 6px',
-                          fontSize: '12px',
-                        }}>
+                        <span className="cartquantity">
                           {cartQuantity}
                         </span>
                       )}
