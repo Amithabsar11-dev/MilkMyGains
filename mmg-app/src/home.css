@@ -443,8 +443,6 @@
   width: 25%;
   height: 55vh;
   perspective: 1000px;
-  /* Adds depth effect */
-  box-shadow: -10px 10px rgba(40, 130, 255, 0.5);
   border-radius: 20px;
 }
 
@@ -554,9 +552,13 @@
 
 /* Milk */
 .milk-image {
-  width: 20%;
   padding-left: 5%;
-  padding-top: 18%;
+    width: 30%;
+    padding-top: 5%;
+}
+.milk-pic-container{
+  display: flex;
+  justify-content: center;
 }
 
 .footers-links {
@@ -605,7 +607,7 @@
 
 .signup-container {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 5%;
 }
 
