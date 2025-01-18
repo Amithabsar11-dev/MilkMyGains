@@ -1,0 +1,243 @@
+.about-heading {
+    font-size: 100px;
+    color: white;
+    font-family: "Anybody", serif;
+    font-style: italic;
+    text-align: center;
+    font-weight: 900;
+    padding-top: 5%;
+    line-height: 5rem;
+}
+
+.about-protein {
+    background: url('./assets//background.png');
+    padding-top: 8%;
+}
+
+.about-para {
+    font-size: 20px;
+    color: white;
+    font-family: "Chivo Mono", Sans-serif;
+    padding-top: 3%;
+    text-align: center;
+    padding-bottom: 5%;
+    text-transform: uppercase;
+}
+
+.about-para1 {
+    font-size: 20px;
+    color: #0564F2;
+    font-family: "Chivo Mono", Sans-serif;
+    padding-top: 3%;
+    text-align: center;
+    padding-bottom: 5%;
+    text-transform: uppercase;
+}
+
+.about-subheading {
+    font-size: 40px;
+    color: #fc5e3b;
+    font-family: "Anybody", serif;
+    font-style: italic;
+    text-align: center;
+    font-weight: 900;
+    padding-top: 5%;
+}
+
+.about-nutrition {
+    font-size: 100px;
+    color: #0052f0;
+    font-family: "Anybody", serif;
+    font-style: italic;
+    text-align: center;
+    font-weight: 900;
+}
+
+.about-join-container {
+    background-image: url("./assets/Frame 75.png");
+    background-size: cover;
+    position: relative;
+    padding-top: 10%;
+}
+
+.about-join-container {
+    display: flex;
+    justify-content: center;
+}
+.protein-pic-container{
+    display: flex;
+    justify-content: center;
+}
+
+.icon-container {
+    padding-top: 15%;
+    padding-bottom: 5%;
+}
+.protein-image1{
+    width: 85%;
+}
+.milk-image1{
+    width: 30%;
+   padding-top: 15%;
+}
+.milk-pic-container{
+    display: flex;
+    justify-content: center;
+}
+
+/* .card-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10%;
+    padding-top: 5%;
+  }
+  
+  .card {
+    width: 6%;
+    height: 45vh;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+  .card-image1{
+    width: 50%;
+  }
+  
+  .card-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 16px;
+    font-weight: bold;
+    color: #0056b3;
+    font-family: "Anybody", serif;
+  }
+  
+  .card.active {
+    width: 50%;
+    padding: 40px;
+    align-items: flex-start;
+  }
+  
+  .card-content {
+    margin-top: 10px;
+    text-align: left;
+    display: flex;
+    font-size: 20px;
+    color: #0564F2;
+    font-family: "Chivo Mono", Sans-serif;
+    text-transform: uppercase;
+  }
+  
+  .card-content img {
+    width: 40%;
+    border-radius: 8px;
+    padding-bottom: 30%;
+  }
+
+  .card.active .card-title {
+    transform: rotate(270deg); 
+    font-size: 40px;
+    padding-right: 35%;
+    white-space: nowrap;
+  }
+   */
+
+   .card-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    padding-bottom: 10%;
+  }
+  
+  .card {
+    width: 80px;
+    height: 300px;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+  }
+  
+  .card-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 16px;
+    font-weight: bold;
+    color: #0056b3;
+    transition: transform 0.3s ease-in-out, font-size 0.3s ease-in-out;
+  }
+  
+  .card.active {
+    width: 400px;
+    padding: 20px;
+    align-items: flex-start;
+  }
+  
+  .card.active .card-title {
+    transform: rotate(0deg); /* Rotate to horizontal */
+    font-size: 22px;
+    margin-bottom: 10px;
+    writing-mode: horizontal-tb;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .text-section {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    font-family: "Chivo Mono", Sans-serif;
+    color: #0052f0;
+    line-height: 1.5;
+    max-width: 250px;
+    font-weight: 400;
+  }
+  
+  .image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .card-image {
+    width: 120px;
+  }
+  
+  .card-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0056b3;
+    margin-top: 5px;
+    align-self: flex-end;
+  }
+  
+  

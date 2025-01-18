@@ -35,7 +35,7 @@ import Vegbowl from './assets/vegbowl.svg';
 import Recepiesbutton from './assets/recepiesbutton.svg';
 import Stickers from './assets/Stickers.svg';
 import Arrowpoint from './assets/arrowpoint.svg';
-import Copyright from './assets/copyright.svg';
+import Copyright1 from './assets/copyright1.svg';
 import TransparencyIcon from "./assets/transparency.svg";
 import MythIcon from "./assets/myth.svg";
 import PossibilitiesIcon from "./assets/unlockmilk.svg";
@@ -306,7 +306,7 @@ const Home = () => {
       {/* Proteins Section */}
       <div className="proteins-container pt-5 pb-5">
         <img src={Protein} className="protein-image" alt="protein-pic" />
-        <div className="milk-div">
+        <div className="milk-pic-container">
           <img src={Milk} className="milk-image" alt="milk-pic" />
         </div>
         <div className="signup-container">
@@ -329,7 +329,7 @@ const Home = () => {
 
       {/* Footer Section */}
       <div className="footers">
-        <img src={Copyright} className="copyright-image" alt="copyright-pic" />
+         <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
       </div>
     </div>
 

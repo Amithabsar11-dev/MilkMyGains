@@ -210,7 +210,7 @@ const faqData = [
     title: "SUBSCRIPTION",
     content: [
       {
-        question: "11. Does MilkMyGains offer a subscription service?",
+        question: "1. Does MilkMyGains offer a subscription service?",
         answer:
           "Yes! To make it easier for you to get your favorite high-protein products regularly, we offer a flexible subscription service. You can choose to have MilkMyGains products delivered weekly for 30,60 or 90 days.",
       },

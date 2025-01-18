@@ -7,7 +7,8 @@ import './App.css';
 import Home from './home';
 import Footer from './footer';
 import Preload from './preload';
-import FAQ from './faq.js'
+import FAQ from './faq.js';
+import About from './About.js';
 import { CartProvider } from './cartContext';
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
               <Route path="/products" element={<ProductPage />} />
               <Route path="/product/:handle" element={<ProductDetails />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/about" element={<About />} />
             </Routes>
           </Router>
         </div>
