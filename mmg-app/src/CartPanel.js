@@ -3,7 +3,12 @@ import { useContext } from 'react';
 import { CartContext } from './cartContext';
 
 const CartPanel = ({ onClose }) => {
-  const { cartItems, cartQuantity, cartTotal, updateItemQuantity, removeItemFromCart } = useContext(CartContext);
+  const { cartItems, cartQuantity, cartTotal, updateItemQuantity, removeItemFromCart, proceedToPayment } = useContext(CartContext);
+
+  const handleProceedToPayment = () => {
+    console.log('Proceed to payment button clicked');
+    proceedToPayment();
+  };
 
   return (
     <div className="cart-panel">
@@ -22,19 +27,26 @@ const CartPanel = ({ onClose }) => {
             <div className="cart-details">
               <h3>{item.title}</h3>
               <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
-              <p>Quantity: {item.quantity}</p>
-              <div className="quantity-controls">
+              <p>Quantity:
                 <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
-                <button onClick={() => updateItemQuantity(item.id, item.quantity - 1)}>-</button>
-                <button onClick={() => removeItemFromCart(item.id)}>Remove</button>
-              </div>
+                <button onClick={() => {
+                  if (item.quantity > 1) {
+                    updateItemQuantity(item.id, item.quantity - 1);
+                  } else {
+                    removeItemFromCart(item.id);
+                  }
+                }}>-</button>
+                <br />
+                {item.quantity}
+              </p>
+              <button onClick={() => removeItemFromCart(item.id)}>Remove</button>
             </div>
           </div>
         ))}
       </div>
       <div className="checkout-option">
-        <p>Total: ₹{cartTotal.toFixed(2)}</p>
-        <button className="checkout">Proceed to Payment</button>
+        <p>Total: ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</p>
+        <button className="checkout" onClick={handleProceedToPayment}>Proceed to Payment</button>
       </div>
     </div>
   );
