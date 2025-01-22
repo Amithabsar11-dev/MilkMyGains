@@ -38,6 +38,7 @@ const ProductDetails = () => {
     addItemToCart,
     updateItemQuantity,
     removeItemFromCart,
+    proceedToPayment,
   } = useContext(CartContext);
 
 
@@ -152,10 +153,10 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (selectedVariant) {
-      const itemId = `${selectedVariant.id}-${packQuantity}`; // Unique ID for each pack size
+      const itemId = `${selectedVariant.id}-${packQuantity}`; 
       const existingItem = cartItems.find(item => item.id === itemId);
       if (existingItem) {
-        existingItem.quantity += 1;
+        updateItemQuantity(itemId, existingItem.quantity + 1);
       } else {
         const item = {
           id: itemId,
@@ -166,37 +167,12 @@ const ProductDetails = () => {
           quantity: 1,
           image: images.edges[0]?.node.src,
           packQuantity: packQuantity,
+          originalPackQuantity: packQuantity,
         };
-
+  
         addItemToCart(item);
       }
       setCartVisible(true);
-    }
-  };
-
-
-
-  const proceedToPayment = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/cart/create",
-        {
-          lines: cartItems.map((item) => ({
-            merchandiseId: item.id,
-            quantity: item.quantity,
-            price: item.price * item.quantity,
-          })),
-        }
-      );
-
-      if (response.data && response.data.checkoutUrl) {
-        window.location.href = response.data.checkoutUrl;
-      } else {
-        alert("Error creating cart or fetching checkout URL.");
-      }
-    } catch (err) {
-      console.error("Error proceeding to payment:", err);
-      alert("There was an error with the checkout process.");
     }
   };
 
