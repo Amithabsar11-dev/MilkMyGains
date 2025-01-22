@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Eyestar from "./assets/eyediamond1.svg";
 import Signal from "./assets/shopicon1.svg";
 import Star from "./assets/staricon1.svg";
@@ -47,8 +47,24 @@ const cards = [
     },
 ];
 
+
 function About() {
     const [activeCard, setActiveCard] = useState(1);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const handleCardClick = (id) => {
+        if (!isMobile) {
+            setActiveCard(activeCard === id ? null : id);
+        }
+    };
     return (
         <div className='about-container'>
             <div className='about-protein'>
@@ -64,29 +80,29 @@ function About() {
                     <p className='about-para'>MilkMyGains is a quest for high-quality, vegetarian protein to fuel an active<br /> lifestyle. Faced with limited options, we’re here to bridge India’s protein <br />gap, naturally and accessibly. More than a solution, it’s a mission to<br /> transform lives, one high-protein bite at a time.</p>
                 </div>
                 <div className='about-power'>
-                    <h1 className='about-heading'>THE POWER OF<br /> PROTEIN</h1>
-                </div>
-                <div className="card-container">
-                    {cards.map((card) => (
-                        <div
-                            key={card.id}
-                            className={`card ${activeCard === card.id ? "active" : ""}`}
-                            onClick={() => setActiveCard(card.id)}
-                        >
-                            <h2 className="card-title">{card.title}</h2>
-                            {activeCard === card.id && (
-                                <div className="card-content">
-                                    <div className="text-section">
-                                        <p className="card-text">{card.content}</p>
+                    <h1 className='about-header'>THE POWER OF<br /> PROTEIN</h1>
+                    <div className="card-container">
+                        {cards.map((card) => (
+                            <div
+                                key={card.id}
+                                className={`card ${isMobile || activeCard === card.id ? "active" : ""}`}
+                                onClick={() => handleCardClick(card.id)}
+                            >
+                                <h2 className="card-title">{card.title}</h2>
+                                {(isMobile || activeCard === card.id) && (
+                                    <div className="card-content">
+                                        <div className="text-section">
+                                            <p className="card-text">{card.content}</p>
+                                        </div>
+                                        <div className="image-section">
+                                            <img className="card-image" src={card.image} alt={card.title} />
+                                            <span className="card-number">{card.number}</span>
+                                        </div>
                                     </div>
-                                    <div className="image-section">
-                                        <img className="card-image" src={card.image} alt={card.title} />
-                                        <span className="card-number">{card.number}</span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <div className='about-challenge'>
@@ -152,6 +168,13 @@ function About() {
                     </div>
                     <div className='milk-pic-container'>
                         <img src={Milk} className="milk-image1" alt="milk-pic" />
+                    </div>
+                    <div className="signup-container">
+                        <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>
+                        <div>
+                            <input type="email" placeholder="YOUR EMAIL" className="email-placing" />
+                            <button type="button" className="subscribe">Subscribe</button>
+                        </div>
                     </div>
                     <div className="footers-column shop-footers mt-5">
                         <ul className="footers-links">
