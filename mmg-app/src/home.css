@@ -705,6 +705,9 @@
     font-size: 15px;
     white-space: nowrap;
   }
+  .raising-star {
+    gap: 30px;
+  }
   .protein-slogan {
     width: 90%;
     left: 5%;
@@ -712,6 +715,7 @@
   }
   .raising-heading {
     font-size: 23px;
+    padding-left: 1%;
   }
   .comparison-table {
     display: block;
@@ -811,5 +815,8 @@
   .icecream-button {
     padding: 0px;
     width: 15%;
+  }
+  .milk-pic-container{
+    justify-content: flex-start !important;
   }
 }

@@ -152,19 +152,29 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (selectedVariant) {
-      const item = {
-        id: selectedVariant.id,
-        title: product.title,
-        price: purchaseOption === "subscribe"
-          ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
-          : parseFloat(selectedVariant.priceV2.amount * packQuantity),
-        quantity: packQuantity,
-        image: images.edges[0]?.node.src,
-      };
-      addItemToCart(item);
+      const itemId = `${selectedVariant.id}-${packQuantity}`; // Unique ID for each pack size
+      const existingItem = cartItems.find(item => item.id === itemId);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        const item = {
+          id: itemId,
+          title: `${product.title} - Pack of ${packQuantity}`,
+          price: purchaseOption === "subscribe"
+            ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
+            : parseFloat(selectedVariant.priceV2.amount * packQuantity),
+          quantity: 1,
+          image: images.edges[0]?.node.src,
+          packQuantity: packQuantity,
+        };
+
+        addItemToCart(item);
+      }
       setCartVisible(true);
     }
   };
+
+
 
   const proceedToPayment = async () => {
     try {
@@ -174,7 +184,7 @@ const ProductDetails = () => {
           lines: cartItems.map((item) => ({
             merchandiseId: item.id,
             quantity: item.quantity,
-            price: item.price,
+            price: item.price * item.quantity,
           })),
         }
       );
@@ -197,7 +207,7 @@ const ProductDetails = () => {
   if (!product) {
     return <div>Loading...</div>;
   }
-  
+
   const handleBuyNow = async () => {
     if (selectedVariant) {
       const item = {
@@ -367,20 +377,32 @@ const ProductDetails = () => {
               {cartItems.map((item) => (
                 <div key={item.id} className="cart-item">
                   <img
-                    src={item.image} 
+                    src={item.image}
                     alt={item.title || "Product Image"}
                     className="cart-image"
                   />
                   <div className="cart-details">
                     <h3>{item.title}</h3>
-                    <p>Price: ₹{item.price.toFixed(2)}</p> 
-                    <p>Quantity: {item.quantity}</p>
+                    <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <p>Quantity:
+                      <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
+                      <button onClick={() => {
+                        if (item.quantity > 1) {
+                          updateItemQuantity(item.id, item.quantity - 1);
+                        } else {
+                          removeItemFromCart(item.id);
+                        }
+                      }}>-</button>
+                      <br />
+                      {item.quantity}
+                    </p>
+                    <button onClick={() => removeItemFromCart(item.id)}>Remove</button>
                   </div>
                 </div>
               ))}
             </div>
             <div className="checkout-option">
-              <p>Total: ₹{cartItems.reduce((total, item) => total + item.price, 0).toFixed(2)}</p>
+              <p>Total: ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</p>
               <button className="checkout" onClick={proceedToPayment}>
                 Proceed to Payment
               </button>

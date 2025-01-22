@@ -8,6 +8,16 @@
     padding-top: 5%;
     line-height: 5rem;
 }
+.about-header{
+  font-size: 100px;
+  color: #0052F0;
+  font-family: "Anybody", serif;
+  font-style: italic;
+  text-align: center;
+  font-weight: 900;
+  padding-top: 5%;
+  line-height: 5rem;
+}
 
 .about-protein {
     background: url('./assets//background.png');
@@ -42,6 +52,10 @@
     text-align: center;
     font-weight: 900;
     padding-top: 5%;
+}
+
+.about-power{
+  background-color: #CDE0FC;
 }
 
 .about-nutrition {
@@ -187,9 +201,10 @@
   }
   
   .card.active {
-    width: 400px;
+    width: 600px;
     padding: 20px;
     align-items: flex-start;
+    position: relative;
   }
   
   .card.active .card-title {
@@ -197,6 +212,9 @@
     font-size: 22px;
     margin-bottom: 10px;
     writing-mode: horizontal-tb;
+    position: absolute;
+    top: 10%;
+    left: 5%;
   }
   
   .card-content {
@@ -220,6 +238,7 @@
     line-height: 1.5;
     max-width: 250px;
     font-weight: 400;
+    font-style: normal;
   }
   
   .image-section {
@@ -229,7 +248,7 @@
   }
   
   .card-image {
-    width: 120px;
+    width: 220px;
   }
   
   .card-number {
@@ -240,4 +259,50 @@
     align-self: flex-end;
   }
   
+  @media only screen and (max-width: 425px) and (min-width: 320px) {
+    .about-heading{
+      font-size: 40px;
+      line-height: 3rem;
+    }
+    .star-icon,
+    .diamond-icon,
+    .eye-icon,
+    .shop-icon,
+    .drop-icon{
+      width: 5%;
+    }
+    .about-para{
+      font-size: 14px;
+    }
+    .about-header{
+      font-size: 40px;
+      line-height: 3rem;
+    }
+    .card-container{
+      display: block;
+    }
+    .card.active{
+      width: fit-content;
+      margin-bottom: 5%;
+    }
+    .card-image{
+      width: 150px;
+    }
+    .card-text{
+      font-size: 12px;
+    }
+    .card.active .card-title {
+      left: 8%;
+    }
+    .about-subheading{
+      font-size: 20px;
+    }
+    .about-nutrition{
+      font-size: 40px;
+    }
+    .about-para1{
+      font-size: 14px;
+    }
+    
+  }
   
