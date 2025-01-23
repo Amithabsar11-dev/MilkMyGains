@@ -8,6 +8,7 @@ import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
 import { useContext } from "react";
 import { CartContext } from "./cartContext";
+import Words from "./assets/words.svg";
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -153,7 +154,7 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     if (selectedVariant) {
-      const itemId = `${selectedVariant.id}-${packQuantity}`; 
+      const itemId = `${selectedVariant.id}-${packQuantity}`;
       const existingItem = cartItems.find(item => item.id === itemId);
       if (existingItem) {
         updateItemQuantity(itemId, existingItem.quantity + 1);
@@ -169,7 +170,7 @@ const ProductDetails = () => {
           packQuantity: packQuantity,
           originalPackQuantity: packQuantity,
         };
-  
+
         addItemToCart(item);
       }
       setCartVisible(true);
@@ -242,7 +243,7 @@ const ProductDetails = () => {
           <hr className="horizontal-line"></hr>
 
           <div className="pack-selection">
-            <h4 className="quantity">Quantity:</h4>
+            <h4 className="quantity">Quantity</h4>
             <div className="pack-buttons">
               <button
                 className="pack-button"
@@ -385,6 +386,17 @@ const ProductDetails = () => {
             </div>
           </div>
         )}
+      </div>
+      {/* Metafields */}
+      <div className="metafield-container">
+        <div className="metafield-items">
+          {faqContent?.map((item, index) => (
+            <div key={index}>
+              <h5 className="metafield-question">{item.question}</h5>
+              <p className="metafield-answer">{item.answer}</p>
+            </div>
+          ))}
+        </div>
       </div>
       {/* Accordion Section */}
       <div className="accordion-container">
