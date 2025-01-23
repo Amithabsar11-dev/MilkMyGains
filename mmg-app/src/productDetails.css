@@ -15,7 +15,7 @@
   background-image: url("./assets/Vector (1).png");
   background-repeat: no-repeat;
   background-position-x: center;
-  background-color: #0054F1;
+  background-color: #0054f1;
 }
 
 .product-details-image {
@@ -317,27 +317,34 @@
   color: #555;
 }
 
-.review-image{
+.review-image {
   width: 15%;
 }
-.metafield-container{
+.metafield-container {
   background-color: white;
   width: 50%;
   padding-top: 7%;
   padding-bottom: 7%;
+  position: relative;
 }
-.metafield-question{
-  color: #0054F1;
+.metafield-question {
+  color: #0054f1;
   font-size: 30px;
   font-family: "Anybody", serif;
   font-weight: 700;
   font-style: italic;
   text-transform: uppercase;
 }
-.metafield-answer{
+.metafield-answer {
   color: #000;
   font-size: 16px;
   font-family: "Chivo Mono", serif;
   text-transform: uppercase;
   padding-bottom: 5%;
+}
+.words-image {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  bottom: -25%;
 }

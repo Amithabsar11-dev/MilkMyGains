@@ -8,7 +8,7 @@ import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
 import { useContext } from "react";
 import { CartContext } from "./cartContext";
-import Words from "./assets/words.svg";
+import Words1 from "./assets/words1.svg";
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -396,6 +396,7 @@ const ProductDetails = () => {
               <p className="metafield-answer">{item.answer}</p>
             </div>
           ))}
+          <img src={Words1} alt="words" className="words-image" />
         </div>
       </div>
       {/* Accordion Section */}
