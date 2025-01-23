@@ -52,7 +52,7 @@ const MilkMyGain = (props) => {
       groupRef.current.rotation.y += 0.5 * delta; // Adjust the speed by changing the multiplier
 
       // // Optional: Add mouse interaction for additional rotation
-      // const targetX = mousePosition.current.y * 0.2; 
+      // const targetX = mousePosition.current.y * 0.2;  s
       // const targetZ = mousePosition.current.x * 0.2; 
 
       // // Smooth interpolation for mouse interaction
@@ -77,7 +77,8 @@ const MilkMyGain = (props) => {
         geometry={nodes.package004.geometry}
         material={materials['Default.001']}
         rotation={[0, 0, -Math.PI / 2]}
-        position={[0,0,0]}
+        // position={[10, window.innerWidth / window.innerHeight, 10,100]}
+        position={[0,0,0 ]}
         scale={modelScale}  // Adjust scale as needed
       />
       <Environment files="./small_empty_room_3_2k.exr" background={false} intensity={0.5} />

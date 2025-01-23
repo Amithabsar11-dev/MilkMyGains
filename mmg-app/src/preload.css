@@ -80,22 +80,18 @@
       rgba(163, 189, 227, 0.5) 100%);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
-  /* Center the ripple and start small */
   opacity: 1;
   transition: transform 5s ease-out, opacity 3s ease-out;
   z-index: 3;
-  /* Ensure ripple stays below the text */
 }
 
 .ripple.ripple-animated {
   transform: translate(-50%, -50%) scale(25);
-  /* Expand to cover the screen */
   opacity: 1;
 }
 
 .ripple.ripple-animated~.word-alignment .letter {
   color: white;
-  /* Change text color to white during ripple animation */
 }
 
 @media only screen and (max-width: 768px) and (min-width: 320px) {

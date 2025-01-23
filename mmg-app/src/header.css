@@ -2,6 +2,21 @@
   padding: 10px 0;
   background-image: url("./assets/background.png");
 }
+/* White Background for Specific Pages */
+.header.white-bg {
+  background-color: white !important;
+  background-image: none;
+}
+
+/* Dark Text for Navigation Links */
+.navbar-nav .nav-link.nav-dark {
+  color: black !important;
+}
+
+/* Dark Logo */
+.logo-dark {
+  filter: invert(1);
+}
 .free-shipping {
   display: flex;
   justify-content: center;
