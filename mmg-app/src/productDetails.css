@@ -434,3 +434,36 @@
   font-size: 16px;
   font-family: "Chivo Mono", Sans-serif;
 }
+.data-table{
+    caption-side: bottom;
+    border-collapse: separate;
+    width: 100%;
+    gap: 20px;
+    border-spacing: 50px;
+}
+.col-image{
+  width: 70%;
+}
+.table-body{
+  font-family: "Chivo Mono", Sans-serif;
+  text-transform: uppercase;
+}
+.first-td {
+  color: #0052f0;;
+}
+.table-body tr td:not(:first-child) {
+  text-align: center;
+  padding-right: 4%;
+}
+.reviews-container{
+  width: 100%;
+}
+.reviews-intro{
+  text-align: center;
+}
+.reviews-intro-heading{
+  font-family: "Anybody", serif;
+  font-style: italic;
+  color: #0052f0;
+  font-size: 50px;
+}
