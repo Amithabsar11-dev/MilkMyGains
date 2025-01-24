@@ -348,3 +348,89 @@
   left: -50%;
   bottom: -25%;
 }
+.raising-container {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.raising-star {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.raising-heading {
+  font-size: 100px;
+  color: #fc5e3b;
+  font-family: "Anybody", serif;
+  font-style: italic;
+  color: #0052f0;
+  font-weight: 900;
+}
+
+.raising-protein {
+  width: 25%;
+}
+
+/* Comparison Table Styles */
+.comparison-table {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: white;
+  width: 100%;
+}
+
+.comparison-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 12%;
+  height: 50vh;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.comparison-column.highlighted {
+  background-color: #0052f0;
+  color: white;
+}
+
+.comparison-column.labels {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+.label {
+  font-size: 16px;
+  text-align: left;
+  color: #0052f0;
+  font-family: "Chivo Mono", Sans-serif;
+}
+
+.product img {
+  width: 40%;
+}
+
+.product .star {
+  font-size: 20px;
+  color: #ffcc00;
+}
+
+.icon img {
+  width: 100%;
+}
+
+.value {
+  font-size: 16px;
+  font-family: "Chivo Mono", Sans-serif;
+}
