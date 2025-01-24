@@ -150,8 +150,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-      : 0;
+        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+        : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -432,6 +432,7 @@ const ProductDetails = () => {
           <img src={Words1} alt="words" className="words-image" />
         </div>
       </div>
+
       {/* Raising the star */}
       <div className="raising-container pt-5">
         <div className="raising-star">
@@ -444,71 +445,49 @@ const ProductDetails = () => {
           <h1 className="raising-heading"> THE BAR </h1>
         </div>
       </div>
+      {/* Comparision */}
+      <div className="comparision-metafield">
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              {comparisonData?.table.columns.map((col, index) => (
+                <th key={index}>
+                  <img src={col.image} alt={col.name} className="col-image" />
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="table-body">
+            {comparisonData?.table.rows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                <td className="first-td">{row.name}</td>
+                {row.values.map((value, valueIndex) => (
+                  <td key={valueIndex} className="flex-td">{value}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
 
-      {/* Comparision Table */}
-      <div className="comparison-table">
-        <div className="comparison-column labels">
-          <div className="label">PROTEIN</div>
-          <div className="label">FAT</div>
-          <div className="label">CALORIES</div>
-          <div className="label">PRICE</div>
-        </div>
-
-        <div className="comparison-column highlighted">
-          <div className="product">
-            <img src={Paneericon} alt="Product 1" />
-            {/* <span className="star">★</span> */}
+        </table>
+      </div>
+      {/* Reviews */}
+      <div className="reviews-container">
+        <div className="row reviews-row">
+          <div className="col-sm-6 reviews-intro">
+              <h1 className="review-intro-heading">
+              Loved <br />by Protein<br /> Fans <br />Everywhere
+              </h1>
+              <p className="review-rating-para">OVERALL RATING</p>
           </div>
-          <div className="value">31G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">$</div>
-        </div>
-
-        <div className="comparison-column">
-          <div className="icon">
-            <img src={Proteins} alt="Product 2" />
+          <div className="col-sm-6 reviews-corner">
+              
           </div>
-          <div className="value">18G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹</div>
-        </div>
-
-        <div className="comparison-column">
-          <div className="icon">
-            <img src={Whey} alt="Product 3" />
-          </div>
-          <div className="value">31G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹</div>
-        </div>
-
-        <div className="comparison-column">
-          <div className="icon">
-            <img src={Energybar} alt="Product 4" />
-          </div>
-          <div className="value">25G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹₹</div>
-        </div>
-
-        <div className="comparison-column">
-          <div className="icon">
-            <img src={Palakpaneer} alt="Product 5" />
-          </div>
-          <div className="value">37G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹₹₹</div>
         </div>
       </div>
-
       {/* Accordion Section */}
       <div className="accordion-container">
-        <Accordion
+        {/* <Accordion
           title="What, Who & How?"
           content={
             <div>
@@ -520,7 +499,7 @@ const ProductDetails = () => {
               ))}
             </div>
           }
-        />
+        /> */}
         <Accordion
           title="Nutritional Highlights"
           content={
@@ -552,7 +531,7 @@ const ProductDetails = () => {
             </div>
           }
         />
-        <Accordion
+        {/* <Accordion
           title="Comparison"
           content={
             <div>
@@ -562,10 +541,10 @@ const ProductDetails = () => {
               <table>
                 <thead>
                   <tr>
+                    <th></th>
                     {comparisonData?.table.columns.map((col, index) => (
                       <th key={index}>
                         <img src={col.image} alt={col.name} />
-                        {col.name}
                       </th>
                     ))}
                   </tr>
@@ -583,7 +562,7 @@ const ProductDetails = () => {
               </table>
             </div>
           }
-        />
+        /> */}
         <Accordion
           title="Ingredients"
           content={
@@ -628,7 +607,7 @@ const ProductDetails = () => {
             )
           }
         />
-        <Accordion
+        {/* <Accordion
           title="Accordion Content"
           content={
             <div>
@@ -640,7 +619,7 @@ const ProductDetails = () => {
               ))}
             </div>
           }
-        />
+        /> */}
       </div>
     </div>
   );
