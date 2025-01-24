@@ -9,6 +9,12 @@ import Chemical from "./assets/chemical.svg";
 import { useContext } from "react";
 import { CartContext } from "./cartContext";
 import Words1 from "./assets/words1.svg";
+import Raisingprotein from "./assets/high-protein.svg";
+import Paneericon from "./assets/Panner-icon.svg";
+import Proteins from "./assets/meat.svg";
+import Whey from "./assets/powder.svg";
+import Energybar from "./assets/ricebag.svg";
+import Palakpaneer from "./assets/paneercubes.svg";
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -41,7 +47,6 @@ const ProductDetails = () => {
     removeItemFromCart,
     proceedToPayment,
   } = useContext(CartContext);
-
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -96,7 +101,7 @@ const ProductDetails = () => {
         if (comparisonDataMetafield) {
           setComparisonData(comparisonDataMetafield.value);
         }
-
+        console.log("Comparison Data:", comparisonData);
         // Extract Ingredients from metafields
         const ingredientsMetafield = metafields.find(
           (metafield) =>
@@ -109,10 +114,13 @@ const ProductDetails = () => {
 
         const accordionContentMetafield = metafields.find(
           (metafield) =>
-            metafield.key === "accordion_content" && metafield.namespace === "new"
+            metafield.key === "accordion_content" &&
+            metafield.namespace === "new"
         );
         if (accordionContentMetafield) {
-          const accordionContentData = JSON.parse(accordionContentMetafield.value);
+          const accordionContentData = JSON.parse(
+            accordionContentMetafield.value
+          );
           setAccordionContent(accordionContentData);
         }
       } catch (err) {
@@ -124,7 +132,9 @@ const ProductDetails = () => {
 
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/reviews/${handle}`);
+        const response = await axios.get(
+          `http://localhost:3001/api/reviews/${handle}`
+        );
         setReviews(response.data);
       } catch (err) {
         console.error("Error fetching reviews:", err);
@@ -140,8 +150,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-        : 0;
+      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+      : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -155,16 +165,17 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     if (selectedVariant) {
       const itemId = `${selectedVariant.id}-${packQuantity}`;
-      const existingItem = cartItems.find(item => item.id === itemId);
+      const existingItem = cartItems.find((item) => item.id === itemId);
       if (existingItem) {
         updateItemQuantity(itemId, existingItem.quantity + 1);
       } else {
         const item = {
           id: itemId,
           title: `${product.title} - Pack of ${packQuantity}`,
-          price: purchaseOption === "subscribe"
-            ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
-            : parseFloat(selectedVariant.priceV2.amount * packQuantity),
+          price:
+            purchaseOption === "subscribe"
+              ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
+              : parseFloat(selectedVariant.priceV2.amount * packQuantity),
           quantity: 1,
           image: images.edges[0]?.node.src,
           packQuantity: packQuantity,
@@ -190,9 +201,10 @@ const ProductDetails = () => {
       const item = {
         id: selectedVariant.id,
         title: product.title,
-        price: purchaseOption === "subscribe"
-          ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
-          : parseFloat(selectedVariant.priceV2.amount * packQuantity),
+        price:
+          purchaseOption === "subscribe"
+            ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
+            : parseFloat(selectedVariant.priceV2.amount * packQuantity),
         quantity: packQuantity,
         image: images.edges[0]?.node.src,
       };
@@ -361,25 +373,46 @@ const ProductDetails = () => {
                   <div className="cart-details">
                     <h3>{item.title}</h3>
                     <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
-                    <p>Quantity:
-                      <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
-                      <button onClick={() => {
-                        if (item.quantity > 1) {
-                          updateItemQuantity(item.id, item.quantity - 1);
-                        } else {
-                          removeItemFromCart(item.id);
+                    <p>
+                      Quantity:
+                      <button
+                        onClick={() =>
+                          updateItemQuantity(item.id, item.quantity + 1)
                         }
-                      }}>-</button>
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (item.quantity > 1) {
+                            updateItemQuantity(item.id, item.quantity - 1);
+                          } else {
+                            removeItemFromCart(item.id);
+                          }
+                        }}
+                      >
+                        -
+                      </button>
                       <br />
                       {item.quantity}
                     </p>
-                    <button onClick={() => removeItemFromCart(item.id)}>Remove</button>
+                    <button onClick={() => removeItemFromCart(item.id)}>
+                      Remove
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
             <div className="checkout-option">
-              <p>Total: ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</p>
+              <p>
+                Total: ₹
+                {cartItems
+                  .reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                  )
+                  .toFixed(2)}
+              </p>
               <button className="checkout" onClick={proceedToPayment}>
                 Proceed to Payment
               </button>
@@ -399,6 +432,80 @@ const ProductDetails = () => {
           <img src={Words1} alt="words" className="words-image" />
         </div>
       </div>
+      {/* Raising the star */}
+      <div className="raising-container pt-5">
+        <div className="raising-star">
+          <h1 className="raising-heading"> RAISING </h1>
+          <img
+            className="raising-protein"
+            src={Raisingprotein}
+            alt="raising-protein"
+          />
+          <h1 className="raising-heading"> THE BAR </h1>
+        </div>
+      </div>
+
+      {/* Comparision Table */}
+      <div className="comparison-table">
+        <div className="comparison-column labels">
+          <div className="label">PROTEIN</div>
+          <div className="label">FAT</div>
+          <div className="label">CALORIES</div>
+          <div className="label">PRICE</div>
+        </div>
+
+        <div className="comparison-column highlighted">
+          <div className="product">
+            <img src={Paneericon} alt="Product 1" />
+            {/* <span className="star">★</span> */}
+          </div>
+          <div className="value">31G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">$</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Proteins} alt="Product 2" />
+          </div>
+          <div className="value">18G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Whey} alt="Product 3" />
+          </div>
+          <div className="value">31G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Energybar} alt="Product 4" />
+          </div>
+          <div className="value">25G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹₹</div>
+        </div>
+
+        <div className="comparison-column">
+          <div className="icon">
+            <img src={Palakpaneer} alt="Product 5" />
+          </div>
+          <div className="value">37G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹₹₹</div>
+        </div>
+      </div>
+
       {/* Accordion Section */}
       <div className="accordion-container">
         <Accordion
@@ -498,11 +605,20 @@ const ProductDetails = () => {
               <div>
                 {reviews.map((review) => (
                   <div key={review.id}>
-                    <h5>{review.title} - {review.rating} Stars</h5>
+                    <h5>
+                      {review.title} - {review.rating} Stars
+                    </h5>
                     <p>{review.body}</p>
-                    <p><strong>Reviewer:</strong> {review.reviewer.name}</p>
+                    <p>
+                      <strong>Reviewer:</strong> {review.reviewer.name}
+                    </p>
                     {review.pictures.map((picture, index) => (
-                      <img key={index} className="review-image" src={picture.urls.original} alt="Review" />
+                      <img
+                        key={index}
+                        className="review-image"
+                        src={picture.urls.original}
+                        alt="Review"
+                      />
                     ))}
                   </div>
                 ))}
