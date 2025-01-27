@@ -44,9 +44,20 @@ import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
+  const [currentModel, setCurrentModel] = useState("/mmg1.glb");
+  const [activeButton, setActiveButton] = useState("paneer"); // Default active button
   const [scrolling, setScrolling] = useState(false);
   const navigate = useNavigate();
 
+  const handleModelChange = (modelPath, button) => {
+    console.log("Switching model to:", modelPath);
+    setCurrentModel(modelPath);
+    setActiveButton(button);
+  };
+  useEffect(() => {
+    console.log("Current Model Path:", currentModel); // Logs the model path whenever it changes
+  }, [currentModel]);
+  
   const handleScroll = (e) => {
     if (scrolling) return;
     setScrolling(true);
@@ -54,9 +65,9 @@ const Home = () => {
     const direction = e.deltaY > 0 ? "down" : "up";
 
     if (direction === "down") {
-      window.scrollBy(0, window.innerHeight); // Scroll to next section
+      window.scrollBy({ top: window.innerHeight, behavior: "smooth" }); // Smooth transition
     } else {
-      window.scrollBy(0, -window.innerHeight); // Scroll to previous section
+      window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
     }
 
     // Reset scrolling state after a short delay to prevent continuous scrolling
@@ -80,25 +91,36 @@ const Home = () => {
         <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
         <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
-        <img src={Object} alt="object-order" className="object-order" onClick={() => navigate("/product/high-protein-paneer")}/>
+        <img src={Object} alt="object-order" className="object-order" onClick={() => navigate("/product/high-protein-paneer")} />
         <div className="order-buttons">
-          <img src={OrderButton} alt="order-button" className="paneer-button" />
-          <img src={OrderButton1} alt="order-button" className="milk-button" />
+          <img
+            src={OrderButton}
+            alt="order-button"
+            className={`paneer-button ${activeButton === "paneer" ? "active" : ""}`}
+            onClick={() => handleModelChange("/mmg1.glb", "paneer")}
+          />
+          <img
+            src={OrderButton1}
+            alt="order-button"
+            className={`milk-button ${activeButton === "milk" ? "active" : ""}`}
+            onClick={() => handleModelChange("/packet_1.glb", "milk")}
+          />
           <img
             src={OrderButton2}
             alt="order-button"
-            className="yogart-button"
+            className={`yogart-button ${activeButton === "yogart" ? "active" : ""}`}
           />
           <img
             src={OrderButton3}
             alt="order-button"
-            className="icecream-button"
+            className={`icecream-button ${activeButton === "icecream" ? "active" : ""}`}
           />
         </div>
 
-        <Canvas>
-          <MilkMyGain />
+        <Canvas key={currentModel}>  {/* Adding key forces remount */}
+          <MilkMyGain modelPath={currentModel} />
         </Canvas>
+
       </div>
       {/* Change the Paradigm */}
       <div className="container-paradigm">
@@ -131,7 +153,7 @@ const Home = () => {
               </div>
               <div className="card-back">
                 <h1 className="back-heading">Transparency<br /> in every drop</h1>
-                <p className="back-text">No secrets, no surprises.<br /> We’re upfront about every<br /> ingredient and every process,<br /> empowering you to make <br/>informed choices about your<br /> nutrition.</p>
+                <p className="back-text">No secrets, no surprises.<br /> We’re upfront about every<br /> ingredient and every process,<br /> empowering you to make <br />informed choices about your<br /> nutrition.</p>
               </div>
             </div>
           </div>
@@ -312,7 +334,7 @@ const Home = () => {
         <div className="signup-container">
           <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>
           <div>
-            <input type="email" placeholder="YOUR EMAIL" className="email-placing"/>
+            <input type="email" placeholder="YOUR EMAIL" className="email-placing" />
             <button type="button" className="subscribe">Subscribe</button>
           </div>
         </div>
@@ -329,7 +351,7 @@ const Home = () => {
 
       {/* Footer Section */}
       <div className="footers">
-         <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
+        <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
       </div>
     </div>
 

@@ -461,9 +461,11 @@
 .reviews-intro{
   text-align: center;
 }
-.reviews-intro-heading{
+.review-intro-heading{
   font-family: "Anybody", serif;
   font-style: italic;
   color: #0052f0;
   font-size: 50px;
+  font-weight:900;
+  text-transform: uppercase;
 }
