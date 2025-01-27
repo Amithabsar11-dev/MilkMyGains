@@ -26,7 +26,6 @@ const Header = () => {
 
   const hideFreeShipping = location.pathname === '/products' || location.pathname.startsWith('/product/');
 
-
   return (
     <header className={`header ${isWhiteBg ? 'white-bg' : ''}`}>
       {!hideFreeShipping && (

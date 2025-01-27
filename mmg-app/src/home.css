@@ -1,14 +1,16 @@
 .slider-container {
-  position: relative;
+  position: sticky;
+  top: 0;
   width: 100%;
-  margin: 0 auto;
+  height: 100vh;
+  z-index: -1;
   text-align: center;
   background-image: url("./assets/background.png");
 }
 
 .home-container {
-  min-height: 100vh;
-  box-sizing: border-box;
+  position: relative;
+  z-index: 99;
 }
 
 .milkbg {
@@ -59,18 +61,21 @@
   bottom: 15%;
   cursor: pointer;
   gap: 20px;
+  z-index: 10;
 }
 
 .paneer-button {
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .milk-button {
   border: 2px solid #d9d9d9;
   border-radius: 50px;
-  opacity: 0.4;
   width: 90%;
   padding: 10px;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .yogart-button {
@@ -79,6 +84,7 @@
   opacity: 0.4;
   width: 90%;
   padding: 10px;
+  pointer-events: auto;
 }
 
 .icecream-button {
@@ -87,6 +93,7 @@
   opacity: 0.4;
   width: 90%;
   padding: 10px;
+  pointer-events: auto;
 }
 
 /* Container pure */
