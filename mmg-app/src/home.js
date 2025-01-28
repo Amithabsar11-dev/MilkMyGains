@@ -56,6 +56,8 @@ const Home = () => {
   const [scrolling, setScrolling] = useState(false);
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("paneer");
+  const containerRef = useRef(null);
+  const cardsRef = useRef([]);
 
   const getButtonImage = (button) => {
     if (button === activeButton) {
@@ -126,27 +128,29 @@ const Home = () => {
 
   //Comparison Table 
 
-  useEffect(() => {
-    gsap.fromTo(
-      ".comparison-column",
-      { x: "-100vw", opacity: 0 }, // Start off-screen from the left
-      {
-        x: "0", // Move to original position
-        opacity: 1,
-        duration: 1,
-        stagger: 0.3, // Delay between each column animation
-        scrollTrigger: {
-          trigger: ".comparison-table", // Section to trigger animations on scroll
-          start: "top 75%", // When the top of the comparison table hits 75% of the viewport
-          end: "bottom 25%",
-          scrub: true, // Makes the animation tied to scroll position
-          markers: false, // Set to true to see scrollTrigger markers for debugging
-        }
-      }
-    );
-  }, []);
+  // useEffect(() => {
+  //   gsap.fromTo(
+  //     ".comparison-column",
+  //     { x: "-100vw", opacity: 1 }, 
+  //     {
+  //       x: "0",
+  //       opacity: 1,
+  //       duration: 1,
+  //       stagger: 0.3,
+  //       ease: "power2.out",
+  //       scrollTrigger: {
+  //         trigger: ".comparison-table",
+  //         start: "top 75%",
+  //         end: "bottom 25%",
+  //         scrub: false, 
+  //       },
+  //     }
+  //   );
+  // }, []);
 
-
+  //Cards Animation
+  
+  
   return (
     <div className="home-container">
       {/* Image Slider Section */}
