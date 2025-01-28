@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./home.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Card1 from "./assets/Card1.png";
@@ -21,6 +23,10 @@ import OrderButton from "./assets/paneerorder.svg";
 import OrderButton1 from "./assets/milk.svg";
 import OrderButton2 from "./assets/yogart.svg";
 import OrderButton3 from "./assets/icecream.svg";
+import Order1Button from "./assets/paneer-button.svg";
+import Order2Button from "./assets/milk-button.svg";
+import Order3Button from "./assets/yogart-button.svg";
+import Order4Button from "./assets/icecream-button.svg";
 import Words from "./assets/words.svg";
 import ProteinCap from "./assets/protein-cap.svg";
 import Weightlift from "./assets/body builder.svg";
@@ -42,22 +48,40 @@ import PossibilitiesIcon from "./assets/unlockmilk.svg";
 import Object from './assets/OBJECTS.svg';
 import { useNavigate } from "react-router-dom";
 
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const [currentModel, setCurrentModel] = useState("/mmg1.glb");
-  const [activeButton, setActiveButton] = useState("paneer"); // Default active button
+  const [isNext, setIsNext] = useState(true);
   const [scrolling, setScrolling] = useState(false);
   const navigate = useNavigate();
+  const [activeButton, setActiveButton] = useState("paneer");
 
-  const handleModelChange = (modelPath, button) => {
+  const getButtonImage = (button) => {
+    if (button === activeButton) {
+      return button === "paneer" ? OrderButton :
+        button === "milk" ? Order2Button :
+          button === "yogart" ? Order2Button :
+            Order4Button;
+    } else {
+      return button === "paneer" ? Order1Button :
+        button === "milk" ? OrderButton1 :
+          button === "yogart" ? OrderButton2 :
+            OrderButton3;
+    }
+  };
+
+  const handleModelChange = (modelPath, button, direction) => {
     console.log("Switching model to:", modelPath);
     setCurrentModel(modelPath);
     setActiveButton(button);
+    setIsNext(direction === 'next');
   };
+
   useEffect(() => {
-    console.log("Current Model Path:", currentModel); // Logs the model path whenever it changes
+    console.log("Current Model Path:", currentModel);
   }, [currentModel]);
-  
+
   const handleScroll = (e) => {
     if (scrolling) return;
     setScrolling(true);
@@ -65,19 +89,63 @@ const Home = () => {
     const direction = e.deltaY > 0 ? "down" : "up";
 
     if (direction === "down") {
-      window.scrollBy({ top: window.innerHeight, behavior: "smooth" }); // Smooth transition
+      window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
     } else {
       window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
     }
-
-    // Reset scrolling state after a short delay to prevent continuous scrolling
     setTimeout(() => {
       setScrolling(false);
-    }, 1000); // 1 second delay
+    }, 1000);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const containerPure = document.querySelector('.container-pure');
+      const scrollTop = window.scrollY;
+
+      // Apply a bending effect to .container-pure based on scroll
+      if (scrollTop > 0) {
+        const bendEffect = Math.min(scrollTop / 10, 50); // Control bend strength
+        containerPure.style.backgroundPosition = `center ${bendEffect}px`;
+        containerPure.style.backgroundSize = `cover ${100 + bendEffect}%`; // Slight scaling
+      } else {
+        containerPure.style.backgroundPosition = 'center top';
+        containerPure.style.backgroundSize = 'cover';
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
   const scrollRef = useRef(null); // Ref to the scroll container
+
+  //Comparison Table 
+
+  useEffect(() => {
+    gsap.fromTo(
+      ".comparison-column",
+      { x: "-100vw", opacity: 0 }, // Start off-screen from the left
+      {
+        x: "0", // Move to original position
+        opacity: 1,
+        duration: 1,
+        stagger: 0.3, // Delay between each column animation
+        scrollTrigger: {
+          trigger: ".comparison-table", // Section to trigger animations on scroll
+          start: "top 75%", // When the top of the comparison table hits 75% of the viewport
+          end: "bottom 25%",
+          scrub: true, // Makes the animation tied to scroll position
+          markers: false, // Set to true to see scrollTrigger markers for debugging
+        }
+      }
+    );
+  }, []);
+
 
   return (
     <div className="home-container">
@@ -92,26 +160,31 @@ const Home = () => {
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
         <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
         <img src={Object} alt="object-order" className="object-order" onClick={() => navigate("/product/high-protein-paneer")} />
+        {/* <div className="object-container">
+          <img src={Object} alt="object-order" className="object-image" />
+          <img src={Object} alt="object-water" className="water-effect" />
+        </div> */}
+
         <div className="order-buttons">
           <img
-            src={OrderButton}
+            src={getButtonImage("paneer")}
             alt="order-button"
             className={`paneer-button ${activeButton === "paneer" ? "active" : ""}`}
-            onClick={() => handleModelChange("/mmg1.glb", "paneer")}
+            onClick={() => handleModelChange("/mmg1.glb", "paneer", 'prev')}
           />
           <img
-            src={OrderButton1}
+            src={getButtonImage("milk")}
             alt="order-button"
             className={`milk-button ${activeButton === "milk" ? "active" : ""}`}
-            onClick={() => handleModelChange("/packet_1.glb", "milk")}
+            onClick={() => handleModelChange("/packet_1.glb", "milk", 'next')}
           />
           <img
-            src={OrderButton2}
+            src={getButtonImage("yogart")}
             alt="order-button"
             className={`yogart-button ${activeButton === "yogart" ? "active" : ""}`}
           />
           <img
-            src={OrderButton3}
+            src={getButtonImage("icecream")}
             alt="order-button"
             className={`icecream-button ${activeButton === "icecream" ? "active" : ""}`}
           />
@@ -264,7 +337,6 @@ const Home = () => {
         <div className="comparison-column highlighted">
           <div className="product">
             <img src={Paneericon} alt="Product 1" />
-            {/* <span className="star">★</span> */}
           </div>
           <div className="value">31G</div>
           <div className="value">5G</div>
@@ -312,7 +384,6 @@ const Home = () => {
           <div className="value">₹₹₹₹</div>
         </div>
       </div>
-
       {/* Wholesome Section */}
       <div className="wholesome-container pt-5 pb-5">
         <div className="wholesome-heading">

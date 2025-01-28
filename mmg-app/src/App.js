@@ -12,7 +12,7 @@ import About from './About.js';
 import { CartProvider } from './cartContext';
 
 function App() {
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isPreloadEnabled, setIsPreloadEnabled] = useState(true);
 
   useEffect(() => {
@@ -32,10 +32,10 @@ function App() {
 
   useEffect(() => {
     if (isPreloadEnabled) {
-      const timer = setTimeout(() => setIsTransitioning(true), 4000);
+      const timer = setTimeout(() => setIsLoaded(true), 4000);
       return () => clearTimeout(timer);
     } else {
-      setIsTransitioning(true);
+      setIsLoaded(true);
     }
   }, [isPreloadEnabled]);
 
@@ -43,14 +43,14 @@ function App() {
     <CartProvider>
       <div className="app-wrapper">
         {/* Preload only appears on screens wider than 768px */}
-        {isPreloadEnabled && !isTransitioning && (
+        {isPreloadEnabled && !isLoaded  && (
           <div className="preload-wrapper">
             <Preload />
           </div>
         )}
 
         {/* Ensure the home page always renders */}
-        <div className={`home-wrapper ${isPreloadEnabled ? (isTransitioning ? 'slide-in' : '') : 'visible'}`}>
+        <div className={`home-wrapper ${isLoaded ? 'visible' : ''}`}>
           <Router>
             <Header />
             <Routes>

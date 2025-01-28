@@ -20,7 +20,6 @@
   margin: 10px 0;
   position: relative;
   z-index: 2;
-  /* Ensure text stays above the ripple */
 }
 
 .letter {
@@ -73,11 +72,12 @@
   left: 50%;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle,
+  /* background: radial-gradient(circle,
       #0564f2 50%,
       rgba(5, 100, 242, 0.2) 85%,
       rgba(5, 100, 242, 0.2) 95%,
-      rgba(163, 189, 227, 0.5) 100%);
+      rgba(163, 189, 227, 0.5) 100%); */
+  background: url('./assets/background.png') no-repeat center center/cover;
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
   opacity: 1;
