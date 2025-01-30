@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import "./home.css";
-import gsap from "gsap";
+import Cards from './cards'
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from '@studio-freight/lenis';
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Card1 from "./assets/Card1.png";
@@ -46,18 +48,20 @@ import TransparencyIcon from "./assets/transparency.svg";
 import MythIcon from "./assets/myth.svg";
 import PossibilitiesIcon from "./assets/unlockmilk.svg";
 import Object from './assets/OBJECTS.svg';
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import Splitting from "splitting";
+import "splitting/dist/splitting.css";
+import "splitting/dist/splitting-cells.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Home = () => {
+const Home = ({ setIsLoaded }) => {
   const [currentModel, setCurrentModel] = useState("/mmg1.glb");
   const [isNext, setIsNext] = useState(true);
   const [scrolling, setScrolling] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("paneer");
-  const containerRef = useRef(null);
-  const cardsRef = useRef([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const getButtonImage = (button) => {
     if (button === activeButton) {
@@ -126,48 +130,54 @@ const Home = () => {
   const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
   const scrollRef = useRef(null); // Ref to the scroll container
 
-  //Comparison Table 
+  // Testing Animation
+  useLayoutEffect(() => {
+    if (!setIsLoaded) return; 
+    const words = document.querySelectorAll('.main-heading span');
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".container-paradigm", 
+        start: "top top", 
+        end: "bottom top", 
+        once: false,
+        scroller: ".home-wrapper" 
+      },
+      onComplete: () => {
+        setIsLoaded(true);
+      }
+    });
 
-  // useEffect(() => {
-  //   gsap.fromTo(
-  //     ".comparison-column",
-  //     { x: "-100vw", opacity: 1 }, 
-  //     {
-  //       x: "0",
-  //       opacity: 1,
-  //       duration: 1,
-  //       stagger: 0.3,
-  //       ease: "power2.out",
-  //       scrollTrigger: {
-  //         trigger: ".comparison-table",
-  //         start: "top 75%",
-  //         end: "bottom 25%",
-  //         scrub: false, 
-  //       },
-  //     }
-  //   );
-  // }, []);
+    // Animate each word
+    words.forEach((word, index) => {
+      tl.to(word, {
+        opacity: 1,
+        x: 0,
+        duration: 0.3,
+        delay: index * 0.1 
+      }, "<"); 
+    });
 
-  //Cards Animation
-  
-  
+    return () => ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  }, [setIsLoaded]);
+
+  console.log('ScrollTrigger initialized');
+
   return (
-    <div className="home-container">
+    <div className="">
       {/* Image Slider Section */}
+      {/* <div>
+        <Cards />
+      </div> */}
       <div
         className="slider-container text-center"
         style={{ height: "100vh" }}
-        onWheel={handleScroll} // Add onWheel event to detect scroll
+        onWheel={handleScroll}
       >
         <img src={MilkBg} alt="milk-bg" className="milkbg" />
         <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
         <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
-        <img src={Object} alt="object-order" className="object-order" onClick={() => navigate("/product/high-protein-paneer")} />
-        {/* <div className="object-container">
-          <img src={Object} alt="object-order" className="object-image" />
-          <img src={Object} alt="object-water" className="water-effect" />
-        </div> */}
+        <img src={Object} alt="object-order" className="object-order" />
 
         <div className="order-buttons">
           <img
@@ -194,11 +204,12 @@ const Home = () => {
           />
         </div>
 
-        <Canvas key={currentModel}>  {/* Adding key forces remount */}
+        <Canvas key={currentModel}>
           <MilkMyGain modelPath={currentModel} />
         </Canvas>
 
       </div>
+
       {/* Change the Paradigm */}
       <div className="container-paradigm">
         <div className="icon-paradigm">
@@ -210,8 +221,9 @@ const Home = () => {
         </div>
         <div className="paradigm-heading">
           <h1 className="main-heading">
-            CHANGING THE <br />
-            PARADIGM
+            <span>CHANGING</span> <br />
+            <span>THE</span> <br />
+            <span>PARADIGM</span>
           </h1>
         </div>
         <div className="paradigm-para">
@@ -234,7 +246,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-
           <div className="card2">
             <div className="card-inner">
               <div className="card-front">
@@ -274,7 +285,6 @@ const Home = () => {
               <br /> compromising on taste.
             </h1>
             <img src={Words} alt="words" className="words" />
-            {/* <button className="shop-now-button">Shop Now</button> */}
           </div>
           <div className="col-sm-6">
             <img src={ProteinCap} alt="protein-cap" className="protein-cap" />
@@ -319,13 +329,13 @@ const Home = () => {
       {/* Raising the star */}
       <div className="raising-container pt-5">
         <div className="raising-star">
-          <h1 className="raising-heading"> RAISING </h1>
+          <h1 className="raising-heading">RAISING</h1>
           <img
             className="raising-protein"
             src={Raisingprotein}
             alt="raising-protein"
           />
-          <h1 className="raising-heading"> THE BAR </h1>
+          <h1 className="raising-heading">THE BAR</h1>
         </div>
       </div>
 

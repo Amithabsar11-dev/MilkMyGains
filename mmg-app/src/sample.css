@@ -1,0 +1,6 @@
+/* Sample Testing */
+.main-heading span {
+    display: inline-block; 
+    opacity: 0; 
+    transform: translateX(-50px);
+  }

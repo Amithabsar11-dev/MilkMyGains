@@ -10,6 +10,8 @@ import Preload from './preload';
 import FAQ from './faq.js';
 import About from './About.js';
 import { CartProvider } from './cartContext';
+import Sample from './sample.js';
+import Cards from './cards.js';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,20 +43,17 @@ function App() {
 
   return (
     <CartProvider>
-      <div className="app-wrapper">
-        {/* Preload only appears on screens wider than 768px */}
-        {isPreloadEnabled && !isLoaded  && (
+      <div className="">
+        {isPreloadEnabled && !isLoaded && (
           <div className="preload-wrapper">
             <Preload />
           </div>
         )}
-
-        {/* Ensure the home page always renders */}
         <div className={`home-wrapper ${isLoaded ? 'visible' : ''}`}>
           <Router>
             <Header />
             <Routes>
-              <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/product/:handle" element={<ProductDetails />} />
               <Route path="/faq" element={<FAQ />} />

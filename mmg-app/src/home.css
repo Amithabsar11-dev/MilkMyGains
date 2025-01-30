@@ -1,5 +1,140 @@
+.font-larger .char[data-char="F"]{
+  padding-left:30px;
+}
+.home-intro {
+  font-size: 21px;
+  padding-top: 1%;
+  font-family: "JetBrains Mono", monospace;
+}
+.content__title {
+  font-size: 6vw;
+  line-height: 0.8;
+  text-align: center;
+  display: grid;
+  letter-spacing: 1px;
+  font-weight: 400;
+  gap: 0rem;
+}
+.content_ready {
+  gap: 1rem;
+}
+.content__title--left {
+  text-align: left;
+}
+.content__title--right {
+  text-align: right;
+}
+.content__title::before {
+  content: "." counter(section);
+  font-weight: 400;
+  display: block;
+  font-size: 0rem;
+  text-align: center;
+}
+
+.content__title1 {
+  font-size: 6vw;
+  line-height: 0.5;
+  text-align: center;
+  display: grid;
+  letter-spacing: 1px;
+  margin: 0;
+  font-weight: 500;
+}
+.content__title1--left {
+  text-align: left;
+}
+.content__title1--right {
+  text-align: right;
+}
+.content__title1::before {
+  content: "." counter(section);
+  font-weight: 400;
+  display: block;
+  font-size: 0rem;
+  text-align: center;
+}
+
+.content--full {
+  font-family: "FontRegular";
+}
+
+.font-upper {
+  color: white;
+  font-size: 95px;
+}
+.font-lower {
+  color: white;
+  font-size: 43px;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  position: relative;
+  padding: var(--page-padding);
+}
+.content1 {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  position: relative;
+  padding: var(--page-padding);
+}
+.content p {
+  max-width: 660px;
+  margin: 1.5rem auto;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.content1 p {
+  max-width: 660px;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+.font-medium {
+  font-size: 6vw;
+}
+.font-19 {
+  font-weight: initial;
+  font-family: "FontRegular";
+  font-variation-settings: "slnt" 0, "wght" 610;
+}
+.font-1 {
+  font-family: "FontRegular";
+  font-weight: 100;
+}
+.font-7 {
+  font-family: "FontRegular";
+  font-weight: 400;
+}
+.font-8 {
+  font-family: "FontRegular";
+  font-weight: 400;
+}
+.font-4 {
+  font-family: "FontRegular";
+  font-weight: 400;
+}
+.font-align {
+  text-align: justify;
+}
+.content--full {
+  padding: 0;
+}
+.font-larger {
+  font-size: 95px;
+  color: white;
+}
+.font-sub {
+  font-size: 5vw;
+  display: block;
+}
+
 .slider-container {
-  position: sticky;
+  position: relative;
   top: 0;
   width: 100%;
   height: 100vh;
@@ -96,46 +231,6 @@
     opacity: 0.6;
   }
 }
-
-/* .object-container {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 300px; 
-  height: auto;
-}
-
-.object-container img {
-  position: absolute;
-  width: 100%;
-  height: auto;
-}
-
-.object-container .water-effect {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  animation: waterAnimation 4s ease-in-out infinite;
-  clip-path: polygon(
-    0% 100%, 100% 100%, 100% 70%, 80% 60%, 60% 65%, 40% 55%, 20% 65%, 0% 60%
-  ); 
-  opacity: 0.8;
-}
-
-@keyframes waterAnimation {
-  0%, 100% {
-    clip-path: polygon(
-      0% 100%, 100% 100%, 100% 90%, 80% 85%, 60% 88%, 40% 80%, 20% 85%, 0% 82%
-    );
-  }
-  50% {
-    clip-path: polygon(
-      0% 100%, 100% 100%, 100% 50%, 80% 55%, 60% 52%, 40% 48%, 20% 50%, 0% 45%
-    );
-  }
-} */
 
 .order-paneer {
   position: absolute;
@@ -319,29 +414,27 @@
 }
 
 /* Raising Star*/
-.raising-container {
-  background-color: white;
-  display: flex;
-  justify-content: center;
-}
-
-.raising-star {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-}
 
 .raising-heading {
-  font-size: 100px;
-  color: #fc5e3b;
-  font-family: "Anybody", serif;
-  font-style: italic;
-  color: #0052f0;
-  font-weight: 900;
+  opacity: 1;
 }
 
 .raising-protein {
-  width: 25%;
+  opacity: 1;
+}
+
+.high-protein-text {
+  opacity: 1;
+}
+
+.high-protein-text p {
+  margin: 0;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.spacing {
+  margin-right: 40px;
 }
 
 /* Comparison Table Styles */
@@ -503,6 +596,7 @@
   background-color: white;
   padding-bottom: 10%;
   padding-top: 10%;
+  min-height: 100vh; 
 }
 
 .icon-paradigm {
@@ -769,6 +863,13 @@
   color: #2882ff;
   font-size: 20px;
   font-family: "Chivo Mono", Sans-serif;
+}
+
+/* Sample Testing */
+.main-heading span {
+  display: inline-block; 
+  opacity: 0; 
+  transform: translateX(-50px);
 }
 
 @media only screen and (max-width: 425px) and (min-width: 320px) {
