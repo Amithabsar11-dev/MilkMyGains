@@ -147,6 +147,14 @@
   position: relative;
   z-index: 99;
 }
+.svg-overlay-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+}
 
 .milkbg {
   position: absolute;
@@ -307,6 +315,25 @@
   background-position: center top;
   transition: background-position 0.5s ease-in-out,
     background-size 0.5s ease-in-out;
+  overflow: hidden;
+}
+.svg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.overlay-path {
+  fill: white; 
+  mask-image: url("./assets/background.png"); 
+  mask-size: cover;
+  mask-position: center;
+  -webkit-mask-image: url("./assets/background.png");
+  -webkit-mask-size: cover;
+  -webkit-mask-position: center;
 }
 
 .row-pure {
@@ -362,7 +389,9 @@
 }
 
 /* Power of protein */
-.power-container {
+.power-container,
+.power-container1,
+.power-container2 {
   background-color: white;
   padding: 70px;
   position: relative;
@@ -372,7 +401,13 @@
   background-color: #cde0fc;
   border-radius: 20px;
 }
-
+.build-text{
+  width: 35%;
+}
+.row-build{
+  display: flex;
+  align-items: center;
+}
 .power-heading {
   font-size: 100px;
   color: #0052f0;
@@ -382,6 +417,9 @@
   text-align: center;
   padding-top: 10%;
   line-height: 5rem;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 5%;
 }
 
 .build {
@@ -541,7 +579,7 @@
   color: #ff5733;
   transform: scale(0.5);
   position: absolute;
-  left: 50%;
+  left: 55%;
   top: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.2;
@@ -614,12 +652,14 @@
 
 /* Wholesome */
 .wholesome-container {
-  background-color: white;
   position: relative;
+  overflow: hidden;
 }
 
 .wholesome-heading {
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .protein-packed {
@@ -742,8 +782,10 @@
   left: -2px;
 } */
 
+
+
 /* Paradigm */
-.container-paradigm {
+/* .container-paradigm {
   background-color: white;
   padding-bottom: 10%;
   padding-top: 10%;
@@ -793,6 +835,129 @@
   font-family: "Chivo Mono", serif;
   font-weight: 800;
   padding-top: 10%;
+} */
+.parent-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.container-paradigm {
+  background-color: white;
+  padding-bottom: 10%;
+}
+
+.main-heading span {
+  display: inline-block; 
+  opacity: 0; 
+  transform: translateX(-50px);
+}
+.icon-paradigm {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.paradigm-heading {
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+  text-align: center;
+}
+
+.main-heading {
+  font-size: 100px;
+  color: #004ef0;
+  font-family: "Anybody", serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.paradigm-para {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+  text-align: center;
+}
+
+.main-para {
+  font-size: 20px;
+  font-family: "Chivo Mono", serif;
+  text-transform: uppercase;
+}
+
+.link-to-know {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  margin-top: 3%;
+  text-align: center;
+  font-family: "Chivo Mono", serif;
+  font-weight: 800;
+  padding-top: 10%;
+}
+.steps{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  top: 0;
+  padding-top: 0;
+}
+.cards {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150vw;
+  height: 600px;
+  will-change: transform;
+}
+
+.card {
+  position: absolute;
+  width: 400px;
+  height: 550px;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  margin-left: -200px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  will-change: transform;
+  border-radius: 25px;
+  transition: transform 0.3s ease;
+  perspective: 1000px;
+  cursor: pointer;
+  background-color: transparent; 
+  border: none;
+}
+.card-img {
+  flex: 1;
+  border-radius: 0.5em;
+  overflow: hidden;
+}
+
+.card-content {
+  width: 100%;
+  height: 60px;
+}
+
+.card-content p {
+  text-align: left;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  display: flex;
+  justify-content: center;
+}
+
+.card-border{
+  height: 100%;
+    margin: 25px;
+    border-radius: 10px;
+    border: 1px solid #fff;
 }
 
 .card-section {
@@ -818,7 +983,9 @@
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
-
+.card:hover .card-inner {
+  transform: rotateY(180deg) scale(1.1);
+}
 .card1:hover .card-inner,
 .card2:hover .card-inner,
 .card3:hover .card-inner {
@@ -913,6 +1080,15 @@
 .protein-image {
   width: 100%;
   padding-top: 10%;
+}
+.overlay-path1 {
+  fill: white;
+  mask-image: url("./assets/Backgroundmilk.png");
+  mask-size: cover;
+  mask-position: center;
+  -webkit-mask-image: url("./assets/Backgroundmilk.png");
+  -webkit-mask-size: cover;
+  -webkit-mask-position: center;
 }
 
 /* Milk */

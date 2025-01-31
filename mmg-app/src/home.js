@@ -55,6 +55,15 @@ import "splitting/dist/splitting-cells.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const cardData = [
+  { image: TransparencyIcon, text: "TRANSPARENCY IN EVERY DROP", backText: "We ensure the highest quality standards." },
+  { image: MythIcon, text: "PURE INGREDIENTS, PURE JOY", backText: "Only natural, no additives!" },
+  { image: PossibilitiesIcon, text: "NATURE'S GOODNESS, BOTTLED", backText: "Packed with essential nutrients." },
+  { image: TransparencyIcon, text: "SUSTAINABLY SOURCED, ETHICALLY MADE", backText: "Our process is 100% eco-friendly." },
+  { image: MythIcon, text: "CRAFTED FOR YOUR WELL-BEING", backText: "Supporting a healthier lifestyle." },
+  { image: PossibilitiesIcon, text: "EXPERIENCE THE DIFFERENCE", backText: "Taste the purity in every sip." },
+];
+
 const Home = ({ setIsLoaded }) => {
   const [currentModel, setCurrentModel] = useState("/mmg1.glb");
   const [isNext, setIsNext] = useState(true);
@@ -68,18 +77,18 @@ const Home = ({ setIsLoaded }) => {
       return button === "paneer"
         ? OrderButton
         : button === "milk"
-        ? Order2Button
-        : button === "yogart"
-        ? Order2Button
-        : Order4Button;
+          ? Order2Button
+          : button === "yogart"
+            ? Order2Button
+            : Order4Button;
     } else {
       return button === "paneer"
         ? Order1Button
         : button === "milk"
-        ? OrderButton1
-        : button === "yogart"
-        ? OrderButton2
-        : OrderButton3;
+          ? OrderButton1
+          : button === "yogart"
+            ? OrderButton2
+            : OrderButton3;
     }
   };
 
@@ -110,33 +119,68 @@ const Home = ({ setIsLoaded }) => {
     }, 1000);
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const containerPure = document.querySelector(".container-pure");
-      const scrollTop = window.scrollY;
+  //Card Animation 
+  const stickySectionRef = useRef(null);
+  const cardsRef = useRef([]);
 
-      // Apply a bending effect to .container-pure based on scroll
-      if (scrollTop > 0) {
-        const bendEffect = Math.min(scrollTop / 10, 50); // Control bend strength
-        containerPure.style.backgroundPosition = `center ${bendEffect}px`;
-        containerPure.style.backgroundSize = `cover ${100 + bendEffect}%`; // Slight scaling
-      } else {
-        containerPure.style.backgroundPosition = "center top";
-        containerPure.style.backgroundSize = "cover";
-      }
+  useEffect(() => {
+    if (!setIsLoaded) return;
+    const stickySection = stickySectionRef.current;
+    const cards = cardsRef.current;
+    const totalCards = cards.length;
+    const stickyHeight = window.innerHeight * 7;
+
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: stickySection,
+      start: "top top",
+      end: `+=${stickyHeight}px`,
+      pin: true,
+      scroller: ".home-wrapper",
+      scrub: 1,
+      onUpdate: (self) => {
+        positionCards(self.progress);
+      },
+    });
+
+    const getRadius = () => {
+      return window.innerWidth < 900 ? window.innerWidth * 7 : window.innerWidth * 2;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    const arcAngle = Math.PI * 0.4;
+    const startAngle = Math.PI / 2 - arcAngle / 2;
+
+    function positionCards(progress = 0) {
+      const radius = getRadius();
+      const totalTravel = 1 + totalCards / 7.5;
+      const adjustedProgress = (progress * totalTravel - 1) * 0.75;
+
+      cards.forEach((card, i) => {
+        const normalizedProgress = (totalCards - 1 - i) / totalCards;
+        const cardProgress = normalizedProgress + adjustedProgress;
+        const angle = startAngle + arcAngle * cardProgress;
+
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+        const rotation = (angle - Math.PI / 2) * (180 / Math.PI);
+
+        gsap.set(card, {
+          x: x,
+          y: -y + radius,
+          rotation: -rotation,
+          transformOrigin: "center center",
+          opacity: cardProgress > 1 || cardProgress < -0.1 ? 0 : 1,
+        });
+      });
+    }
+
+    positionCards(0);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      scrollTrigger.kill();
+      ScrollTrigger.killAll();
     };
-  }, []);
+  }, [setIsLoaded]);
 
-  const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
-  const scrollRef = useRef(null); // Ref to the scroll container
-
-  // Testing Animation
   useEffect(() => {
     if (!setIsLoaded) return;
     const words = document.querySelectorAll(".main-heading span");
@@ -171,6 +215,35 @@ const Home = ({ setIsLoaded }) => {
     return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, [setIsLoaded]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const containerPure = document.querySelector(".container-pure");
+      const scrollTop = window.scrollY;
+
+      // Apply a bending effect to .container-pure based on scroll
+      if (scrollTop > 0) {
+        const bendEffect = Math.min(scrollTop / 10, 50); // Control bend strength
+        containerPure.style.backgroundPosition = `center ${bendEffect}px`;
+        containerPure.style.backgroundSize = `cover ${100 + bendEffect}%`; // Slight scaling
+      } else {
+        containerPure.style.backgroundPosition = "center top";
+        containerPure.style.backgroundSize = "cover";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const [scrollIndex, setScrollIndex] = useState(0); // Track the current index
+  const scrollRef = useRef(null); // Ref to the scroll container
+
+  // Testing Animation
+
+
   console.log("ScrollTrigger initialized");
 
   // Table Animation
@@ -182,7 +255,7 @@ const Home = ({ setIsLoaded }) => {
         trigger: ".animation-container",
         start: "top 80%", // Start when 80% of the section is in view
         end: "bottom 20%", // End when 20% is still visible
-        toggleActions: "restart none none reset", 
+        toggleActions: "restart none none reset",
         scroller: ".home-wrapper",
       },
       onComplete: () => setIsLoaded(true),
@@ -196,8 +269,8 @@ const Home = ({ setIsLoaded }) => {
     )
 
       // Step 2: Move "RAISING" left & "THE BAR" right
-      .to(".raising", { x: "-150px", duration: 1, ease: "power2.out" }, "-=0.5")
-      .to(".bar", { x: "150px", duration: 1, ease: "power2.out" }, "-=1")
+      .to(".raising", { x: "-65px", duration: 1, ease: "power2.out" }, "-=0.5")
+      .to(".bar", { x: "215px", duration: 1, ease: "power2.out" }, "-=1")
 
       // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
       .fromTo(
@@ -237,7 +310,7 @@ const Home = ({ setIsLoaded }) => {
 
   //pure protein animation
   useEffect(() => {
-  const cap = document.querySelector(".protein-cap");
+    const cap = document.querySelector(".protein-cap");
 
     gsap.fromTo(
       cap,
@@ -258,18 +331,75 @@ const Home = ({ setIsLoaded }) => {
     );
   }, []);
 
+  useEffect(() => {
+    if (!setIsLoaded) return;
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".container-pure",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+        scroller: ".home-wrapper",
+      },
+    })
+      .to(".overlay-path", { attr: { d: paths.curve1 }, duration: 1 })
+      .to(".overlay-path", { attr: { d: paths.curve2 }, duration: 1 });
+  }, [setIsLoaded]);
+
+  // Footer - background 
+  useEffect(() => {
+    if (!setIsLoaded) return;
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".proteins-container",
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+        scroller: ".home-wrapper",
+      },
+    })
+      .to(".overlay-path1", { attr: { d: paths.curve1 }, duration: 1 })
+      .to(".overlay-path1", { attr: { d: paths.curve2 }, duration: 1 });
+  }, [setIsLoaded]);
+
+  const paths = {
+    start: "M 0 0 V 0 Q 50 0 100 0 V 0 Z",  // Flat at the top
+    curve1: "M 0 0 V 10 Q 50 20 100 10 V 0 Z",  // Smaller curve
+    curve2: "M 0 0 V 20 Q 50 30 100 20 V 0 Z"   // Slightly larger curve
+  };
+  // Banner Animation Curve
+  // useEffect(() => {
+  //   if (!setIsLoaded) return;
+  //   gsap.timeline({
+  //     scrollTrigger: {
+  //       trigger: ".slider-container",
+  //       start: "top bottom",
+  //       end: "bottom top",
+  //       scrub: 1,
+  //       scroller: ".home-wrapper",
+  //     },
+  //   })
+  //     .to(".overlay-path", { attr: { d: path1.curveBottom1 }, duration: 1 })
+  //     .to(".overlay-path", { attr: { d: path1.curveBottom2 }, duration: 1 });
+  // }, [setIsLoaded]);
+
+  // const path1 = {
+  //   startBottom: "M 0 100 V 100 Q 50 95 100 100 V 100 Z",  
+  //   curveBottom1: "M 0 100 V 95 Q 50 90 100 95 V 100 Z",  
+  //   curveBottom2: "M 0 100 V 90 Q 50 85 100 90 V 100 Z"   
+  // };
+
 
   return (
     <div className="home-container">
-      {/* Image Slider Section */}
-      {/* <div>
-        <Cards />
-      </div> */}
       <div
         className="slider-container text-center"
         style={{ height: "100vh" }}
         onWheel={handleScroll}
       >
+        {/* <svg className="svg-overlay-bottom" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path className="overlay-path" vectorEffect="non-scaling-stroke" d={paths.startBottom} />
+        </svg> */}
         <img src={MilkBg} alt="milk-bg" className="milkbg" />
         <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
@@ -280,9 +410,8 @@ const Home = ({ setIsLoaded }) => {
           <img
             src={getButtonImage("paneer")}
             alt="order-button"
-            className={`paneer-button ${
-              activeButton === "paneer" ? "active" : ""
-            }`}
+            className={`paneer-button ${activeButton === "paneer" ? "active" : ""
+              }`}
             onClick={() => handleModelChange("/mmg1.glb", "paneer", "prev")}
           />
           <img
@@ -294,16 +423,14 @@ const Home = ({ setIsLoaded }) => {
           <img
             src={getButtonImage("yogart")}
             alt="order-button"
-            className={`yogart-button ${
-              activeButton === "yogart" ? "active" : ""
-            }`}
+            className={`yogart-button ${activeButton === "yogart" ? "active" : ""
+              }`}
           />
           <img
             src={getButtonImage("icecream")}
             alt="order-button"
-            className={`icecream-button ${
-              activeButton === "icecream" ? "active" : ""
-            }`}
+            className={`icecream-button ${activeButton === "icecream" ? "active" : ""
+              }`}
           />
         </div>
 
@@ -313,7 +440,7 @@ const Home = ({ setIsLoaded }) => {
       </div>
 
       {/* Change the Paradigm */}
-      <div className="container-paradigm">
+      {/* <div className="container-paradigm">
         <div className="icon-paradigm">
           <img src={Star} alt="Star" className="star-icon" />
           <img src={Eyestar} alt="Diamond" className="diamond-icon" />
@@ -419,9 +546,63 @@ const Home = ({ setIsLoaded }) => {
         <a className="link-to-know" href="#">
           KNOW MORE
         </a>
+      </div> */}
+      <div className='container-paradigm pt-5'>
+        <div className="icon-paradigm">
+          <img src={Star} alt="Star" className="star-icon" />
+          <img src={Eyestar} alt="Diamond" className="diamond-icon" />
+          <img src={Eye} alt="Eye" className="eye-icon" />
+          <img src={Signal} alt="Shop" className="shop-icon" />
+          <img src={Drop} alt="Drop" className="drop-icon" />
+        </div>
+        <div className="paradigm-heading">
+          <h1 className="main-heading">
+            <span>CHANGING</span> <br />
+            <span>THE</span> <br />
+            <span>PARADIGM</span>
+          </h1>
+        </div>
+        <div className="paradigm-para">
+          <p className="main-para">
+            Transforming Vegetarian Nutrition: <br />
+            Accessible, High-Protein Solutions for an
+            <br /> Active Lifestyle
+          </p>
+        </div>
+        {/* <div className='steps'> */}
+        <div ref={stickySectionRef} className="steps">
+          <div className="cards">
+            {cardData.map((card, index) => (
+              <div key={index} ref={(el) => (cardsRef.current[index] = el)} className="card">
+                <div className="card-inner">
+                  {/* Front Side */}
+                  <div className="card-front">
+                    <div className='card-border'>
+                      <div className="card-img">
+                        <img src={card.image} alt={card.text} className="card-icon" />
+                      </div>
+                      <div className="card-content">
+                        <p className="card-text">{card.text}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Back Side */}
+                  <div className="card-back">
+                    <p className="back-text">{card.backText}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <a className="link-to-know" href="#">KNOW MORE</a>
       </div>
       {/* Pure Protein Zero */}
       <div className="container-pure">
+        <svg className="svg-overlay" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path className="overlay-path" vectorEffect="non-scaling-stroke" d={paths.start} />
+        </svg>
         <div className="row row-pure">
           <div className="col-sm-6">
             <h1 className="crafted-pure">
@@ -445,33 +626,89 @@ const Home = ({ setIsLoaded }) => {
           </div>
         </div>
       </div>
-
       {/* Power Of Protein */}
-      <div className="power-container bg-white">
-        <div className="power-space">
-          <h1 className="power-heading">
-            THE POWER <br />
-            OF PROTEIN
-          </h1>
-          <img src={Weightlift} className="weight-lift" alt="weight-lift" />
-          <div className="build-container">
-            <h1 className="build">BUILD MUSCLE</h1>
-            <p className="build-para">
-              Protein builds muscle and bone,
-              <br /> supporting agility and resilience.
-              <br /> It’s essential for vitality and
-              <br /> longevity, fueling an active,
-              <br /> enduring lifestyle.
-            </p>
+      <div className="power-wrapper">
+        <div className="power-container bg-white">
+          <div className="power-space">
+            <h1 className="power-heading">
+              THE POWER <br />
+              OF PROTEIN
+            </h1>
+            <div className="row row-build">
+              <div className="col-sm-6 build-text">
+                <div className="build-container">
+                  <h1 className="build">BUILD MUSCLE</h1>
+                  <p className="build-para">
+                    Protein builds muscle and bone,<br />
+                    supporting agility and resilience.<br />
+                    It’s essential for vitality and<br />
+                    longevity, fueling an active,<br />
+                    enduring lifestyle.
+                  </p>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <img src={Weightlift} className="weight-lift" alt="weight-lift" />
+              </div>
+            </div>
+            <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
           </div>
-          <img
-            src={ProteinSlogan}
-            className="protein-slogan"
-            alt="protein-slogan"
-          />
         </div>
-      </div>
 
+        {/* <div className="power-container1">
+          <div className="power-space">
+            <h1 className="power-heading">
+              THE POWER <br />
+              OF PROTEIN
+            </h1>
+            <div className="row row-build">
+              <div className="col-sm-6 build-text">
+                <div className="build-container">
+                  <h1 className="build">BUILD MUSCLE</h1>
+                  <p className="build-para">
+                    Protein builds muscle and bone,<br />
+                    supporting agility and resilience.<br />
+                    It’s essential for vitality and<br />
+                    longevity, fueling an active,<br />
+                    enduring lifestyle.
+                  </p>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <img src={Weightlift} className="weight-lift" alt="weight-lift" />
+              </div>
+            </div>
+            <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
+          </div>
+        </div> */}
+
+        {/* <div className="power-container2">
+          <div className="power-space">
+            <h1 className="power-heading">
+              THE POWER <br />
+              OF PROTEIN
+            </h1>
+            <div className="row row-build">
+              <div className="col-sm-6 build-text">
+                <div className="build-container">
+                  <h1 className="build">BUILD MUSCLE</h1>
+                  <p className="build-para">
+                    Protein builds muscle and bone,<br />
+                    supporting agility and resilience.<br />
+                    It’s essential for vitality and<br />
+                    longevity, fueling an active,<br />
+                    enduring lifestyle.
+                  </p>
+                </div>
+              </div>
+              <div className="col-sm-6">
+                <img src={Weightlift} className="weight-lift" alt="weight-lift" />
+              </div>
+            </div>
+            <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
+          </div>
+        </div> */}
+      </div>
       {/* Raising the star */}
       <div className="animation-container">
         <div className="text-wrapper">
@@ -551,23 +788,21 @@ const Home = ({ setIsLoaded }) => {
             <br /> Gains
           </h1>
           <img src={Vegbowl} className="veg-bowl" alt="veg-bowl" />
-          <img
-            src={Recepiesbutton}
-            className="recepies-button pt-5"
-            alt="recepies-button"
-          />
+          <img src={Recepiesbutton} className="recepies-button pt-5" alt="recepies-button" />
           <img src={Stickers} className="stickers" alt="stickers" />
           <p className="muscle-para">
             Protein builds muscle and
             <br /> bone, supporting agility
             <br /> and resilience.
           </p>
-          {/* <button className="button-receipe">More recepies on the blog</button> */}
           <img src={Arrowpoint} className="arrow-point" alt="arrow-point" />
         </div>
       </div>
       {/* Proteins Section */}
       <div className="proteins-container pt-5 pb-5">
+        <svg className="svg-overlay" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path className="overlay-path1" vectorEffect="non-scaling-stroke" d={paths.start} />
+        </svg>
         <img src={Protein} className="protein-image" alt="protein-pic" />
         <div className="milk-pic-container">
           <img src={Milk} className="milk-image" alt="milk-pic" />

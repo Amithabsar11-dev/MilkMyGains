@@ -61,7 +61,7 @@ const Header = () => {
                     <a className={`nav-link ${isWhiteBg ? 'nav-dark' : ''}`} href="#subscribe">Subscribe</a>
                   </li>
                   <li className="nav-item">
-                    <a className={`nav-link ${isWhiteBg ? 'nav-dark' : ''}`} href="#product">Products</a>
+                    <a className={`nav-link ${isWhiteBg ? 'nav-dark' : ''}`} href="products">Products</a>
                   </li>
                   <li className="nav-item">
                     <a className={`nav-link ${isWhiteBg ? 'nav-dark' : ''}`} href="#about">About</a>

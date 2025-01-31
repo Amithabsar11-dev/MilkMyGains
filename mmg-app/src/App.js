@@ -10,7 +10,6 @@ import Preload from './preload';
 import FAQ from './faq.js';
 import About from './About.js';
 import { CartProvider } from './cartContext';
-import Sample from './sample.js';
 import Cards from './cards.js';
 
 function App() {
