@@ -1,5 +1,5 @@
-.font-larger .char[data-char="F"]{
-  padding-left:30px;
+.font-larger .char[data-char="F"] {
+  padding-left: 30px;
 }
 .home-intro {
   font-size: 21px;
@@ -337,6 +337,7 @@
 .protein-cap {
   position: absolute;
   right: 15%;
+  transform-origin: center;
 }
 
 .shop-now-button {
@@ -415,7 +416,7 @@
 
 /* Raising Star*/
 
-.raising-heading {
+/* .raising-heading {
   opacity: 1;
 }
 
@@ -437,11 +438,123 @@
   margin-right: 40px;
 }
 
-/* Comparison Table Styles */
 .comparison-table {
   display: flex;
   justify-content: center;
   gap: 10px;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: white;
+}
+
+.comparison-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 12%;
+  height: 50vh;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+}
+
+.comparison-column.highlighted {
+  background-color: #0052f0;
+  color: white;
+}
+
+.comparison-column.labels {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+.label {
+  font-size: 16px;
+  text-align: left;
+  color: #0052f0;
+  font-family: "Chivo Mono", Sans-serif;
+}
+
+.product img {
+  width: 40%;
+}
+
+.product .star {
+  font-size: 20px;
+  color: #ffcc00;
+}
+
+.icon img {
+  width: 100%;
+}
+
+.value {
+  font-size: 16px;
+  font-family: "Chivo Mono", Sans-serif;
+} */
+
+.animation-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.text-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
+.raising,
+.bar {
+  position: relative;
+}
+
+.text-wrapper h1 {
+  font-size: 90px;
+  font-weight: 900;
+  font-style: italic;
+  color: #0057ff;
+  white-space: nowrap;
+  margin: 0;
+  font-family: "Anybody", serif;
+}
+
+.middle-text {
+  text-align: center;
+  font-size: 1.8rem;
+  font-style: italic;
+  color: #ff5733;
+  transform: scale(0.5);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.2;
+  font-family: "Anybody", serif;
+}
+.spacing {
+  margin-right: 40px;
+}
+
+.comparison-table {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
   padding-top: 5%;
   padding-bottom: 5%;
   background-color: white;
@@ -591,12 +704,50 @@
   color: #007bff;
 }
 
+/* .button-receipe {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  background-color: #e74c3c;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #e74c3c;
+}
+.button-receipe::after {
+  content: "";
+  position: absolute;
+  bottom: -9px;
+  left: -1px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #e74c3c;
+  border-radius: 12px;
+  z-index: -1;
+  transition: all 0.2s ease-in-out;
+}
+.button-receipe:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+  box-shadow: 1px 1px 0px rgba(231, 76, 60, 0.5);
+}
+.button-receipe:hover::after {
+  bottom: -2px;
+  left: -2px;
+} */
+
 /* Paradigm */
 .container-paradigm {
   background-color: white;
   padding-bottom: 10%;
   padding-top: 10%;
-  min-height: 100vh; 
+  min-height: 100vh;
 }
 
 .icon-paradigm {
@@ -867,8 +1018,8 @@
 
 /* Sample Testing */
 .main-heading span {
-  display: inline-block; 
-  opacity: 0; 
+  display: inline-block;
+  opacity: 0;
   transform: translateX(-50px);
 }
 
