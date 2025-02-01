@@ -327,8 +327,8 @@
 }
 
 .overlay-path {
-  fill: white; 
-  mask-image: url("./assets/background.png"); 
+  fill: white;
+  mask-image: url("./assets/background.png");
   mask-size: cover;
   mask-position: center;
   -webkit-mask-image: url("./assets/background.png");
@@ -401,10 +401,10 @@
   background-color: #cde0fc;
   border-radius: 20px;
 }
-.build-text{
+.build-text {
   width: 35%;
 }
-.row-build{
+.row-build {
   display: flex;
   align-items: center;
 }
@@ -782,8 +782,6 @@
   left: -2px;
 } */
 
-
-
 /* Paradigm */
 /* .container-paradigm {
   background-color: white;
@@ -847,8 +845,8 @@
 }
 
 .main-heading span {
-  display: inline-block; 
-  opacity: 0; 
+  display: inline-block;
+  opacity: 0;
   transform: translateX(-50px);
 }
 .icon-paradigm {
@@ -895,17 +893,17 @@
   font-weight: 800;
   padding-top: 10%;
 }
-.steps{
+.steps {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   top: 0;
-  padding-top: 0;
+  padding: 0;
 }
 .cards {
   position: absolute;
-  top: 10%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 150vw;
@@ -929,7 +927,7 @@
   transition: transform 0.3s ease;
   perspective: 1000px;
   cursor: pointer;
-  background-color: transparent; 
+  background-color: transparent;
   border: none;
 }
 .card-img {
@@ -953,11 +951,11 @@
   justify-content: center;
 }
 
-.card-border{
+.card-border {
   height: 100%;
-    margin: 25px;
-    border-radius: 10px;
-    border: 1px solid #fff;
+  margin: 25px;
+  border-radius: 10px;
+  border: 1px solid #fff;
 }
 
 .card-section {
@@ -965,15 +963,6 @@
   justify-content: center;
   gap: 80px;
   margin-top: 3%;
-}
-
-.card1,
-.card2,
-.card3 {
-  width: 25%;
-  height: 55vh;
-  perspective: 1000px;
-  border-radius: 20px;
 }
 
 .card-inner {
@@ -985,11 +974,6 @@
 }
 .card:hover .card-inner {
   transform: rotateY(180deg) scale(1.1);
-}
-.card1:hover .card-inner,
-.card2:hover .card-inner,
-.card3:hover .card-inner {
-  transform: rotateY(180deg);
 }
 
 .card-front,
@@ -1018,26 +1002,6 @@
   color: #004ef0;
   transform: rotateY(180deg);
   border: 1px solid #004ef0;
-}
-
-.card1 {
-  transform: rotate(-30deg) translateY(100px) translateX(-100px);
-}
-
-.card3 {
-  transform: rotate(30deg) translateY(100px) translateX(100px);
-}
-
-.card1:hover {
-  transform: rotate(-30deg) translateY(90px) translateX(-100px);
-}
-
-.card2:hover {
-  transform: translateY(-10px);
-}
-
-.card3:hover {
-  transform: rotate(30deg) translateY(90px) translateX(100px);
 }
 
 .card-icon {

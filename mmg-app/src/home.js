@@ -56,12 +56,36 @@ import "splitting/dist/splitting-cells.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const cardData = [
-  { image: TransparencyIcon, text: "TRANSPARENCY IN EVERY DROP", backText: "We ensure the highest quality standards." },
-  { image: MythIcon, text: "PURE INGREDIENTS, PURE JOY", backText: "Only natural, no additives!" },
-  { image: PossibilitiesIcon, text: "NATURE'S GOODNESS, BOTTLED", backText: "Packed with essential nutrients." },
-  { image: TransparencyIcon, text: "SUSTAINABLY SOURCED, ETHICALLY MADE", backText: "Our process is 100% eco-friendly." },
-  { image: MythIcon, text: "CRAFTED FOR YOUR WELL-BEING", backText: "Supporting a healthier lifestyle." },
-  { image: PossibilitiesIcon, text: "EXPERIENCE THE DIFFERENCE", backText: "Taste the purity in every sip." },
+  {
+    image: TransparencyIcon,
+    text: "TRANSPARENCY IN EVERY DROP",
+    backText: "We ensure the highest quality standards.",
+  },
+  {
+    image: MythIcon,
+    text: "PURE INGREDIENTS, PURE JOY",
+    backText: "Only natural, no additives!",
+  },
+  {
+    image: PossibilitiesIcon,
+    text: "NATURE'S GOODNESS, BOTTLED",
+    backText: "Packed with essential nutrients.",
+  },
+  {
+    image: TransparencyIcon,
+    text: "SUSTAINABLY SOURCED, ETHICALLY MADE",
+    backText: "Our process is 100% eco-friendly.",
+  },
+  {
+    image: MythIcon,
+    text: "CRAFTED FOR YOUR WELL-BEING",
+    backText: "Supporting a healthier lifestyle.",
+  },
+  {
+    image: PossibilitiesIcon,
+    text: "EXPERIENCE THE DIFFERENCE",
+    backText: "Taste the purity in every sip.",
+  },
 ];
 
 const Home = ({ setIsLoaded }) => {
@@ -77,18 +101,18 @@ const Home = ({ setIsLoaded }) => {
       return button === "paneer"
         ? OrderButton
         : button === "milk"
-          ? Order2Button
-          : button === "yogart"
-            ? Order2Button
-            : Order4Button;
+        ? Order2Button
+        : button === "yogart"
+        ? Order2Button
+        : Order4Button;
     } else {
       return button === "paneer"
         ? Order1Button
         : button === "milk"
-          ? OrderButton1
-          : button === "yogart"
-            ? OrderButton2
-            : OrderButton3;
+        ? OrderButton1
+        : button === "yogart"
+        ? OrderButton2
+        : OrderButton3;
     }
   };
 
@@ -119,7 +143,7 @@ const Home = ({ setIsLoaded }) => {
     }, 1000);
   };
 
-  //Card Animation 
+  //Card Animation
   const stickySectionRef = useRef(null);
   const cardsRef = useRef([]);
 
@@ -128,58 +152,73 @@ const Home = ({ setIsLoaded }) => {
     const stickySection = stickySectionRef.current;
     const cards = cardsRef.current;
     const totalCards = cards.length;
-    const stickyHeight = window.innerHeight * 7;
-
+  
+    // Dynamically adjust the sticky height to match the number of cards
+    const stickyHeight = window.innerHeight * (5 + totalCards * 0.2);
+  
     const scrollTrigger = ScrollTrigger.create({
       trigger: stickySection,
       start: "top top",
       end: `+=${stickyHeight}px`,
       pin: true,
       scroller: ".home-wrapper",
-      scrub: 1,
+      scrub: 2,
       onUpdate: (self) => {
         positionCards(self.progress);
       },
+      onLeave: () => {
+        gsap.to(stickySection, { opacity: 1, duration: 0.3 });
+      },
+      onEnterBack: () => {
+        gsap.to(stickySection, { opacity: 1, duration: 0.3 });
+      }
     });
-
+  
     const getRadius = () => {
       return window.innerWidth < 900 ? window.innerWidth * 7 : window.innerWidth * 2;
     };
-
+  
     const arcAngle = Math.PI * 0.4;
     const startAngle = Math.PI / 2 - arcAngle / 2;
-
+  
     function positionCards(progress = 0) {
       const radius = getRadius();
-      const totalTravel = 1 + totalCards / 7.5;
-      const adjustedProgress = (progress * totalTravel - 1) * 0.75;
-
+      const totalTravel = 1 + totalCards / 5;
+  
+      // Ensure the last card stops at the center
+      const adjustedProgress = (progress * totalTravel - 0.4) * 0.85; 
+  
       cards.forEach((card, i) => {
         const normalizedProgress = (totalCards - 1 - i) / totalCards;
         const cardProgress = normalizedProgress + adjustedProgress;
-        const angle = startAngle + arcAngle * cardProgress;
-
+  
+        // Clamp progress so last card doesn't overshoot
+        const clampedProgress = Math.min(Math.max(cardProgress, 0), 1); 
+  
+        const angle = startAngle + arcAngle * clampedProgress;
+  
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
         const rotation = (angle - Math.PI / 2) * (180 / Math.PI);
-
+  
         gsap.set(card, {
           x: x,
           y: -y + radius,
           rotation: -rotation,
           transformOrigin: "center center",
-          opacity: cardProgress > 1 || cardProgress < -0.1 ? 0 : 1,
+          opacity: clampedProgress > 1 || clampedProgress < -0.1 ? 0 : 1,
         });
       });
     }
-
+  
     positionCards(0);
-
+  
     return () => {
       scrollTrigger.kill();
       ScrollTrigger.killAll();
     };
   }, [setIsLoaded]);
+  
 
   useEffect(() => {
     if (!setIsLoaded) return;
@@ -242,7 +281,6 @@ const Home = ({ setIsLoaded }) => {
   const scrollRef = useRef(null); // Ref to the scroll container
 
   // Testing Animation
-
 
   console.log("ScrollTrigger initialized");
 
@@ -333,39 +371,41 @@ const Home = ({ setIsLoaded }) => {
 
   useEffect(() => {
     if (!setIsLoaded) return;
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".container-pure",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1,
-        scroller: ".home-wrapper",
-      },
-    })
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: ".container-pure",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+          scroller: ".home-wrapper",
+        },
+      })
       .to(".overlay-path", { attr: { d: paths.curve1 }, duration: 1 })
       .to(".overlay-path", { attr: { d: paths.curve2 }, duration: 1 });
   }, [setIsLoaded]);
 
-  // Footer - background 
+  // Footer - background
   useEffect(() => {
     if (!setIsLoaded) return;
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".proteins-container",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1,
-        scroller: ".home-wrapper",
-      },
-    })
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: ".proteins-container",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+          scroller: ".home-wrapper",
+        },
+      })
       .to(".overlay-path1", { attr: { d: paths.curve1 }, duration: 1 })
       .to(".overlay-path1", { attr: { d: paths.curve2 }, duration: 1 });
   }, [setIsLoaded]);
 
   const paths = {
-    start: "M 0 0 V 0 Q 50 0 100 0 V 0 Z",  // Flat at the top
-    curve1: "M 0 0 V 10 Q 50 20 100 10 V 0 Z",  // Smaller curve
-    curve2: "M 0 0 V 20 Q 50 30 100 20 V 0 Z"   // Slightly larger curve
+    start: "M 0 0 V 0 Q 50 0 100 0 V 0 Z", // Flat at the top
+    curve1: "M 0 0 V 10 Q 50 20 100 10 V 0 Z", // Smaller curve
+    curve2: "M 0 0 V 20 Q 50 30 100 20 V 0 Z", // Slightly larger curve
   };
   // Banner Animation Curve
   // useEffect(() => {
@@ -384,11 +424,10 @@ const Home = ({ setIsLoaded }) => {
   // }, [setIsLoaded]);
 
   // const path1 = {
-  //   startBottom: "M 0 100 V 100 Q 50 95 100 100 V 100 Z",  
-  //   curveBottom1: "M 0 100 V 95 Q 50 90 100 95 V 100 Z",  
-  //   curveBottom2: "M 0 100 V 90 Q 50 85 100 90 V 100 Z"   
+  //   startBottom: "M 0 100 V 100 Q 50 95 100 100 V 100 Z",
+  //   curveBottom1: "M 0 100 V 95 Q 50 90 100 95 V 100 Z",
+  //   curveBottom2: "M 0 100 V 90 Q 50 85 100 90 V 100 Z"
   // };
-
 
   return (
     <div className="home-container">
@@ -410,8 +449,9 @@ const Home = ({ setIsLoaded }) => {
           <img
             src={getButtonImage("paneer")}
             alt="order-button"
-            className={`paneer-button ${activeButton === "paneer" ? "active" : ""
-              }`}
+            className={`paneer-button ${
+              activeButton === "paneer" ? "active" : ""
+            }`}
             onClick={() => handleModelChange("/mmg1.glb", "paneer", "prev")}
           />
           <img
@@ -423,14 +463,16 @@ const Home = ({ setIsLoaded }) => {
           <img
             src={getButtonImage("yogart")}
             alt="order-button"
-            className={`yogart-button ${activeButton === "yogart" ? "active" : ""
-              }`}
+            className={`yogart-button ${
+              activeButton === "yogart" ? "active" : ""
+            }`}
           />
           <img
             src={getButtonImage("icecream")}
             alt="order-button"
-            className={`icecream-button ${activeButton === "icecream" ? "active" : ""
-              }`}
+            className={`icecream-button ${
+              activeButton === "icecream" ? "active" : ""
+            }`}
           />
         </div>
 
@@ -547,7 +589,7 @@ const Home = ({ setIsLoaded }) => {
           KNOW MORE
         </a>
       </div> */}
-      <div className='container-paradigm pt-5'>
+      <div className="container-paradigm pt-5">
         <div className="icon-paradigm">
           <img src={Star} alt="Star" className="star-icon" />
           <img src={Eyestar} alt="Diamond" className="diamond-icon" />
@@ -573,13 +615,21 @@ const Home = ({ setIsLoaded }) => {
         <div ref={stickySectionRef} className="steps">
           <div className="cards">
             {cardData.map((card, index) => (
-              <div key={index} ref={(el) => (cardsRef.current[index] = el)} className="card">
+              <div
+                key={index}
+                ref={(el) => (cardsRef.current[index] = el)}
+                className="card"
+              >
                 <div className="card-inner">
                   {/* Front Side */}
                   <div className="card-front">
-                    <div className='card-border'>
+                    <div className="card-border">
                       <div className="card-img">
-                        <img src={card.image} alt={card.text} className="card-icon" />
+                        <img
+                          src={card.image}
+                          alt={card.text}
+                          className="card-icon"
+                        />
                       </div>
                       <div className="card-content">
                         <p className="card-text">{card.text}</p>
@@ -596,12 +646,24 @@ const Home = ({ setIsLoaded }) => {
             ))}
           </div>
         </div>
-        <a className="link-to-know" href="#">KNOW MORE</a>
+        <a className="link-to-know" href="#">
+          KNOW MORE
+        </a>
       </div>
       {/* Pure Protein Zero */}
       <div className="container-pure">
-        <svg className="svg-overlay" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path className="overlay-path" vectorEffect="non-scaling-stroke" d={paths.start} />
+        <svg
+          className="svg-overlay"
+          width="100%"
+          height="100%"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <path
+            className="overlay-path"
+            vectorEffect="non-scaling-stroke"
+            d={paths.start}
+          />
         </svg>
         <div className="row row-pure">
           <div className="col-sm-6">
@@ -639,19 +701,31 @@ const Home = ({ setIsLoaded }) => {
                 <div className="build-container">
                   <h1 className="build">BUILD MUSCLE</h1>
                   <p className="build-para">
-                    Protein builds muscle and bone,<br />
-                    supporting agility and resilience.<br />
-                    It’s essential for vitality and<br />
-                    longevity, fueling an active,<br />
+                    Protein builds muscle and bone,
+                    <br />
+                    supporting agility and resilience.
+                    <br />
+                    It’s essential for vitality and
+                    <br />
+                    longevity, fueling an active,
+                    <br />
                     enduring lifestyle.
                   </p>
                 </div>
               </div>
               <div className="col-sm-6">
-                <img src={Weightlift} className="weight-lift" alt="weight-lift" />
+                <img
+                  src={Weightlift}
+                  className="weight-lift"
+                  alt="weight-lift"
+                />
               </div>
             </div>
-            <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
+            <img
+              src={ProteinSlogan}
+              className="protein-slogan"
+              alt="protein-slogan"
+            />
           </div>
         </div>
 
@@ -788,7 +862,11 @@ const Home = ({ setIsLoaded }) => {
             <br /> Gains
           </h1>
           <img src={Vegbowl} className="veg-bowl" alt="veg-bowl" />
-          <img src={Recepiesbutton} className="recepies-button pt-5" alt="recepies-button" />
+          <img
+            src={Recepiesbutton}
+            className="recepies-button pt-5"
+            alt="recepies-button"
+          />
           <img src={Stickers} className="stickers" alt="stickers" />
           <p className="muscle-para">
             Protein builds muscle and
@@ -800,8 +878,18 @@ const Home = ({ setIsLoaded }) => {
       </div>
       {/* Proteins Section */}
       <div className="proteins-container pt-5 pb-5">
-        <svg className="svg-overlay" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <path className="overlay-path1" vectorEffect="non-scaling-stroke" d={paths.start} />
+        <svg
+          className="svg-overlay"
+          width="100%"
+          height="100%"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          <path
+            className="overlay-path1"
+            vectorEffect="non-scaling-stroke"
+            d={paths.start}
+          />
         </svg>
         <img src={Protein} className="protein-image" alt="protein-pic" />
         <div className="milk-pic-container">
