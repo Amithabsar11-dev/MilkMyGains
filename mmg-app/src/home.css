@@ -132,6 +132,49 @@
   font-size: 5vw;
   display: block;
 }
+.liquid {
+  text-align: center;
+    width: 12%;
+    height: 25vh;
+    border-radius: 60% 40% 40% 60% / 50% 60% 40% 50%;
+    background-color: #FFFFFF;
+    animation: wave 5s linear infinite;
+    position: absolute;
+    left: 10%;
+    bottom: 0%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: #004DF0;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: "Chivo Mono", serif;
+    font-size: 35px;
+}
+@keyframes wave {
+  20% {
+      border-radius: 55% 45% 45% 55% / 55% 55% 45% 45%;
+  }
+  40% {
+      border-radius: 50% 50% 40% 60% / 60% 50% 50% 40%;
+  }
+  60% {
+      border-radius: 45% 55% 55% 45% / 50% 60% 40% 50%;
+  }
+  80% {
+      border-radius: 40% 60% 60% 40% / 55% 55% 45% 45%;
+  }
+}
+@keyframes glow {
+  0% {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Subtle glow */
+  }
+  100% {
+      box-shadow: 0 0 20px rgba(255, 255, 255, 1); /* Stronger glow */
+  }
+}
 
 .slider-container {
   position: relative;
@@ -389,18 +432,65 @@
 }
 
 /* Power of protein */
-.power-container,
-.power-container1,
-.power-container2 {
-  background-color: white;
-  padding: 70px;
+.power-wrapper {
   position: relative;
+  height: 500vh; 
+}
+
+.power-container{
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background-color: white;
+  width: 100%;
+  z-index: 1;
+  opacity: 1;
+  padding-top: 1%;
+  padding-left: 10%;
+  padding-right: 10%;
+
+}
+.power-container1 {
+  z-index: 2;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+  opacity: 1;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.power-container2 {
+  z-index: 3;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+  opacity: 1;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .power-space {
   background-color: #cde0fc;
   border-radius: 20px;
 }
+.power-space1 {
+  background-color: #cde0fc;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
+  transition: box-shadow 0.3s ease-in-out; 
+}
+.power-space2 {
+  background-color: #cde0fc;
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow */
+  transition: box-shadow 0.3s ease-in-out; 
+}
+
 .build-text {
   width: 35%;
 }
@@ -415,7 +505,7 @@
   font-weight: 900;
   font-style: italic;
   text-align: center;
-  padding-top: 10%;
+  padding-top: 4%;
   line-height: 5rem;
   display: flex;
   justify-content: flex-start;
@@ -442,9 +532,9 @@
 }
 
 .protein-slogan {
-  width: 60%;
+  width: 50%;
   position: absolute;
-  left: 20%;
+  left: 24%;
   bottom: 2%;
 }
 
@@ -579,7 +669,7 @@
   color: #ff5733;
   transform: scale(0.5);
   position: absolute;
-  left: 55%;
+  left: 54%;
   top: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.2;
@@ -684,19 +774,69 @@
 
 .veg-bowl {
   position: absolute;
-  top: 20%;
-  width: 25%;
-  right: 38%;
+  top: 12%;
+  width: 20%;
+  right: 40%;
 }
 
 .recepies-button {
   cursor: pointer;
 }
+.Subscribe-button1 {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  background-color: #0052F0;
+  border: none;
+  width: 20%;
+  padding: 15px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #0052F0;
+}
+.Subscribe-button1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: -2px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #0052F0;
+  border-radius: 12px;
+  z-index: 1;
+  transition: all 0.2s ease-in-out;
+}
+.Subscribe-button1:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+  background-color: #0052F0;
+}
+.Subscribe-button1:hover::after {
+  bottom: -2px;
+  left: -2px  ;
+  opacity: 0;
+}
 
 .stickers {
   position: absolute;
-  top: 30%;
-  left: 12%;
+  top: 20%;
+  left: 24%;
+  transform-origin: top right; 
+  transform: rotate(70deg);
+  animation: swing 2s ease-in-out infinite alternate;
+}
+@keyframes swing {
+  0% {
+    transform: rotate(-15deg); 
+  }
+  100% {
+    transform: rotate(15deg); 
+  }
 }
 
 .muscle-para {
@@ -710,7 +850,9 @@
 
 .arrow-point {
   position: absolute;
-  bottom: 20%;
+  bottom: 15%;
+  right: 30%;
+  height: 15vh;
 }
 
 .slider-image {
@@ -1156,6 +1298,49 @@
   font-family: "Chivo Mono", Sans-serif;
 }
 
+.Subscribe-button {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  background-color: #E74C3C;
+  border: none;
+  width: 20%;
+  padding: 8px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  /* box-shadow: 0px 4px 0px 2px #2882ff; */
+  border: 2px solid #E74C3C;
+  bottom: 10%;
+  right: 2%;
+  position: absolute;
+}
+.Subscribe-button::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: -2px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #E74C3C;
+  border-radius: 12px;
+  z-index: 1;
+  transition: all 0.2s ease-in-out;
+}
+.Subscribe-button:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+  /* box-shadow: 1px 1px 0px rgba(231, 76, 60, 0.5); */
+}
+.Subscribe-button:hover::after {
+  bottom: -2px;
+  left: -2px  ;
+  opacity: 0;
+}
 /* Sample Testing */
 .main-heading span {
   display: inline-block;

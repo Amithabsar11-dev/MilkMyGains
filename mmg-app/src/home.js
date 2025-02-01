@@ -95,24 +95,25 @@ const Home = ({ setIsLoaded }) => {
   // const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("paneer");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [step, setStep] = useState(0);
 
   const getButtonImage = (button) => {
     if (button === activeButton) {
       return button === "paneer"
         ? OrderButton
         : button === "milk"
-        ? Order2Button
-        : button === "yogart"
-        ? Order2Button
-        : Order4Button;
+          ? Order2Button
+          : button === "yogart"
+            ? Order2Button
+            : Order4Button;
     } else {
       return button === "paneer"
         ? Order1Button
         : button === "milk"
-        ? OrderButton1
-        : button === "yogart"
-        ? OrderButton2
-        : OrderButton3;
+          ? OrderButton1
+          : button === "yogart"
+            ? OrderButton2
+            : OrderButton3;
     }
   };
 
@@ -152,10 +153,10 @@ const Home = ({ setIsLoaded }) => {
     const stickySection = stickySectionRef.current;
     const cards = cardsRef.current;
     const totalCards = cards.length;
-  
+
     // Dynamically adjust the sticky height to match the number of cards
     const stickyHeight = window.innerHeight * (5 + totalCards * 0.2);
-  
+
     const scrollTrigger = ScrollTrigger.create({
       trigger: stickySection,
       start: "top top",
@@ -173,34 +174,34 @@ const Home = ({ setIsLoaded }) => {
         gsap.to(stickySection, { opacity: 1, duration: 0.3 });
       }
     });
-  
+
     const getRadius = () => {
       return window.innerWidth < 900 ? window.innerWidth * 7 : window.innerWidth * 2;
     };
-  
+
     const arcAngle = Math.PI * 0.4;
     const startAngle = Math.PI / 2 - arcAngle / 2;
-  
+
     function positionCards(progress = 0) {
       const radius = getRadius();
       const totalTravel = 1 + totalCards / 5;
-  
+
       // Ensure the last card stops at the center
-      const adjustedProgress = (progress * totalTravel - 0.4) * 0.85; 
-  
+      const adjustedProgress = (progress * totalTravel - 0.4) * 0.85;
+
       cards.forEach((card, i) => {
         const normalizedProgress = (totalCards - 1 - i) / totalCards;
         const cardProgress = normalizedProgress + adjustedProgress;
-  
+
         // Clamp progress so last card doesn't overshoot
-        const clampedProgress = Math.min(Math.max(cardProgress, 0), 1); 
-  
+        const clampedProgress = Math.min(Math.max(cardProgress, 0), 1);
+
         const angle = startAngle + arcAngle * clampedProgress;
-  
+
         const x = Math.cos(angle) * radius;
         const y = Math.sin(angle) * radius;
         const rotation = (angle - Math.PI / 2) * (180 / Math.PI);
-  
+
         gsap.set(card, {
           x: x,
           y: -y + radius,
@@ -210,15 +211,15 @@ const Home = ({ setIsLoaded }) => {
         });
       });
     }
-  
+
     positionCards(0);
-  
+
     return () => {
       scrollTrigger.kill();
       ScrollTrigger.killAll();
     };
   }, [setIsLoaded]);
-  
+
 
   useEffect(() => {
     if (!setIsLoaded) return;
@@ -407,6 +408,61 @@ const Home = ({ setIsLoaded }) => {
     curve1: "M 0 0 V 10 Q 50 20 100 10 V 0 Z", // Smaller curve
     curve2: "M 0 0 V 20 Q 50 30 100 20 V 0 Z", // Slightly larger curve
   };
+
+  //Power Protein 
+  useEffect(() => {  
+    if (!setIsLoaded) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const containers = gsap.utils.toArray(".power-container1, .power-container2");
+
+    containers.forEach((container, index) => {
+      gsap.fromTo(
+        container,
+        { y: "100%", opacity: 1 },
+        {
+          y: "0%",
+          opacity: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: container,
+            start: index === 0 ? "top center" : "top+=100 center", 
+            scroller: ".home-wrapper",
+            toggleActions: "play none none reverse",
+            scrub: 2, 
+          },
+        }
+      );
+    });
+  }, [setIsLoaded]);
+
+  // useEffect(() => {
+  //   if (!setIsLoaded) return;
+  //   gsap.registerPlugin(ScrollTrigger);
+  
+  //   const containers = gsap.utils.toArray([".power-container1", ".power-container2"]);
+  
+  //   containers.forEach((container, index) => {
+  //     gsap.fromTo(
+  //       container,
+  //       { x: "100%", opacity: 0 }, // Starts from the right
+  //       {
+  //         x: "0%",
+  //         opacity: 1,
+  //         ease: "power2.out",
+  //         scrollTrigger: {
+  //           trigger: container,
+  //           start: index === 0 ? "top center" : "top+=100 center", // power-container1 starts normally, power-container2 waits
+  //           scroller: ".home-wrapper",
+  //           toggleActions: "play none none reverse",
+  //           scrub: 2,
+  //         },
+  //       }
+  //     );
+  //   });
+  // }, [setIsLoaded]);
+  
+
   // Banner Animation Curve
   // useEffect(() => {
   //   if (!setIsLoaded) return;
@@ -443,15 +499,15 @@ const Home = ({ setIsLoaded }) => {
         <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
         <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
         <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
-        <img src={Object} alt="object-order" className="object-order" />
+        {/* <img src={Object} alt="object-order" className="object-order" /> */}
+        <div className="liquid">ORDER <br /> NOW </div>
 
         <div className="order-buttons">
           <img
             src={getButtonImage("paneer")}
             alt="order-button"
-            className={`paneer-button ${
-              activeButton === "paneer" ? "active" : ""
-            }`}
+            className={`paneer-button ${activeButton === "paneer" ? "active" : ""
+              }`}
             onClick={() => handleModelChange("/mmg1.glb", "paneer", "prev")}
           />
           <img
@@ -463,16 +519,14 @@ const Home = ({ setIsLoaded }) => {
           <img
             src={getButtonImage("yogart")}
             alt="order-button"
-            className={`yogart-button ${
-              activeButton === "yogart" ? "active" : ""
-            }`}
+            className={`yogart-button ${activeButton === "yogart" ? "active" : ""
+              }`}
           />
           <img
             src={getButtonImage("icecream")}
             alt="order-button"
-            className={`icecream-button ${
-              activeButton === "icecream" ? "active" : ""
-            }`}
+            className={`icecream-button ${activeButton === "icecream" ? "active" : ""
+              }`}
           />
         </div>
 
@@ -729,8 +783,8 @@ const Home = ({ setIsLoaded }) => {
           </div>
         </div>
 
-        {/* <div className="power-container1">
-          <div className="power-space">
+        <div className="power-container1">
+          <div className="power-space1">
             <h1 className="power-heading">
               THE POWER <br />
               OF PROTEIN
@@ -754,10 +808,10 @@ const Home = ({ setIsLoaded }) => {
             </div>
             <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className="power-container2">
-          <div className="power-space">
+        <div className="power-container2">
+          <div className="power-space2">
             <h1 className="power-heading">
               THE POWER <br />
               OF PROTEIN
@@ -781,7 +835,7 @@ const Home = ({ setIsLoaded }) => {
             </div>
             <img src={ProteinSlogan} className="protein-slogan" alt="protein-slogan" />
           </div>
-        </div> */}
+        </div>
       </div>
       {/* Raising the star */}
       <div className="animation-container">
@@ -862,11 +916,14 @@ const Home = ({ setIsLoaded }) => {
             <br /> Gains
           </h1>
           <img src={Vegbowl} className="veg-bowl" alt="veg-bowl" />
-          <img
+          {/* <img
             src={Recepiesbutton}
             className="recepies-button pt-5"
             alt="recepies-button"
-          />
+          /> */}
+          <div className="subscribe-container">
+            <button class="Subscribe-button1">More Recepies On The Blog</button>
+          </div>
           <img src={Stickers} className="stickers" alt="stickers" />
           <p className="muscle-para">
             Protein builds muscle and
@@ -903,9 +960,10 @@ const Home = ({ setIsLoaded }) => {
               placeholder="YOUR EMAIL"
               className="email-placing"
             />
-            <button type="button" className="subscribe">
+            {/* <button type="button" className="subscribe">
               Subscribe
-            </button>
+            </button> */}
+            <button class="Subscribe-button">Subscribe</button>
           </div>
         </div>
         <div className="footers-column shop-footers mt-5">
