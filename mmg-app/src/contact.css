@@ -1,0 +1,362 @@
+.contact-container {
+    width: 90%;
+    max-width: 500px; 
+    margin: 40px auto;
+    padding: 20px;
+    margin-top: 0px;
+    padding-top: 11%;
+}
+.contact-color{
+  background-color: #F3F3F3;
+}
+.title {
+    font-size: 80px;
+    font-weight: bold;
+    color: #0564F2;
+    text-transform: uppercase;
+    font-style: italic;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: "Anybody_Condensed";
+}
+
+.email {
+    font-size: 25px;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-style: italic;
+    display: flex;
+    justify-content: center;
+    font-family: "Anybody_Condensed";
+}
+
+.email a {
+    text-decoration: none;
+    color: inherit; 
+}
+
+.phone {
+    margin-bottom: 70px;
+    font-size: 25px;
+    font-weight: 700 !important;
+    font-family: 'Chivo Mono', monospace;
+    text-transform: uppercase;
+    font-style: italic;
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    font-family: "Anybody_Condensed";
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    width: 100%;  
+    gap: 20px;  
+    flex-wrap: nowrap;  
+}
+
+.input-field {
+    width: 100%;  
+}
+
+.input-field label {
+    display: block;
+    font-size: 16px;
+    color: black;
+    margin-bottom: 5px;
+    text-align: left;
+    font-family: 'Chivo Mono', monospace;
+    font-weight: bold;
+}
+
+.input-group input,
+.input-field input,
+.input-field textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #0564F2;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #E0E0E0;
+    font-size: 14px;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+.button-contact {
+    background-color: #0564F2;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.button-contact:hover {
+    background-color: #0564F2;
+}
+.Subscribe-button-contact {
+    font-family: "Chivo Mono", Sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
+    background-color: #0052F0;
+    border: none;
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid #0052F0;
+  }
+  .Subscribe-button-contact::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: -2px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #0052F0;
+    border-radius: 12px;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+  }
+  .Subscribe-button-contact:hover {
+    transform: translateY(6px);
+    box-shadow: none;
+  }
+  .Subscribe-button-contact:hover::after {
+    bottom: -2px;
+    left: -2px;
+    opacity: 0;
+  }
+
+.response-message {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.response-message.success {
+    background-color: #28a745; /* Green for success */
+    color: white;
+}
+
+.response-message.error {
+    background-color: #dc3545; /* Red for error */
+    color: white;
+}
+
+.sent-message {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+}
+
+.proteins-container {
+    padding-top: 10%;
+    background-image: url("./assets/contact-back.png");
+    background-size: cover;
+    position: relative;
+  }
+  
+  .protein-rally {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .protein-image {
+    width: 80%;
+    padding-top: 10%;
+  }
+  .overlay-path1 {
+    fill: white;
+    mask-image: url("./assets/Backgroundmilk.png");
+    mask-size: cover;
+    mask-position: center;
+    -webkit-mask-image: url("./assets/Backgroundmilk.png");
+    -webkit-mask-size: cover;
+    -webkit-mask-position: center;
+  }
+  
+  /* Milk */
+  .milk-image2 {
+    padding-left: 5%;
+    width: 30%;
+    padding-top: 7%;
+    margin-right: 16%;
+  }
+  .milk-pic-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footers-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 35px;
+    color: white;
+    font-family: "Anybody", serif;
+    font-weight: 900;
+    font-style: italic;
+    padding-right: 14%;
+  }
+  
+  .footers-links li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: text-decoration 0.3s ease;
+  }
+  
+  .footers-links li:hover {
+    text-decoration: underline;
+  }
+  
+  .shop-footers {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .footers-column {
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  
+  .footers {
+    background-color: white;
+  }
+  
+  .copyright-image {
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
+  .signup-container {
+    position: absolute;
+    bottom: 1%;
+    left: 5%;
+  }
+  
+  .signup-heading {
+    font-size: 20px;
+    color: #004ef0;
+    font-family: "Anybody", serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+  .email-placing {
+    width: 35vw;
+    padding: 15px;
+    border: 1px solid #2882ff;
+    border-radius: 10px;
+  }
+  
+  .subscribe {
+    position: absolute;
+    width: 20%;
+    padding: 8px;
+    bottom: 8%;
+    right: 2%;
+    background-color: #fc5e3b;
+    font-family: "Chivo Mono", Sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    fill: #000000;
+    color: #000000;
+    border-radius: 18px;
+    box-shadow: 0px 4px 0px 2px #2882ff;
+    padding: 10px 15px;
+    cursor: pointer;
+    border: none;
+    color: white;
+  }
+  ::placeholder {
+    color: #2882ff;
+    font-size: 20px;
+    font-family: "Chivo Mono", Sans-serif;
+  }
+  
+  .Subscribe-button {
+    font-family: "Chivo Mono", Sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
+    background-color: #e74c3c;
+    border: none;
+    width: 20%;
+    padding: 8px;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+    border: 2px solid #e74c3c;
+    bottom: 10%;
+    right: 2%;
+    position: absolute;
+  }
+  .Subscribe-button::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: -2px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #e74c3c;
+    border-radius: 12px;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+  }
+  .Subscribe-button:hover {
+    transform: translateY(6px);
+    box-shadow: none;
+  }
+  .Subscribe-button:hover::after {
+    bottom: -2px;
+    left: -2px;
+    opacity: 0;
+  }
+
+  @media only screen and (max-width: 500px) and (min-width: 320px) {
+    .title{
+      font-size: 50px;
+    }
+    .phone,.email{
+      font-size: 15px;
+    }
+  }

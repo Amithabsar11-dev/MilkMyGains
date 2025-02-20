@@ -2,7 +2,7 @@
   display: flex;
   padding-left: 0px;
   padding-right: 0px;
-  background-color: #ffedd8;
+  padding-top: 6%;
 }
 
 .product-details-left {
@@ -167,7 +167,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px dotted #000; /* Dotted line that extends till the price */
+  border-bottom: 1px dotted #000; 
 }
 
 .purchase-options input[type="radio"] {
@@ -176,10 +176,9 @@
 
 .price {
   font-weight: bold;
-  margin-left: auto; /* Push the price to the right */
+  margin-left: auto; 
 }
 
-/* Cart Panel Styling */
 .cart-panel {
   position: fixed;
   top: 0;
@@ -373,7 +372,7 @@
   width: 25%;
 }
 
-/* Comparison Table Styles */
+
 .comparison-table {
   display: flex;
   justify-content: center;
@@ -417,19 +416,14 @@
   font-family: "Chivo Mono", Sans-serif;
 }
 
-.product img {
+/* .product img {
   width: 40%;
-}
+} */
 
 .product .star {
   font-size: 20px;
   color: #ffcc00;
 }
-
-.icon img {
-  width: 100%;
-}
-
 .value {
   font-size: 16px;
   font-family: "Chivo Mono", Sans-serif;

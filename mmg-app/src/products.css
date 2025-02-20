@@ -170,6 +170,6 @@ button {
   transition: background-color 0.2s ease;
 }
 
-button:hover {
+/* button:hover {
   background-color: #E74C3C;
-}
+} */

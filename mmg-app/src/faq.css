@@ -1,75 +1,353 @@
-.faq-container {
-  width: 100%;
-  padding: 20px;
-  font-family: "Anybody", serif;
+.main-container {
+  max-width: 1007px;
+  margin: 0 auto;
+  padding: 50px;
 }
 
-.faq-heading {
-  padding-left: 4%;
+.main-color {
+  background-color: #F3F3F3;
+}
+
+.frequent-heading {
+  font-size: 70px;
+  margin-bottom: 20px;
+  font-family: "Anybody_Condensed";
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 15%;
+}
+
+.tabs {
+  display: flex;
+  justify-content: start;
+  padding: 20px 0px;
+  margin-bottom: 10%;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  gap: 10px;
+}
+
+.faq-content {
+  text-align: left;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  padding-left: 35px;
+  background-color: transparent;
+}
+
+.faq-content.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.faq-item {
+  padding-bottom: 40px;
+  border-bottom: 1px dotted #000;
+  counter-increment: faq-counter;
+}
+
+.faq-item h3 {
+  font-size: 21px;
+  margin-top: 30px;
+  font-weight: bold;
+  font-family: "Chivo Mono", Sans-serif;
+  text-transform: capitalize;
+}
+
+.faq-item p {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-family: "Chivo Mono", Sans-serif;
+  padding-left: 40px;
+  margin-top: 4%;
+}
+
+.tab-button {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #0564F2;
+  background-color: white;
+  border: 2px solid #0564F2;
+  width: 20%;
+  padding: 10px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Active tab style */
+.tab-button.active {
+  color: white;
+  background-color: #0564F2;
+  border: 2px solid #0564F2;
+}
+
+/* Hover effect */
+.tab-button:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+}
+
+/* Adding an outline effect only for active and hovered tabs */
+.tab-button.active::after,
+.tab-button:hover::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: -2px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #0564F2;
+  border-radius: 12px;
+  z-index: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Remove the border effect when inactive */
+.tab-button:not(.active)::after {
+  border: none;
+  opacity: 0;
+}
+
+/* Hover effect on the border */
+.tab-button:hover::after {
+  bottom: -2px;
+  left: -2px;
+  opacity: 0;
+}
+
+.proteins-container {
+  padding-top: 10%;
+  background-image: url("./assets/Backgroundmilk.png");
+  background-size: cover;
+  position: relative;
+}
+
+.protein-rally {
+  display: flex;
+  justify-content: center;
+}
+
+.protein-image {
+  width: 80%;
+  padding-top: 10%;
+}
+
+.overlay-path1 {
+  fill: white;
+  mask-image: url("./assets/Backgroundmilk.png");
+  mask-size: cover;
+  mask-position: center;
+  -webkit-mask-image: url("./assets/Backgroundmilk.png");
+  -webkit-mask-size: cover;
+  -webkit-mask-position: center;
+}
+
+/* Milk */
+.milk-image {
+  /* padding-left: 5%; */
+  width: 30%;
+  /* padding-top: 12%; */
+}
+
+.milk-pic-container {
+  display: flex;
+  justify-content: center;
+}
+
+.footers-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 35px;
+  color: white;
+  font-family: "Anybody", serif;
   font-weight: 900;
   font-style: italic;
-  padding-top: 4%;
+  padding-right: 14%;
 }
 
-
-.faq-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 50px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.faq-title-text {
-  flex-grow: 1;
-  font-family: "Anybody", serif;
-  font-weight: 600;
-  font-size: 25px;
-}
-
-.faq-icon {
-  font-size: 24px;
-  width: 2%;
-}
-
-.faqs-content {
-  padding: 15px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.faq-qna {
+.footers-links li {
   margin-bottom: 10px;
+  cursor: pointer;
+  transition: text-decoration 0.3s ease;
 }
 
-.faq-question {
-  font-weight: bold;
-  margin-top: 5%;
+.footers-links li:hover {
+  text-decoration: underline;
+}
+
+.shop-footers {
+  display: flex;
+  justify-content: center;
+}
+
+.footers-column {
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.footers {
+  background-color: white;
+}
+
+.copyright-image {
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.signup-container {
+  position: absolute;
+  bottom: 1%;
+  left: 5%;
+}
+
+.signup-heading {
+  font-size: 35px;
+  color: #004ef0;
   font-family: "Anybody", serif;
-  font-size: 30px;
+  font-weight: 900;
+  font-style: italic;
 }
 
-.faq-answer {
-  font-size: 16px;
-  margin-bottom: 5%;
-  padding: 25px;
-  font-family: "Chivo Mono", serif;
+.email-placing {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #2882ff;
+  border-radius: 25px;
 }
 
-.dashed-line {
-  border-bottom: 1px dashed black;
-  margin: 10px 0;
+.subscribe {
+  position: absolute;
+  width: 20%;
+  padding: 8px;
+  bottom: 8%;
+  right: 2%;
+  background-color: #fc5e3b;
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  fill: #000000;
+  color: #000000;
+  border-radius: 18px;
+  box-shadow: 0px 4px 0px 2px #2882ff;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  color: white;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
+::placeholder {
+  color: #2882ff;
+  font-size: 20px;
+  font-family: "Chivo Mono", Sans-serif;
+}
+
+.Subscribe-button {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  background-color: #e74c3c;
+  border: none;
+  width: 20%;
+  padding: 8px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #e74c3c;
+  bottom: 10%;
+  right: 2%;
+  position: absolute;
+}
+
+.Subscribe-button::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: -2px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #e74c3c;
+  border-radius: 12px;
+  z-index: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.Subscribe-button:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+}
+
+.Subscribe-button:hover::after {
+  bottom: -2px;
+  left: -2px;
+  opacity: 0;
+}
+
+@media only screen and (max-width: 500px) and (min-width: 320px) {
+  .frequent-heading {
+    font-size: 35px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .main-container {
+    padding: 15px;
   }
+
+  .tabs {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab-button {
+    width: 60%;
+  }
+
+  .faq-item p {
+    padding-left: 0px;
+  }
+
+  .nav-dark span {
+    color: white !important;
+  }
+
+  .signup-heading {
+    font-size: 12px !important;
+  }
+  .email-placing{
+    padding: 5px !important;
+    width: 50vw !important;
+  }
+  .Subscribe-button{
+    font-size: 10px !important;
+    width: 60% !important;
+    padding: 6px !important;
+    right: -70% !important;
+  }
+  .proteins-container{
+    background-position: 60% 100%;
+    padding: 0 !important;
+  }
+  .footers-links li{
+    font-size: 15px  !important;
+    margin-bottom: 2px !important;
+  }
+  .footers-links {
+    padding-right: 0% !important;
+    padding-bottom: 3rem !important;
+}
+
 }

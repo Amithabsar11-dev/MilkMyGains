@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import ProductPage from './products';
 import ProductDetails from './ProductDetails';
 import Header from './header';
@@ -10,11 +10,25 @@ import Preload from './preload';
 import FAQ from './faq.js';
 import About from './About.js';
 import { CartProvider } from './cartContext';
+import Contact from './contact.js';
 import Cards from './cards.js';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isPreloadEnabled, setIsPreloadEnabled] = useState(true);
+  const location = useLocation();
+
+  // Handle preloading logic for the home page
+  useEffect(() => {
+    const shouldShowPreload = location.pathname === '/'; // Only show preload on home page
+
+    if (shouldShowPreload) {
+      const timer = setTimeout(() => setIsLoaded(true), 6000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoaded(true); // Skip preload if not on home page
+    }
+  }, [location.pathname, isPreloadEnabled]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 768px)');
@@ -31,15 +45,6 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    if (isPreloadEnabled) {
-      const timer = setTimeout(() => setIsLoaded(true), 4000);
-      return () => clearTimeout(timer);
-    } else {
-      setIsLoaded(true);
-    }
-  }, [isPreloadEnabled]);
-
   return (
     <CartProvider>
       <div className="">
@@ -49,20 +54,27 @@ function App() {
           </div>
         )}
         <div className={`home-wrapper ${isLoaded ? 'visible' : ''}`}>
-          <Router>
             <Header />
             <Routes>
-            <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/products" element={<ProductPage />} />
               <Route path="/product/:handle" element={<ProductDetails />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/faq" element={<FAQ isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/about" element={<About isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/contact" element={<Contact isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
             </Routes>
-          </Router>
         </div>
       </div>
     </CartProvider>
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;
