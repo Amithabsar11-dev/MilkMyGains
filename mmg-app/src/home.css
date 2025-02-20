@@ -305,9 +305,11 @@
   left: 50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle,
-      rgba(255, 255, 255, 0.3) 10%,
-      rgba(255, 255, 255, 0) 60%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3) 10%,
+    rgba(255, 255, 255, 0) 60%
+  );
   filter: blur(10px);
   opacity: 0.6;
   transform: translate(-50%, -50%) scale(1);
@@ -561,7 +563,6 @@
   position: absolute;
   top: 63%;
 } */
-
 
 .container-paradigm {
   background-color: white;
@@ -1057,26 +1058,24 @@
 .product img {
   height: 13vh;
 }
-.product-highlight{
-   height: 175px;
+.product-highlight {
+  height: 175px;
 }
 
 .product-label img {
   height: 14vh;
   opacity: 0;
 }
-.product-label{
+.product-label {
   height: 175px;
 }
 
-.table-icons{
+.table-icons {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 15px;
 }
-
-
 
 /* Wholesome */
 .wholesome-container {
@@ -1414,10 +1413,7 @@
 
 /* Sample */
 
-
-
 @media only screen and (max-width: 1700px) and (min-width: 770px) {
-
   .power-space,
   .power-space1,
   .power-space2 {
@@ -1428,9 +1424,9 @@
 
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .milkbg {
-    width: 40%;
+    width: 43%;
     height: 35%;
-    top: 46%;
+    top: 65%;
   }
 
   .svg-container {
@@ -1455,34 +1451,34 @@
 
   .svg-order-button-container {
     position: absolute;
-    bottom: 18%;
+    bottom: 8%;
     left: 15%;
   }
 
   .order-button-svg {
-    width: 60%;
+    width: 50%;
   }
 
   .milkbg3 {
-    left: 2%;
-    top: 75%;
-    width: 25%;
+    left: 8%;
+    top: 84%;
+    width: 20%;
   }
 
   .milkbg2 {
     right: 4%;
-    bottom: 55%;
+    bottom: 33%;
   }
 
   .milkbg1 {
     right: 13%;
-    bottom: 42%;
+    bottom: 23%;
     width: 17%;
   }
 
   .order-buttons {
     flex-direction: row;
-    bottom: 6%;
+    bottom: 0%;
     gap: 15px;
     justify-content: center;
   }
@@ -1494,10 +1490,10 @@
   }
 
   .liquid-text {
-    bottom: 28%;
+    bottom: 24%;
     left: 37%;
     line-height: 1rem;
-    font-size: 20px;
+    font-size: 16px;
   }
 
   .main-heading {
@@ -1554,7 +1550,7 @@
   }
 
   .weight-lift {
-    width: 80%;
+    width: 70%;
     right: 10%;
   }
 
@@ -1576,7 +1572,7 @@
 
   .weight-lift1 {
     bottom: 10%;
-    width: 60%;
+    width: 50%;
     right: 19%;
   }
 
@@ -1660,12 +1656,12 @@
 }
 
 @media only screen and (max-width: 1750px) and (min-width: 1500px) {
- .product img{
-  height: 14vh;
- }
- .product-label img{
-  height: 15vh;
- }
+  .product img {
+    height: 14vh;
+  }
+  .product-label img {
+    height: 15vh;
+  }
 }
 
 @media only screen and (max-width: 2200px) and (min-width: 1750px) {

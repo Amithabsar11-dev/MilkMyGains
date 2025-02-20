@@ -2,7 +2,11 @@
   display: flex;
   padding-left: 0px;
   padding-right: 0px;
-  padding-top: 6%;
+  padding-top: 7%;
+}
+
+.row {
+  --bs-gutter-x: 0rem;
 }
 
 .product-details-left {
@@ -14,8 +18,10 @@
   padding: 100px;
   background-image: url("./assets/Vector (1).png");
   background-repeat: no-repeat;
-  background-position-x: center;
+  background-position: 65% 30%;
+  background-size: 60%;
   background-color: #0054f1;
+  position: relative;
 }
 
 .product-details-image {
@@ -28,13 +34,39 @@
 .product-details-right {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   border: 1px solid black;
   border-style: dashed;
   border-right: none;
-  padding: 50px;
+  padding: 30px;
   border-left: none;
   background-color: white;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.milk-product {
+  position: absolute;
+  left: 3%;
+  bottom: 6%;
+}
+
+.icecream-product {
+  position: absolute;
+  left: 3%;
+  bottom: 18%;
+}
+
+.paneer-product {
+  position: absolute;
+  left: 3%;
+  bottom: 30%;
+}
+
+.mmg-product {
+  position: absolute;
+  left: 3%;
+  bottom: 42%;
 }
 
 .horizontal-line {
@@ -47,10 +79,11 @@
 }
 
 .details-title {
-  font-size: 80px;
+  font-size: 55px;
   font-family: "Anybody", serif;
   font-weight: 900;
   font-style: italic;
+  margin: 0;
 }
 
 .variant-selection,
@@ -90,16 +123,108 @@
   box-shadow: -1px 2px 0px 6px #ff7a5c;
 }
 
+.Subscribe-button-cart,
+.Subscribe-button-buy {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: black;
+  background-color: #fff;
+  border: none;
+  width: 48%;
+  padding: 15px;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #f04e2a;
+  box-shadow: -5px 5px #f04e2a;
+}
+
+/* .Subscribe-button-cart::after,
+  .Subscribe-button-buy::after {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    left: -2px;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #F04E2A;
+    border-radius: 12px;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+  } */
+
+.Subscribe-button-cart:hover,
+.Subscribe-button-buy:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+  color: white;
+  background-color: #f04e2a;
+}
+
+.Subscribe-button-cart:hover::after,
+.Subscribe-button-buy:hover::after {
+  bottom: -2px;
+  left: -2px;
+  opacity: 0;
+}
+
+.Subscribe-button-pack {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000000;
+  background-color: white;
+  border: none;
+  width: 20%;
+  padding: 8px;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #000000;
+  /* margin-bottom: 10%; */
+  position: relative;
+  box-shadow: -5px 5px;
+}
+
+.Subscribe-button-pack:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+  background-color: #f04e2a;
+  box-shadow: none;
+  color: white;
+}
+
+.Subscribe-button-pack:hover::after {
+  bottom: -2px;
+  left: -2px;
+  opacity: 0;
+}
+
 .feature-icons {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 80px;
   margin: 20px 0;
 }
 
 .feature-item {
   text-align: center;
   flex: 1;
+}
+.feature-cow {
+  display: grid;
+  justify-content: flex-start;
+}
+.feature-protein {
+  display: grid;
+  justify-content: flex-end;
 }
 
 .feature-item img {
@@ -110,12 +235,14 @@
 .button-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   gap: 20px;
 }
 
 .text-family {
   font-family: "Chivo Mono", serif;
+  margin-bottom: 0;
+  font-size: 14px;
 }
 
 .pack-button {
@@ -146,12 +273,14 @@
 .pack-buttons {
   display: flex;
   gap: 20px;
+  padding-bottom: 3%;
 }
 
 .quantity {
   font-size: 20px;
   font-family: "Chivo Mono", serif;
   padding-bottom: 2%;
+  text-transform: uppercase;
 }
 
 .purchase-options label {
@@ -162,12 +291,13 @@
   cursor: pointer;
   font-family: "Chivo Mono", Sans-serif;
 }
+
 .purchase-option-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px dotted #000; 
+  border-bottom: 1px dotted #000;
 }
 
 .purchase-options input[type="radio"] {
@@ -176,9 +306,10 @@
 
 .price {
   font-weight: bold;
-  margin-left: auto; 
+  margin-left: auto;
 }
 
+/* Cart Panel Styling */
 .cart-panel {
   position: fixed;
   top: 0;
@@ -240,7 +371,6 @@
 .product-details-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .accordion-container {
@@ -302,7 +432,6 @@
 
 .faq-content {
   padding: 10px;
-  background-color: #f9f9f9;
   border-radius: 5px;
 }
 
@@ -319,13 +448,24 @@
 .review-image {
   width: 15%;
 }
+
 .metafield-container {
   background-color: white;
-  width: 50%;
   padding-top: 7%;
   padding-bottom: 7%;
   position: relative;
 }
+
+.metafield-ingredients {
+  background-image: url("./assets//background.png");
+}
+
+.metafield-total {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10%;
+}
+
 .metafield-question {
   color: #0054f1;
   font-size: 30px;
@@ -334,6 +474,7 @@
   font-style: italic;
   text-transform: uppercase;
 }
+
 .metafield-answer {
   color: #000;
   font-size: 16px;
@@ -341,125 +482,484 @@
   text-transform: uppercase;
   padding-bottom: 5%;
 }
+
+.nutrition-lift {
+  width: 20% !important;
+  position: absolute;
+  right: 10%;
+  top: -15%;
+}
+
+.ingredients-row {
+  padding: 100px;
+  position: relative;
+}
+
+.nutritional-title-container {
+  border: 1px dashed white;
+  border-radius: 15px;
+  padding: 30px;
+  width: 85%;
+}
+
+.nutritional-items-total {
+  display: flex;
+  gap: 40px;
+  padding-top: 5%;
+}
+
+.nutrients-imaging {
+  position: absolute;
+  bottom: 24%;
+  right: 7%;
+}
+
+.ingredients-first {
+  position: relative;
+}
+
+.ingredients-title {
+  font-family: "Anybody_Condensed";
+  font-size: 40px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.ingredients-para {
+  font-family: "Chivo Mono", serif;
+  text-transform: uppercase;
+  color: white;
+  font-size: 15px;
+}
+
+.nutritional-energy {
+  font-family: "Chivo Mono", serif;
+  color: white;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+/* Raising Protein */
+.texting-wrapper-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.raising-1 {
+  font-size: 150px;
+  font-family: "Anybody_Condensed";
+  color: #0052f0;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.bar-proteins-1 {
+  font-size: 150px;
+  font-family: "Anybody_Condensed";
+  color: #0052f0;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.high-proteins-1,
+.low-proteins-1 {
+  font-size: 30px;
+  font-family: "Anybody_Condensed";
+  color: #fc5e3b;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.nutritional-highlights {
+  font-family: "Anybody_Condensed";
+  font-size: 40px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.energy-para {
+  font-family: "Chivo Mono", serif;
+  text-transform: uppercase;
+  color: white;
+  font-size: 12px;
+}
+
+.nutritional-space {
+  padding-top: 15%;
+}
+
+.ingredients-list {
+  width: 80%;
+  position: absolute;
+  left: 15%;
+  top: 5%;
+}
+
 .words-image {
   position: absolute;
-  bottom: 0;
-  left: -50%;
-  bottom: -25%;
+  top: 10%;
+  left: 0;
 }
-.raising-container {
-  background-color: white;
+
+.review-heading {
+  font-family: "Anybody_Condensed";
+  font-size: 60px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0054f1;
+}
+
+.rating-para {
+  font-family: "Chivo Mono", serif;
+  text-transform: uppercase;
+  font-size: 15px;
+  text-align: center;
+  padding-right: 30%;
+  padding-top: 10%;
+}
+
+.rating-review {
   display: flex;
+  gap: 20px;
   justify-content: center;
 }
 
-.raising-star {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
+.review-title {
+  position: relative;
 }
 
-.raising-heading {
-  font-size: 100px;
-  color: #fc5e3b;
-  font-family: "Anybody", serif;
-  font-style: italic;
-  color: #0052f0;
-  font-weight: 900;
+.orange-star1 {
+  position: absolute;
+  right: 10%;
+  bottom: 30%;
+  width: 15%;
 }
 
-.raising-protein {
-  width: 25%;
+.orange-star {
+  position: absolute;
+  width: 8%;
+  left: 16%;
 }
 
+.reviews-40 {
+  font-family: "Chivo Mono", serif;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #aaa;
+}
 
-.comparison-table {
+.rating-number {
+  font-family: "Chivo Mono", serif;
+  font-size: 50px;
+  color: #0054f1;
+}
+
+.review-button {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  padding-top: 7%;
+}
+
+.reviewer-section {
+  display: flex;
+  gap: 25px;
+  padding-bottom: 2%;
+}
+
+.reviewer-days,
+.reviewer-name {
+  padding-top: 4%;
+  color: #aaa;
+  font-family: "Chivo Mono", Sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.reviewer-days1,
+.reviewer-name1 {
+  padding-top: 2%;
+  color: #aaa;
+  font-family: "Chivo Mono", Sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.reviewer-days2,
+.reviewer-name2 {
+  padding-top: 2%;
+  color: #aaa;
+  font-family: "Chivo Mono", Sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.reviewer-title {
+  font-family: "Chivo Mono", serif;
+  font-size: 25px;
+}
+
+.reviewer-para {
+  font-family: "Chivo Mono", serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  padding-bottom: 2%;
+}
+
+.reviews-row {
+  padding-top: 5%;
+}
+
+.review-button-contact {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  background-color: #0052f0;
+  border: none;
+  width: 50%;
+  padding: 8px;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #0052f0;
+}
+
+.review-button-contact::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: -2px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #0052f0;
+  border-radius: 12px;
+  z-index: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.review-button-contact:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+}
+
+.review-button-contact:hover::after {
+  bottom: -2px;
+  left: -2px;
+  opacity: 0;
+}
+
+.star-5 {
+  width: 60%;
+  padding-top: 2%;
+}
+
+.star-4 {
+  width: 20%;
+  padding-top: 2%;
+}
+
+.spacing-reviews {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.high-protein-heading {
+  font-family: "Anybody_Condensed";
+  font-size: 65px;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
   padding-top: 5%;
   padding-bottom: 5%;
-  background-color: white;
-  width: 100%;
 }
 
-.comparison-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-  width: 12%;
-  height: 50vh;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  background-color: white;
-  text-align: center;
-  padding: 10px;
+.graph-image {
+  width: 65%;
 }
 
-.comparison-column.highlighted {
-  background-color: #0052f0;
-  color: white;
+.milk-image-product {
+  width: 30%;
+  padding-top: 2%;
 }
 
-.comparison-column.labels {
-  background-color: transparent;
-  border: none;
-  display: flex;
-  justify-content: center;
-}
+@media only screen and (max-width: 500px) and (min-width: 320px) {
+  .product-details-container {
+    display: block;
+  }
 
-.label {
-  font-size: 16px;
-  text-align: left;
-  color: #0052f0;
-  font-family: "Chivo Mono", Sans-serif;
-}
+  .product-details-left {
+    background-size: contain;
+    padding: 0px;
+  }
 
-/* .product img {
-  width: 40%;
-} */
+  .product-lisiting-icon {
+    display: none;
+  }
 
-.product .star {
-  font-size: 20px;
-  color: #ffcc00;
-}
-.value {
-  font-size: 16px;
-  font-family: "Chivo Mono", Sans-serif;
-}
-.data-table{
-    caption-side: bottom;
-    border-collapse: separate;
-    width: 100%;
+  .product-details-right {
+    padding: 0px;
+    display: block;
+  }
+
+  .details-title {
+    font-size: 35px;
+    padding-top: 5%;
+  }
+
+  .Subscribe-button-pack {
+    width: 28%;
+  }
+
+  .purchase-option-row {
+    padding: 10px 10px;
+  }
+
+  .feature-item img {
+    max-width: 45px;
+  }
+
+  .text-family {
+    font-size: 12px;
+  }
+
+  .button-row {
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .pack-buttons {
+    justify-content: center;
+  }
+
+  .metafield-answer {
+    padding-bottom: 0%;
+  }
+
+  .words-image {
+    display: none;
+  }
+
+  .ingredients-row {
+    padding: 20px;
+  }
+
+  .nutrition-lift {
+    width: 45%;
+    right: 0%;
+    top: -10%;
+  }
+
+  .nutritional-highlights {
+    font-size: 20px;
+  }
+
+  .nutritional-energy {
+    font-size: 20px;
+  }
+
+  .nutritional-items-total {
     gap: 20px;
-    border-spacing: 50px;
+  }
+
+  .nutritional-title-container {
+    width: 90%;
+  }
+
+  .nutrients-imaging {
+    bottom: 35%;
+    right: 0;
+    width: 30%;
+    right: 10%;
+  }
+
+  .metafield-items {
+    padding: 5px;
+  }
+
+  .ingredients-list {
+    width: 100%;
+    padding-top: 10%;
+    position: static;
+  }
+
+  .star-4 {
+    width: 35%;
+  }
+
+  .reviews-space-pad {
+    padding-top: 6%;
+  }
+
+  .reviewer-section {
+    align-items: flex-start;
+  }
+
+  .reviewer-title-container {
+    padding: 5px;
+  }
+
+  .texting-wrapper-1 {
+    display: block;
+  }
+
+  .raising-1,
+  .bar-proteins-1 {
+    font-size: 70px;
+  }
+
+  .animations-container {
+    text-align: center;
+  }
+
+  .high-proteins-1,
+  .low-proteins-1 {
+    font-size: 25px;
+  }
+
+  .comparison-table {
+    display: block !important;
+  }
+
+  .comparison-column {
+    gap: 30px;
+    width: 100% !important;
+  }
+
+  .product-label {
+    display: none;
+  }
+
+  .comparison-table {
+    padding-top: 0;
+  }
+
+  .high-protein-heading {
+    font-size: 26px;
+  }
+
+  .proteins-container-1 {
+    background-position: 60% 100%;
+  }
+
+  .milk-image-product {
+    padding-top: 20%;
+    width: 30%;
+  }
+  .labels {
+    width: 100% !important;
+  }
+  .metafield-container {
+    overflow: hidden;
+  }
 }
-.col-image{
-  width: 70%;
-}
-.table-body{
-  font-family: "Chivo Mono", Sans-serif;
-  text-transform: uppercase;
-}
-.first-td {
-  color: #0052f0;;
-}
-.table-body tr td:not(:first-child) {
-  text-align: center;
-  padding-right: 4%;
-}
-.reviews-container{
-  width: 100%;
-}
-.reviews-intro{
-  text-align: center;
-}
-.review-intro-heading{
-  font-family: "Anybody", serif;
-  font-style: italic;
-  color: #0052f0;
-  font-size: 50px;
-  font-weight:900;
-  text-transform: uppercase;
+@media only screen and (max-width: 1900px) and (min-width: 1600px) {
+  .details-title {
+    font-size: 80px;
+  }
 }

@@ -10,11 +10,26 @@ import { useContext } from "react";
 import { CartContext } from "./cartContext";
 import Words1 from "./assets/words1.svg";
 import Raisingprotein from "./assets/high-protein.svg";
+import MMGproduct from "./assets/mmg-product.svg";
+import Paneerproduct from "./assets/paneer-product.svg";
+import Icecreamproduct from "./assets/icrecream-product.svg";
+import Milkproduct from "./assets/milk-product.svg";
+import MMG from "./assets/MMG-image.svg";
 import Paneericon from "./assets/Panner-icon.svg";
 import Proteins from "./assets/meat.svg";
 import Whey from "./assets/powder.svg";
 import Energybar from "./assets/ricebag.svg";
 import Palakpaneer from "./assets/paneercubes.svg";
+import LiftSticker from "./assets/nutrition-sticker.svg";
+import INGREDIENTS from "./assets/ingredients-list.svg";
+import Nutrients from "./assets/nutrients-icon.svg";
+import Stars from "./assets/stars.svg";
+import Orangestars from "./assets/reviews-orange.svg";
+import Activestar from "./assets/active-star.svg";
+import Inactivestar from "./assets/inactive-star.svg";
+import Milk from "./assets/Slice-3.svg";
+import Copyright1 from "./assets/copyright1.svg";
+import Graph from "./assets/graph.svg";
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -150,8 +165,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-        : 0;
+      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+      : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -239,40 +254,59 @@ const ProductDetails = () => {
     <div className="product-details-page">
       <div className="product-details-container">
         <div className="product-details-left col-sm-6">
-          {images.edges[0]?.node.src ? (
-            <img
-              src={images.edges[0].node.src}
-              alt={images.edges[0].node.altText || "Product Image"}
-              className="product-details-image"
-            />
-          ) : (
-            <div className="placeholder">No Image Available</div>
-          )}
+          <img src={MMG} alt="mmg-image" className="product-details-image" />
+          <div className="product-lisiting-icon">
+            <div className="product-icons-list">
+              <img
+                src={MMGproduct}
+                className="mmg-product"
+                alt="mmg-product-image"
+              />
+              <img
+                src={Paneerproduct}
+                className="paneer-product"
+                alt="mmg-product-image"
+              />
+              <img
+                src={Icecreamproduct}
+                className="icecream-product"
+                alt="mmg-product-image"
+              />
+              <img
+                src={Milkproduct}
+                className="milk-product"
+                alt="mmg-product-image"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="product-details-right col-sm-6">
-          <h1 className="details-title">{title}</h1>
+          <h1 className="details-title">
+            HIGH PROTEIN <br />
+            PANEER
+          </h1>
           <hr className="horizontal-line"></hr>
 
           <div className="pack-selection">
             <h4 className="quantity">Quantity</h4>
             <div className="pack-buttons">
               <button
-                className="pack-button"
+                className="Subscribe-button-pack"
                 disabled={selectedVariant?.quantityAvailable < 1}
                 onClick={() => handlePackSelection(1)}
               >
                 Pack of 1
               </button>
               <button
-                className="pack-button"
+                className="Subscribe-button-pack"
                 disabled={selectedVariant?.quantityAvailable < 4}
                 onClick={() => handlePackSelection(4)}
               >
                 Pack of 4
               </button>
               <button
-                className="pack-button"
+                className="Subscribe-button-pack"
                 disabled={selectedVariant?.quantityAvailable < 6}
                 onClick={() => handlePackSelection(6)}
               >
@@ -344,13 +378,13 @@ const ProductDetails = () => {
 
           <div className="button-row">
             <button
-              className="add-to-cart-button"
+              className="Subscribe-button-cart"
               disabled={!selectedVariant?.availableForSale}
               onClick={handleAddToCart}
             >
               Add to Cart
             </button>
-            <button className="buy-now-button" onClick={handleBuyNow}>
+            <button className="Subscribe-button-buy" onClick={handleBuyNow}>
               Buy Now
             </button>
           </div>
@@ -422,204 +456,353 @@ const ProductDetails = () => {
       </div>
       {/* Metafields */}
       <div className="metafield-container">
-        <div className="metafield-items">
-          {faqContent?.map((item, index) => (
-            <div key={index}>
-              <h5 className="metafield-question">{item.question}</h5>
-              <p className="metafield-answer">{item.answer}</p>
+        <div className="metafield-total">
+          <div className="metafield-items">
+            <div className="metafield-QA">
+              <h5 className="metafield-question">What it is?</h5>
+              <p className="metafield-answer">
+                Our high-protein paneer supports your active lifestyle with 31
+                grams
+                <br /> of protein per serving and just two natural ingredients.
+                It’s clean,
+                <br /> wholesome, and perfect for muscle growth, recovery, and
+                weight
+                <br /> management—low in fat, low in calories, and high in
+                quality, without
+                <br /> compromising on taste.
+              </p>
             </div>
-          ))}
-          <img src={Words1} alt="words" className="words-image" />
+            <div className="metafield-QA">
+              <h5 className="metafield-question">What it is?</h5>
+              <p className="metafield-answer">
+                Our high-protein paneer supports your active lifestyle with 31
+                grams
+                <br /> of protein per serving and just two natural ingredients.
+                It’s clean,
+                <br /> wholesome, and perfect for muscle growth, recovery, and
+                weight
+                <br /> management—low in fat, low in calories, and high in
+                quality, without
+                <br /> compromising on taste.
+              </p>
+            </div>
+            <div className="metafield-QA">
+              <h5 className="metafield-question">What it is?</h5>
+              <p className="metafield-answer">
+                Our high-protein paneer supports your active lifestyle with 31
+                grams
+                <br /> of protein per serving and just two natural ingredients.
+                It’s clean,
+                <br /> wholesome, and perfect for muscle growth, recovery, and
+                weight
+                <br /> management—low in fat, low in calories, and high in
+                quality, without
+                <br /> compromising on taste.
+              </p>
+            </div>
+            <img src={Words1} alt="words" className="words-image" />
+          </div>
+        </div>
+        <div className="metafield-ingredients">
+          <div className="row ingredients-row">
+            <img
+              src={LiftSticker}
+              className="nutrition-lift"
+              alt="nutrition-lift"
+            />
+            <div className="col-sm-7 ingredients-first">
+              <img
+                src={Nutrients}
+                className="nutrients-imaging"
+                alt="nutrients-image"
+              />
+              <div className="ingredients-title-container">
+                <h1 className="ingredients-title">Ingredients</h1>
+                <p className="ingredients-para">
+                  Made with pasteurized cow milk and lemon, our paneer is <br />
+                  pure, natural, and free from additives or preservatives.
+                  <br /> Simple ingredients for a healthier you!
+                </p>
+              </div>
+              <div className="nutritional-space">
+                <div className="nutritional-title-container">
+                  <h1 className="nutritional-highlights">
+                    Nutritional Highlights
+                  </h1>
+                  <div className="nutritional-items-total">
+                    <div className="nutritional-items">
+                      <h1 className="nutritional-energy">162 Kcal</h1>
+                      <p className="energy-para">Energy</p>
+                    </div>
+                    <div className="nutritional-items1">
+                      <h1 className="nutritional-energy">30.5g</h1>
+                      <p className="energy-para">protein</p>
+                    </div>
+                    <div className="nutritional-items2">
+                      <h1 className="nutritional-energy">4g</h1>
+                      <p className="energy-para">Total fat</p>
+                    </div>
+                    <div className="nutritional-items3">
+                      <h1 className="nutritional-energy">1g</h1>
+                      <p className="energy-para">carbs</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-5" style={{ position: "relative" }}>
+              <div className="ingredients-image">
+                <img
+                  src={INGREDIENTS}
+                  alt="ingredients-list"
+                  className="ingredients-list"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="reviews-container">
+          <div className="row reviews-row">
+            <div className="col-sm-6 spacing-reviews">
+              <div className="review-spacing">
+                <div className="review-title">
+                  <img
+                    src={Orangestars}
+                    className="orange-star"
+                    alt="orange-star"
+                  />
+                  <h1 className="review-heading">
+                    loved <br /> by protein <br />
+                    fans <br />
+                    everywhere
+                  </h1>
+                  <img
+                    src={Orangestars}
+                    className="orange-star1"
+                    alt="orange-star"
+                  />
+                </div>
+                <p className="rating-para">overall rating</p>
+                <div className="rating-review">
+                  <div className="ratings-style">
+                    <h1 className="rating-number">5</h1>
+                  </div>
+                  <div className="reviews-style">
+                    <img src={Stars} className="star-5" alt="stars" />
+                    <p className="reviews-40">40 Reviews</p>
+                  </div>
+                </div>
+                <div className="review-button">
+                  <button className="review-button-contact">
+                    Write a review
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-6 reviews-space-pad">
+              <div className="reviewer-section">
+                <img src={Stars} className="star-4" alt="stars" />
+                <p className="reviewer-days">2 days ago</p>
+                <p className="reviewer-name">john joseph</p>
+              </div>
+              <div className="reviewer-title-container">
+                <h3 className="reviewer-title">In Loveeee</h3>
+                <p className="reviewer-para">
+                  52 year old gent here, have used many different flavors of
+                  EVOO
+                  <br /> over the years and have to say this is in my top 5 list
+                  for sure,
+                  <br /> especially if you buy the bundles to get a better
+                  price.
+                </p>
+                <hr className="horizontal-line1" />
+              </div>
+              <div className="reviewer-section">
+                <img src={Stars} className="star-4" alt="stars" />
+                <p className="reviewer-days1">2 days ago</p>
+                <p className="reviewer-name1">john joseph</p>
+              </div>
+              <div className="reviewer-title-container">
+                <h3 className="reviewer-title">Subtle & Natural</h3>
+                <p className="reviewer-para">
+                  52 year old gent here, have used many different flavors of
+                  EVOO
+                  <br /> over the years and have.
+                </p>
+                <hr className="horizontal-line1" />
+              </div>
+              <div className="reviewer-section">
+                <img src={Stars} className="star-4" alt="stars" />
+                <p className="reviewer-days2">2 days ago</p>
+                <p className="reviewer-name2">john joseph</p>
+              </div>
+              <div className="reviewer-title-container">
+                <h3 className="reviewer-title">Obsessed</h3>
+                <p className="reviewer-para">
+                  52 year old gent here, have used many different flavors of
+                  EVOO
+                  <br /> over the years and have to say this is in my top 5 list
+                  for sure,
+                  <br /> especially if you buy the bundles to get a better
+                  price.
+                </p>
+                <hr className="horizontal-line1" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Raising the star */}
-      <div className="raising-container pt-5">
-        <div className="raising-star">
-          <h1 className="raising-heading"> RAISING </h1>
-          <img
-            className="raising-protein"
-            src={Raisingprotein}
-            alt="raising-protein"
-          />
-          <h1 className="raising-heading"> THE BAR </h1>
+      <div className="animations-container">
+        <div className="texting-wrapper-1">
+          <h1 className="raising-1">RAISING</h1>
+          <div className="middle-texting">
+            <span className="high-proteins-1">HIGH PROTEINS</span>
+            <br />
+            <span className="low-proteins-1">LOW CALORIES</span>
+          </div>
+          <h1 className="bar-proteins-1">THE BAR</h1>
         </div>
       </div>
       {/* Comparision */}
-      <div className="comparision-metafield">
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th></th>
-              {comparisonData?.table.columns.map((col, index) => (
-                <th key={index}>
-                  <img src={col.image} alt={col.name} className="col-image" />
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="table-body">
-            {comparisonData?.table.rows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                <td className="first-td">{row.name}</td>
-                {row.values.map((value, valueIndex) => (
-                  <td key={valueIndex} className="flex-td">{value}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-
-        </table>
-      </div>
-      {/* Reviews */}
-      <div className="reviews-container">
-        <div className="row reviews-row">
-          <div className="col-sm-6 reviews-intro">
-              <h1 className="review-intro-heading">
-              Loved <br />by Protein<br /> Fans <br />Everywhere
-              </h1>
-              <p className="review-rating-para">OVERALL RATING</p>
+      <div className="comparison-table">
+        <div className="comparison-column labels">
+          <div className="product-label">
+            <img src={Paneericon} alt="Product 1" className="product1" />
           </div>
-          <div className="col-sm-6 reviews-corner">
-              
+          <div className="label">PROTEINS</div>
+          <div className="label">FAT</div>
+          <div className="label">CALORIES</div>
+          <div className="label">PRICE</div>
+        </div>
+        <div className="comparison-column highlighted">
+          <img src={Activestar} className="active-star" alt="active star" />
+          <div className="product product-highlight">
+            <img src={Paneericon} alt="Product 1" />
           </div>
+          <div className="value">31G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">$</div>
+        </div>
+        <div className="comparison-column">
+          <img
+            src={Inactivestar}
+            className="inactive-star"
+            alt="inactive star"
+          />
+          <div className="icon">
+            <img src={Proteins} alt="Product 2" className="product2" />
+          </div>
+          <div className="value">18G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹</div>
+        </div>
+        <div className="comparison-column">
+          <img
+            src={Inactivestar}
+            className="inactive-star"
+            alt="inactive star"
+          />
+          <div className="icon">
+            <img src={Whey} alt="Product 3" className="product3" />
+          </div>
+          <div className="value">31G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹</div>
+        </div>
+        <div className="comparison-column">
+          <img
+            src={Inactivestar}
+            className="inactive-star"
+            alt="inactive star"
+          />
+          <div className="icon">
+            <img src={Energybar} alt="Product 4" className="product4" />
+          </div>
+          <div className="value">25G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹₹</div>
+        </div>
+        <div className="comparison-column">
+          <img
+            src={Inactivestar}
+            className="inactive-star"
+            alt="inactive star"
+          />
+          <div className="icon">
+            <img src={Palakpaneer} alt="Product 5" className="product5" />
+          </div>
+          <div className="value">37G</div>
+          <div className="value">5G</div>
+          <div className="value">160</div>
+          <div className="value">₹₹₹₹</div>
         </div>
       </div>
-      {/* Accordion Section */}
-      <div className="accordion-container">
-        {/* <Accordion
-          title="What, Who & How?"
-          content={
-            <div>
-              {faqContent?.map((item, index) => (
-                <div key={index}>
-                  <h5>{item.question}</h5>
-                  <p>{item.answer}</p>
-                </div>
-              ))}
-            </div>
-          }
-        /> */}
-        <Accordion
-          title="Nutritional Highlights"
-          content={
-            <div>
-              <h4>{nutritionalHighlights?.title}</h4>
-              <ul>
-                {nutritionalHighlights?.summary.map((item, index) => (
-                  <li key={index}>
-                    {item.heading}: {item.subheading}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          }
-        />
-        <Accordion
-          title="Graph"
-          content={
-            <div>
-              <h4>{graphData?.heading}</h4>
-              {graphData?.data.map((item, index) => (
-                <div key={index}>
-                  <p>
-                    {item.label}: {item.percentage}%
-                  </p>
-                  <img src={item.image_url} alt={item.label} />
-                </div>
-              ))}
-            </div>
-          }
-        />
-        {/* <Accordion
-          title="Comparison"
-          content={
-            <div>
-              <h4>{comparisonData?.title}</h4>
-              <p>{comparisonData?.subheading}</p>
-              <p>{comparisonData?.highlights}</p>
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    {comparisonData?.table.columns.map((col, index) => (
-                      <th key={index}>
-                        <img src={col.image} alt={col.name} />
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {comparisonData?.table.rows.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
-                      <td>{row.name}</td>
-                      {row.values.map((value, valueIndex) => (
-                        <td key={valueIndex}>{value}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          }
-        /> */}
-        <Accordion
-          title="Ingredients"
-          content={
-            <div>
-              <h4>{ingredients?.title}</h4>
-              {ingredients?.details.map((item, index) => (
-                <div key={index}>
-                  <h5>{item.heading}</h5>
-                  <p>{item.content}</p>
-                </div>
-              ))}
-            </div>
-          }
-        />
-        <Accordion
-          title="Reviews"
-          content={
-            reviews.length > 0 ? (
-              <div>
-                {reviews.map((review) => (
-                  <div key={review.id}>
-                    <h5>
-                      {review.title} - {review.rating} Stars
-                    </h5>
-                    <p>{review.body}</p>
-                    <p>
-                      <strong>Reviewer:</strong> {review.reviewer.name}
-                    </p>
-                    {review.pictures.map((picture, index) => (
-                      <img
-                        key={index}
-                        className="review-image"
-                        src={picture.urls.original}
-                        alt="Review"
-                      />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No reviews available for this product yet.</p>
-            )
-          }
-        />
-        {/* <Accordion
-          title="Accordion Content"
-          content={
-            <div>
-              {accordionContent?.map((item, index) => (
-                <div key={index}>
-                  <h5>{item.question}</h5>
-                  <p>{item.answer}</p>
-                </div>
-              ))}
-            </div>
-          }
-        /> */}
+      {/* Protein-section */}
+      <div className="proteins-container-1 pt-5 pb-5">
+        <h1 className="high-protein-heading">
+          Highest Protein-to-Calorie
+          <br /> Ratio—75% Power
+        </h1>
+        <div className="milk-pic-container">
+          <img src={Graph} className="graph-image" alt="graph" />
+        </div>
+        <div className="milk-pic-container">
+          <img src={Milk} className="milk-image-product" alt="milk-pic" />
+        </div>
+        <div className="signup-container">
+          <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>
+          <div>
+            <input
+              type="email"
+              placeholder="YOUR EMAIL"
+              className="email-placing"
+            />
+            <button class="Subscribe-button">Subscribe</button>
+          </div>
+        </div>
+        <div className="footers-column shop-footers mt-5">
+          <ul className="footers-links">
+            <li>
+              <a
+                style={{ textDecoration: "none", color: "white" }}
+                href="/product"
+              >
+                SHOP
+              </a>
+            </li>
+            <li>
+              <a
+                style={{ textDecoration: "none", color: "white" }}
+                href="about"
+              >
+                ABOUT US
+              </a>
+            </li>
+            <li>
+              <a style={{ textDecoration: "none", color: "white" }} href="faq">
+                FAQ
+              </a>
+            </li>
+            <li>
+              <a
+                style={{ textDecoration: "none", color: "white" }}
+                href="contact"
+              >
+                CONTACT
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {/* Footer Section */}
+      <div className="footers mb-3">
+        <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
       </div>
     </div>
   );
