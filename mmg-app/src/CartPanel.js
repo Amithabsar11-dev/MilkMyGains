@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { CartContext } from './cartContext';
+import "./productDetails.css";
 
 const CartPanel = ({ onClose }) => {
   const { cartItems, cartQuantity, cartTotal, updateItemQuantity, removeItemFromCart, proceedToPayment } = useContext(CartContext);
@@ -13,39 +14,55 @@ const CartPanel = ({ onClose }) => {
   return (
     <div className="cart-panel">
       <div className="cart-items-wrapper">
-        <button className="close-cart" onClick={onClose}>
+        <h2 className="close-cart" onClick={onClose}>
           &times;
-        </button>
-        <h2>Cart</h2>
-        {cartItems.map((item) => (
-          <div key={item.id} className="cart-item">
-            <img
-              src={item.image}
-              alt={item.title || "Product Image"}
-              className="cart-image"
-            />
-            <div className="cart-details">
-              <h3>{item.title}</h3>
-              <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
-              <p>Quantity:
-                <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
-                <button onClick={() => {
-                  if (item.quantity > 1) {
-                    updateItemQuantity(item.id, item.quantity - 1);
-                  } else {
-                    removeItemFromCart(item.id);
-                  }
-                }}>-</button>
-                <br />
-                {item.quantity}
-              </p>
-              <button onClick={() => removeItemFromCart(item.id)}>Remove</button>
+        </h2>
+        <h2 className='cart-panel-heading'>Your Cart ({cartItems.reduce((total, item) => total + item.quantity, 0)})</h2>
+        {cartItems.map((item) => {
+          const titleParts = item.title.split(" - "); // Splitting title at " - "
+          const mainTitle = titleParts[0]; // First part of the title
+          const extraInfo = titleParts[1] ? `(${titleParts[1]})` : ""; // Second part in parentheses if exists
+
+          return (
+            <div key={item.id} className="cart-item">
+              <img
+                src={item.image}
+                alt={item.title || "Product Image"}
+                className="cart-image"
+              />
+              <div className="cart-details">
+                <div className='cart-selection'>
+                  <h3 className='cart-title'>{mainTitle} {extraInfo}</h3>
+                  <h2 className='remove-items' onClick={() => removeItemFromCart(item.id)}>&times;</h2>
+                </div>
+                <p className='qty-container'>
+                  <div className="qty-buttons">
+                    <p className='qty-quantity'>QTY: {item.quantity}</p>
+                    <button className="circle-btn" onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
+                    <button className="circle-btn" onClick={() => {
+                      if (item.quantity > 1) {
+                        updateItemQuantity(item.id, item.quantity - 1);
+                      } else {
+                        removeItemFromCart(item.id);
+                      }
+                    }}>-</button>
+                  </div>
+                  <p className='items-price'>₹{(item.price * item.quantity).toFixed(2)}</p>
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="checkout-option">
-        <p>Total: ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</p>
+        <div className='checkout-total'>
+          <p className='subtotal'>
+            SUB TOTAL
+          </p>
+          <p className='subtotal-amount'>
+            ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
+          </p>
+        </div>
         <button className="checkout" onClick={handleProceedToPayment}>Proceed to Payment</button>
       </div>
     </div>

@@ -37,26 +37,38 @@ const Header = () => {
     } else if (location.pathname === "/contact") {
       body.classList.add("contact-page");
       body.classList.remove("faq-page", "product-page");
+    } else if (location.pathname === "/terms") {
+      body.classList.add("terms-page");
+      body.classList.remove("faq-page", "product-page");
+    } else if (location.pathname === "/shipping") {
+      body.classList.add("shipping-page");
+      body.classList.remove("faq-page", "product-page");
+    } else if (location.pathname === "/refund") {
+      body.classList.add("shipping-page");
+      body.classList.remove("faq-page", "product-page");
+    } else if (location.pathname === "/privacy") {
+      body.classList.add("privacy-page");
+      body.classList.remove("faq-page", "product-page");
     } else if (location.pathname.startsWith("/product/")) {
       body.classList.add("product-page");
       body.classList.remove("faq-page", "contact-page");
     } else {
-      body.classList.remove("faq-page", "contact-page", "product-page");
+      body.classList.remove("faq-page", "contact-page", "product-page", "terms-page");
     }
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      body.classList.remove("faq-page", "contact-page", "product-page");
+      body.classList.remove("faq-page", "contact-page", "product-page", "shipping-page", "terms-page","privacy-page");
     };
   }, [location.pathname]);
 
-  const whiteBgPages = ["/faq", "/contact", "/product"];
-  const isWhiteBg = ["/faq", "/contact"].includes(location.pathname) || location.pathname.startsWith("/product/");
+  const whiteBgPages = ["/faq", "/contact", "/product", "/terms", "/shipping", "/privacy","/refund"];
+  const isWhiteBg = ["/faq", "/contact", "/terms", "/shipping","/privacy","/refund"].includes(location.pathname) || location.pathname.startsWith("/product/");
 
   // Check if the current page is FAQ, Contact, or Product/Paneer
   const isFaqOrContact =
-    location.pathname === "/faq" || location.pathname === "/contact";
-    const isProductPaneer = location.pathname.startsWith("/product/");
+    location.pathname === "/faq" || location.pathname === "/contact" || location.pathname === "/terms" || location.pathname === "/shipping" || location.pathname === "/privacy" || location.pathname === "/refund";
+  const isProductPaneer = location.pathname.startsWith("/product/");
 
   // Show free shipping on all pages except the product/paneer page
   const showFreeShipping =

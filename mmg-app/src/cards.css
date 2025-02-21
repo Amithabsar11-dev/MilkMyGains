@@ -28,6 +28,9 @@
   position: absolute;
   bottom: -130%;
 }
+.svg{
+  width: 200%;
+}
 
 .box {
   position: absolute;

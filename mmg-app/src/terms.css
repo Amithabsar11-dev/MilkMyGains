@@ -1,0 +1,58 @@
+.terms-conditions {
+    padding-top: 12%;
+}
+
+.terms-heading {
+    text-align: center;
+    padding-bottom: 5%;
+    font-size: 55px;
+    font-family: "Anybody", serif;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+}
+
+.terms-title{
+    font-size: 21px;
+    margin-top: 30px;
+    font-weight: bold;
+    font-family: "Chivo Mono", Sans-serif;
+    text-transform: capitalize;
+}
+.terms-para{
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family: "Chivo Mono", Sans-serif;
+    padding-left: 40px;
+    margin-top: 4%;
+}
+.terms-spacing{
+    max-width: 1007px;
+    margin: 0 auto;
+    padding: 50px;
+}
+.list-terms{
+    padding-left: 1rem;
+}
+.mail-terms{
+    font-family: "Chivo Mono", Sans-serif;
+    font-size: 16px;
+}
+.shipping-link{
+    text-decoration: none;
+}
+.shipping-link:hover{
+    text-decoration: underline;
+}
+.mail-mailto{
+    font-size: 16px;
+    text-transform: lowercase;
+    text-decoration: none;
+}
+.mail-mailto:hover{
+    text-decoration: underline;
+}
+.listing-terms{
+    padding-left: 2rem;
+    padding-top: 1%;
+}

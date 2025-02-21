@@ -21,7 +21,7 @@ const Preload = () => {
     // Show white text after the mask appears
     setTimeout(() => {
       setShowWhiteText(true);
-    }, 4200);
+    }, 4000);
   
     return () => {
       clearTimeout();

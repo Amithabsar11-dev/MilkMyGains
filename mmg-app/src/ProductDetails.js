@@ -30,6 +30,8 @@ import Inactivestar from "./assets/inactive-star.svg";
 import Milk from "./assets/Slice-3.svg";
 import Copyright1 from "./assets/copyright1.svg";
 import Graph from "./assets/graph.svg";
+import Copyrightline from './assets/Line 23.svg';
+import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -165,8 +167,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-      : 0;
+        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+        : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -331,7 +333,7 @@ const ProductDetails = () => {
                 ₹{(selectedVariant?.priceV2.amount * packQuantity).toFixed(2)}
               </span>
             </div>
-            {packQuantity > 1 && (
+            {/* {packQuantity > 1 && (
               <div className="purchase-option-row">
                 <label>
                   <input
@@ -351,7 +353,7 @@ const ProductDetails = () => {
                   ).toFixed(2)}
                 </span>
               </div>
-            )}
+            )} */}
           </div>
 
           <div className="feature-icons">
@@ -393,63 +395,57 @@ const ProductDetails = () => {
         {cartVisible && (
           <div className="cart-panel">
             <div className="cart-items-wrapper">
-              <button className="close-cart" onClick={toggleCart}>
+              <h2 className="close-cart" onClick={toggleCart}>
                 &times;
-              </button>
-              <h2>Cart</h2>
-              {cartItems.map((item) => (
-                <div key={item.id} className="cart-item">
-                  <img
-                    src={item.image}
-                    alt={item.title || "Product Image"}
-                    className="cart-image"
-                  />
-                  <div className="cart-details">
-                    <h3>{item.title}</h3>
-                    <p>Price: ₹{(item.price * item.quantity).toFixed(2)}</p>
-                    <p>
-                      Quantity:
-                      <button
-                        onClick={() =>
-                          updateItemQuantity(item.id, item.quantity + 1)
-                        }
-                      >
-                        +
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (item.quantity > 1) {
-                            updateItemQuantity(item.id, item.quantity - 1);
-                          } else {
-                            removeItemFromCart(item.id);
-                          }
-                        }}
-                      >
-                        -
-                      </button>
-                      <br />
-                      {item.quantity}
-                    </p>
-                    <button onClick={() => removeItemFromCart(item.id)}>
-                      Remove
-                    </button>
+              </h2>
+              <h2 className='cart-panel-heading'>Your Cart ({cartItems.reduce((total, item) => total + item.quantity, 0)})</h2>
+              {cartItems.map((item) => {
+                const titleParts = item.title.split(" - "); // Splitting title at " - "
+                const mainTitle = titleParts[0]; // First part of the title
+                const extraInfo = titleParts[1] ? `(${titleParts[1]})` : ""; // Second part in parentheses if exists
+
+                return (
+                  <div key={item.id} className="cart-item">
+                    <img
+                      src={item.image}
+                      alt={item.title || "Product Image"}
+                      className="cart-image"
+                    />
+                    <div className="cart-details">
+                      <div className='cart-selection'>
+                        <h3 className='cart-title'>{mainTitle} {extraInfo}</h3>
+                        <h2 className='remove-items' onClick={() => removeItemFromCart(item.id)}>&times;</h2>
+                      </div>
+                      <p className='qty-container'>
+                        <div className="qty-buttons">
+                          <p className='qty-quantity'>QTY: {item.quantity}</p>
+                          <button className="circle-btn" onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
+                          <button className="circle-btn" onClick={() => {
+                            if (item.quantity > 1) {
+                              updateItemQuantity(item.id, item.quantity - 1);
+                            } else {
+                              removeItemFromCart(item.id);
+                            }
+                          }}>-</button>
+                        </div>
+                        <p className='items-price'>₹{(item.price * item.quantity).toFixed(2)}</p>
+                      </p>
+                      {/* <button onClick={() => removeItemFromCart(item.id)}>Remove</button> */}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="checkout-option">
-              <p>
-                Total: ₹
-                {cartItems
-                  .reduce(
-                    (total, item) => total + item.price * item.quantity,
-                    0
-                  )
-                  .toFixed(2)}
-              </p>
-              <button className="checkout" onClick={proceedToPayment}>
-                Proceed to Payment
-              </button>
+              <div className='checkout-total'>
+                <p className='subtotal'>
+                  SUB TOTAL
+                </p>
+                <p className='subtotal-amount'>
+                  ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
+                </p>
+              </div>
+              <button className="checkout" onClick={proceedToPayment}>Proceed to Payment</button>
             </div>
           </div>
         )}
@@ -767,42 +763,57 @@ const ProductDetails = () => {
           </div>
         </div>
         <div className="footers-column shop-footers mt-5">
-          <ul className="footers-links">
-            <li>
-              <a
-                style={{ textDecoration: "none", color: "white" }}
-                href="/product"
-              >
-                SHOP
-              </a>
-            </li>
-            <li>
-              <a
-                style={{ textDecoration: "none", color: "white" }}
-                href="about"
-              >
-                ABOUT US
-              </a>
-            </li>
-            <li>
-              <a style={{ textDecoration: "none", color: "white" }} href="faq">
-                FAQ
-              </a>
-            </li>
-            <li>
-              <a
-                style={{ textDecoration: "none", color: "white" }}
-                href="contact"
-              >
-                CONTACT
-              </a>
-            </li>
-          </ul>
+          <div className="footer-column-links">
+            <ul className="footers-links">
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                 href="/product/milk-my-gains-sample-product"
+                >SHOP</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/about"
+                >ABOUT US</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/faq"
+                >FAQ</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/contact"
+                >CONTACT</a></li>
+            </ul>
+            <ul className="footer-links-1">
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/shipping"
+                >SHIPPING</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/refund"
+                >REFUND & RETURNS</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/terms"
+                >TERMS & CONDITIONS</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/privacy"
+                >PRIVACY POLICY</a></li>
+            </ul>
+          </div>
         </div>
       </div>
       {/* Footer Section */}
       <div className="footers mb-3">
-        <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
+        <p className="copyright-text">Copyright © 2025. All rights reserved</p>
       </div>
     </div>
   );

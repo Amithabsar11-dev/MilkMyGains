@@ -16,28 +16,67 @@ import "./cards.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const Card = ({ setIsLoaded }) => {
-    const circleRef = useRef(null);
+    // const circleRef = useRef(null);
 
-    useEffect(() => {
-        if (!setIsLoaded) return;
-        gsap.to(circleRef.current, {
-            rotation: -187, 
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".parent",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-                scroller: ".home-wrapper"
+    // useEffect(() => {
+    //     if (!setIsLoaded) return;
+    //     gsap.to(circleRef.current, {
+    //         rotation: -187,
+    //         ease: "none",
+    //         scrollTrigger: {
+    //             trigger: ".parent",
+    //             start: "top top",
+    //             end: "bottom bottom",
+    //             scrub: 1,
+    //             scroller: ".home-wrapper"
+    //         }
+    //     });
+    // }, [setIsLoaded]);
+
+     const pathRef = useRef(null); // Reference to the SVG path
+    
+        useEffect(() => {
+            if (!setIsLoaded) return;
+    
+            const pathElement = pathRef.current;
+            if (!pathElement) return;
+    
+            console.log(pathRef.current);
+    
+            // Ensure the pathElement is an SVG path
+            if (!(pathElement instanceof SVGPathElement)) {
+                console.error("The referenced element is not an SVG path.");
+                return;
             }
-        });
-    }, [setIsLoaded]);
+    
+            const pathLength = pathElement.getTotalLength();
+            const cards = document.querySelectorAll('.box');
+    
+            // Start from the middle of the path
+            const startPoint = pathLength / 2;
+    
+            cards.forEach((card, index) => {
+                // Calculate the position along the path
+                const point = pathElement.getPointAtLength(startPoint + (index * (pathLength / cards.length)));
+                const angle = Math.atan2(
+                    pathElement.getPointAtLength(startPoint + ((index + 1) * (pathLength / cards.length))).y - point.y,
+                    pathElement.getPointAtLength(startPoint + ((index + 1) * (pathLength / cards.length))).x - point.x
+                ) * (180 / Math.PI); // Convert radians to degrees
+    
+                // Set the position and rotation of the card
+                card.style.position = 'absolute'; // Ensure the card is positioned absolutely
+                card.style.transform = `translate(${point.x}px, ${point.y}px) rotate(${angle}deg)`;
+            });
+        }, [setIsLoaded]);
 
     return (
         <div>
             <div className="parent">
                 <div className="circle-container">
-                    <div className="circle" ref={circleRef}>
+                    <svg ref={pathRef} width="4035" height="1165" viewBox="1100 -500 4035 1165" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4029 1165C4029 857.614 3817.07 562.818 3439.85 345.463C3062.62 128.109 2550.98 6.00002 2017.5 6C1484.02 5.99998 972.384 128.109 595.155 345.463C217.925 562.818 6.00008 857.614 6 1165" stroke="#D9D9D9" strokeWidth="12"></path>
+                    </svg>
+                    <div className="circle" >
                         {/* card-3 */}
                         <div className="box carding3" style={{ transform: "rotate(-4deg) translateX(59vw) rotate(101deg) translateY(21vw)" }}>
                             <div className="carding-inner">

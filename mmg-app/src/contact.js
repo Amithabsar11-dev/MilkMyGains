@@ -4,6 +4,7 @@ import "./contact.css";
 import Protein from "./assets/protein.png";
 import Milk from "./assets/Slice-3.svg";
 import Copyright1 from "./assets/copyright1.svg";
+import Copyrightline from './assets/Line 23.svg';
 
 const ContactForm = () => {
     const [formData, setFormData] = useState({
@@ -148,33 +149,57 @@ const ContactForm = () => {
                         </div>
                     </div>
                     <div className="footers-column shop-footers mt-5">
-                        <ul className="footers-links">
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="/product"
-                                >SHOP</a></li>
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="about"
-                                >ABOUT US</a></li>
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="faq"
-                                >FAQ</a></li>
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="contact"
-                                >CONTACT</a></li>
-                        </ul>
+                        <div className="footer-column-links">
+                            <ul className="footers-links">
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                       href="/product/milk-my-gains-sample-product"
+                                    >SHOP</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/about"
+                                    >ABOUT US</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/faq"
+                                    >FAQ</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/contact"
+                                    >CONTACT</a></li>
+                            </ul>
+                            <ul className="footer-links-1">
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/shipping"
+                                    >SHIPPING</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/refund"
+                                    >REFUND & RETURNS</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/terms"
+                                    >TERMS & CONDITIONS</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/privacy"
+                                    >PRIVACY POLICY</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div></>
             <div className="footers mb-3">
-                <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
+                <p className="copyright-text">Copyright © 2025. All rights reserved</p>
             </div>
 
         </>

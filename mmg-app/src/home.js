@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import "./home.css";
 import "./cards.css";
-import Card from "./cards.js";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Milk from "./assets/Slice-3.svg";
@@ -11,14 +10,8 @@ import MilkBg from "./assets/Vector (1).png";
 import MilkBg1 from "./assets/Vector (2).png";
 import MilkBg2 from "./assets/Vector (3).png";
 import MilkBg3 from "./assets/Vector (4).png";
-import Starbuild from "./assets/Vector (7).svg";
 import OrderButton from "./assets/paneerorder.svg";
-import OrderButton1 from "./assets/milk.svg";
-import OrderButton2 from "./assets/yogart.svg";
-import OrderButton3 from "./assets/icecream.svg";
-import Order1Button from "./assets/paneer-button.svg";
 import Order2Button from "./assets/milk-button.svg";
-import Order3Button from "./assets/yogart-button.svg";
 import Order4Button from "./assets/icecream-button.svg";
 import Weightlift from "./assets/body builder.svg";
 import ProteinSlogan from "./assets/protein-slogan.svg";
@@ -30,7 +23,7 @@ import Palakpaneer from "./assets/paneercubes.svg";
 import Vegbowl from "./assets/vegbowl.svg";
 import Stickers from "./assets/Stickers.svg";
 import Arrowpoint from "./assets/arrowpoint.svg";
-import Copyright1 from "./assets/copyright1.svg";
+import Copyright1 from "./assets/copyrights-reserved.svg";
 import Protein from "./assets/protein.png";
 import TransparencyIcon from "./assets/Transparancy-card.svg";
 import MythIcon from "./assets/myth-card.svg";
@@ -43,10 +36,7 @@ import Signal from "./assets/shopicon.svg";
 import Star from "./assets/staricon.svg";
 import Eye from "./assets/eyeicon.svg";
 import Drop from "./assets/dropicon.svg";
-import EyeCard from "./assets/EyeCard.svg";
-import EyeCardline from "./assets/EyeCardline.svg";
 import Sunback from "./assets/Sunback.svg";
-import SunIcon from "./assets/SunIcon.svg";
 import EyesightIcon from "./assets/EyesightIcon.svg";
 import SunlookIcon from "./assets/SunlookIcon.svg";
 import Activestar from "./assets/active-star.svg";
@@ -59,9 +49,9 @@ import Yogartblur from './assets/yogart-blur.png'
 import Icecreamblur from './assets/icecream-blur.png';
 import Raisingfooter1 from './assets/raising-footer-icon-1.svg';
 import Raisingfooter2 from './assets/raising-footer-icon-2.svg';
+import Copyrightline from './assets/Line 23.svg';
 
 /* Pure Protein Section */
-import Words from "./assets/Linked Path Group.svg";
 import ProteinCap from "./assets/protein-cap.svg";
 import './text-anim.css';
 
@@ -1049,7 +1039,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                         data-splitting
                         data-effect1
                       >
-                       BUILD MUSCLE
+                        BUILD MUSCLE
                       </h1>
                     </div>
                   )
@@ -1103,7 +1093,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                         data-splitting
                         data-effect1
                       >
-                       STAY LEAN
+                        STAY LEAN
                       </h1>
                     </div>
                   )
@@ -1301,10 +1291,10 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
       {/* Table Icon */}
       <div className="table-icons">
-         <img src={Raisingfooter1} className="raising-footer-1" alt="raising-footer" />
-         <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
-         <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
-         <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
+        <img src={Raisingfooter1} className="raising-footer-1" alt="raising-footer" />
+        <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
+        <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
+        <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
       </div>
 
       {/* <div className="table-container">
@@ -1418,34 +1408,58 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
         </div>
         <div className="footers-column shop-footers mt-5">
-          <ul className="footers-links">
-            <li>
-              <a
-               style={{textDecoration:"none",color:"white"}}
-                href="/product"
-              >SHOP</a></li>
-            <li>
-              <a
-                  style={{textDecoration:"none",color:"white"}}
-                href="about"
-              >ABOUT US</a></li>
-            <li>
-              <a
-                  style={{textDecoration:"none",color:"white"}}
-                href="faq"
-              >FAQ</a></li>
-            <li>
-              <a
-                  style={{textDecoration:"none",color:"white"}}
-                href="contact"
-              >CONTACT</a></li>
-          </ul>
+          <div className="footer-column-links">
+            <ul className="footers-links">
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/product/milk-my-gains-sample-product"
+                >SHOP</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/about"
+                >ABOUT US</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/faq"
+                >FAQ</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/contact"
+                >CONTACT</a></li>
+            </ul>
+            <ul className="footer-links-1">
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/shipping"
+                >SHIPPING</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/refund"
+                >REFUND & RETURNS</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/terms"
+                >TERMS & CONDITIONS</a></li>
+              <li>
+                <a
+                  style={{ textDecoration: "none", color: "white" }}
+                  href="/privacy"
+                >PRIVACY POLICY</a></li>
+            </ul>
+          </div>
         </div>
       </div>
 
       {/* Footer Section */}
       <div className="footers mb-3">
-        <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
+        <p className="copyright-text">Copyright © 2025. All rights reserved</p>
       </div>
     </>
   );

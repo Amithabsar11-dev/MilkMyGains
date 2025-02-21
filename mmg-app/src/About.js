@@ -28,6 +28,7 @@ import EyesightIcon from './assets/EyesightIcon.svg';
 import SunlookIcon from './assets/SunlookIcon.svg';
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
+import Copyrightline from './assets/Line 23.svg';
 
 gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
@@ -77,23 +78,23 @@ function About({ setIsLoaded }) {
         }
     };
     //Card Animation
-    const circleRef = useRef(null);
-
-    useEffect(() => {
-        if (!setIsLoaded || isMobile) return;
-        gsap.to(circleRef.current, {
-            rotation: -127, // Adjust rotation range as needed
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".parent",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-                scroller: ".home-wrapper"
-            }
-        });
-    }, [setIsLoaded, isMobile]);
-
+       const circleRef = useRef(null);
+   
+       useEffect(() => {
+           if (!setIsLoaded) return;
+           gsap.to(circleRef.current, {
+               rotation: -127,
+               ease: "none",
+               scrollTrigger: {
+                   trigger: ".parent",
+                   start: "top top",
+                   end: "bottom bottom",
+                   scrub: 1,
+                   scroller: ".home-wrapper"
+               }
+           });
+       }, [setIsLoaded]);
+   
     return (
         <div className='about-container'>
             <div className='about-protein'>
@@ -367,34 +368,58 @@ function About({ setIsLoaded }) {
                         </div>
                     </div>
                     <div className="footers-column shop-footers mt-5">
-                        <ul className="footers-links">
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="/product"
-                                >SHOP</a></li>
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="about"
-                                >ABOUT US</a></li>
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="faq"
-                                >FAQ</a></li>
-                            <li>
-                                <a
-                                    style={{ textDecoration: "none", color: "white" }}
-                                    href="contact"
-                                >CONTACT</a></li>
-                        </ul>
+                        <div className="footer-column-links">
+                            <ul className="footers-links">
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/product/milk-my-gains-sample-product"
+                                    >SHOP</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="about"
+                                    >ABOUT US</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="faq"
+                                    >FAQ</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="contact"
+                                    >CONTACT</a></li>
+                            </ul>
+                            <ul className="footer-links-1">
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/shipping"
+                                    >SHIPPING</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/refund"
+                                    >REFUND & RETURNS</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/terms"
+                                    >TERMS & CONDITIONS</a></li>
+                                <li>
+                                    <a
+                                        style={{ textDecoration: "none", color: "white" }}
+                                        href="/privacy"
+                                    >PRIVACY POLICY</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
             {/* Footer Section */}
-            <div className="footers">
-                <img src={Copyright1} className="copyright-image" alt="copyright-pic" />
+            <div className="footers mb-3">
+                <p className="copyright-text">Copyright © 2025. All rights reserved</p>
             </div>
         </div>
     )
