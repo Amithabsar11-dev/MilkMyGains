@@ -77,7 +77,7 @@ const Header = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/products");
+        const response = await axios.get("http://147.93.106.149:3001/api/products");
         console.log("Fetched products:", response.data);
         setProducts(response.data);
       } catch (err) {

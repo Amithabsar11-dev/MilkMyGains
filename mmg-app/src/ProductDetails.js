@@ -69,7 +69,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/product/${handle}`
+          `http://147.93.106.149:3001/api/product/${handle}`
         );
         console.log("Full Response:", response.data);
 
@@ -150,7 +150,7 @@ const ProductDetails = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/reviews/${handle}`
+          `http://147.93.106.149:3001/api/reviews/${handle}`
         );
         setReviews(response.data);
       } catch (err) {
