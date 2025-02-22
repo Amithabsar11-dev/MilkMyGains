@@ -70,6 +70,7 @@ function App() {
               <Route path="/shipping" element={<Shipping isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/privacy" element={<Privacy isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
             </Routes>
         </div>
       </div>

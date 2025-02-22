@@ -26,10 +26,10 @@ function terms() {
                         </h3>
                         <p className='terms-para'>
                             <ul className='list-terms'>
-                                <li> <span style={{ fontWeight: 600 }}>Name:</span> Athletude LLP</li>
-                                <li> <span style={{ fontWeight: 600 }}>Address:</span> 47/30, 33rd A Cross, 11th Main, 4th T Block, Jayanagar, Bangalore – 560041, India.</li>
-                                <li> <span style={{ fontWeight: 600 }}>Contact Email:</span> customercare@milkmygains.com</li>
-                                <li> <span style={{ fontWeight: 600 }}>Contact Number:</span> +91 9663696025</li>
+                                <li> <span style={{ fontWeight: 600 , color:"black" }}>Name:</span> Athletude LLP</li>
+                                <li> <span style={{ fontWeight: 600, color:"black" }}>Address:</span> 47/30, 33rd A Cross, 11th Main, 4th T Block, Jayanagar, Bangalore – 560041, India.</li>
+                                <li> <span style={{ fontWeight: 600, color:"black" }}>Contact Email:</span> customercare@milkmygains.com</li>
+                                <li> <span style={{ fontWeight: 600 , color:"black"}}>Contact Number:</span> +91 9663696025</li>
                             </ul>
                         </p>
                     </div>
@@ -67,9 +67,9 @@ function terms() {
                         </h3>
                         <p className='terms-para'>
                             <ul className='list-terms'>
-                                <li> <span style={{ fontWeight: 600 }}>Pricing: </span>All prices listed on the website are in Indian Rupees and are inclusive of applicable taxes.</li>
-                                <li><span style={{ fontWeight: 600 }}>Payment Methods:</span> We accept payments through credit/debit cards, net banking, UPI, and other digital payment methods.</li>
-                                <li> <span style={{ fontWeight: 600 }}>Pricing Errors:</span> In the event of a pricing error, we reserve the right to cancel any orders placed at the incorrect price and refund the amount paid.</li>
+                                <li> <span style={{ fontWeight: 600, color:"black" }}>Pricing: </span>All prices listed on the website are in Indian Rupees and are inclusive of applicable taxes.</li>
+                                <li><span style={{ fontWeight: 600, color:"black" }}>Payment Methods:</span> We accept payments through credit/debit cards, net banking, UPI, and other digital payment methods.</li>
+                                <li> <span style={{ fontWeight: 600 , color:"black"}}>Pricing Errors:</span> In the event of a pricing error, we reserve the right to cancel any orders placed at the incorrect price and refund the amount paid.</li>
                             </ul>
                         </p>
                     </div>
@@ -154,8 +154,8 @@ function terms() {
                                 For any queries regarding these Terms and Conditions, please contact us at:
                             </p>
                             <ul className='list-terms'>
-                                <li className='mail-terms'> <span style={{ fontWeight: 600 }}>Email: </span> customercare@milkmygains.com</li>
-                                <li className='mail-terms'><span style={{ fontWeight: 600 }}>Phone:</span> +91 9663696025</li>
+                                <li className='mail-terms'> <span style={{ fontWeight: 600, color:"black" }}>Email: </span> customercare@milkmygains.com</li>
+                                <li className='mail-terms'><span style={{ fontWeight: 600, color:"black" }}>Phone:</span> +91 9663696025</li>
                             </ul>
                         </div>
                     </div>

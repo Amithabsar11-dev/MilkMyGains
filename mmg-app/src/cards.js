@@ -33,7 +33,7 @@ const Card = ({ setIsLoaded }) => {
     //     });
     // }, [setIsLoaded]);
 
-     const pathRef = useRef(null); // Reference to the SVG path
+     const pathRef = useRef(null); 
     
         useEffect(() => {
             if (!setIsLoaded) return;
@@ -43,7 +43,6 @@ const Card = ({ setIsLoaded }) => {
     
             console.log(pathRef.current);
     
-            // Ensure the pathElement is an SVG path
             if (!(pathElement instanceof SVGPathElement)) {
                 console.error("The referenced element is not an SVG path.");
                 return;

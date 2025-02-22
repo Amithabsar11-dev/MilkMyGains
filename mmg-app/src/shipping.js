@@ -33,8 +33,8 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li> A delivery fee of <span style={{ fontWeight: 600 }}>Rs.50</span> is applicable for all orders below <span style={{ fontWeight: 600 }}>Rs.560 .</span></li>
-                            <li> Orders above <span style={{ fontWeight: 600 }}>Rs.560</span> include <span style={{ fontWeight: 600 }}>free delivery.</span>All prices are inclusive of taxes.</li>
+                            <li> A delivery fee of <span style={{ fontWeight: 600, color:"black" }}>Rs.50</span> is applicable for all orders below <span style={{ fontWeight: 600, color:"black" }}>Rs.560 .</span></li>
+                            <li> Orders above <span style={{ fontWeight: 600, color:"black" }}>Rs.560</span> include <span style={{ fontWeight: 600, color:"black" }}>free delivery.</span>All prices are inclusive of taxes.</li>
                         </ul>
                     </p>
                 </div>
@@ -44,8 +44,8 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li><span style={{ fontWeight: 600 }}>Orders placed before 12 PM: </span>Delivered <span style={{ fontWeight: 600 }}>same day.</span></li>
-                            <li><span style={{ fontWeight: 600 }}>Orders placed after 12 PM: </span>Delivered <span style={{ fontWeight: 600 }}>the next day before 12 PM.</span></li>
+                            <li><span style={{ fontWeight: 600, color:"black" }}>Orders placed before 12 PM: </span>Delivered <span style={{ fontWeight: 600, color:"black" }}>same day.</span></li>
+                            <li><span style={{ fontWeight: 600, color:"black" }}>Orders placed after 12 PM: </span>Delivered <span style={{ fontWeight: 600, color:"black" }}>the next day before 12 PM.</span></li>
                         </ul>
                     </p>
                 </div>
@@ -55,7 +55,7 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li>For customers who opt for subscription plans, deliveries will be made <span style={{ fontWeight: 600 }}>fresh every Sunday </span>on a <span style={{ fontWeight: 600 }}>weekly basis</span> for the <span style={{ fontWeight: 600 }}>time frame chosen at the time of subscription.</span> This ensures you always have a consistent supply of fresh products as per your needs.</li>
+                            <li>For customers who opt for subscription plans, deliveries will be made <span style={{ fontWeight: 600 , color:"black"}}>fresh every Sunday </span>on a <span style={{ fontWeight: 600, color:"black" }}>weekly basis</span> for the <span style={{ fontWeight: 600 , color:"black"}}>time frame chosen at the time of subscription.</span> This ensures you always have a consistent supply of fresh products as per your needs.</li>
                         </ul>
                     </p>
                 </div>
@@ -75,7 +75,7 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li>We currently<span style={{ fontWeight: 600 }}> do not ship outside Bangalore.</span></li>
+                            <li>We currently<span style={{ fontWeight: 600, color:"black" }}> do not ship outside Bangalore.</span></li>
                             <li>Customers outside Bangalore can soon access our products via quick commerce platforms. Stay tuned for updates!</li>
                         </ul>
                     </p>
