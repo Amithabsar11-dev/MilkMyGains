@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const axios = require("axios");
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 app.use(bodyParser.json());
@@ -11,12 +13,160 @@ app.use(cors());
 const SHOPIFY_BASE_URL = "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
 const STORE_FRONT_ACCESS_TOKEN = "b49fae102098a23e7a2b663dbc0e4d48";
 
+// MongoDB URI 
+const MONGO_URI = "mongodb+srv://amithabsar11:amithabsar11@cluster11.klfyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster11";
+
+// Connect to MongoDB Atlas
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("MongoDB Atlas Connected"))
+  .catch(err => console.error("MongoDB Connection Error:", err));
+
+// User Model
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  shopifyCustomerId: { type: String }
+});
+const User = mongoose.model("User", UserSchema);
 
 // Judge.me API Details
 const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
 const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw";  // Replace with your actual Judge.me API token
 const SHOP_DOMAIN = "milk-my-gains.myshopify.com";  // Replace with your actual Shopify domain
 
+
+// Signup API
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    let user = await User.findOne({ email });
+    if (user) return res.status(400).json({ message: "User already exists" });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create Shopify Customer
+    const query = `
+      mutation {
+        customerCreate(input: {
+          firstName: "${name}",
+          email: "${email}",
+          password: "${password}"
+        }) {
+          customer { id }
+          userErrors { field message }
+        }
+      }
+    `;
+
+    const shopifyResponse = await axios.post(
+      SHOPIFY_BASE_URL,
+      { query },
+      { headers: { "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN, "Content-Type": "application/json" } }
+    );
+
+    const shopifyCustomer = shopifyResponse.data.data.customerCreate.customer;
+    if (!shopifyCustomer) return res.status(400).json({ message: "Failed to create Shopify customer" });
+
+    user = new User({ name, email, password: hashedPassword, shopifyCustomerId: shopifyCustomer.id });
+    await user.save();
+
+    res.status(201).json({ message: "User registered successfully!" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Login API
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
+    res.status(200).json({ token, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Forgot Password API
+app.post("/api/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "User not found" });
+
+    const resetToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "15m" });
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: EMAIL_USER, pass: EMAIL_PASS }
+    });
+
+    const mailOptions = {
+      from: EMAIL_USER,
+      to: email,
+      subject: "Password Reset",
+      text: `Click the link to reset your password: http://localhost:3000/reset-password/${resetToken}`
+    };
+
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) return res.status(500).json({ error: "Failed to send email" });
+      res.status(200).json({ message: "Reset email sent" });
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Fetch User Order History from Shopify
+app.get("/api/order-history", async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const query = `
+      query {
+        customer(id: "${user.shopifyCustomerId}") {
+          orders(first: 5) {
+            edges {
+              node {
+                name
+                totalPriceV2 { amount currencyCode }
+                lineItems(first: 5) {
+                  edges {
+                    node {
+                      title quantity originalTotalPrice { amount }
+                    }
+                  }
+                }
+                processedAt
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const shopifyResponse = await axios.post(
+      SHOPIFY_BASE_URL,
+      { query },
+      { headers: { "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN, "Content-Type": "application/json" } }
+    );
+
+    res.status(200).json(shopifyResponse.data.data.customer.orders.edges);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Helper to call Shopify Storefront API
 const shopifyRequest = async (query, variables = {}) => {

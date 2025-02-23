@@ -353,7 +353,6 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-
 }
 
 .carding-icon {
@@ -447,18 +446,16 @@
   top: 43%;
 }
 
-
 /* Mobile card section */
-
 
 .mobile-carding1:hover .carding-inner,
 .mobile-carding2:hover .carding-inner,
 .mobile-carding3:hover .carding-inner {
   transform: rotateY(180deg);
 }
-.mobile-cards-container{
+.mobile-cards-container {
   display: flex;
-  justify-content: center;
+  padding-left: 10%;
 }
 .mobile-carding1,
 .mobile-carding2,
@@ -518,6 +515,18 @@
     font-size: 50px;
     line-height: 3rem;
   }
+  .about-protein {
+    padding-top: 40%;
+  }
+
+  .carding-inner {
+    width: 300px;
+    height: 400px;
+  }
+
+  .milk-image1 {
+    width: 60%;
+  }
 
   .star-icon,
   .diamond-icon,
@@ -537,7 +546,7 @@
     font-size: 40px;
     line-height: 3rem;
   }
-  
+
   .card.active {
     width: fit-content;
     display: block;
@@ -609,4 +618,3 @@
     height: 100vw;
   }
 }
- 

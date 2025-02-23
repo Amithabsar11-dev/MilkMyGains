@@ -1265,6 +1265,7 @@
   /* padding-left: 5%; */
   width: 30%;
   padding-top: 8%;
+  object-fit: contain;
 }
 
 .milk-pic-container {
@@ -1496,8 +1497,8 @@
   }
 
   .main-heading {
-    font-size: 70px;
-    line-height: 4rem;
+    font-size: 55px;
+    line-height: 3rem;
   }
 
   .main-para {
@@ -1515,7 +1516,7 @@
   }
 
   .pure-heading {
-    font-size: 80px;
+    font-size: 60px;
     padding-left: 3%;
   }
 
@@ -1632,7 +1633,7 @@
   }
 
   .milk-image {
-    width: 50% !important;
+    width: 65% !important;
   }
 }
 
