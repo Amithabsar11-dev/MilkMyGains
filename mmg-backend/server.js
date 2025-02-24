@@ -13,6 +13,9 @@ app.use(cors());
 const SHOPIFY_BASE_URL = "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
 const STORE_FRONT_ACCESS_TOKEN = "b49fae102098a23e7a2b663dbc0e4d48";
 
+//Omnisend API
+const OMNISEND_API_KEY = "67bc5f6c532625c406fdf16a-kPttxT0hf5yvBAQj770IiAq5hMsJ89PGaEFh16lcQ66HdUYt7V";
+
 // MongoDB URI 
 const MONGO_URI = "mongodb+srv://amithabsar11:amithabsar11@cluster11.klfyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster11";
 
@@ -398,6 +401,10 @@ app.get("/api/product/:handle", async (req, res) => {
               }
               availableForSale
               quantityAvailable
+              image {
+                src
+                altText
+              }
             }
           }
         }
@@ -703,6 +710,45 @@ app.post("/api/cart/remove", async (req, res) => {
     res.status(200).json(data.cartLinesRemove.cart);
   } catch (error) {
     res.status(500).json({ error: "Failed to remove product from cart" });
+  }
+});
+
+//Newsletter 
+
+app.post("/subscribe", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  try {
+    // Send subscriber data to Omnisend
+    const response = await axios.post(
+      "https://api.omnisend.com/v5/contacts",
+      {
+        email: email,
+        status: "subscribed", // Add the subscriber
+        tags: ["Newsletter"], // Optional: Add custom tags
+      },
+      {
+        headers: {
+          "Authorization": `Bearer ${OMNISEND_API_KEY}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    res.json({
+      message: "Subscription successful! Thank you for subscribing."
+    });
+
+  } catch (error) {
+    console.error("Error subscribing user:", error.response?.data || error.message);
+    res.status(500).json({
+      error: "Subscription failed. Please try again later.",
+      details: error.response?.data || error.message
+    });
   }
 });
 

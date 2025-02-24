@@ -1,6 +1,284 @@
-/* Sample Testing */
-.main-heading span {
-    display: inline-block; 
-    opacity: 0; 
-    transform: translateX(-50px);
+.icon-height{
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.paneer-icon-active {
+  height: 14vh;
+}
+.palak-icon-active , .proteins-icon-active, .energy-icon-active , .whey-icon-active{
+  max-height: 100%;
+}
+ol, ul {
+  padding-left: 0rem;
+}
+.column-active{
+  background-color: #0052F0;
+  color: #fff;
+}
+.paneer-icon-active-hidden{
+ opacity: 0;
+}
+#cd-table {
+  position: relative;
+  width: 85%;
+  margin: 1em auto;
+  font-size: 14px;
+  border-right: 1px solid #E6E7F1;
+}
+.set-list{
+  list-style-type: none;
+  flex: 1 1;
+  font-family: Chivo Mono, Sans-serif;
+  font-size: 20px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.cd-table-wrapper{
+  display: flex;
+    gap: 10px;
+}
+.border-column{
+  border: 1px solid #E0E0E0
+}
+.set-list-paneer{
+  list-style-type: none;
+  flex: 1 1;
+  font-family: Chivo Mono, Sans-serif;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.set-list-active{
+  list-style-type: none;
+  align-items: start;
+  color:#0052f0 !important;
+  flex: 1 1;
+  font-family: Chivo Mono, Sans-serif;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+#cd-table::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+#cd-table::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -1px;
+  height: 100%;
+  width: 35px;
+  background: linear-gradient(to left, #FFF 10%, rgba(255, 255, 255, 0));
+  z-index: 5;
+  pointer-events: none;
+}
+#cd-table.table-end::before {
+  display: none;
+}
+.cd-table-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.cd-table-wrapper {
+  width: 870px;
+  padding-left: 120px;
+}
+.cd-table-column {
+  width: 150px;
+  float: left;
+  margin-left: -1px;
+}
+.cd-table-column:last-child {
+  border-right: none;
+}
+h2, ul > li {
+  position: relative;
+  text-align: center;
+  padding: 0 1em;
+  border-bottom: transparent;
+  height: 42px;
+  line-height: 42px;
+  /* background-color: #FFF; */
+}
+h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #646678;
+}
+ul > li {
+  /* color: #787A8D; */
+}
+ul > li:nth-child(odd) {
+  /* background-color: #F2F3F8; */
+}
+ul > li:last-child {
+  border-bottom: none;
+}
+.cd-unchecked span, .cd-checked span {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  display: block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  background-image: url('https://svgshare.com/i/NDN.svg');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 32px 16px;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.cd-unchecked span {
+  background-position: -16px 0;
+}
+.cd-select {
+  display: block;
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+}
+header.cd-table-column {
+  position: absolute;
+  width: 120px;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  background: white;
+  margin-left: -30px;
+  /* border-color: #6D7589;
+  box-shadow: 2px 0 0 rgba(0, 0, 0, 0.1); */
+  pointer-events: none;
+}
+header.cd-table-column h2, header.cd-table-column li {
+  background-color: transparent;
+  text-align: left;
+  color:#0052f0;
+  border-bottom-color: transparent;
+}
+header.cd-table-column h2 {
+  color: #D2D7E3;
+}
+header.cd-table-column li:nth-child(odd) {
+  /* background-color: rgba(108, 116, 137, 0.95); */
+}
+header.cd-table-column li:last-child {
+  border-bottom: transparent;
+}
+.cd-scroll-right {
+  display: block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+  background: url('https://svgshare.com/i/NEg.svg') no-repeat center center;
+  z-index: 6;
+  animation: cd-scroll-right 1.5s infinite;
+}
+@media only screen and (min-width: 870px) {
+  #cd-table {
+    margin: 2em auto;
+    border-right: none;
   }
+  #cd-table::before {
+    display: none;
+  }
+  .cd-table-wrapper {
+    width: 100%;
+    padding-left: 14.2857%;
+  }
+  .cd-table-column {
+    width: 20%;
+  }
+  .cd-table-column:last-child {
+    border-right: 1px solid #E6E7F1;
+  }
+  header.cd-table-column {
+    width: 16.6667%;
+    /* background: #798299; */
+    box-shadow: none;
+    pointer-events: auto;
+  }
+  .cd-scroll-right {
+    display: none;
+  }
+}
+@media only screen and (min-width: 1170px) {
+  #cd-table {
+    margin: 4em auto;
+  }
+}
+@keyframes cd-scroll-right {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(3px);
+  }
+}
+.column-active {
+  position: sticky;
+  left: 60px;
+  z-index: 99;
+}
+/* Responsive adjustments for mobile */
+@media only screen and (max-width: 768px) {
+  .cd-table-wrapper {
+    width: max-content;
+    padding-left: 60px;
+  }
+  .cd-table-column {
+    width: 33.33%; /* Ensure 3 columns are visible */
+  }
+  .set-list, .set-list-paneer, .set-list-active {
+    font-size: 12px; /* Reduce font size */
+    gap: 8px; /* Reduce spacing */
+  }
+  .icon-height {
+    height: 10vh; /* Reduce icon height */
+  }
+  .paneer-icon-active,
+  .palak-icon-active,
+  .proteins-icon-active,
+  .energy-icon-active,
+  .whey-icon-active {
+    height: 6vh; /* Reduce image size */
+    max-width: 50%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .set-list, .set-list-paneer, .set-list-active {
+      font-size: 12px;
+      gap: 0px;
+  }
+}
+.cd-table-column {
+  width: 20%; /* Reduce width to fit 3 columns */
+  min-width: 100px; /* Ensure it doesn't shrink too much */
+}
+@media only screen and (max-width: 768px) {
+  .icon-height {
+      height: 8vh;
+  }
+}
+
+
+
+
+

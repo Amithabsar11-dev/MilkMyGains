@@ -88,19 +88,23 @@
 }
 
 .cart-icon {
-  height: 7vh;
+  height: 5vh;
   cursor: pointer;
 }
 
 .cartquantity {
   position: absolute;
   top: -10px;
-  right: 40px;
+  right: -4px;
   background-color: red;
   color: white;
   border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 12px;
+  font-size: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .content__item {

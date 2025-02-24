@@ -35,6 +35,7 @@
   will-change: opacity, transform;
   padding-left: 6px;
   padding-right: 10px;
+  position: relative;
 }
 
 @keyframes fadeInUp {
@@ -52,15 +53,12 @@
 .word-alignment {
   position: relative;
   z-index: 4;
+  color: black; /* Default text color */
 }
 
-.word-alignment.text-white .letter {
-  background: none;
-  -webkit-background-clip: none;
-  background-clip: none;
-  color: white;
-  -webkit-text-stroke: 0;
-  transition: color 2s ease-in;
+/* Text will appear white when covered by the mask */
+.word-alignment .letter {
+  background-blend-mode: normal;
 }
 
 /* Masking effect */
@@ -77,6 +75,12 @@
   mask-size: 10%;
   transform: translate(-50%, -50%);
   opacity: 1;
+  /* background: white; */
+  mix-blend-mode: normal; /* Prevent blending */
+}
+
+.mask1.mask-expand ~ .word-alignment .letter {
+  color: white; /* This turns text pure white when mask covers it */
 }
 
 .mask1.mask-expand {

@@ -16,6 +16,7 @@ import Cards from './cards.js';
 import Shipping from './shipping.js';
 import Privacy from './privacy.js';
 import Refund from './refund.js';
+import Sample from './sample.js';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -27,7 +28,7 @@ function App() {
     const shouldShowPreload = location.pathname === '/'; // Only show preload on home page
 
     if (shouldShowPreload) {
-      const timer = setTimeout(() => setIsLoaded(true), 6000);
+      const timer = setTimeout(() => setIsLoaded(true), 4000);
       return () => clearTimeout(timer);
     } else {
       setIsLoaded(true); // Skip preload if not on home page
@@ -71,6 +72,7 @@ function App() {
               <Route path="/privacy" element={<Privacy isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              {/* <Route path="/sample" element={<Sample isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} /> */}
             </Routes>
         </div>
       </div>

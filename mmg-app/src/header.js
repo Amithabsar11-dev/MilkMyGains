@@ -25,6 +25,10 @@ const Header = () => {
   const navigate = useNavigate();  // Create navigate function
   const targetProductId = "gid://shopify/Product/7528878702676";
 
+
+  const openCart = () => setCartPanelOpen(true);
+  const closeCart = () => setCartPanelOpen(false);
+
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);
@@ -58,12 +62,12 @@ const Header = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      body.classList.remove("faq-page", "contact-page", "product-page", "shipping-page", "terms-page","privacy-page");
+      body.classList.remove("faq-page", "contact-page", "product-page", "shipping-page", "terms-page", "privacy-page");
     };
   }, [location.pathname]);
 
-  const whiteBgPages = ["/faq", "/contact", "/product", "/terms", "/shipping", "/privacy","/refund"];
-  const isWhiteBg = ["/faq", "/contact", "/terms", "/shipping","/privacy","/refund"].includes(location.pathname) || location.pathname.startsWith("/product/");
+  const whiteBgPages = ["/faq", "/contact", "/product", "/terms", "/shipping", "/privacy", "/refund"];
+  const isWhiteBg = ["/faq", "/contact", "/terms", "/shipping", "/privacy", "/refund"].includes(location.pathname) || location.pathname.startsWith("/product/");
 
   // Check if the current page is FAQ, Contact, or Product/Paneer
   const isFaqOrContact =
@@ -209,7 +213,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {cartPanelOpen && <CartPanel onClose={() => setCartPanelOpen(false)} />}
+      <CartPanel onClose={() => setCartPanelOpen(false)} isOpen={cartPanelOpen} />
     </header>
   );
 };

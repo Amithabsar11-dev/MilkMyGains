@@ -6,6 +6,7 @@ import "./cards.css";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Milk from "./assets/Slice-3.svg";
+import MilkTM from './assets/Logo-TM.svg'
 import MilkBg from "./assets/Vector (1).png";
 import MilkBg1 from "./assets/Vector (2).png";
 import MilkBg2 from "./assets/Vector (3).png";
@@ -49,6 +50,9 @@ import Yogartblur from './assets/yogart-blur.png'
 import Icecreamblur from './assets/icecream-blur.png';
 import Raisingfooter1 from './assets/raising-footer-icon-1.svg';
 import Raisingfooter2 from './assets/raising-footer-icon-2.svg';
+import Sample from './sample';
+import Lottie from "lottie-react";
+import paneerAnimation from "./assets/lottie/data-1.json";
 import Copyrightline from './assets/Line 23.svg';
 
 /* Pure Protein Section */
@@ -78,6 +82,8 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   const handleMilkClick = () => handleModelChange("/packet_1.glb", true);
   const [scrollDirection, setScrollDirection] = useState(0);
   const homeWrapperRef = useRef(null);
+  const mmgModelRef = useRef();
+  const homeContainerRef = useRef();
 
   const getButtonImage = (button) => {
     if (button === activeButton) {
@@ -205,6 +211,15 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  //Fade In Effect 
+  useEffect(() => {
+    if (isLoaded) {
+      gsap.to(mmgModelRef.current, { opacity: 1, duration: 1.5, ease: "power2.out" });
+    } else {
+      gsap.set(mmgModelRef.current, { opacity: 0 });
+    }
+  }, [isLoaded]);
 
   const handleScroll = (e) => {
     if (scrolling) return;
@@ -338,10 +353,10 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           stagger: 0.04,
           scrollTrigger: {
             trigger: title,
-            start: "top bottom",
-            end: "bottom top",
+            start: "top 60%",
+            end: "top 20%",
             scroller: ".home-wrapper",
-            scrub: true,
+            scrub: 2,
           },
         }
       );
@@ -442,6 +457,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     if (!setIsLoaded) return;
     gsap.to(".stickers", {
       rotation: 10,
+      transformOrigin: "center",
       scrollTrigger: {
         trigger: ".wholesome-container",
         start: "top center",
@@ -480,7 +496,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
   useEffect(() => {
     if (!setIsLoaded) return;
-    gsap.utils.toArray('.milkbg, .milkbg1, .milkbg2, .milkbg3').forEach((element) => {
+    gsap.utils.toArray('.lottie-animation, .milkbg1, .milkbg2, .milkbg3').forEach((element) => {
       gsap.fromTo(
         element,
         { y: 0 },
@@ -545,16 +561,19 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
   return (
     <>
-      <div className="home-container">
+      <div className="home-container" ref={homeContainerRef}>
         <div
           className="slider-container text-center"
           style={{ height: "100vh" }}
           onWheel={handleScroll}
         >
-          <img src={MilkBg} alt="milk-bg" className="milkbg" />
+          {/* <img src={MilkBg} alt="milk-bg" className="milkbg" />
           <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
           <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
-          <img src={MilkBg3} alt="milk-bg3" className="milkbg3" />
+          <img src={MilkBg3} alt="milk-bg3" className="milkbg3" /> */}
+          <div className="lottie-animation">
+            <Lottie id="lottie-anim" animationData={paneerAnimation} loop={true} />
+          </div>
           {/* <div className="liquid-container">
             <svg
               className="liquid-circle"
@@ -625,7 +644,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                 }`}
             />
           </div>
-          <div className="mmg-model">
+          <div className="mmg-model" ref={mmgModelRef} style={{ opacity: 0 }}>
             <Canvas key={currentModel}>
               <MilkMyGain
                 modelPath={currentModel}
@@ -1005,7 +1024,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     PURE
                     <br /> PROTEIN.
                     <br /> ZERO
-                    <br /> COMPRO
+                    <br /> COMPRO-
                     <br />
                     MISE.
                   </h1>
@@ -1039,7 +1058,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                         data-splitting
                         data-effect1
                       >
-                        BUILD MUSCLE
+                        BUILD<br /> MUSCLE
                       </h1>
                     </div>
                   )
@@ -1093,7 +1112,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                         data-splitting
                         data-effect1
                       >
-                        STAY LEAN
+                        STAY<br /> LEAN
                       </h1>
                     </div>
                   )
@@ -1211,83 +1230,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
         )
       }
       {/* Comparision Table */}
-      <div className="comparison-table">
-        <div className="comparison-column labels">
-          <div className="product-label">
-            <img src={Paneericon} alt="Product 1" className="product1" />
-          </div>
-          <div className="label">PROTEINS</div>
-          <div className="label">FAT</div>
-          <div className="label">CALORIES</div>
-          <div className="label">PRICE</div>
-        </div>
-        <div className="comparison-column highlighted">
-          <img src={Activestar} className="active-star" alt="active star" />
-          <div className="product product-highlight">
-            <img src={Paneericon} alt="Product 1" />
-          </div>
-          <div className="value">31G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">$</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Palakpaneer} alt="Product 5" className="product5" />
-          </div>
-          <div className="value">18G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Proteins} alt="Product 2" className="product2" />
-          </div>
-          <div className="value">31G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Energybar} alt="Product 4" className="product4" />
-          </div>
-          <div className="value">25G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹₹</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Whey} alt="Product 3" className="product3" />
-          </div>
-          <div className="value">37G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹₹₹</div>
-        </div>
-      </div>
+      <Sample />
 
       {/* Table Icon */}
       <div className="table-icons">
@@ -1394,7 +1337,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           <img src={Protein} className="protein-image" alt="protein-pic" />
         </div>
         <div className="milk-pic-container">
-          <img src={Milk} className="milk-image" alt="milk-pic" />
+          <img src={MilkTM} className="milk-image" alt="milk-pic" />
         </div>
         <div className="signup-container">
           <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>

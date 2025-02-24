@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import './preload.css';
 import gsap from "gsap";
 import Splitting from "splitting";
@@ -16,19 +16,14 @@ const Preload = () => {
     setTimeout(() => {
       setShowMask(true);
       setStartMaskAnimation(true); // Start expansion immediately
-    }, 3000); // Matches the end of text animation
-  
-    // Show white text after the mask appears
-    setTimeout(() => {
-      setShowWhiteText(true);
-    }, 4000);
-  
+    }, 1800); // Matches the end of text animation
+
     return () => {
       clearTimeout();
     };
   }, []);
-  
-  
+
+
   useEffect(() => {
     Splitting();
 
@@ -51,7 +46,7 @@ const Preload = () => {
         z: 0,
         stagger: 0.05,
         ease: "power1.inOut",
-        duration: 1.2,
+        duration: 0.8,
       }
     );
 
@@ -77,7 +72,7 @@ const Preload = () => {
           amount: 0.5,
           from: "center",
         },
-        duration: 1.5,
+        duration: 0.8,
       }
     );
 
@@ -87,17 +82,20 @@ const Preload = () => {
       proteinLetters,
       {
         opacity: 0,
-        y: 20,
+        y: 30, // Starts slightly below
+        scale: 0.8, // Slight zoom effect
       },
       {
         opacity: 1,
         y: 0,
+        scale: 1,
         stagger: 0.05,
-        ease: "power1.inOut",
+        ease: "power2.out", // Smooth easing
         duration: 1,
       }
     );
   }, []);
+
 
   return (
     <div className="preload-container">
@@ -106,28 +104,28 @@ const Preload = () => {
 
       {showMask && (
         <div className={`mask1 ${startMaskAnimation ? "mask-expand" : ""}`}>
-          <img src={Mask} className="masking" alt="Masked Background"  style={{objectFit:"cover"}}/>
+          <img src={Mask} className="masking" alt="Masked Background" style={{ objectFit: "cover" }} />
         </div>
       )}
 
       {/* Text Content */}
-      <div className={`word-alignment ${showWhiteText ? "text-white" : ""}`}>
+      <div className="word-alignment">
         <div className="word pure">
-          {["P", "U", "R", "E","."].map((letter, index) => (
+          {["P", "U", "R", "E", "."].map((letter, index) => (
             <span key={index} className="letter">
               {letter}
             </span>
           ))}
         </div>
         <div className="word pure">
-          {["P", "O", "W", "E", "R", "F", "U", "L","."].map((letter, index) => (
+          {["P", "O", "W", "E", "R", "F", "U", "L", "."].map((letter, index) => (
             <span key={index} className="letter">
               {letter}
             </span>
           ))}
         </div>
-        <div className="word powerful">
-          {["P", "R", "O", "T", "E", "I", "N","."].map((letter, index) => (
+        <div className="word pure">
+          {["P", "R", "O", "T", "E", "I", "N", "."].map((letter, index) => (
             <span key={index} className="letter">
               {letter}
             </span>

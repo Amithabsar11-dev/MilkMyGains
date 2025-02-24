@@ -45,7 +45,7 @@ const CartProvider = ({ children }) => {
   const proceedToPayment = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/cart/create",
+        "http://147.93.106.149:3001/api/cart/create",
         {
           lines: cartItems.map((item) => ({
             merchandiseId: item.id,

@@ -53,12 +53,12 @@
 }
 @media only screen and (max-width: 1450px) and (min-width: 1400px) {
   .circle-container{
-    height: 104vh;
+    height: 99vh;
   }
 }
 @media only screen and (max-width: 1500px) and (min-width: 1450px) {
   .circle-container{
-    height: 105vh;
+    height: 102vh;
   }
 }
 @media only screen and (max-width: 1600px) and (min-width: 1550px) {
@@ -68,7 +68,7 @@
 }
 @media only screen and (max-width: 1550px) and (min-width: 1500px) {
   .circle-container{
-    height: 106vh;
+    height: 105vh;
   }
 }
 @media only screen and (max-width: 1650px) and (min-width: 1600px) {

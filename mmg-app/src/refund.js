@@ -1,7 +1,7 @@
 import React from 'react';
 import './terms.css';
 import Copyright1 from "./assets/copyright1.svg";
-import Milk from "./assets/Slice-3.svg";
+import MilkTM from './assets/Logo-TM.svg';
 import Copyrightline from './assets/Line 23.svg';
 
 function Refund() {
@@ -81,7 +81,7 @@ function Refund() {
             </div>
             <div className="proteins-container pt-5 pb-5">
                 <div className="milk-pic-container">
-                    <img src={Milk} className="milk-image2" alt="milk-pic" />
+                    <img src={MilkTM} className="milk-image2" alt="milk-pic" />
                 </div>
                 <div className="signup-container">
                     <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>

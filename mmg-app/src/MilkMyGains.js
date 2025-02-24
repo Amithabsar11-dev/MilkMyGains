@@ -10,10 +10,10 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const groupRef = useRef();
   const { scene } = useGLTF(modelPath, true);
   const [defaultScale, setDefaultScale] = useState(window.innerWidth < 768 ? 2 : 3);
-  const [scale, setScale] = useState(0);
+  const [scale, setScale] = useState(1); // Set scale to 1 immediately
   const rotationDirection = useRef(isNext ? 1 : -1);
   const targetRotation = useRef({ x: 0, y: 0 });
-  const [isScaleUpComplete, setIsScaleUpComplete] = useState(false);
+  const [isScaleUpComplete, setIsScaleUpComplete] = useState(true); // Set to true since we are not scaling
   const [isRotating, setIsRotating] = useState(false); // New state to track rotation
   const [rotationX, setRotationX] = useState(0);
   const [rotationY, setRotationY] = useState(1);
@@ -22,7 +22,7 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const [positionY, setPositionY] = useState(-0.4);
   const [positionZ, setPositionZ] = useState(0);
   const [rotationOffsetX, setRotationOffsetX] = useState(0);
-  const [rotationOffsetY, setRotationOffsetY] = useState(5.5);
+  const [rotationOffsetY, setRotationOffsetY] = useState(7);
   
   // Resize listener
   useEffect(() => {
@@ -46,33 +46,15 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   // Track first visit to sync with preload
   const isFirstVisit = useRef(true);
   
-  // Scale-up effect when visiting homepage
+  // Set scale to 1 immediately when loaded
   useEffect(() => {
-    setScale(0);
-    setIsScaleUpComplete(false);
-    let startTime;
-    const duration = 1.5;
-    const animateScale = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = (timestamp - startTime) / 1000;
-      const progress = Math.min(elapsed / duration, 1);
-      setScale(progress * defaultScale);
-      if (groupRef.current) {
-        groupRef.current.rotation.y = progress * Math.PI * 2.3;
-      }
-      if (progress < 1) {
-        requestAnimationFrame(animateScale);
-      } else {
-        setIsScaleUpComplete(true);
-      }
-    };
     if (isFirstVisit.current && isLoaded) {
-      setTimeout(() => {
-        requestAnimationFrame(animateScale);
-      }, 300);
+      setScale(1); // Set scale to 1 immediately
+      setIsScaleUpComplete(true); // Mark scaling as complete
       isFirstVisit.current = false;
-    } else {
-      requestAnimationFrame(animateScale);
+
+      // Fade in effect
+      gsap.fromTo(groupRef.current.scale, { opacity: 0 }, { opacity: 1, duration: 1 });
     }
   }, [modelPath, isLoaded]);
 
@@ -113,10 +95,9 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
       scroller: ".home-wrapper",
       onUpdate: (self) => {
         const progress = self.progress;
-        const rotationAmount = progress * Math.PI;
-        lastRotationY.current = rotationAmount;
+        lastRotationY.current = 0; // Disable rotation based on scroll
         if (groupRef.current) {
-          groupRef.current.rotation.y = lastRotationY.current;
+          groupRef.current.rotation.y = lastRotationY.current; // Keep rotation fixed
         }
       },
     });
@@ -131,25 +112,10 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
       groupRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
       groupRef.current.position.set(positionX, positionY, positionZ);
 
-      const rotationSpeed = 0.1; // Adjust this value for smoother stopping
-      // Lerp rotation for smoothness
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(
-        groupRef.current.rotation.x,
-        targetRotation.current.x + rotationX + rotationOffsetX,
-        rotationSpeed
-      );
-
-      // Lerp for Y rotation based on mouse movement
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(
-        groupRef.current.rotation.y,
-        targetRotation.current.y + lastRotationY.current + rotationOffsetY,
-        rotationSpeed
-      );
-
       // Ensure Z rotation is set correctly
       groupRef.current.rotation.z = rotationZ;
 
-      // Check if scaling and rotation are complete
+      // Check if scaling is complete
       if (isScaleUpComplete) {
         // Snap to final values to prevent any additional movement
         groupRef.current.scale.set(defaultScale, defaultScale, defaultScale);
@@ -163,12 +129,12 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
         groupRef.current.rotation.x = THREE.MathUtils.lerp(
           groupRef.current.rotation.x,
           targetRotation.current.x + rotationX + rotationOffsetX,
-          rotationSpeed
+          0.1 // Adjust this value for smoother stopping
         );
         groupRef.current.rotation.y = THREE.MathUtils.lerp(
           groupRef.current.rotation.y,
           targetRotation.current.y + lastRotationY.current + rotationOffsetY,
-          rotationSpeed
+          0.1 // Adjust this value for smoother stopping
         );
       }
     }
@@ -179,7 +145,17 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
       <primitive object={scene} scale={defaultScale} />
       <Environment files="./NightEnvironmentHDRI003_2K-HDR.exr" background={false} intensity={0.8} />
       <directionalLight 
-       position={[0, -0.4, 0]} 
+       position={[2, -0.8, 1]} 
+       intensity={1.8} 
+       castShadow 
+      />
+       <directionalLight 
+       position={[1, -3, 2]} 
+       intensity={1.8} 
+       castShadow 
+      />
+        <directionalLight 
+       position={[1, 3, 2]} 
        intensity={1.8} 
        castShadow 
       />

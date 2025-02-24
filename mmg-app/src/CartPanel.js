@@ -1,18 +1,32 @@
-import React from 'react';
+import React , { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { CartContext } from './cartContext';
 import "./productDetails.css";
 
-const CartPanel = ({ onClose }) => {
+const CartPanel = ({ onClose, isOpen }) => {
   const { cartItems, cartQuantity, cartTotal, updateItemQuantity, removeItemFromCart, proceedToPayment } = useContext(CartContext);
+  const [isVisible, setIsVisible] = useState(isOpen);
+  const [isOpenState, setIsOpenState] = useState(false);
 
   const handleProceedToPayment = () => {
     console.log('Proceed to payment button clicked');
     proceedToPayment();
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      setIsVisible(true); // Show immediately when opening
+      setTimeout(() => setIsOpenState(true), 100); // Delay adding the open class
+    } else {
+      setIsOpenState(false); // Remove open class immediately
+      setTimeout(() => setIsVisible(false), 300); // Delay hiding to match transition
+    }
+  }, [isOpen]);
+
+  if (!isVisible) return null; // Only render when needed
+
   return (
-    <div className="cart-panel">
+    <div className={`cart-panel ${isOpenState ? 'open' : 'closed'}`}>
       <div className="cart-items-wrapper">
         <h2 className="close-cart" onClick={onClose}>
           &times;

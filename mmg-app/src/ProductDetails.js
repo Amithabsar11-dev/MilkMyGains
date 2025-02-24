@@ -37,7 +37,7 @@ const ProductDetails = () => {
   const { handle } = useParams(); // Extract the product handle from the URL
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
-  const [packQuantity, setPackQuantity] = useState(1); // Default pack quantity
+  const [packQuantity, setPackQuantity] = useState(null); // Default pack quantity
   const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
   const [error, setError] = useState("");
@@ -47,6 +47,7 @@ const ProductDetails = () => {
   const [comparisonData, setComparisonData] = useState(null);
   const [ingredients, setIngredients] = useState(null);
   const [accordionContent, setAccordionContent] = useState(null);
+  const [isActive, setIsActive] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
     review_title: "",
@@ -173,6 +174,7 @@ const ProductDetails = () => {
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
     setPurchaseOption("oneTime");
+    setIsActive(!isActive);
   };
 
   const toggleCart = () => {
@@ -294,21 +296,21 @@ const ProductDetails = () => {
             <h4 className="quantity">Quantity</h4>
             <div className="pack-buttons">
               <button
-                className="Subscribe-button-pack"
+                className={`Subscribe-button-pack ${packQuantity === 1 ? "active" : ""}`}
                 disabled={selectedVariant?.quantityAvailable < 1}
                 onClick={() => handlePackSelection(1)}
               >
                 Pack of 1
               </button>
               <button
-                className="Subscribe-button-pack"
+                className={`Subscribe-button-pack ${packQuantity === 4 ? "active" : ""}`}
                 disabled={selectedVariant?.quantityAvailable < 4}
                 onClick={() => handlePackSelection(4)}
               >
                 Pack of 4
               </button>
               <button
-                className="Subscribe-button-pack"
+                className={`Subscribe-button-pack ${packQuantity === 6 ? "active" : ""}`}
                 disabled={selectedVariant?.quantityAvailable < 6}
                 onClick={() => handlePackSelection(6)}
               >
@@ -768,7 +770,7 @@ const ProductDetails = () => {
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
-                 href="/product/milk-my-gains-sample-product"
+                  href="/product/milk-my-gains-sample-product"
                 >SHOP</a></li>
               <li>
                 <a

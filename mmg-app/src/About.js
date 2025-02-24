@@ -16,7 +16,7 @@ import TransparencyIconline from "./assets/spring-transparancy.svg";
 import MythIconline from "./assets/spring-break.svg";
 import PossibilitiesIconline from "./assets/spring-unlock.svg";
 import Protein from "./assets/protein.png";
-import Milk from "./assets/Slice-3.svg";
+import MilkTM from './assets/Logo-TM.svg'
 import Copyright1 from './assets/copyright1.svg';
 import Weightlift from "./assets/body builder.svg";
 import Lean from "./assets/basketball.svg";
@@ -358,7 +358,7 @@ function About({ setIsLoaded }) {
                         <img src={Protein} className="protein-image1" alt="protein-pic" />
                     </div>
                     <div className='milk-pic-container'>
-                        <img src={Milk} className="milk-image1" alt="milk-pic" />
+                        <img src={MilkTM} className="milk-image1" alt="milk-pic" />
                     </div>
                     <div className="signup-container">
                         <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>

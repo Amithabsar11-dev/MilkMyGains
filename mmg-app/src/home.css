@@ -151,6 +151,13 @@
   align-items: center;
 }
 
+.lottie-animation{
+  width: 57%;
+  position: absolute;
+  top: 34%;
+  left: 22%;
+}
+
 .liquid-circle {
   position: absolute;
   width: 20%;
@@ -674,6 +681,7 @@
   transition: background-position 0.5s ease-in-out,
     background-size 0.5s ease-in-out;
   overflow: hidden;
+    min-height: 100vh;
 }
 
 .svg-overlay {
@@ -797,7 +805,7 @@
   opacity: 1;
   padding-left: 2%;
   padding-right: 2%;
-  padding-top: 3%;
+  padding-top: 4%;
 }
 
 .power-container2 {
@@ -810,7 +818,7 @@
   opacity: 1;
   padding-left: 2%;
   padding-right: 2%;
-  padding-top: 4%;
+  padding-top: 5%;
 }
 
 .power-space {
@@ -1003,6 +1011,7 @@
 .inactive-star {
   position: absolute;
   right: 4%;
+  top: 4%;
 }
 
 .comparison-column.labels {
@@ -1168,9 +1177,10 @@
   position: absolute;
   top: 43%;
   left: 18%;
-  transform-origin: top right;
   transform: rotate(70deg);
-  animation: swing 2s ease-in-out infinite alternate;
+  transform-origin: center; /* Ensures the rotation happens around the center */
+  display: block;
+  margin: 0 auto; /* Centering in case it helps */
 }
 
 /* @keyframes swing {
@@ -1662,6 +1672,9 @@
   .product-label img {
     height: 15vh;
   }
+  .lottie-animation{
+    top: 30%;
+  }
 }
 
 @media only screen and (max-width: 2200px) and (min-width: 1750px) {
@@ -1673,5 +1686,12 @@
 @media only screen and (max-width: 800px) and (min-width: 320px) {
   .svg-overlay-bottom {
     display: none;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 320px) {
+  .lottie-animation{
+    width: 100%;
+    top: 57%;
+      left: 2%;
   }
 }
