@@ -567,7 +567,7 @@ const ProductDetails = () => {
           </div>
         )}
       </div>
-      {product.variants.edges.map((variant, index) => {
+      {/* {product.variants.edges.map((variant, index) => {
         const image = variant.node.image; // Extract the image object
         console.log("Full Variant Data:", variant.node);
         console.log("Variant Image Data:", variant.node.image ? variant.node.image.src : "No image found");
@@ -582,7 +582,7 @@ const ProductDetails = () => {
             <p>Price: {variant.node.priceV2.amount} {variant.node.priceV2.currencyCode}</p>
           </div>
         );
-      })}
+      })} */}
       {/* Metafields */}
       <div className="metafield-container">
         <div className="metafield-total">
