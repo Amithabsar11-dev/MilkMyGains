@@ -26,9 +26,6 @@ const Header = () => {
   const targetProductId = "gid://shopify/Product/7528878702676";
 
 
-  const openCart = () => setCartPanelOpen(true);
-  const closeCart = () => setCartPanelOpen(false);
-
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
     window.addEventListener("resize", handleResize);

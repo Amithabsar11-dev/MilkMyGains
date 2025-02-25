@@ -1,12 +1,28 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
 
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
-  const [cartQuantity, setCartQuantity] = useState(0);
+  const [cartItems, setCartItems] = useState(() => {
+    // Load cart items from local storage if available
+    const savedCartItems = localStorage.getItem('cartItems');
+    return savedCartItems ? JSON.parse(savedCartItems) : [];
+  });
+
+  const [cartQuantity, setCartQuantity] = useState(() => {
+    // Load cart quantity from local storage if available
+    const savedCartQuantity = localStorage.getItem('cartQuantity');
+    return savedCartQuantity ? JSON.parse(savedCartQuantity) : 0;
+  });
+
   const [cartTotal, setCartTotal] = useState(0);
+
+  useEffect(() => {
+    // Update local storage whenever cartItems or cartQuantity changes
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
+  }, [cartItems, cartQuantity]);
 
   const addItemToCart = (item) => {
     const existingItem = cartItems.find((i) => i.id === item.id);
@@ -30,6 +46,7 @@ const CartProvider = ({ children }) => {
       setCartTotal(cartTotal - item.price * item.quantity);
     }
   };
+
   const updateItemQuantity = (id, quantity) => {
     const itemIndex = cartItems.findIndex((i) => i.id === id);
     if (itemIndex !== -1) {
@@ -50,11 +67,10 @@ const CartProvider = ({ children }) => {
           lines: cartItems.map((item) => ({
             merchandiseId: item.id,
             quantity: item.packQuantity,
-            price: item.price ,
+            price: item.price,
           })),
         }
       );
-
       if (response.data && response.data.checkoutUrl) {
         console.log('Redirecting to Shopify checkout');
         window.location.href = response.data.checkoutUrl;

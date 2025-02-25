@@ -169,6 +169,7 @@ app.get("/api/order-history", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+
 });
 
 // Helper to call Shopify Storefront API
@@ -382,7 +383,7 @@ app.get("/api/product/:handle", async (req, res) => {
         value
         type
       }
-        images(first: 1) {
+        images(first: 10) {
           edges {
             node {
               src
@@ -395,16 +396,16 @@ app.get("/api/product/:handle", async (req, res) => {
             node {
               id
               title
+               image {
+                src
+                altText
+              }
               priceV2 {
                 amount
                 currencyCode
               }
               availableForSale
               quantityAvailable
-              image {
-                src
-                altText
-              }
             }
           }
         }
@@ -751,6 +752,7 @@ app.post("/subscribe", async (req, res) => {
     });
   }
 });
+// console.log("Shopify API Full Response:", JSON.stringify(shopifyResponse, null, 2));
 
 // Start the server
 const PORT = 3001;

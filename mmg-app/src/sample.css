@@ -1,12 +1,18 @@
 .icon-height{
-  height: 30vh;
+  height: 32vh;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
+.paneer-active-image-1 {
+  height: 20vh !important;
+}
+.paneer-active-image-2 {
+  height: 5vh !important;
+}
 .paneer-icon-active {
-  height: 14vh;
+  height: 8vh;
 }
 .palak-icon-active , .proteins-icon-active, .energy-icon-active , .whey-icon-active{
   max-height: 100%;
@@ -33,10 +39,11 @@ ol, ul {
   flex: 1 1;
   font-family: Chivo Mono, Sans-serif;
   font-size: 20px;
-  color: black;
   display: flex;
   flex-direction: column;
   gap: 25px;
+  text-transform: uppercase;
+  padding-left: 0;
 }
 .cd-table-wrapper{
   display: flex;
@@ -53,6 +60,7 @@ ol, ul {
   display: flex;
   flex-direction: column;
   gap: 25px;
+  text-transform: uppercase;
 }
 .set-list-active{
   list-style-type: none;
@@ -64,6 +72,7 @@ ol, ul {
   display: flex;
   flex-direction: column;
   gap: 25px;
+  text-transform: uppercase;
 }
 #cd-table::after {
   content: '';
@@ -278,6 +287,12 @@ header.cd-table-column li:last-child {
 @media only screen and (max-width: 768px) {
   .icon-height {
       height: 8vh;
+  }
+  .paneer-active-image-1 {
+    height: 8vh !important;
+  }
+ .header .cd-table-column {
+    margin-left: -50px !important;
   }
 }
 

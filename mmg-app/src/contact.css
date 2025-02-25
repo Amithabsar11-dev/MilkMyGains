@@ -29,6 +29,7 @@
   display: flex;
   justify-content: center;
   font-family: "Anybody_Condensed";
+  padding-top: 7%;
 }
 
 .email a {

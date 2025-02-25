@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./productDetails.css";
@@ -30,6 +30,11 @@ import Inactivestar from "./assets/inactive-star.svg";
 import Milk from "./assets/Slice-3.svg";
 import Copyright1 from "./assets/copyright1.svg";
 import Graph from "./assets/graph.svg";
+import FilledStar from "./assets/Star 1.svg"; // Replace with actual path
+import EmptyStar from "./assets/Star 5.svg"; // Replace with actual path
+import moment from "moment";
+import HalfStar from './assets/Frame 215.svg';
+import Sample from './sample';
 import Copyrightline from './assets/Line 23.svg';
 import CartPanel from "./CartPanel";
 
@@ -49,6 +54,10 @@ const ProductDetails = () => {
   const [accordionContent, setAccordionContent] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageGroupStart, setPageGroupStart] = useState(1); // Controls the first page in the row
+  const reviewsPerPage = 3;
+  const pagesPerRow = 3; // How many page numbers to show at a time
   const [newReview, setNewReview] = useState({
     review_title: "",
     review_body: "",
@@ -65,6 +74,63 @@ const ProductDetails = () => {
     removeItemFromCart,
     proceedToPayment,
   } = useContext(CartContext);
+
+  //Graph
+  const data = [
+    { value: 76, text: "76%\nCALORIES\nFROM\nPROTEIN", icon: "🏃‍♂️", color: "#E74C3C" },
+    { value: 24, text: "24%\nCALORIES\nFROM\nPROTEIN", icon: "🥗", color: "#FFFFFF" },
+    { value: 72, text: "72%\nCALORIES\nFROM\nPROTEIN", icon: "🍗", color: "#FFFFFF" },
+    { value: 26, text: "26%\nCALORIES\nFROM\nPROTEIN", icon: "🍫", color: "#FFFFFF" },
+    { value: 71, text: "71%\nCALORIES\nFROM\nPROTEIN", icon: "🍼", color: "#FFFFFF" },
+  ];
+
+  //Table 
+
+  const tableContainerRef = useRef(null);
+  const scrollRightRef = useRef(null);
+
+  useEffect(() => {
+    const tableContainer = tableContainerRef.current;
+    const scrollRight = scrollRightRef.current;
+
+    // ✅ Ensure elements exist before adding event listeners
+    if (!tableContainer || !scrollRight) return;
+
+    const handleScroll = () => {
+      if (tableContainer.scrollLeft > 0) {
+        scrollRight.style.display = "none";
+      } else {
+        scrollRight.style.display = "block";
+      }
+
+      const totalTableWidth = tableContainer.scrollWidth;
+      const tableViewport = tableContainer.clientWidth;
+
+      if (tableContainer.scrollLeft >= totalTableWidth - tableViewport) {
+        tableContainer.classList.add("table-end");
+      } else {
+        tableContainer.classList.remove("table-end");
+      }
+    };
+
+    const handleScrollRight = () => {
+      const column = tableContainer.querySelector(".cd-table-column");
+      if (!column) return;
+
+      const columnWidth = column.offsetWidth;
+      tableContainer.scrollBy({ left: columnWidth, behavior: "smooth" });
+      scrollRight.style.display = "none";
+    };
+
+    tableContainer.addEventListener("scroll", handleScroll);
+    scrollRight.addEventListener("click", handleScrollRight);
+
+    return () => {
+      tableContainer.removeEventListener("scroll", handleScroll);
+      scrollRight.removeEventListener("click", handleScrollRight);
+    };
+  }, []);
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -120,6 +186,7 @@ const ProductDetails = () => {
           setComparisonData(comparisonDataMetafield.value);
         }
         console.log("Comparison Data:", comparisonData);
+
         // Extract Ingredients from metafields
         const ingredientsMetafield = metafields.find(
           (metafield) =>
@@ -129,6 +196,7 @@ const ProductDetails = () => {
           const ingredientsData = JSON.parse(ingredientsMetafield.value);
           setIngredients(ingredientsData);
         }
+
 
         const accordionContentMetafield = metafields.find(
           (metafield) =>
@@ -153,6 +221,9 @@ const ProductDetails = () => {
         const response = await axios.get(
           `http://147.93.106.149:3001/api/reviews/${handle}`
         );
+        const sortedReviews = response.data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
         setReviews(response.data);
       } catch (err) {
         console.error("Error fetching reviews:", err);
@@ -161,6 +232,41 @@ const ProductDetails = () => {
 
     fetchReviews();
   }, [handle]);
+
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const averageRating = reviews.length ? (totalRating / reviews.length).toFixed(1) : "0.0";
+
+  // Pagination logic
+  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
+  const startIndex = (currentPage - 1) * reviewsPerPage;
+  const currentReviews = reviews.slice(startIndex, startIndex + reviewsPerPage);
+
+  // Page Numbers Display Logic
+  const lastPageInRow = Math.min(pageGroupStart + pagesPerRow - 1, totalPages);
+  const pageNumbers = [];
+  for (let i = pageGroupStart; i <= lastPageInRow; i++) {
+    pageNumbers.push(i);
+  }
+
+  // Function to render stars based on average rating
+  const renderStars = (rating) => {
+    const stars = [];
+    const fullStars = Math.floor(rating); // Get full stars count
+    const hasHalfStar = rating % 1 >= 0.5; // Check if there’s a half star
+
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) {
+        stars.push(<img key={i} src={FilledStar} className="staring-icon" alt="star" />);
+      } else if (i === fullStars && hasHalfStar) {
+        stars.push(<img key={i} src={HalfStar} className="staring-icon" alt="star" />);
+      } else {
+        stars.push(<img key={i} src={EmptyStar} className="staring-icon" alt="star" />);
+      }
+    }
+    return stars;
+  };
+
+
 
   const totalPrice =
     purchaseOption === "subscribe"
@@ -233,32 +339,42 @@ const ProductDetails = () => {
   };
   const { title, description, images } = product;
 
-  const Accordion = ({ title, content }) => {
-    const [isOpen, setIsOpen] = useState(false);
+  // const Accordion = ({ title, content }) => {
+  //   const [isOpen, setIsOpen] = useState(false);
 
-    return (
-      <div className={`accordion-section ${isOpen ? "open" : ""}`}>
-        <div className="accordion-title" onClick={() => setIsOpen(!isOpen)}>
-          <span className="accordion-text">{title}</span>
-          <span className="accordion-icon">{isOpen ? "-" : "+"}</span>
-        </div>
-        {isOpen && (
-          <div className="accordion-content">
-            <span className="accordion-close" onClick={() => setIsOpen(false)}>
-              ×
-            </span>
-            {content}
-          </div>
-        )}
-      </div>
-    );
-  };
+  //   return (
+  //     <div className={`accordion-section ${isOpen ? "open" : ""}`}>
+  //       <div className="accordion-title" onClick={() => setIsOpen(!isOpen)}>
+  //         <span className="accordion-text">{title}</span>
+  //         <span className="accordion-icon">{isOpen ? "-" : "+"}</span>
+  //       </div>
+  //       {isOpen && (
+  //         <div className="accordion-content">
+  //           <span className="accordion-close" onClick={() => setIsOpen(false)}>
+  //             ×
+  //           </span>
+  //           {content}
+  //         </div>
+  //       )}
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="product-details-page">
       <div className="product-details-container">
         <div className="product-details-left col-sm-6">
-          <img src={MMG} alt="mmg-image" className="product-details-image" />
+          <div className="main-product-background">
+            {images.edges[0]?.node.src ? (
+              <img
+                src={images.edges[0].node.src}
+                alt={images.edges[0].node.altText || "Product Image"}
+                className="product-details-image"
+              />
+            ) : (
+              <div className="placeholder">No Image Available</div>
+            )}
+          </div>
           <div className="product-lisiting-icon">
             <div className="product-icons-list">
               <img
@@ -287,8 +403,7 @@ const ProductDetails = () => {
 
         <div className="product-details-right col-sm-6">
           <h1 className="details-title">
-            HIGH PROTEIN <br />
-            PANEER
+            {title}
           </h1>
           <hr className="horizontal-line"></hr>
 
@@ -452,11 +567,35 @@ const ProductDetails = () => {
           </div>
         )}
       </div>
+      {product.variants.edges.map((variant, index) => {
+        const image = variant.node.image; // Extract the image object
+        console.log("Full Variant Data:", variant.node);
+        console.log("Variant Image Data:", variant.node.image ? variant.node.image.src : "No image found");
+        return (
+          <div key={index}>
+            {image && image.src ? ( // Check if image and image.src exist
+              <img src={image.src} alt={image.altText || 'Variant Image'} />
+            ) : (
+              <p>No image available</p> // Fallback if no image is available
+            )}
+            <p>{variant.node.title}</p>
+            <p>Price: {variant.node.priceV2.amount} {variant.node.priceV2.currencyCode}</p>
+          </div>
+        );
+      })}
       {/* Metafields */}
       <div className="metafield-container">
         <div className="metafield-total">
           <div className="metafield-items">
             <div className="metafield-QA">
+              {faqContent?.map((item, index) => (
+                <div key={index}>
+                  <h5 className="metafield-question">{item.question}</h5>
+                  <p className="metafield-answer">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+            {/* <div className="metafield-QA">
               <h5 className="metafield-question">What it is?</h5>
               <p className="metafield-answer">
                 Our high-protein paneer supports your active lifestyle with 31
@@ -469,8 +608,8 @@ const ProductDetails = () => {
                 quality, without
                 <br /> compromising on taste.
               </p>
-            </div>
-            <div className="metafield-QA">
+            </div> */}
+            {/* <div className="metafield-QA">
               <h5 className="metafield-question">What it is?</h5>
               <p className="metafield-answer">
                 Our high-protein paneer supports your active lifestyle with 31
@@ -483,21 +622,7 @@ const ProductDetails = () => {
                 quality, without
                 <br /> compromising on taste.
               </p>
-            </div>
-            <div className="metafield-QA">
-              <h5 className="metafield-question">What it is?</h5>
-              <p className="metafield-answer">
-                Our high-protein paneer supports your active lifestyle with 31
-                grams
-                <br /> of protein per serving and just two natural ingredients.
-                It’s clean,
-                <br /> wholesome, and perfect for muscle growth, recovery, and
-                weight
-                <br /> management—low in fat, low in calories, and high in
-                quality, without
-                <br /> compromising on taste.
-              </p>
-            </div>
+            </div> */}
             <img src={Words1} alt="words" className="words-image" />
           </div>
         </div>
@@ -515,36 +640,27 @@ const ProductDetails = () => {
                 alt="nutrients-image"
               />
               <div className="ingredients-title-container">
-                <h1 className="ingredients-title">Ingredients</h1>
+                <h1 className="ingredients-title">{nutritionalHighlights.accordion.title}</h1>
                 <p className="ingredients-para">
-                  Made with pasteurized cow milk and lemon, our paneer is <br />
-                  pure, natural, and free from additives or preservatives.
-                  <br /> Simple ingredients for a healthier you!
+                  {nutritionalHighlights.accordion.content}
                 </p>
               </div>
               <div className="nutritional-space">
                 <div className="nutritional-title-container">
                   <h1 className="nutritional-highlights">
-                    Nutritional Highlights
+                    {nutritionalHighlights.title}
                   </h1>
-                  <div className="nutritional-items-total">
-                    <div className="nutritional-items">
-                      <h1 className="nutritional-energy">162 Kcal</h1>
-                      <p className="energy-para">Energy</p>
+                  {nutritionalHighlights && (
+                    <div className="nutritional-items-total">
+                      {nutritionalHighlights.summary.map((item, index) => (
+                        <div key={index} className={`nutritional-items${index === 0 ? "" : index + 1}`}>
+                          <h1 className="nutritional-energy">{item.subheading}</h1>
+                          <p className="energy-para">{item.heading}</p>
+                        </div>
+                      ))}
                     </div>
-                    <div className="nutritional-items1">
-                      <h1 className="nutritional-energy">30.5g</h1>
-                      <p className="energy-para">protein</p>
-                    </div>
-                    <div className="nutritional-items2">
-                      <h1 className="nutritional-energy">4g</h1>
-                      <p className="energy-para">Total fat</p>
-                    </div>
-                    <div className="nutritional-items3">
-                      <h1 className="nutritional-energy">1g</h1>
-                      <p className="energy-para">carbs</p>
-                    </div>
-                  </div>
+                  )}
+
                 </div>
               </div>
             </div>
@@ -559,92 +675,125 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+        {/* <div>
+          {reviews.map((review) => (
+            <div key={review.id}>
+              <h5>
+                {review.title} - {review.rating} Stars
+              </h5>
+              <p>{review.body}</p>
+              <p>
+                <strong>Reviewer:</strong> {review.reviewer.name}
+              </p>
+              {review.pictures.map((picture, index) => (
+                <img
+                  key={index}
+                  className="review-image"
+                  src={picture.urls.original}
+                  alt="Review"
+                />
+              ))}
+            </div>
+          ))}
+        </div> */}
+        {/* Review section */}
         <div className="reviews-container">
           <div className="row reviews-row">
+            {/* Left Section */}
             <div className="col-sm-6 spacing-reviews">
               <div className="review-spacing">
                 <div className="review-title">
-                  <img
-                    src={Orangestars}
-                    className="orange-star"
-                    alt="orange-star"
-                  />
+                  <img src={Orangestars} className="orange-star" alt="orange-star" />
                   <h1 className="review-heading">
                     loved <br /> by protein <br />
                     fans <br />
                     everywhere
                   </h1>
-                  <img
-                    src={Orangestars}
-                    className="orange-star1"
-                    alt="orange-star"
-                  />
+                  <img src={Orangestars} className="orange-star1" alt="orange-star" />
                 </div>
                 <p className="rating-para">overall rating</p>
                 <div className="rating-review">
                   <div className="ratings-style">
-                    <h1 className="rating-number">5</h1>
+                    <h1 className="rating-number">{averageRating}</h1>
                   </div>
                   <div className="reviews-style">
-                    <img src={Stars} className="star-5" alt="stars" />
-                    <p className="reviews-40">40 Reviews</p>
+                    <div className="star-5">{renderStars(averageRating)}</div>
+                    {/* <img src={Stars} className="star-5" alt="stars" /> */}
+                    <p className="reviews-40">{reviews.length} Reviews</p>
                   </div>
                 </div>
                 <div className="review-button">
-                  <button className="review-button-contact">
-                    Write a review
-                  </button>
+                  <button className="review-button-contact">Write a review</button>
                 </div>
               </div>
             </div>
+
+            {/* Right Section - Reviews List */}
             <div className="col-sm-6 reviews-space-pad">
-              <div className="reviewer-section">
-                <img src={Stars} className="star-4" alt="stars" />
-                <p className="reviewer-days">2 days ago</p>
-                <p className="reviewer-name">john joseph</p>
-              </div>
-              <div className="reviewer-title-container">
-                <h3 className="reviewer-title">In Loveeee</h3>
-                <p className="reviewer-para">
-                  52 year old gent here, have used many different flavors of
-                  EVOO
-                  <br /> over the years and have to say this is in my top 5 list
-                  for sure,
-                  <br /> especially if you buy the bundles to get a better
-                  price.
-                </p>
-                <hr className="horizontal-line1" />
-              </div>
-              <div className="reviewer-section">
-                <img src={Stars} className="star-4" alt="stars" />
-                <p className="reviewer-days1">2 days ago</p>
-                <p className="reviewer-name1">john joseph</p>
-              </div>
-              <div className="reviewer-title-container">
-                <h3 className="reviewer-title">Subtle & Natural</h3>
-                <p className="reviewer-para">
-                  52 year old gent here, have used many different flavors of
-                  EVOO
-                  <br /> over the years and have.
-                </p>
-                <hr className="horizontal-line1" />
-              </div>
-              <div className="reviewer-section">
-                <img src={Stars} className="star-4" alt="stars" />
-                <p className="reviewer-days2">2 days ago</p>
-                <p className="reviewer-name2">john joseph</p>
-              </div>
-              <div className="reviewer-title-container">
-                <h3 className="reviewer-title">Obsessed</h3>
-                <p className="reviewer-para">
-                  52 year old gent here, have used many different flavors of
-                  EVOO
-                  <br /> over the years and have to say this is in my top 5 list
-                  for sure,
-                  <br /> especially if you buy the bundles to get a better
-                  price.
-                </p>
-                <hr className="horizontal-line1" />
+              {currentReviews.map((review, index) => (
+                <div key={index}>
+                  <div className="reviewer-section">
+                    {/* Display Star Rating */}
+                    <div className="star-rating">
+                      {[...Array(5)].map((_, i) => (
+                        <img
+                          key={i}
+                          src={i < review.rating ? FilledStar : EmptyStar}
+                          className="staring-icon"
+                          alt="star"
+                        />
+                      ))}
+                    </div>
+
+                    {/* Display Relative Time */}
+                    <p className="reviewer-days">{moment(review.created_at).fromNow()}</p>
+
+                    <p className="reviewer-name">{review.reviewer.name}</p>
+                  </div>
+
+                  <div className="reviewer-title-container">
+                    <h3 className="reviewer-title">{review.title || "No Title"}</h3>
+                    <p className="reviewer-para">{review.body}</p>
+                    <hr className="horizontal-line1" />
+                  </div>
+                </div>
+              ))}
+
+              {/* Pagination Controls */}
+              <div className="pagination">
+                {pageGroupStart > 1 && (
+                  <button
+                    className="prev-button"
+                    onClick={() => {
+                      setPageGroupStart(pageGroupStart - 1);
+                      setCurrentPage(pageGroupStart - 1);
+                    }}
+                  >
+                    ←
+                  </button>
+                )}
+
+                {pageNumbers.map((pageNum) => (
+                  <button
+                    key={pageNum}
+                    className={`page-number ${pageNum === currentPage ? "active" : ""}`}
+                    onClick={() => setCurrentPage(pageNum)}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+
+                {lastPageInRow < totalPages && (
+                  <button
+                    className="next-button"
+                    onClick={() => {
+                      setPageGroupStart(pageGroupStart + 1);
+                      setCurrentPage(pageGroupStart + 1);
+                    }}
+                  >
+                    →
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -656,7 +805,7 @@ const ProductDetails = () => {
         <div className="texting-wrapper-1">
           <h1 className="raising-1">RAISING</h1>
           <div className="middle-texting">
-            <span className="high-proteins-1">HIGH PROTEINS</span>
+            <span className="high-proteins-1">HIGH PROTEIN</span>
             <br />
             <span className="low-proteins-1">LOW CALORIES</span>
           </div>
@@ -664,7 +813,7 @@ const ProductDetails = () => {
         </div>
       </div>
       {/* Comparision */}
-      <div className="comparison-table">
+      {/* <div className="comparison-table">
         <div className="comparison-column labels">
           <div className="product-label">
             <img src={Paneericon} alt="Product 1" className="product1" />
@@ -740,16 +889,73 @@ const ProductDetails = () => {
           <div className="value">160</div>
           <div className="value">₹₹₹₹</div>
         </div>
-      </div>
+      </div> */}
+      <section id="cd-table">
+        <header className="cd-table-column">
+          <div className='icon-height'>
+            <img src={Paneericon} className='paneer-icon-active-hidden' alt='' />
+          </div>
+          <ul className="set-list-active">
+            {comparisonData?.table.rows.map((row, rowIndex) => (
+              <li key={rowIndex}>{row.name}</li>
+            ))}
+          </ul>
+        </header>
+
+        <div className="cd-table-container" ref={tableContainerRef}>
+          <div className="cd-table-wrapper">
+            {comparisonData?.table.columns.map((col, colIndex) => (
+              <div
+                key={colIndex}
+                className={`cd-table-column ${colIndex === 0 ? 'column-active' : 'border-column'}`}
+              >
+                <div className='icon-height'>
+                  <img
+                    src={colIndex === 0 ? Activestar : Inactivestar}
+                    className={colIndex === 0 ? "active-star" : "inactive-star"}
+                    alt={colIndex === 0 ? "active star" : "inactive star"}
+                  />
+                  <img
+                    src={col.image}
+                    className={`paneer-icon-active 
+              ${colIndex === 0 ? "paneer-active-image-1" : ""} 
+              ${colIndex === 3 ? "paneer-active-image-2" : ""}`}
+                    alt={col.name}
+                  />
+                </div>
+                <ul className="set-list">
+                  {comparisonData?.table.rows.map((row, rowIndex) => (
+                    <li key={rowIndex}>{row.values[colIndex]}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+        <em className="cd-scroll-right" ref={scrollRightRef}></em>
+      </section>
+
       {/* Protein-section */}
       <div className="proteins-container-1 pt-5 pb-5">
         <h1 className="high-protein-heading">
-          Highest Protein-to-Calorie
-          <br /> Ratio—75% Power
+          {graphData?.heading}
         </h1>
         <div className="milk-pic-container">
           <img src={Graph} className="graph-image" alt="graph" />
         </div>
+        {/* <div className="chart-container">
+          {data.map((item, index) => (
+            <div key={index} className="bar-wrapper">
+              <div className="icongraph">{item.icon}</div>
+              <div className="bargraph">
+                <div className="bar-fill" style={{ height: `${item.value}vh`, backgroundColor: item.color }}></div>
+                <span className="bar-text">{item.text.split("\n").map((line, i) => <div key={i}>{line}</div>)}</span>
+              </div>
+            </div>
+          ))}
+        </div> */}
         <div className="milk-pic-container">
           <img src={Milk} className="milk-image-product" alt="milk-pic" />
         </div>
