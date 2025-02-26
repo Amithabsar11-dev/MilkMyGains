@@ -10,34 +10,37 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Shopify Storefront API Details
-const SHOPIFY_BASE_URL = "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
+const SHOPIFY_BASE_URL =
+  "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
 const STORE_FRONT_ACCESS_TOKEN = "b49fae102098a23e7a2b663dbc0e4d48";
 
 //Omnisend API
-const OMNISEND_API_KEY = "67bc5f6c532625c406fdf16a-kPttxT0hf5yvBAQj770IiAq5hMsJ89PGaEFh16lcQ66HdUYt7V";
+const OMNISEND_API_KEY =
+  "67bc5f6c532625c406fdf16a-kPttxT0hf5yvBAQj770IiAq5hMsJ89PGaEFh16lcQ66HdUYt7V";
 
-// MongoDB URI 
-const MONGO_URI = "mongodb+srv://amithabsar11:amithabsar11@cluster11.klfyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster11";
+// MongoDB URI
+const MONGO_URI =
+  "mongodb+srv://amithabsar11:amithabsar11@cluster11.klfyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster11";
 
 // Connect to MongoDB Atlas
-mongoose.connect(MONGO_URI)
+mongoose
+  .connect(MONGO_URI)
   .then(() => console.log("MongoDB Atlas Connected"))
-  .catch(err => console.error("MongoDB Connection Error:", err));
+  .catch((err) => console.error("MongoDB Connection Error:", err));
 
 // User Model
 const UserSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  shopifyCustomerId: { type: String }
+  shopifyCustomerId: { type: String },
 });
 const User = mongoose.model("User", UserSchema);
 
 // Judge.me API Details
 const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
-const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw";  // Replace with your actual Judge.me API token
-const SHOP_DOMAIN = "milk-my-gains.myshopify.com";  // Replace with your actual Shopify domain
-
+const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw"; // Replace with your actual Judge.me API token
+const SHOP_DOMAIN = "milk-my-gains.myshopify.com"; // Replace with your actual Shopify domain
 
 // Signup API
 app.post("/api/signup", async (req, res) => {
@@ -66,13 +69,26 @@ app.post("/api/signup", async (req, res) => {
     const shopifyResponse = await axios.post(
       SHOPIFY_BASE_URL,
       { query },
-      { headers: { "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN, "Content-Type": "application/json" } }
+      {
+        headers: {
+          "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN,
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     const shopifyCustomer = shopifyResponse.data.data.customerCreate.customer;
-    if (!shopifyCustomer) return res.status(400).json({ message: "Failed to create Shopify customer" });
+    if (!shopifyCustomer)
+      return res
+        .status(400)
+        .json({ message: "Failed to create Shopify customer" });
 
-    user = new User({ name, email, password: hashedPassword, shopifyCustomerId: shopifyCustomer.id });
+    user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      shopifyCustomerId: shopifyCustomer.id,
+    });
     await user.save();
 
     res.status(201).json({ message: "User registered successfully!" });
@@ -90,7 +106,8 @@ app.post("/api/login", async (req, res) => {
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid credentials" });
 
     const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
     res.status(200).json({ token, user });
@@ -106,18 +123,20 @@ app.post("/api/forgot-password", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "User not found" });
 
-    const resetToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "15m" });
+    const resetToken = jwt.sign({ id: user._id }, JWT_SECRET, {
+      expiresIn: "15m",
+    });
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
-      auth: { user: EMAIL_USER, pass: EMAIL_PASS }
+      auth: { user: EMAIL_USER, pass: EMAIL_PASS },
     });
 
     const mailOptions = {
       from: EMAIL_USER,
       to: email,
       subject: "Password Reset",
-      text: `Click the link to reset your password: http://localhost:3000/reset-password/${resetToken}`
+      text: `Click the link to reset your password: http://localhost:3000/reset-password/${resetToken}`,
     };
 
     transporter.sendMail(mailOptions, (error) => {
@@ -162,14 +181,18 @@ app.get("/api/order-history", async (req, res) => {
     const shopifyResponse = await axios.post(
       SHOPIFY_BASE_URL,
       { query },
-      { headers: { "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN, "Content-Type": "application/json" } }
+      {
+        headers: {
+          "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN,
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     res.status(200).json(shopifyResponse.data.data.customer.orders.edges);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-
 });
 
 // Helper to call Shopify Storefront API
@@ -213,16 +236,20 @@ app.get("/api/reviews/:handle", async (req, res) => {
     });
 
     if (!response.data.reviews?.length) {
-      return res.status(404).json({ message: "No reviews found for this product." });
+      return res
+        .status(404)
+        .json({ message: "No reviews found for this product." });
     }
 
     res.status(200).json(response.data.reviews);
   } catch (error) {
-    console.error("Error fetching reviews:", error.response?.data || error.message);
+    console.error(
+      "Error fetching reviews:",
+      error.response?.data || error.message
+    );
     res.status(500).json({ error: "Failed to fetch reviews from Judge.me." });
   }
 });
-
 
 // Helper function to get Judge.me product ID using Shopify product ID
 const getJudgeMeProductId = async (shopifyProductId) => {
@@ -244,7 +271,10 @@ const getJudgeMeProductId = async (shopifyProductId) => {
       throw new Error("Product ID not found in Judge.me response.");
     }
   } catch (error) {
-    console.error("Error fetching Judge.me product ID:", error.response?.data || error.message);
+    console.error(
+      "Error fetching Judge.me product ID:",
+      error.response?.data || error.message
+    );
     throw new Error("Failed to fetch Judge.me product ID.");
   }
 };
@@ -261,7 +291,14 @@ app.post("/api/reviews", async (req, res) => {
   } = req.body;
 
   // Validate input fields
-  if (!shopify_product_id || !review_title || !review_body || !reviewer_name || !reviewer_email || !rating) {
+  if (
+    !shopify_product_id ||
+    !review_title ||
+    !review_body ||
+    !reviewer_name ||
+    !reviewer_email ||
+    !rating
+  ) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -269,7 +306,9 @@ app.post("/api/reviews", async (req, res) => {
     // Fetch Judge.me product ID
     const product_id = await getJudgeMeProductId(shopify_product_id);
     if (!product_id) {
-      return res.status(500).json({ error: "Unable to map Shopify product to Judge.me product." });
+      return res
+        .status(500)
+        .json({ error: "Unable to map Shopify product to Judge.me product." });
     }
 
     const payload = {
@@ -303,7 +342,10 @@ app.post("/api/reviews", async (req, res) => {
       message: "Review is being processed and will appear shortly.",
     });
   } catch (error) {
-    console.error("Error submitting review:", error.response?.data || error.message);
+    console.error(
+      "Error submitting review:",
+      error.response?.data || error.message
+    );
     res.status(500).json({ error: "Failed to submit review." });
   }
 });
@@ -352,7 +394,8 @@ app.get("/api/products", async (req, res) => {
       const product = edge.node;
       return {
         ...product,
-        handle: product.handle || product.title.toLowerCase().replace(/\s+/g, "-"),
+        handle:
+          product.handle || product.title.toLowerCase().replace(/\s+/g, "-"),
       };
     });
     res.status(200).json(products);
@@ -365,88 +408,94 @@ app.get("/api/products", async (req, res) => {
 app.get("/api/product/:handle", async (req, res) => {
   const { handle } = req.params;
   const query = `
-    {
-      productByHandle(handle: "${handle}") {
-        title
-        description
-        metafields(identifiers: [
+  {
+    productByHandle(handle: "${handle}") {
+      title
+      description
+      metafields(identifiers: [
         { namespace: "faq", key: "list" },
         { namespace: "nutritional", key: "highlights" },
         { namespace: "product", key: "comparison" },
         { namespace: "product", key: "ingredients" },
-        { namespace: "graph", key: "chart" }
-        { namespace: "new", key: "accordion_content" }
-        { namespace: "new", key: "faq" },
+        { namespace: "graph", key: "chart" },
+        { namespace: "new", key: "accordion_content" },
+        { namespace: "new", key: "faq" }
       ]) {
         namespace
         key
         value
         type
       }
-        images(first: 10) {
-          edges {
-            node {
+      
+      images(first: 10) {
+        edges {
+          node {
+            src
+            altText
+          }
+        }
+      }
+
+      variants(first: 10) {
+        edges {
+          node {
+            id
+            title
+            availableForSale
+            quantityAvailable
+            priceV2 {
+              amount
+              currencyCode
+            }
+            image {
               src
               altText
             }
           }
         }
-        variants(first: 10) {
-          edges {
-            node {
-              id
-              title
-               image {
-                src
-                altText
-              }
-              priceV2 {
-                amount
-                currencyCode
-              }
-              availableForSale
-              quantityAvailable
-            }
-          }
-        }
       }
     }
-  `;
-
+  }
+`;
   try {
     const data = await shopifyRequest(query);
     const product = data.productByHandle;
 
-    console.log('Raw Metafields:', product.metafields);
+    console.log("Raw Metafields:", product.metafields);
 
     // Parse the metafield value if it exists
     if (product.metafields && product.metafields.length > 0) {
-      console.log('Raw Metafields:', product.metafields);
+      console.log("Raw Metafields:", product.metafields);
 
       product.metafields = product.metafields
         .filter((metafield) => metafield !== null)
         .map((metafield) => {
           if (metafield.value) {
             try {
-              console.log(`Parsing metafield: ${metafield.namespace}.${metafield.key}`, metafield.value);
+              console.log(
+                `Parsing metafield: ${metafield.namespace}.${metafield.key}`,
+                metafield.value
+              );
               metafield.value = JSON.parse(metafield.value); // Parse JSON
             } catch (error) {
-              console.error(`Error parsing metafield ${metafield.namespace}.${metafield.key}:`, error);
+              console.error(
+                `Error parsing metafield ${metafield.namespace}.${metafield.key}:`,
+                error
+              );
               metafield.value = metafield.value; // Keep as raw string if parsing fails
             }
           }
           return metafield;
         });
 
-      console.log('Parsed Metafields:', product.metafields);
+      console.log("Parsed Metafields:", product.metafields);
     }
 
-
-    console.log('Parsed Metafields:', product.metafields);
-    console.log('Final Product Data:', product);
+    console.log("Parsed Metafields:", product.metafields);
+    console.log("Final Product Data:", product);
 
     // Add some additional logging to see where the metafields data is being reset
-    console.log('Metafields before sending response:', product.metafields);
+    console.log("Metafields before sending response:", product.metafields);
 
     res.status(200).json(product);
   } catch (error) {
@@ -502,18 +551,16 @@ app.post("/api/cart/create", async (req, res) => {
         attributes: [
           {
             key: "discountedPrice",
-            value: line?.price ? line.price.toString() : "0" // Default to "0" if price is undefined
+            value: line?.price ? line.price.toString() : "0", // Default to "0" if price is undefined
           },
           {
             key: "purchaseOption",
-            value: line?.purchaseOption || "N/A" // Default to "N/A" if purchaseOption is undefined
+            value: line?.purchaseOption || "N/A", // Default to "N/A" if purchaseOption is undefined
           },
         ],
       })),
     },
   };
-
-
 
   try {
     const data = await shopifyRequest(query, variables);
@@ -521,7 +568,9 @@ app.post("/api/cart/create", async (req, res) => {
     console.log("Cart Creation Response:", data);
 
     if (data.cartCreate.userErrors.length > 0) {
-      throw new Error(data.cartCreate.userErrors.map((e) => e.message).join(", "));
+      throw new Error(
+        data.cartCreate.userErrors.map((e) => e.message).join(", ")
+      );
     }
     res.status(200).json(data.cartCreate.cart);
   } catch (error) {
@@ -534,7 +583,8 @@ app.post("/api/cart/add", async (req, res) => {
   const { cartId, variantId, quantity } = req.body;
   if (!cartId || !variantId || !quantity) {
     return res.status(400).json({
-      error: "Invalid request. 'cartId', 'variantId', and 'quantity' are required.",
+      error:
+        "Invalid request. 'cartId', 'variantId', and 'quantity' are required.",
     });
   }
 
@@ -625,13 +675,13 @@ app.post("/api/cart/view", async (req, res) => {
   }
 });
 
-
 // Update cart item
 app.post("/api/cart/update", async (req, res) => {
   const { cartId, lineItemId, quantity } = req.body;
   if (!cartId || !lineItemId || !quantity) {
     return res.status(400).json({
-      error: "Invalid request. 'cartId', 'lineItemId', and 'quantity' are required.",
+      error:
+        "Invalid request. 'cartId', 'lineItemId', and 'quantity' are required.",
     });
   }
 
@@ -714,7 +764,7 @@ app.post("/api/cart/remove", async (req, res) => {
   }
 });
 
-//Newsletter 
+//Newsletter
 
 app.post("/subscribe", async (req, res) => {
   const { email } = req.body;
@@ -734,24 +784,32 @@ app.post("/subscribe", async (req, res) => {
       },
       {
         headers: {
-          "Authorization": `Bearer ${OMNISEND_API_KEY}`,
-          "Content-Type": "application/json"
-        }
+          Authorization: `Bearer ${OMNISEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
     res.json({
-      message: "Subscription successful! Thank you for subscribing."
+      message: "Subscription successful! Thank you for subscribing.",
     });
-
   } catch (error) {
-    console.error("Error subscribing user:", error.response?.data || error.message);
+    console.error(
+      "Error subscribing user:",
+      error.response?.data || error.message
+    );
     res.status(500).json({
       error: "Subscription failed. Please try again later.",
-      details: error.response?.data || error.message
+      details: error.response?.data || error.message,
     });
   }
 });
+
+app.post("/log", (req, res) => {
+  console.log("Received data:", req.body);
+  res.sendStatus(200);
+});
+
 // console.log("Shopify API Full Response:", JSON.stringify(shopifyResponse, null, 2));
 
 // Start the server

@@ -33,9 +33,9 @@ import Graph from "./assets/graph.svg";
 import FilledStar from "./assets/Star 1.svg"; // Replace with actual path
 import EmptyStar from "./assets/Star 5.svg"; // Replace with actual path
 import moment from "moment";
-import HalfStar from './assets/Frame 215.svg';
-import Sample from './sample';
-import Copyrightline from './assets/Line 23.svg';
+import HalfStar from "./assets/Frame 215.svg";
+import Sample from "./sample";
+import Copyrightline from "./assets/Line 23.svg";
 import CartPanel from "./CartPanel";
 
 const ProductDetails = () => {
@@ -77,14 +77,39 @@ const ProductDetails = () => {
 
   //Graph
   const data = [
-    { value: 76, text: "76%\nCALORIES\nFROM\nPROTEIN", icon: "🏃‍♂️", color: "#E74C3C" },
-    { value: 24, text: "24%\nCALORIES\nFROM\nPROTEIN", icon: "🥗", color: "#FFFFFF" },
-    { value: 72, text: "72%\nCALORIES\nFROM\nPROTEIN", icon: "🍗", color: "#FFFFFF" },
-    { value: 26, text: "26%\nCALORIES\nFROM\nPROTEIN", icon: "🍫", color: "#FFFFFF" },
-    { value: 71, text: "71%\nCALORIES\nFROM\nPROTEIN", icon: "🍼", color: "#FFFFFF" },
+    {
+      value: 76,
+      text: "76%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🏃‍♂️",
+      color: "#E74C3C",
+    },
+    {
+      value: 24,
+      text: "24%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🥗",
+      color: "#FFFFFF",
+    },
+    {
+      value: 72,
+      text: "72%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🍗",
+      color: "#FFFFFF",
+    },
+    {
+      value: 26,
+      text: "26%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🍫",
+      color: "#FFFFFF",
+    },
+    {
+      value: 71,
+      text: "71%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🍼",
+      color: "#FFFFFF",
+    },
   ];
 
-  //Table 
+  //Table
 
   const tableContainerRef = useRef(null);
   const scrollRightRef = useRef(null);
@@ -131,7 +156,6 @@ const ProductDetails = () => {
     };
   }, []);
 
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -139,14 +163,14 @@ const ProductDetails = () => {
           `http://147.93.106.149:3001/api/product/${handle}`
         );
         console.log("Full Response:", response.data);
-
+        console.log("Fetched product data:", product);
         setProduct(response.data);
 
         // Automatically select the first available variant
-        const firstAvailableVariant = response.data.variants.edges.find(
-          ({ node }) => node.availableForSale
-        )?.node;
-        setSelectedVariant(firstAvailableVariant || null);
+        // const firstAvailableVariant = response.data.variants.edges.find(
+        //   ({ node }) => node.availableForSale
+        // )?.node;
+        // setSelectedVariant(firstAvailableVariant || null);
 
         // Extract FAQ content from metafields
         const metafields = response.data.metafields || [];
@@ -197,7 +221,6 @@ const ProductDetails = () => {
           setIngredients(ingredientsData);
         }
 
-
         const accordionContentMetafield = metafields.find(
           (metafield) =>
             metafield.key === "accordion_content" &&
@@ -234,7 +257,9 @@ const ProductDetails = () => {
   }, [handle]);
 
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-  const averageRating = reviews.length ? (totalRating / reviews.length).toFixed(1) : "0.0";
+  const averageRating = reviews.length
+    ? (totalRating / reviews.length).toFixed(1)
+    : "0.0";
 
   // Pagination logic
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
@@ -256,17 +281,21 @@ const ProductDetails = () => {
 
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
-        stars.push(<img key={i} src={FilledStar} className="staring-icon" alt="star" />);
+        stars.push(
+          <img key={i} src={FilledStar} className="staring-icon" alt="star" />
+        );
       } else if (i === fullStars && hasHalfStar) {
-        stars.push(<img key={i} src={HalfStar} className="staring-icon" alt="star" />);
+        stars.push(
+          <img key={i} src={HalfStar} className="staring-icon" alt="star" />
+        );
       } else {
-        stars.push(<img key={i} src={EmptyStar} className="staring-icon" alt="star" />);
+        stars.push(
+          <img key={i} src={EmptyStar} className="staring-icon" alt="star" />
+        );
       }
     }
     return stars;
   };
-
-
 
   const totalPrice =
     purchaseOption === "subscribe"
@@ -274,8 +303,8 @@ const ProductDetails = () => {
         ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
         : 0
       : selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-        : 0;
+      ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
+      : 0;
 
   const handlePackSelection = (quantity) => {
     setPackQuantity(quantity);
@@ -402,30 +431,34 @@ const ProductDetails = () => {
         </div>
 
         <div className="product-details-right col-sm-6">
-          <h1 className="details-title">
-            {title}
-          </h1>
+          <h1 className="details-title">{title}</h1>
           <hr className="horizontal-line"></hr>
 
           <div className="pack-selection">
             <h4 className="quantity">Quantity</h4>
             <div className="pack-buttons">
               <button
-                className={`Subscribe-button-pack ${packQuantity === 1 ? "active" : ""}`}
+                className={`Subscribe-button-pack ${
+                  packQuantity === 1 ? "active" : ""
+                }`}
                 disabled={selectedVariant?.quantityAvailable < 1}
                 onClick={() => handlePackSelection(1)}
               >
                 Pack of 1
               </button>
               <button
-                className={`Subscribe-button-pack ${packQuantity === 4 ? "active" : ""}`}
+                className={`Subscribe-button-pack ${
+                  packQuantity === 4 ? "active" : ""
+                }`}
                 disabled={selectedVariant?.quantityAvailable < 4}
                 onClick={() => handlePackSelection(4)}
               >
                 Pack of 4
               </button>
               <button
-                className={`Subscribe-button-pack ${packQuantity === 6 ? "active" : ""}`}
+                className={`Subscribe-button-pack ${
+                  packQuantity === 6 ? "active" : ""
+                }`}
                 disabled={selectedVariant?.quantityAvailable < 6}
                 onClick={() => handlePackSelection(6)}
               >
@@ -515,7 +548,10 @@ const ProductDetails = () => {
               <h2 className="close-cart" onClick={toggleCart}>
                 &times;
               </h2>
-              <h2 className='cart-panel-heading'>Your Cart ({cartItems.reduce((total, item) => total + item.quantity, 0)})</h2>
+              <h2 className="cart-panel-heading">
+                Your Cart (
+                {cartItems.reduce((total, item) => total + item.quantity, 0)})
+              </h2>
               {cartItems.map((item) => {
                 const titleParts = item.title.split(" - "); // Splitting title at " - "
                 const mainTitle = titleParts[0]; // First part of the title
@@ -529,23 +565,44 @@ const ProductDetails = () => {
                       className="cart-image"
                     />
                     <div className="cart-details">
-                      <div className='cart-selection'>
-                        <h3 className='cart-title'>{mainTitle} {extraInfo}</h3>
-                        <h2 className='remove-items' onClick={() => removeItemFromCart(item.id)}>&times;</h2>
+                      <div className="cart-selection">
+                        <h3 className="cart-title">
+                          {mainTitle} {extraInfo}
+                        </h3>
+                        <h2
+                          className="remove-items"
+                          onClick={() => removeItemFromCart(item.id)}
+                        >
+                          &times;
+                        </h2>
                       </div>
-                      <p className='qty-container'>
+                      <p className="qty-container">
                         <div className="qty-buttons">
-                          <p className='qty-quantity'>QTY: {item.quantity}</p>
-                          <button className="circle-btn" onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
-                          <button className="circle-btn" onClick={() => {
-                            if (item.quantity > 1) {
-                              updateItemQuantity(item.id, item.quantity - 1);
-                            } else {
-                              removeItemFromCart(item.id);
+                          <p className="qty-quantity">QTY: {item.quantity}</p>
+                          <button
+                            className="circle-btn"
+                            onClick={() =>
+                              updateItemQuantity(item.id, item.quantity + 1)
                             }
-                          }}>-</button>
+                          >
+                            +
+                          </button>
+                          <button
+                            className="circle-btn"
+                            onClick={() => {
+                              if (item.quantity > 1) {
+                                updateItemQuantity(item.id, item.quantity - 1);
+                              } else {
+                                removeItemFromCart(item.id);
+                              }
+                            }}
+                          >
+                            -
+                          </button>
                         </div>
-                        <p className='items-price'>₹{(item.price * item.quantity).toFixed(2)}</p>
+                        <p className="items-price">
+                          ₹{(item.price * item.quantity).toFixed(2)}
+                        </p>
                       </p>
                       {/* <button onClick={() => removeItemFromCart(item.id)}>Remove</button> */}
                     </div>
@@ -554,15 +611,21 @@ const ProductDetails = () => {
               })}
             </div>
             <div className="checkout-option">
-              <div className='checkout-total'>
-                <p className='subtotal'>
-                  SUB TOTAL
-                </p>
-                <p className='subtotal-amount'>
-                  ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
+              <div className="checkout-total">
+                <p className="subtotal">SUB TOTAL</p>
+                <p className="subtotal-amount">
+                  ₹
+                  {cartItems
+                    .reduce(
+                      (total, item) => total + item.price * item.quantity,
+                      0
+                    )
+                    .toFixed(2)}
                 </p>
               </div>
-              <button className="checkout" onClick={proceedToPayment}>Proceed to Payment</button>
+              <button className="checkout" onClick={proceedToPayment}>
+                Proceed to Payment
+              </button>
             </div>
           </div>
         )}
@@ -583,6 +646,21 @@ const ProductDetails = () => {
           </div>
         );
       })} */}
+      {product.variants.edges.map((variant, index) => (
+        <div key={index}>
+          <h3>{variant.node.title}</h3>
+          <p>Quantity Available: {variant.node.quantityAvailable}</p>
+
+          {variant.node.image && variant.node.image.src ? (
+            <img
+              src={variant.node.image.src}
+              alt={variant.node.image.altText || "Variant Image"}
+            />
+          ) : (
+            <p>No Image Available</p>
+          )}
+        </div>
+      ))}
       {/* Metafields */}
       <div className="metafield-container">
         <div className="metafield-total">
@@ -640,7 +718,9 @@ const ProductDetails = () => {
                 alt="nutrients-image"
               />
               <div className="ingredients-title-container">
-                <h1 className="ingredients-title">{nutritionalHighlights.accordion.title}</h1>
+                <h1 className="ingredients-title">
+                  {nutritionalHighlights.accordion.title}
+                </h1>
                 <p className="ingredients-para">
                   {nutritionalHighlights.accordion.content}
                 </p>
@@ -653,14 +733,20 @@ const ProductDetails = () => {
                   {nutritionalHighlights && (
                     <div className="nutritional-items-total">
                       {nutritionalHighlights.summary.map((item, index) => (
-                        <div key={index} className={`nutritional-items${index === 0 ? "" : index + 1}`}>
-                          <h1 className="nutritional-energy">{item.subheading}</h1>
+                        <div
+                          key={index}
+                          className={`nutritional-items${
+                            index === 0 ? "" : index + 1
+                          }`}
+                        >
+                          <h1 className="nutritional-energy">
+                            {item.subheading}
+                          </h1>
                           <p className="energy-para">{item.heading}</p>
                         </div>
                       ))}
                     </div>
                   )}
-
                 </div>
               </div>
             </div>
@@ -703,13 +789,21 @@ const ProductDetails = () => {
             <div className="col-sm-6 spacing-reviews">
               <div className="review-spacing">
                 <div className="review-title">
-                  <img src={Orangestars} className="orange-star" alt="orange-star" />
+                  <img
+                    src={Orangestars}
+                    className="orange-star"
+                    alt="orange-star"
+                  />
                   <h1 className="review-heading">
                     loved <br /> by protein <br />
                     fans <br />
                     everywhere
                   </h1>
-                  <img src={Orangestars} className="orange-star1" alt="orange-star" />
+                  <img
+                    src={Orangestars}
+                    className="orange-star1"
+                    alt="orange-star"
+                  />
                 </div>
                 <p className="rating-para">overall rating</p>
                 <div className="rating-review">
@@ -723,7 +817,9 @@ const ProductDetails = () => {
                   </div>
                 </div>
                 <div className="review-button">
-                  <button className="review-button-contact">Write a review</button>
+                  <button className="review-button-contact">
+                    Write a review
+                  </button>
                 </div>
               </div>
             </div>
@@ -746,13 +842,17 @@ const ProductDetails = () => {
                     </div>
 
                     {/* Display Relative Time */}
-                    <p className="reviewer-days">{moment(review.created_at).fromNow()}</p>
+                    <p className="reviewer-days">
+                      {moment(review.created_at).fromNow()}
+                    </p>
 
                     <p className="reviewer-name">{review.reviewer.name}</p>
                   </div>
 
                   <div className="reviewer-title-container">
-                    <h3 className="reviewer-title">{review.title || "No Title"}</h3>
+                    <h3 className="reviewer-title">
+                      {review.title || "No Title"}
+                    </h3>
                     <p className="reviewer-para">{review.body}</p>
                     <hr className="horizontal-line1" />
                   </div>
@@ -776,7 +876,9 @@ const ProductDetails = () => {
                 {pageNumbers.map((pageNum) => (
                   <button
                     key={pageNum}
-                    className={`page-number ${pageNum === currentPage ? "active" : ""}`}
+                    className={`page-number ${
+                      pageNum === currentPage ? "active" : ""
+                    }`}
                     onClick={() => setCurrentPage(pageNum)}
                   >
                     {pageNum}
@@ -892,8 +994,12 @@ const ProductDetails = () => {
       </div> */}
       <section id="cd-table">
         <header className="cd-table-column">
-          <div className='icon-height'>
-            <img src={Paneericon} className='paneer-icon-active-hidden' alt='' />
+          <div className="icon-height">
+            <img
+              src={Paneericon}
+              className="paneer-icon-active-hidden"
+              alt=""
+            />
           </div>
           <ul className="set-list-active">
             {comparisonData?.table.rows.map((row, rowIndex) => (
@@ -907,9 +1013,11 @@ const ProductDetails = () => {
             {comparisonData?.table.columns.map((col, colIndex) => (
               <div
                 key={colIndex}
-                className={`cd-table-column ${colIndex === 0 ? 'column-active' : 'border-column'}`}
+                className={`cd-table-column ${
+                  colIndex === 0 ? "column-active" : "border-column"
+                }`}
               >
-                <div className='icon-height'>
+                <div className="icon-height">
                   <img
                     src={colIndex === 0 ? Activestar : Inactivestar}
                     className={colIndex === 0 ? "active-star" : "inactive-star"}
@@ -933,15 +1041,12 @@ const ProductDetails = () => {
           </div>
         </div>
 
-
         <em className="cd-scroll-right" ref={scrollRightRef}></em>
       </section>
 
       {/* Protein-section */}
       <div className="proteins-container-1 pt-5 pb-5">
-        <h1 className="high-protein-heading">
-          {graphData?.heading}
-        </h1>
+        <h1 className="high-protein-heading">{graphData?.heading}</h1>
         <div className="milk-pic-container">
           <img src={Graph} className="graph-image" alt="graph" />
         </div>
@@ -977,44 +1082,68 @@ const ProductDetails = () => {
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/product/milk-my-gains-sample-product"
-                >SHOP</a></li>
+                >
+                  SHOP
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/about"
-                >ABOUT US</a></li>
+                >
+                  ABOUT US
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/faq"
-                >FAQ</a></li>
+                >
+                  FAQ
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/contact"
-                >CONTACT</a></li>
+                >
+                  CONTACT
+                </a>
+              </li>
             </ul>
             <ul className="footer-links-1">
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/shipping"
-                >SHIPPING</a></li>
+                >
+                  SHIPPING
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/refund"
-                >REFUND & RETURNS</a></li>
+                >
+                  REFUND & RETURNS
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/terms"
-                >TERMS & CONDITIONS</a></li>
+                >
+                  TERMS & CONDITIONS
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/privacy"
-                >PRIVACY POLICY</a></li>
+                >
+                  PRIVACY POLICY
+                </a>
+              </li>
             </ul>
           </div>
         </div>
