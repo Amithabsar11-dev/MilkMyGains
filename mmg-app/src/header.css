@@ -1,18 +1,21 @@
 .header {
   padding: 10px 0;
   /* background-image: url("./assets/background.png"); */
-  position:absolute;
+  position: absolute;
   z-index: 99999;
   width: 100%;
 }
+
 .header.white-bg {
   background-color: white !important;
   background-image: none;
 }
 
 .header.sandal-bg {
-  background-color: #f3f3f3 !important; /* Sandal color */
+  background-color: #f3f3f3 !important;
+  /* Sandal color */
 }
+
 .navbar-nav {
   gap: 55px !important;
 }
@@ -20,17 +23,21 @@
 .nav-dark span {
   color: black !important;
 }
+
 .blue-text {
-  color: #0564f2 !important; /* Blue color */
+  color: #0564f2 !important;
+  /* Blue color */
 }
 
 .blue-border {
-  border-color: #0564f2 !important; /* Blue border */
+  border-color: #0564f2 !important;
+  /* Blue border */
 }
 
 .logo-dark {
   filter: none;
 }
+
 .header.sandal-bg .free-shipping h1 {
   color: black;
 }
@@ -41,10 +48,12 @@
   gap: 70px;
   align-items: center;
 }
+
 .border-line {
   color: white;
   margin-top: 8px;
 }
+
 .free-heading {
   font-family: "Chivo Mono", serif;
   text-transform: uppercase;
@@ -57,6 +66,7 @@
 .nav-style {
   display: flex;
   justify-content: end;
+  padding: 0;
   /* width: 30%; */
 }
 
@@ -64,11 +74,14 @@
   width: 10%;
   height: auto;
 }
+
 .header.sandal-bg .navbar-nav .nav-link {
   color: #0564f2 !important;
 }
+
 .header.white-bg .navbar-nav .nav-link {
-  color: black !important; /* Black color for white background pages */
+  color: black !important;
+  /* Black color for white background pages */
 }
 
 .navbar-nav .nav-link {
@@ -125,9 +138,11 @@
   font-size: 18px;
   position: relative;
 }
+
 .nav-dark:before {
   background-color: #000 !important;
 }
+
 .link::before,
 .link::after {
   position: absolute;
@@ -143,6 +158,7 @@
   content: "";
   /* show by default */
 }
+
 .link--elara {
   font-family: aktiv-grotesk-extended, sans-serif;
   font-size: 1.375rem;
@@ -151,34 +167,30 @@
 .link--elara::before {
   transform-origin: 50% 100%;
   transition: clip-path 0.3s, transform 0.3s cubic-bezier(0.2, 1, 0.8, 1);
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    0 100%,
-    0 0,
-    100% 0,
-    100% 100%,
-    0 100%,
-    0 100%,
-    100% 100%,
-    100% 0%
-  );
+  clip-path: polygon(0% 0%,
+      0% 100%,
+      0 100%,
+      0 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 100%,
+      100% 100%,
+      100% 0%);
 }
 
 .link--elara:hover::before {
   transform: translate3d(0, 2px, 0) scale3d(1.08, 3, 1);
-  clip-path: polygon(
-    0% 0%,
-    0% 100%,
-    50% 100%,
-    50% 0,
-    50% 0,
-    50% 100%,
-    50% 100%,
-    0 100%,
-    100% 100%,
-    100% 0%
-  );
+  clip-path: polygon(0% 0%,
+      0% 100%,
+      50% 100%,
+      50% 0,
+      50% 0,
+      50% 100%,
+      50% 100%,
+      0 100%,
+      100% 100%,
+      100% 0%);
 }
 
 .link--elara span {
@@ -200,11 +212,13 @@
 /* Mobile Styles (Below 768px) */
 @media (max-width: 768px) {
   .logo {
-    width: 50%;
+    width: 40%;
   }
+
   .free-shipping {
     gap: 0px;
   }
+
   .free-heading {
     font-size: 12px;
   }
@@ -222,6 +236,9 @@
     align-items: center;
     transition: left 0.3s ease-in-out;
     z-index: 1000;
+  }
+  .nav-fonts{
+    font-size: 25px;
   }
 
   .navbar-menu.active {
@@ -261,11 +278,23 @@
   }
 
   .bar {
-    width: 40px;
-    height: 4px;
+    width: 35px;
+    height: 0px;
     background-color: white;
     border-radius: 2px;
     transition: all 0.4s ease-in-out;
+  }
+
+  /* For Product Page */
+  .product-bar {
+    border: 2px dashed black;
+    background-color: black;
+  }
+
+  /* For FAQ, Contact, Shipping, Refund, Terms, Privacy */
+  .faq-bar {
+    border: 2px dashed #0564f2;
+    background-color: #0564f2;
   }
 
   /* Toggle Button Animation */
@@ -319,6 +348,7 @@
     color: white;
   }
 }
+
 @media only screen and (max-width: 1200px) and (min-width: 770px) {
   .cart-icon {
     width: 100%;

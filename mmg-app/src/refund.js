@@ -26,9 +26,9 @@ function Refund() {
                     <p className='terms-para'>
                         We offer full replacement for products that are damaged during transit. To initiate a replacement:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Notification Period:</span> Contact our customer support within <span style={{ fontWeight: 600, color:"black" }}>2 hours</span> of receiving the product.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Validation:</span> Our team will validate the damage through communication over email or phone.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Processing:</span> Once validated, replacement orders are processed immediately.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Notification Period:</span> Contact our customer support within <span style={{ fontWeight: 600, color:"black" }}>2 hours</span> of receiving the product.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Validation:</span> Our team will validate the damage through communication over email or phone.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Processing:</span> Once validated, replacement orders are processed immediately.</li>
                         </ul>
                     </p>
                 </div>
@@ -47,8 +47,8 @@ function Refund() {
                     <p className='terms-para'>
                         Orders cannot be canceled, and refunds are not available once the order is successfully placed and processed by the payment gateway. Refund requests will only be considered in the following cases:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Prepaid Orders:</span>  If the order is prepaid and the shipping location is not serviced by our partner courier companies.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Processing Time:</span> From the date of written confirmation of refund to the customer, the amount will be refunded within the next <span style={{ fontWeight: 600, color:"black" }}>7-10 business days</span> to the customer’s original mode of payment.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Prepaid Orders:</span>  If the order is prepaid and the shipping location is not serviced by our partner courier companies.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Processing Time:</span> From the date of written confirmation of refund to the customer, the amount will be refunded within the next <span style={{ fontWeight: 600, color:"black" }}>7-10 business days</span> to the customer’s original mode of payment.</li>
                         </ul>
                     </p>
                 </div>
@@ -59,10 +59,10 @@ function Refund() {
                     <p className='terms-para'>
                         No refunds will be given in the following cases:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Incorrect or Insufficient Address:</span> Provided by the customer.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Non-Availability:</span> Recipient not available at the mentioned address.</li>
-                            <li><span style={{ fontWeight: 600 , color:"black"}}> Refusal to Accept:</span> Products refused at the time of delivery.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Force Majeure Events:</span> Unforeseen circumstances beyond our control.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Incorrect or Insufficient Address:</span> Provided by the customer.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Non-Availability:</span> Recipient not available at the mentioned address.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600 , color:"black"}}> Refusal to Accept:</span> Products refused at the time of delivery.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Force Majeure Events:</span> Unforeseen circumstances beyond our control.</li>
                         </ul>
                     </p>
                 </div>
@@ -73,8 +73,8 @@ function Refund() {
                     <p className='terms-para'>
                         For any queries or concerns regarding our Refund and Returns Policy, please contact us at:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Email:</span> customercare@milkmygains.com</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Address:</span> Bangalore, India: 560041</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Email:</span> customercare@milkmygains.com</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Phone:</span> +91-9663696025</li>
                         </ul>
                     </p>
                 </div>

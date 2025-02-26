@@ -33,8 +33,8 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li> A delivery fee of <span style={{ fontWeight: 600, color:"black" }}>Rs.50</span> is applicable for all orders below <span style={{ fontWeight: 600, color:"black" }}>Rs.560 .</span></li>
-                            <li> Orders above <span style={{ fontWeight: 600, color:"black" }}>Rs.560</span> include <span style={{ fontWeight: 600, color:"black" }}>free delivery.</span>All prices are inclusive of taxes.</li>
+                            <li className='terms-height'> A delivery fee of <span style={{ fontWeight: 600, color:"black" }}>Rs.50</span> is applicable for all orders below <span style={{ fontWeight: 600, color:"black" }}>Rs.560 .</span></li>
+                            <li className='terms-height'> Orders above <span style={{ fontWeight: 600, color:"black" }}>Rs.560</span> include <span style={{ fontWeight: 600, color:"black" }}>free delivery.</span>All prices are inclusive of taxes.</li>
                         </ul>
                     </p>
                 </div>
@@ -44,8 +44,8 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}>Orders placed before 12 PM: </span>Delivered <span style={{ fontWeight: 600, color:"black" }}>same day.</span></li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}>Orders placed after 12 PM: </span>Delivered <span style={{ fontWeight: 600, color:"black" }}>the next day before 12 PM.</span></li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}>Orders placed before 12 PM: </span>Delivered <span style={{ fontWeight: 600, color:"black" }}>same day.</span></li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}>Orders placed after 12 PM: </span>Delivered <span style={{ fontWeight: 600, color:"black" }}>the next day before 12 PM.</span></li>
                         </ul>
                     </p>
                 </div>
@@ -55,7 +55,7 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li>For customers who opt for subscription plans, deliveries will be made <span style={{ fontWeight: 600 , color:"black"}}>fresh every Sunday </span>on a <span style={{ fontWeight: 600, color:"black" }}>weekly basis</span> for the <span style={{ fontWeight: 600 , color:"black"}}>time frame chosen at the time of subscription.</span> This ensures you always have a consistent supply of fresh products as per your needs.</li>
+                            <li className='terms-height'>For customers who opt for subscription plans, deliveries will be made <span style={{ fontWeight: 600 , color:"black"}}>fresh every Sunday </span>on a <span style={{ fontWeight: 600, color:"black" }}>weekly basis</span> for the <span style={{ fontWeight: 600 , color:"black"}}>time frame chosen at the time of subscription.</span> This ensures you always have a consistent supply of fresh products as per your needs.</li>
                         </ul>
                     </p>
                 </div>
@@ -65,7 +65,7 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li> All orders are processed immediately upon confirmation to ensure timely delivery.</li>
+                            <li className='terms-height'> All orders are processed immediately upon confirmation to ensure timely delivery.</li>
                         </ul>
                     </p>
                 </div>
@@ -75,8 +75,8 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li>We currently<span style={{ fontWeight: 600, color:"black" }}> do not ship outside Bangalore.</span></li>
-                            <li>Customers outside Bangalore can soon access our products via quick commerce platforms. Stay tuned for updates!</li>
+                            <li className='terms-height'>We currently<span style={{ fontWeight: 600, color:"black" }}> do not ship outside Bangalore.</span></li>
+                            <li className='terms-height'>Customers outside Bangalore can soon access our products via quick commerce platforms. Stay tuned for updates!</li>
                         </ul>
                     </p>
                 </div>
@@ -86,9 +86,9 @@ function Shipping() {
                     </h3>
                     <p className='terms-para'>
                         <ul className='list-terms'>
-                            <li>
+                            <li className='terms-height'>
                                 While we take every precaution to ensure your products are delivered in perfect condition, if your order arrives damaged or is missing, please contact our customer support at <a className="mail-mailto" href="mailto:CUSTOMERCARE@MILKMYGAINS.COM">CUSTOMERCARE@MILKMYGAINS.COM</a> within 24 hours of receiving your order. We will address the issue promptly.
-                            </li>
+                            </li >
                         </ul>
                     </p>
                 </div>

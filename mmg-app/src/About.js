@@ -60,7 +60,7 @@ const cards = [
 ];
 
 
-function About({ setIsLoaded }) {
+function About({ setIsLoaded , isLoaded}) {
     const [activeCard, setActiveCard] = useState(1);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -78,23 +78,52 @@ function About({ setIsLoaded }) {
         }
     };
     //Card Animation
-       const circleRef = useRef(null);
-   
-       useEffect(() => {
-           if (!setIsLoaded) return;
-           gsap.to(circleRef.current, {
-               rotation: -127,
-               ease: "none",
-               scrollTrigger: {
-                   trigger: ".parent",
-                   start: "top top",
-                   end: "bottom bottom",
-                   scrub: 1,
-                   scroller: ".home-wrapper"
-               }
-           });
-       }, [setIsLoaded]);
-   
+    const circleRef = useRef(null);
+
+    useEffect(() => {
+        if (!setIsLoaded) return;
+        gsap.to(circleRef.current, {
+            rotation: -127,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parent",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                scroller: ".home-wrapper"
+            }
+        });
+    }, [setIsLoaded]);
+
+    useEffect(() => {
+        if (!isLoaded) return;
+        let sections = gsap.utils.toArray(".card");
+    
+        gsap.to(sections, {
+            scrollTrigger: {
+                trigger: ".about-power",
+                start: "top top",
+                end: "+=150%",
+                scroller: ".home-wrapper",
+                pin: true,
+                scrub: 1, // Increase scrub value for smoother transitions
+                onUpdate: (self) => {
+                    let index = Math.floor(self.progress * sections.length); // Use `Math.floor` for smoother stepping
+    
+                    sections.forEach((card, i) => {
+                        if (i === index) {
+                            gsap.to(card, { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" });
+                            card.classList.add("active");
+                        } else {
+                            gsap.to(card, { scale: 0.8, opacity: 0.3, duration: 0.5, ease: "power2.out" });
+                            card.classList.remove("active");
+                        }
+                    });
+                }
+            }
+        });
+    }, [isLoaded]);
+    
     return (
         <div className='about-container'>
             <div className='about-protein'>
@@ -117,7 +146,6 @@ function About({ setIsLoaded }) {
                                 key={card.id}
                                 id={`card-${card.id}`}
                                 className={`card ${activeCard === card.id ? "active" : ""}`}
-                                onClick={() => handleCardClick(card.id)}
                             >
                                 <div className="text-section">
                                     <h2 className="card-title">{card.title}</h2>
@@ -341,7 +369,7 @@ function About({ setIsLoaded }) {
             }
             {/* Mobile view Cards */}
 
-            <div className='icon-container'>
+            {/* <div className='icon-container'>
                 <div className="icon-paradigm">
                     <img src={Star1} alt="Star" className="star-icon" />
                     <img src={Eyestar1} alt="Diamond" className="diamond-icon" />
@@ -349,7 +377,7 @@ function About({ setIsLoaded }) {
                     <img src={Signal1} alt="Shop" className="shop-icon" />
                     <img src={Drop1} alt="Drop" className="drop-icon" />
                 </div>
-            </div>
+            </div> */}
             <div className='about-join-container'>
                 <div className='about-join'>
                     <h1 className='about-heading'>JOIN THE <br />MOVEMENT</h1>

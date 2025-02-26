@@ -610,7 +610,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
               <img src={Orderbuttons} alt="order-button-svg" className="order-button-svg" />
             </div>
             <div className="liquid-text-container">
-              <h1 className="liquid-text">ORDER <br />NOW</h1>
+              <a className="liquid-text" href="/product/milk-my-gains-sample-product">ORDER <br />NOW</a>
             </div>
           </div>
 
@@ -1009,7 +1009,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     PURE
                     <br /> PROTEIN.
                     <br /> ZERO
-                    <br /> COMPRO
+                    <br /> COMPRO-
                     <br />
                     MISE.
                   </h1>
@@ -1038,164 +1038,171 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       {/* Power Of Protein*/}
       <div className="power-wrapper">
         <div className="power-container bg-white">
-          <div className="power-space">
-            <div className="row row-build">
-              <div className="col-sm-6 build-text">
-                {
-                  isMobile ? (
-                    <div className="content-power">
-                      <h1
-                        className="power-heading"
-                      >
-                        BUILD
-                        <br /> MUSCLE
-                      </h1>
-                    </div>
-                  ) : (
-                    <div className="content">
-                      <h1
-                        className="power-heading content__title content__title--small"
-                        data-splitting
-                        data-effect1
-                      >
-                        BUILD<br /> MUSCLE
-                      </h1>
-                    </div>
-                  )
-                }
-                <div className="build-container">
-                  {/* <div className="star-container">
+          <h1 className="power-space-heading">THE POWER OF<br /> PROTEIN</h1>
+          <div className="power-space-width">
+            <div className="power-space">
+              <div className="row row-build">
+                <div className="col-sm-6 build-text">
+                  {
+                    isMobile ? (
+                      <div className="content-power">
+                        <h1
+                          className="power-heading"
+                        >
+                          BUILD
+                          MUSCLE
+                        </h1>
+                      </div>
+                    ) : (
+                      <div className="content">
+                        <h1
+                          className="power-heading content__title content__title--small"
+                          data-splitting
+                          data-effect1
+                        >
+                          BUILD MUSCLE
+                        </h1>
+                      </div>
+                    )
+                  }
+                  <div className="build-container">
+                    {/* <div className="star-container">
                     <img src={Starbuild} className="star-build" />
                     <h1 className="build">BUILD MUSCLE</h1>
                   </div> */}
-                  <p className="build-para">
-                    Protein builds muscle <br />
-                    and bone, supporting <br />
-                    agility and resilience. <br />
-                    It’s essential for <br />
-                    vitality and longevity,
-                    <br />
-                    fueling an active,
-                    <br />
-                    enduring lifestyle.
-                  </p>
+                    <p className="build-para">
+                      Protein builds muscle <br />
+                      and bone, supporting <br />
+                      agility and resilience. <br />
+                      It’s essential for <br />
+                      vitality and longevity,
+                      <br />
+                      fueling an active,
+                      <br />
+                      enduring lifestyle.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="col-sm-6">
-                <img
-                  src={Weightlift}
-                  className="weight-lift"
-                  alt="weight-lift"
-                />
+                <div className="col-sm-6">
+                  <img
+                    src={Weightlift}
+                    className="weight-lift"
+                    alt="weight-lift"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="power-container1">
-          <div className="power-space1">
-            <div className="row row-build">
-              <div className="col-sm-6 build-text">
-                {
-                  isMobile ? (
-                    <div className="content-power">
-                      <h1
-                        className="power-heading"
-                      >
-                        STAY<br /> LEAN
-                      </h1>
-                    </div>
-                  ) : (
-                    <div className="content">
-                      <h1
-                        className="power-heading content__title content__title--small"
-                        data-splitting
-                        data-effect1
-                      >
-                        STAY<br /> LEAN
-                      </h1>
-                    </div>
-                  )
-                }
-                <div className="build-container build-para-align">
-                  {/* <div className="star-container">
+          <div className="power-space-width">
+            <div className="power-space1">
+              <div className="row row-build">
+                <div className="col-sm-6 build-text">
+                  {
+                    isMobile ? (
+                      <div className="content-power">
+                        <h1
+                          className="power-heading"
+                        >
+                          STAY LEAN
+                        </h1>
+                      </div>
+                    ) : (
+                      <div className="content">
+                        <h1
+                          className="power-heading content__title content__title--small"
+                          data-splitting
+                          data-effect1
+                        >
+                          STAY LEAN
+                        </h1>
+                      </div>
+                    )
+                  }
+                  <div className="build-container build-para-align">
+                    {/* <div className="star-container">
                     <img src={Starbuild} className="star-build" />
                     <h1 className="build">STAY LEAN</h1>
                   </div> */}
-                  <p className="build-para">
-                    Protein aids fat loss by increasing
-                    <br /> fullness and boosting metabolism. It
-                    <br /> requires more energy to digest than carbs
-                    <br /> or fats, making it doubly effective for
-                    <br /> fat loss. The most satiating
-                    <br /> macronutrient that supports a lean and
-                    <br /> healthier body composition.
-                  </p>
+                    <p className="build-para">
+                      Protein aids fat loss by increasing
+                      fullness and boosting metabolism. It
+                      requires more energy to digest than carbs
+                      or fats, making it doubly effective for
+                      fat loss. The most satiating
+                      macronutrient that supports a lean and
+                      healthier body composition.
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="col-sm-6">
-                <img
-                  src={Lean}
-                  className="weight-lift1"
-                  alt="weight-lift"
-                />
+                <div className="col-sm-6">
+                  <img
+                    src={Lean}
+                    className="weight-lift1"
+                    alt="weight-lift"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="power-container2">
-          <div className="power-space2">
-            <div className="row row-build">
-              <div className="col-sm-6 build-text">
-                {
-                  isMobile ? (
-                    <div className="content-power">
-                      <h1
-                        className="power-heading"
-                      >ENHANCE<br /> BEAUTY
-                      </h1>
-                    </div>
-                  ) : (
-                    <div className="content">
-                      <h1
-                        className="power-heading content__title content__title--small"
-                        data-splitting
-                        data-effect1
-                      >
-                        ENHANCE BEAUTY
-                      </h1>
-                    </div>
-                  )
-                }
-                <div className="build-container build-para-align">
-                  {/* <div className="star-container">
+          <div className="power-space-width">
+            <div className="power-space2">
+              <div className="row row-build">
+                <div className="col-sm-6 build-text">
+                  {
+                    isMobile ? (
+                      <div className="content-power">
+                        <h1
+                          className="power-heading"
+                        >ENHANCE BEAUTY
+                        </h1>
+                      </div>
+                    ) : (
+                      <div className="content">
+                        <h1
+                          className="power-heading content__title content__title--small"
+                          data-splitting
+                          data-effect1
+                        >
+                          ENHANCE BEAUTY
+                        </h1>
+                      </div>
+                    )
+                  }
+                  <div className="build-container build-para-align">
+                    {/* <div className="star-container">
                     <img src={Starbuild} className="star-build" />
                     <h1 className="build">ENHANCE BEAUTY</h1>
                   </div> */}
-                  <p className="build-para">
-                    A high-protein diet nourishes skin,
-                    <br /> strengthens nails, and promotes vibrant
-                    <br /> hair, enhancing beauty from within and
-                    <br /> contributing to a radiant, healthy
-                    <br /> appearance.
-                  </p>
+                    <p className="build-para">
+                      A high-protein diet nourishes skin,
+                      strengthens nails, and promotes vibrant
+                     hair, enhancing beauty from within and
+                       contributing to a radiant, healthy
+                      appearance.
+                    </p>
+                  </div>
+                </div>
+                <div className="col-sm-6">
+                  <img
+                    src={Yoga}
+                    className="weight-lift3"
+                    alt="weight-lift"
+                  />
                 </div>
               </div>
-              <div className="col-sm-6">
+              <div className="build-para-container">
                 <img
-                  src={Yoga}
-                  className="weight-lift"
-                  alt="weight-lift"
+                  src={ProteinSlogan}
+                  className="protein-slogan"
+                  alt="protein-slogan"
                 />
               </div>
-            </div>
-            <div className="build-para-container">
-              <img
-                src={ProteinSlogan}
-                className="protein-slogan"
-                alt="protein-slogan"
-              />
             </div>
           </div>
         </div>
@@ -1220,7 +1227,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <div className="text-wrapper">
               <h1 className="raising">RAISING</h1>
               <div className="middle-text">
-                <span className="high">HIGH PROTEINS</span>
+                <span className="high">HIGH PROTEIN</span>
                 <br />
                 <span className="low">LOW CALORIES</span>
               </div>

@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const groupRef = useRef();
   const { scene } = useGLTF(modelPath, true);
-  const [defaultScale, setDefaultScale] = useState(window.innerWidth < 768 ? 2 : 3);
+  const [defaultScale, setDefaultScale] = useState(window.innerWidth < 768 ? 2.2 : 2.7);
   const [scale, setScale] = useState(1); // Set scale to 1 immediately
   const rotationDirection = useRef(isNext ? 1 : -1);
   const targetRotation = useRef({ x: 0, y: 0 });
@@ -19,15 +19,16 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const [rotationY, setRotationY] = useState(1);
   const [rotationZ, setRotationZ] = useState(-0.2);
   const [positionX, setPositionX] = useState(0);
-  const [positionY, setPositionY] = useState(-0.4);
+  const [positionY, setPositionY] = useState(-0.7);
   const [positionZ, setPositionZ] = useState(0);
   const [rotationOffsetX, setRotationOffsetX] = useState(0);
-  const [rotationOffsetY, setRotationOffsetY] = useState(7);
+  const [rotationOffsetY, setRotationOffsetY] = useState(7.2);
   
   // Resize listener
   useEffect(() => {
     const handleResize = () => {
       setDefaultScale(window.innerWidth < 768 ? 2 : 2.8);
+      setPositionY(window.innerWidth < 768 ? 1.2 : -0.9);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

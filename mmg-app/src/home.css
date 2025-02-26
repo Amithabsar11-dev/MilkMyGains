@@ -151,11 +151,11 @@
   align-items: center;
 }
 
-.lottie-animation{
-  width: 57%;
+.lottie-animation {
+  width: 68%;
   position: absolute;
-  top: 34%;
-  left: 22%;
+  top: 18%;
+  left: 17%;
 }
 
 .liquid-circle {
@@ -169,16 +169,22 @@
 
 .liquid-text {
   position: absolute;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   color: #004df0;
   text-align: center;
   font-family: "Chivo Mono", serif;
   cursor: pointer;
   z-index: 1;
-  bottom: 27%;
-  left: 25%;
-  line-height: 2rem;
+  bottom: 30%;
+  left: 32%;
+  line-height: 1.5rem;
+  text-decoration: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+.liquid-text:hover {
+  transform: scale(1.1);
 }
 
 @keyframes liquid {
@@ -252,6 +258,10 @@
   /* Position the curve above the background */
 }
 
+.order-button-svg {
+  width: 75%;
+}
+
 .lava-position {
   mix-blend-mode: screen;
   top: 20%;
@@ -312,11 +322,9 @@
   left: 50%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.3) 10%,
-    rgba(255, 255, 255, 0) 60%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.3) 10%,
+      rgba(255, 255, 255, 0) 60%);
   filter: blur(10px);
   opacity: 0.6;
   transform: translate(-50%, -50%) scale(1);
@@ -373,8 +381,9 @@
   right: 6%;
   bottom: 2%;
   cursor: pointer;
-  gap: 20px;
+  gap: 10px;
   z-index: 10;
+  width: 5%;
 }
 
 .order-buttons img {
@@ -573,7 +582,7 @@
 .container-paradigm {
   background-color: white;
   padding-bottom: 10%;
-  padding-top: 10%;
+  padding-top: 8%;
   min-height: 100vh;
 }
 
@@ -591,12 +600,12 @@
 }
 
 .main-heading {
-  font-size: 100px;
+  font-size: 130px;
   color: #004ef0;
   font-family: "Anybody_Condensed";
   font-weight: 900;
   font-style: italic;
-  line-height: 5rem;
+  line-height: 6.2rem;
 }
 
 .paradigm-para {
@@ -681,7 +690,7 @@
   transition: background-position 0.5s ease-in-out,
     background-size 0.5s ease-in-out;
   overflow: hidden;
-    min-height: 100vh;
+  min-height: 100vh;
 }
 
 .svg-overlay {
@@ -778,6 +787,16 @@
   height: 300vh;
 }
 
+.power-space-heading {
+  font-size: 120px;
+  color: #0052f0;
+  font-family: "Anybody_Condensed";
+  font-weight: 900;
+  font-style: italic;
+  text-align: center;
+  line-height: 6.5rem;
+}
+
 .build-para-align {
   padding-left: 22%;
 }
@@ -805,7 +824,7 @@
   opacity: 1;
   padding-left: 2%;
   padding-right: 2%;
-  padding-top: 4%;
+  padding-top: 17%;
 }
 
 .power-container2 {
@@ -818,42 +837,43 @@
   opacity: 1;
   padding-left: 2%;
   padding-right: 2%;
-  padding-top: 5%;
+  padding-top: 18%;
 }
 
 .power-space {
   background-color: #cde0fc;
   border-radius: 20px;
-  height: 90vh;
+  height: 65vh;
   margin-left: 10%;
   margin-right: 10%;
+  width: 75%;
 }
 
 .power-space1 {
   background-color: #cde0fc;
   border-radius: 20px;
-  height: 90vh;
+  height: 65vh;
+  width: 75%;
   margin-left: 10%;
   margin-right: 10%;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-  /* Adds a subtle shadow */
   transition: box-shadow 0.3s ease-in-out;
 }
 
 .power-space2 {
   background-color: #cde0fc;
   border-radius: 20px;
-  height: 90vh;
+  height: 65vh;
+  width: 75%;
   margin-left: 10%;
   margin-right: 10%;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-  /* Adds a subtle shadow */
   transition: box-shadow 0.3s ease-in-out;
 }
 
 .build-text {
   width: 50%;
-  padding-top: 4%;
+  padding-top: 8%;
 }
 
 .row-build {
@@ -862,13 +882,13 @@
 }
 
 .power-heading {
-  font-size: 100px;
-  color: #0052f0;
+  font-size: 60px;
+  color: #FC5E3B;
   font-family: "Anybody_Condensed";
   font-weight: 900;
   font-style: italic;
   padding: 0;
-  padding-top: 7%;
+  padding-top: 0%;
   line-height: 3rem;
   width: 100%;
 }
@@ -895,9 +915,9 @@
 }
 
 .protein-slogan {
-  width: 60%;
+  width: 50%;
   position: absolute;
-  bottom: -3%;
+  bottom: -2%;
 }
 
 .star-container {
@@ -909,19 +929,27 @@
 
 .weight-lift {
   position: absolute;
-  bottom: 15%;
-  width: 40%;
-  right: 12%;
+  width: 35%;
+  bottom: 4%;
+}
+.weight-lift3{
+  position: absolute;
+  width: 35%;
+  bottom: 4%;
 }
 
 .weight-lift1 {
   position: absolute;
-  bottom: 5%;
-  width: 40%;
-  right: 12%;
+  bottom: 0;
+  width: 35%;
 }
 
 .build-para-container {
+  display: flex;
+  justify-content: center;
+}
+
+.power-space-width {
   display: flex;
   justify-content: center;
 }
@@ -1066,6 +1094,7 @@
 .product img {
   height: 13vh;
 }
+
 .product-highlight {
   height: 175px;
 }
@@ -1074,6 +1103,7 @@
   height: 14vh;
   opacity: 0;
 }
+
 .product-label {
   height: 175px;
 }
@@ -1178,9 +1208,11 @@
   top: 43%;
   left: 18%;
   transform: rotate(70deg);
-  transform-origin: center; /* Ensures the rotation happens around the center */
+  transform-origin: center;
+  /* Ensures the rotation happens around the center */
   display: block;
-  margin: 0 auto; /* Centering in case it helps */
+  margin: 0 auto;
+  /* Centering in case it helps */
 }
 
 /* @keyframes swing {
@@ -1424,6 +1456,7 @@
 /* Sample */
 
 @media only screen and (max-width: 1700px) and (min-width: 770px) {
+
   .power-space,
   .power-space1,
   .power-space2 {
@@ -1461,8 +1494,8 @@
 
   .svg-order-button-container {
     position: absolute;
-    bottom: 8%;
-    left: 15%;
+    bottom: 10%;
+    left: -15%;
   }
 
   .order-button-svg {
@@ -1488,9 +1521,11 @@
 
   .order-buttons {
     flex-direction: row;
-    bottom: 0%;
+    bottom: 2%;
     gap: 15px;
     justify-content: center;
+    right: 0;
+    width: 100%;
   }
 
   .liquid-circle {
@@ -1531,9 +1566,9 @@
   }
 
   .protein-cap {
-    width: 40%;
-    right: 19%;
+    width: 32%;
     top: 23%;
+    right: 20%;
   }
 
   .power-space,
@@ -1541,27 +1576,61 @@
   .power-space2 {
     margin-left: 0%;
     margin-right: 0%;
+    box-shadow: none;
+  }
+  .power-space1{
+    width: 100%;
   }
 
   .power-heading {
-    font-size: 60px;
+    font-size: 50px;
     white-space: nowrap;
-    line-height: 3.3rem;
-    padding-top: 10%;
-    text-align: center;
+    line-height: 2.6rem;
+    padding-left: 4%;
+  }
+
+  .power-space-heading {
+    font-size: 50px;
+    line-height: 2.5rem;
+    padding-top: 5%;
+  }
+  .power-container{
+    height: 70vh;
+  }
+
+  .power-container1{
+    height: 70vh;
+    margin-top: 45px;
   }
 
   .build-text {
     width: 100%;
   }
-
+  .container-pure{
+    min-height: 0;
+  }
   .row-build {
     display: block;
   }
 
   .weight-lift {
-    width: 70%;
-    right: 10%;
+    width: 85%;
+    right: 2%;
+    bottom: -5%;
+  }
+  .weight-lift3{
+    width: 85%;
+    right: 2%;
+    bottom: 30%;
+  }
+  .power-space{
+    width: 100%;
+  }
+  .power-wrapper{
+    height: 225vh;
+  }
+  .power-space2{
+    width: 100%;
   }
 
   .build-para {
@@ -1569,7 +1638,9 @@
   }
 
   .build-container {
-    padding-top: 0%;
+    padding-top: 5%;
+    padding-left: 10%;
+    justify-content: flex-start;
   }
 
   .build {
@@ -1581,14 +1652,14 @@
   }
 
   .weight-lift1 {
-    bottom: 10%;
-    width: 50%;
-    right: 19%;
+    width: 72%;
+    right: 2%;
+    bottom: -5%;
   }
 
   .protein-slogan {
     width: 90%;
-    bottom: 7%;
+    bottom: 25%;
   }
 
   .row-pure .words {
@@ -1602,7 +1673,7 @@
 
   .stickers {
     top: 28%;
-    left: 7%;
+    left: 15%;
     width: 20%;
   }
 
@@ -1645,6 +1716,10 @@
   .milk-image {
     width: 65% !important;
   }
+  .proteins-container-1 {
+    background-position: 100%;
+    margin-bottom: 15%;
+  }
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 1250px) {
@@ -1669,11 +1744,15 @@
   .product img {
     height: 14vh;
   }
+
   .product-label img {
     height: 15vh;
   }
-  .lottie-animation{
-    top: 30%;
+
+  .lottie-animation {
+    top: 21%;
+    width: 65%;
+    left: 18%;
   }
 }
 
@@ -1688,10 +1767,12 @@
     display: none;
   }
 }
+
 @media only screen and (max-width: 800px) and (min-width: 320px) {
-  .lottie-animation{
+  .lottie-animation {
     width: 100%;
-    top: 57%;
-      left: 2%;
+    top: 25%;
+    left: 0%;
+    transform: none !important;
   }
 }

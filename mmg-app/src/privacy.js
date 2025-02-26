@@ -26,8 +26,8 @@ function Privacy() {
                     <p className='terms-para'>
                         We collect the following personal information from you:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Personal Identification Information:</span> Name, address, email, and phone number.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Payment Information:</span> Credit/debit card details and other payment-related information.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Personal Identification Information:</span> Name, address, email, and phone number.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Payment Information:</span> Credit/debit card details and other payment-related information.</li>
                         </ul>
                     </p>
                 </div>
@@ -38,10 +38,10 @@ function Privacy() {
                     <p className='terms-para'>
                         The information we collect is used for:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Order Processing:</span> To process and fulfill your orders, including subscriptions.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Customer Support:</span> To contact you regarding your orders or respond to your inquiries.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Marketing Communications:</span> To send you promotional materials, newsletters, and other communications (with your consent).</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Service Improvement:</span> To enhance our website, products, and services based on your feedback and interactions.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Order Processing:</span> To process and fulfill your orders, including subscriptions.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Customer Support:</span> To contact you regarding your orders or respond to your inquiries.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Marketing Communications:</span> To send you promotional materials, newsletters, and other communications (with your consent).</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Service Improvement:</span> To enhance our website, products, and services based on your feedback and interactions.</li>
                         </ul>
                     </p>
                 </div>
@@ -52,9 +52,9 @@ function Privacy() {
                     <p className='terms-para'>
                         We do not rent, sell, or share your personal information with other people or non-affiliated entities without your consent, except in the following circumstances:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Service Providers:</span> Payment processors and delivery partners may have access to your information to facilitate payments and deliveries.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Third-Party Vendors and Contractors:</span> We may engage third-party vendors and contractors to perform certain support services; they may have limited access to your information.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Legal Requirements:</span> We may disclose your information to government authorities in response to subpoenas, court orders, or other legal processes; to establish or exercise legal rights; to defend against legal claims; or as otherwise required by law.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Service Providers:</span> Payment processors and delivery partners may have access to your information to facilitate payments and deliveries.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Third-Party Vendors and Contractors:</span> We may engage third-party vendors and contractors to perform certain support services; they may have limited access to your information.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Legal Requirements:</span> We may disclose your information to government authorities in response to subpoenas, court orders, or other legal processes; to establish or exercise legal rights; to defend against legal claims; or as otherwise required by law.</li>
                         </ul>
                     </p>
                 </div>
@@ -65,9 +65,9 @@ function Privacy() {
                     <p className='terms-para'>
                         We do not rent, sell, or share your personal information with other people or non-affiliated entities without your consent, except in the following circumstances:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Service Providers:</span> Payment processors and delivery partners may have access to your information to facilitate payments and deliveries.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Third-Party Vendors and Contractors:</span> We may engage third-party vendors and contractors to perform certain support services; they may have limited access to your information.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Legal Requirements:</span> We may disclose your information to government authorities in response to subpoenas, court orders, or other legal processes; to establish or exercise legal rights; to defend against legal claims; or as otherwise required by law.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Service Providers:</span> Payment processors and delivery partners may have access to your information to facilitate payments and deliveries.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Third-Party Vendors and Contractors:</span> We may engage third-party vendors and contractors to perform certain support services; they may have limited access to your information.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Legal Requirements:</span> We may disclose your information to government authorities in response to subpoenas, court orders, or other legal processes; to establish or exercise legal rights; to defend against legal claims; or as otherwise required by law.</li>
                         </ul>
                     </p>
                 </div>
@@ -86,10 +86,10 @@ function Privacy() {
                     <p className='terms-para'>
                         You have the right to:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Access:</span> Request a copy of the personal information we hold about you.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Correction:</span> Request corrections to any inaccurate or incomplete data.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Deletion:</span> Request the deletion of your personal information, subject to legal and contractual obligations.</li>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Opt-Out:</span> Unsubscribe from marketing communications at any time by following the unsubscribe link in our emails or contacting us directly.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Access:</span> Request a copy of the personal information we hold about you.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Correction:</span> Request corrections to any inaccurate or incomplete data.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Deletion:</span> Request the deletion of your personal information, subject to legal and contractual obligations.</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Opt-Out:</span> Unsubscribe from marketing communications at any time by following the unsubscribe link in our emails or contacting us directly.</li>
                         </ul>
                     </p>
                 </div>
@@ -108,8 +108,8 @@ function Privacy() {
                     <p className='terms-para'>
                         If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:
                         <ul className='listing-terms'>
-                            <li><span style={{ fontWeight: 600, color:"black" }}> Email:</span> customercare@milkmygains.com</li>
-                            <li><span style={{ fontWeight: 600 , color:"black"}}> Address:</span> Bangalore, India: 560041</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600, color:"black" }}> Email:</span> customercare@milkmygains.com</li>
+                            <li className='terms-height'><span style={{ fontWeight: 600 , color:"black"}}> Address:</span> Bangalore, India: 560041</li>
                         </ul>
                     </p>
                 </div>

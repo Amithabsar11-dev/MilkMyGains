@@ -10,7 +10,7 @@
 }
 
 .circle-container {
-  height: 85vh;
+  height: 100vh;
   width: 100vw;
   position: sticky;
   top: 0;
@@ -53,47 +53,47 @@
 }
 @media only screen and (max-width: 1450px) and (min-width: 1400px) {
   .circle-container{
-    height: 99vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1500px) and (min-width: 1450px) {
   .circle-container{
-    height: 102vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1600px) and (min-width: 1550px) {
   .circle-container{
-    height: 108vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1550px) and (min-width: 1500px) {
   .circle-container{
-    height: 108vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1650px) and (min-width: 1600px) {
   .circle-container{
-    height: 108vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1700px) and (min-width: 1650px) {
   .circle-container{
-    height: 108vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1800px) and (min-width: 1700px) {
   .circle-container{
-    height: 110vh;
+    height: 100vh;
   }
 }
 @media only screen and (max-width: 1400px) and (min-width: 1250px) {
 .circle-container{
-  height: 92vh; 
+  height: 100vh; 
 }
 }
 @media only screen and (max-width: 2460px) and (min-width: 1800px) {
   .circle-container{
-    height: 115vh;
+    height: 100vh;
   }
 }
 

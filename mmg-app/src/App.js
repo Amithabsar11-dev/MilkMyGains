@@ -72,7 +72,6 @@ function App() {
               <Route path="/privacy" element={<Privacy isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              {/* <Route path="/sample" element={<Sample isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} /> */}
             </Routes>
         </div>
       </div>

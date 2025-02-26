@@ -153,9 +153,9 @@ const Header = () => {
                   className={`navbar-toggler ${isNavOpen ? "open" : ""}`}
                   onClick={() => setIsNavOpen(!isNavOpen)}
                 >
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
+                  <div className={`bar ${location.pathname.startsWith("/product/") ? "product-bar" : isFaqOrContact ? "faq-bar" : ""}`}></div>
+                  <div className={`bar ${location.pathname.startsWith("/product/") ? "product-bar" : isFaqOrContact ? "faq-bar" : ""}`}></div>
+                  <div className={`bar ${location.pathname.startsWith("/product/") ? "product-bar" : isFaqOrContact ? "faq-bar" : ""}`}></div>
                 </button>
               )}
               <div

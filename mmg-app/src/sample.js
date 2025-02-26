@@ -7,6 +7,7 @@ import Energybar from "./assets/ricebag.svg";
 import Palakpaneer from "./assets/paneercubes.svg";
 import Activestar from "./assets/active-star.svg";
 import Inactivestar from "./assets/inactive-star.svg";
+import MMGpacket from "./assets/MMG-image.svg";
 
 const PricingTable = () => {
   const tableContainerRef = useRef(null);
@@ -67,13 +68,13 @@ const PricingTable = () => {
           <div className="cd-table-column column-active">
             <div className='icon-height'>
               <img src={Activestar} className="active-star" alt="active star" />
-              <img src={Paneericon} className='paneer-icon-active' alt='' />
+              <img src={MMGpacket} className='paneer-active-image-1' alt='' />
             </div>
             <ul className="set-list-paneer">
               <li>31G</li>
               <li>5G</li>
               <li>160</li>
-              <li>$</li>
+              <li>₹</li>
             </ul>
           </div>
 
@@ -88,8 +89,8 @@ const PricingTable = () => {
             </div>
             <ul className="set-list">
               <li>18G</li>
-              <li>5G</li>
-              <li>160</li>
+              <li>25G</li>
+              <li>300</li>
               <li>₹</li>
             </ul>
           </div>
@@ -104,9 +105,9 @@ const PricingTable = () => {
               <img src={Proteins} className='proteins-icon-active' alt='' />
             </div>
             <ul className="set-list">
-              <li>31G</li>
+              <li>27G</li>
               <li>5G</li>
-              <li>160</li>
+              <li>150</li>
               <li>₹₹</li>
             </ul>
           </div>
@@ -121,9 +122,9 @@ const PricingTable = () => {
               <img src={Energybar} className='energy-icon-active' alt='' />
             </div>
             <ul className="set-list">
-              <li>25G</li>
-              <li>5G</li>
-              <li>160</li>
+              <li>20G</li>
+              <li>12G</li>
+              <li>300</li>
               <li>₹₹₹</li>
             </ul>
           </div>
@@ -138,9 +139,9 @@ const PricingTable = () => {
               <img src={Whey} className='whey-icon-active' alt='' />
             </div>
             <ul className="set-list">
-              <li>37G</li>
-              <li>5G</li>
-              <li>160</li>
+              <li>25G</li>
+              <li>3G</li>
+              <li>140</li>
               <li>₹₹₹₹</li>
             </ul>
           </div>

@@ -75,4 +75,7 @@
   .terms-spacing {
     padding: 30px;
   }
+  .terms-height{
+    line-height: 25px;
+  }
 }

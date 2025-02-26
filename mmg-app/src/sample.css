@@ -116,12 +116,13 @@ h2, ul > li {
   /* text-align: center; */
   padding: 0 1em;
   border-bottom: transparent;
-  height: 42px;
+  /* height: 42px; */
   line-height: 42px;
   /* background-color: #FFF; */
 }
 .set-list-paneer, .set-list ,.set-list-active{
   text-align: center;
+  padding: 0;
 }
 h2 {
   font-size: 14px;
@@ -261,6 +262,7 @@ header.cd-table-column li:last-child {
   .set-list, .set-list-paneer, .set-list-active {
     font-size: 12px; /* Reduce font size */
     gap: 8px; /* Reduce spacing */
+    padding: 0;
   }
   .icon-height {
     height: 10vh; /* Reduce icon height */

@@ -458,7 +458,7 @@
 }
 .mobile-cards-container {
   display: flex;
-  padding-left: 10%;
+  padding-left: 15%;
 }
 .mobile-carding1,
 .mobile-carding2,
@@ -546,7 +546,7 @@
   }
 
   .about-header {
-    font-size: 40px;
+    font-size: 50px;
     line-height: 3rem;
   }
 
@@ -612,7 +612,8 @@
     line-height: 1.5rem;
   }
   .about-join-container {
-    background-position: 60% 100%;
+    background-position: 100%;
+    margin-bottom: 16%;
   }
 }
 
