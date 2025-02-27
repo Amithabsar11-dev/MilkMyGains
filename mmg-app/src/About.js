@@ -15,7 +15,7 @@ import PossibilitiesIcon from "./assets/unlocking-card.svg";
 import TransparencyIconline from "./assets/spring-transparancy.svg";
 import MythIconline from "./assets/spring-break.svg";
 import PossibilitiesIconline from "./assets/spring-unlock.svg";
-import Protein from "./assets/protein.png";
+import Protein from "./assets/About-protein.svg";
 import MilkTM from './assets/Logo-TM.svg'
 import Copyright1 from './assets/copyright1.svg';
 import Weightlift from "./assets/body builder.svg";
@@ -60,7 +60,7 @@ const cards = [
 ];
 
 
-function About({ setIsLoaded , isLoaded}) {
+function About({ setIsLoaded, isLoaded }) {
     const [activeCard, setActiveCard] = useState(1);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -77,24 +77,6 @@ function About({ setIsLoaded , isLoaded}) {
             setActiveCard(activeCard === id ? null : id);
         }
     };
-    //Card Animation
-    const circleRef = useRef(null);
-
-    useEffect(() => {
-        if (!setIsLoaded) return;
-        gsap.to(circleRef.current, {
-            rotation: -127,
-            ease: "none",
-            scrollTrigger: {
-                trigger: ".parent",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1,
-                scroller: ".home-wrapper"
-            }
-        });
-    }, [setIsLoaded]);
-
     useEffect(() => {
         if (!isLoaded) return;
         let sections = gsap.utils.toArray(".card");
@@ -105,17 +87,17 @@ function About({ setIsLoaded , isLoaded}) {
                 start: "top top",
                 end: "+=150%",
                 scroller: ".home-wrapper",
-                pin: true,
-                scrub: 1, // Increase scrub value for smoother transitions
+                pin: true, 
+                scrub: 1,
                 onUpdate: (self) => {
-                    let index = Math.floor(self.progress * sections.length); // Use `Math.floor` for smoother stepping
+                    let index = Math.floor(self.progress * sections.length);
     
                     sections.forEach((card, i) => {
                         if (i === index) {
-                            gsap.to(card, { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" });
+                            gsap.to(card, { scale: 1, opacity: 1, duration: 0.7, ease: "power4.out" });
                             card.classList.add("active");
                         } else {
-                            gsap.to(card, { scale: 0.8, opacity: 0.3, duration: 0.5, ease: "power2.out" });
+                            gsap.to(card, { scale: 0.8, opacity: 0.3, duration: 0.7, ease: "power4.out" });
                             card.classList.remove("active");
                         }
                     });
@@ -123,7 +105,26 @@ function About({ setIsLoaded , isLoaded}) {
             }
         });
     }, [isLoaded]);
-    
+
+    //Card Animation
+    const circleRef = useRef(null);
+
+    useEffect(() => {
+        if (!setIsLoaded) return;
+        gsap.to(circleRef.current, {
+            rotation: -127, // Adjust rotation range as needed
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parent",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+                scroller: ".home-wrapper",
+            },
+        });
+    }, [setIsLoaded]);
+
+
     return (
         <div className='about-container'>
             <div className='about-protein'>
@@ -324,6 +325,25 @@ function About({ setIsLoaded , isLoaded}) {
                                         </div>
                                     </div>
                                 </div>
+                                {/* card- sample */}
+                                {/* <div className="box carding1" style={{ transform: "rotate(228deg) translateX(67vw) rotate(90deg)" }}>
+                                    <div className="carding-inner">
+                                      <div className="carding-front">
+                                        <div className="carding-border">
+                                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon" />
+                                          <p className="carding-text">TRANSPARENCY <br /> IN EVERY DROP</p>
+                                        </div>
+                                      </div>
+                                      <div className="carding-back">
+                                        <div className="carding-border1">
+                                          <h1 className="backing-heading">Transparency<br /> in every drop</h1>
+                                          <p className="backing-text">No secrets, no surprises. We’re upfront about every ingredient and every process, empowering you to make informed choices about your nutrition.</p>
+                                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon-image" />
+                                          <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line1" />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div> */}
                                 {/* card-1 */}
                                 <div className="box carding1" style={{ transform: "rotate(228deg) translateX(67vw) rotate(90deg)" }}>
                                     <div className="carding-inner">

@@ -22,13 +22,22 @@
   background-position: 65% 30%;
   /* background-size: 60%; */
   position: relative;
+  z-index: 1;
 }
 
 .main-product-background {
-  background-image: url("./assets/Vector\ \(1\).png");
+  /* background-image: url("./assets/Vector\ \(1\).png"); */
   background-repeat: no-repeat;
   background-position: 65% 30%;
   background-size: 70%;
+}
+
+.milking-banner {
+  position: absolute;
+    z-index: -1;
+    width: 58%;
+    left: 25%;
+    top: 5%;
 }
 
 .product-details-image {
@@ -36,6 +45,8 @@
   height: auto;
   border-radius: 8px;
   object-fit: cover;
+  padding-left: 3%;
+  padding-top: 10%;
 }
 
 .product-details-right {
@@ -74,6 +85,24 @@
   position: absolute;
   left: 3%;
   bottom: 42%;
+}
+
+.image-variant {
+  width: 100%;
+  height: 70px;
+  border: 1px solid white;
+  padding: 8px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.product-icons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: absolute;
+  left: 3%;
+  bottom: 8%;
 }
 
 .horizontal-line {
@@ -321,9 +350,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 255, 0.1); /* Mild blue overlay */
-  backdrop-filter: blur(10px); /* Apply background blur */
-  z-index: 99998; /* Below cart but above everything else */
+  background-color: rgba(0, 0, 255, 0.1);
+  /* Mild blue overlay */
+  backdrop-filter: blur(10px);
+  /* Apply background blur */
+  z-index: 99998;
+  /* Below cart but above everything else */
   transition: opacity 0.3s ease;
 }
 
@@ -619,7 +651,9 @@
 }
 
 .metafield-ingredients {
-  background-image: url("./assets//background.png");
+  background-image: url("./assets/mmg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .metafield-total {
@@ -766,6 +800,8 @@
   top: 10%;
   left: 0;
 }
+.product-position{}
+
 
 .review-heading {
   font-family: "Anybody_Condensed";
@@ -1024,7 +1060,8 @@
 
 .bar {
   width: 100%;
-  height: 300px; /* Full height */
+  height: 300px;
+  /* Full height */
   border: 2px dashed white;
   position: relative;
   display: flex;
@@ -1074,12 +1111,16 @@
     padding: 0px;
     display: block;
   }
+
   .feature-icons {
     gap: 0px;
   }
-  .Subscribe-button-cart, .Subscribe-button-buy{
+
+  .Subscribe-button-cart,
+  .Subscribe-button-buy {
     width: 45%;
   }
+
   .metafield-total {
     margin: 0;
     padding-left: 2%;
@@ -1204,7 +1245,8 @@
   .comparison-table {
     display: block !important;
   }
-  .graph-image{
+
+  .graph-image {
     width: 96%;
   }
 
@@ -1241,17 +1283,35 @@
   .metafield-container {
     overflow: hidden;
   }
-  .reviewer-days, .reviewer-name {
+
+  .reviewer-days,
+  .reviewer-name {
     padding-top: 0%;
   }
-  .cart-panel{
+
+  .cart-panel {
     width: 100%;
   }
 }
 
 @media only screen and (max-width: 1900px) and (min-width: 1600px) {
   .details-title {
-    font-size: 80px;
-    line-height: 5rem;
+    font-size: 55px;
+    line-height: 4rem;
+  }
+}
+
+@media only screen and (max-width: 500px) and (min-width: 320px) {
+  .product-details-left {
+    padding: 0px;
+  }
+}
+
+@media only screen and (max-width: 2200px) and (min-width: 1600px) {
+  .ingredients-row {
+    padding: 125px;
+  }
+  .ingredients-list {
+    width: 70%;
   }
 }

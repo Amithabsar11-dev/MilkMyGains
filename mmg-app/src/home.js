@@ -3,10 +3,12 @@ import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import "./home.css";
 import "./cards.css";
+import { Link } from "react-router-dom";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Milk from "./assets/Slice-3.svg";
-import MilkTM from './assets/Logo-TM.svg'
+import MilkTM from './assets/Logo-TM.svg';
+import MMGimage from './assets/MMG-image.svg';
 import MilkBg from "./assets/Vector (1).png";
 import MilkBg1 from "./assets/Vector (2).png";
 import MilkBg2 from "./assets/Vector (3).png";
@@ -70,6 +72,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   const [currentModel, setCurrentModel] = useState("/mmg1.glb");
   const [isNext, setIsNext] = useState(true);
   const [scrolling, setScrolling] = useState(false);
+  const [viewBox, setViewBox] = useState("0 -90 720 543");
   const [activeButton, setActiveButton] = useState("paneer");
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [step, setStep] = useState(0);
@@ -157,6 +160,20 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   //   curve2: "M 0 0 V 20 Q 50 40 100 20 V 0 Z", // Larger curve, bends more in the middle
   // };
 
+  useEffect(() => {
+    const updateViewBox = () => {
+      const width = window.innerWidth;
+      if (width >= 1700 && width <= 2200) {
+        setViewBox("0 -90 910 543");
+      } else {
+        setViewBox("0 -90 720 543");
+      }
+    };
+
+    updateViewBox(); // Set initial value
+    window.addEventListener("resize", updateViewBox);
+    return () => window.removeEventListener("resize", updateViewBox);
+  }, []);
 
 
   const handleModelChange = (modelPath, next = true) => {
@@ -615,15 +632,18 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
 
           <div className="order-buttons">
-            <img
+            {/* <img
               src={getButtonImage("paneer")}
               alt="paneer-button"
               className={`paneer-button ${currentModel === "/mmg1.glb" ? "active" : ""
                 }`}
               onClick={() =>
                 handleModelChange("/mmg1.glb", false)
-              } // Prev
-            />
+              } 
+            /> */}
+            <Link to="/product/milk-my-gains-sample-product">
+              <img src={MMGimage} className="paneer-button-active" alt="Milk My Gains Sample" />
+            </Link>
             <img
               src={getButtonImage("milk")}
               alt="milk-button"
@@ -861,6 +881,25 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                       </div>
                     </div>
                   </div>
+                  {/* card-6 */}
+                  <div className="box carding1" style={{ transform: "rotate(83deg) translateX(44vw) rotate(78deg) translateY(11vw)" }}>
+                    <div className="carding-inner">
+                      <div className="carding-front">
+                        <div className="carding-border">
+                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon" />
+                          <p className="carding-text">TRANSPARENCY <br /> IN EVERY DROP</p>
+                        </div>
+                      </div>
+                      <div className="carding-back">
+                        <div className="carding-border1">
+                          <h1 className="backing-heading">Transparency<br /> in every drop</h1>
+                          <p className="backing-text">No secrets, no surprises. We’re upfront about every ingredient and every process, empowering you to make informed choices about your nutrition.</p>
+                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon-image" />
+                          <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line1" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   {/* card- sample */}
                   {/* <div className="box carding1" style={{ transform: "rotate(228deg) translateX(67vw) rotate(90deg)" }}>
                     <div className="carding-inner">
@@ -952,14 +991,14 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             </h1>
             {/* <img src={Words} alt="words" className=" words" /> */}
             <div className="svg-container">
-              <svg width="681" height="543" viewBox="0 -90 720 543" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="681" height="543" viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" id="curve" d="M0.5 174.001C79 -95.4996 332.5 -7.99936 349 155.5C365.5 319 452 337.501 578.5 337.501C705 337.501 692.5 480.334 654 542.501" />
                 <text>
                   <textPath ref={(el) => (textPathRefs.current[0] = el)} className="text-path" startOffset="0%" href="#curve">
-                    paneer that works as hard as you do paneer that works as hard as you do &nbsp;
+                    Your daily dairy keeps you energized all day long &nbsp;
                   </textPath>
                   <textPath ref={(el) => (textPathRefs.current[1] = el)} className="text-path duplicate-text" startOffset="100%" href="#curve">
-                    paneer that works as hard as you do paneer that works as hard as you do &nbsp;
+                    Your daily dairy keeps you energized all day long &nbsp;
                   </textPath>
                 </text>
               </svg>
@@ -1182,8 +1221,8 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     <p className="build-para">
                       A high-protein diet nourishes skin,
                       strengthens nails, and promotes vibrant
-                     hair, enhancing beauty from within and
-                       contributing to a radiant, healthy
+                      hair, enhancing beauty from within and
+                      contributing to a radiant, healthy
                       appearance.
                     </p>
                   </div>

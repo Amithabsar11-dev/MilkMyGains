@@ -21,7 +21,6 @@ const CartPanel = ({ onClose, isOpen }) => {
 
   return (
     <div className="cart-overlay" onClick={onClose}>
-      {/* Prevent clicks inside the cart from closing it */}
       <div className={`cart-panel ${isOpenState ? 'open' : 'closed'}`} onClick={(e) => e.stopPropagation()}>
         <div className="cart-items-wrapper">
           <h2 className="close-cart" onClick={onClose}>&times;</h2>
@@ -30,7 +29,6 @@ const CartPanel = ({ onClose, isOpen }) => {
             const titleParts = item.title.split(" - ");
             const mainTitle = titleParts[0];
             const extraInfo = titleParts[1] ? `(${titleParts[1]})` : "";
-
             return (
               <div key={item.id} className="cart-item">
                 <img src={item.image} alt={item.title || "Product Image"} className="cart-image" />

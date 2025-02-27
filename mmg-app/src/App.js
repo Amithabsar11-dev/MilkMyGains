@@ -62,8 +62,8 @@ function App() {
             <Header />
             <Routes>
               <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/products" element={<ProductPage />} />
-              <Route path="/product/:handle" element={<ProductDetails />} />
+              <Route path="/products" element={<ProductPage isLoaded={isLoaded} setIsLoaded={setIsLoaded}/>} />
+              <Route path="/product/:handle" element={<ProductDetails isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/faq" element={<FAQ isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/about" element={<About isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/contact" element={<Contact isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />

@@ -28,7 +28,8 @@
   position: absolute;
   bottom: -130%;
 }
-.svg{
+
+.svg {
   width: 200%;
 }
 
@@ -51,49 +52,83 @@
   height: 100vh;
   background-color: aqua;
 }
+
+.carding1 {
+  transform: "rotate(228deg) translateX(67vw) rotate(90deg) ";
+}
+
+.carding2 {
+  transform: "rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw)";
+}
+
+.carding3 {
+  transform: "rotate(294deg) translateX(55vw) rotate(109deg)";
+}
+
+.carding4 {
+  transform: "rotate(-19deg) translateX(61vw) rotate(103deg) translateY(18vw)";
+}
+
+.carding5 {
+  transform: "rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw)";
+}
+
 @media only screen and (max-width: 1450px) and (min-width: 1400px) {
-  .circle-container{
+  .circle-container {
     height: 100vh;
   }
+  .carding3{
+    transform: rotate(292deg) translateX(55vw) rotate(109deg);
+  }
 }
+
 @media only screen and (max-width: 1500px) and (min-width: 1450px) {
-  .circle-container{
+  .circle-container {
     height: 100vh;
   }
+  .carding3{
+    transform: rotate(292deg) translateX(57vw) rotate(109deg);
+  }
 }
+
 @media only screen and (max-width: 1600px) and (min-width: 1550px) {
-  .circle-container{
-    height: 100vh;
-  }
-}
-@media only screen and (max-width: 1550px) and (min-width: 1500px) {
-  .circle-container{
-    height: 100vh;
-  }
-}
-@media only screen and (max-width: 1650px) and (min-width: 1600px) {
-  .circle-container{
-    height: 100vh;
-  }
-}
-@media only screen and (max-width: 1700px) and (min-width: 1650px) {
-  .circle-container{
-    height: 100vh;
-  }
-}
-@media only screen and (max-width: 1800px) and (min-width: 1700px) {
-  .circle-container{
-    height: 100vh;
-  }
-}
-@media only screen and (max-width: 1400px) and (min-width: 1250px) {
-.circle-container{
-  height: 100vh; 
-}
-}
-@media only screen and (max-width: 2460px) and (min-width: 1800px) {
-  .circle-container{
+  .circle-container {
     height: 100vh;
   }
 }
 
+@media only screen and (max-width: 1550px) and (min-width: 1500px) {
+  .circle-container {
+    height: 103vh;
+  }
+}
+
+@media only screen and (max-width: 1650px) and (min-width: 1600px) {
+  .circle-container {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 1700px) and (min-width: 1650px) {
+  .circle-container {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 1800px) and (min-width: 1700px) {
+  .circle-container {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 1250px) {
+  .circle-container {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 2460px) and (min-width: 1800px) {
+  .circle-container {
+    height: 100vh;
+  }
+}

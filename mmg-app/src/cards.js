@@ -174,7 +174,7 @@ const Card = ({ setIsLoaded }) => {
                         <div className="circle-container">
                             <div className="circle" ref={circleRef}>
                                 {/* card-3 */}
-                                <div className="box carding3" style={{ transform: "rotate(294deg) translateX(55vw) rotate(109deg)" }}>
+                                <div className="box carding3" >
                                     <div className="carding-inner">
                                         <div className="carding-front">
                                             <div className="carding-border">
@@ -193,7 +193,7 @@ const Card = ({ setIsLoaded }) => {
                                     </div>
                                 </div>
                                 {/* card-4 */}
-                                <div className="box carding1" style={{ transform: "rotate(-19deg) translateX(61vw) rotate(103deg) translateY(18vw)" }}>
+                                <div className="box carding4" >
                                     <div className="carding-inner">
                                         <div className="carding-front">
                                             <div className="carding-border-4">
@@ -212,7 +212,7 @@ const Card = ({ setIsLoaded }) => {
                                     </div>
                                 </div>
                                 {/* card-5 */}
-                                <div className="box carding2" style={{ transform: "rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw)" }}>
+                                <div className="box carding5" >
                                     <div className="carding-inner">
                                         <div className="carding-front">
                                             <div className="carding-border-4">
@@ -231,7 +231,7 @@ const Card = ({ setIsLoaded }) => {
                                     </div>
                                 </div>
                                 {/* card-1 */}
-                                <div className="box carding1" style={{ transform: "rotate(228deg) translateX(67vw) rotate(90deg)" }}>
+                                <div className="box carding1" >
                                     <div className="carding-inner">
                                         <div className="carding-front">
                                             <div className="carding-border">
@@ -250,7 +250,7 @@ const Card = ({ setIsLoaded }) => {
                                     </div>
                                 </div>
                                 {/* card-2 */}
-                                <div className="box carding2" style={{ transform: "rotate(262deg) translateX(74vw) rotate(98deg) translateY(10vw)" }}>
+                                <div className="box carding2">
                                     <div className="carding-inner">
                                         <div className="carding-front">
                                             <div className="carding-border">

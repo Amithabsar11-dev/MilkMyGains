@@ -19,10 +19,10 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const [rotationY, setRotationY] = useState(1);
   const [rotationZ, setRotationZ] = useState(-0.2);
   const [positionX, setPositionX] = useState(0);
-  const [positionY, setPositionY] = useState(-0.7);
+  const [positionY, setPositionY] = useState(-0.1);
   const [positionZ, setPositionZ] = useState(0);
   const [rotationOffsetX, setRotationOffsetX] = useState(0);
-  const [rotationOffsetY, setRotationOffsetY] = useState(7.2);
+  const [rotationOffsetY, setRotationOffsetY] = useState(7.1);
   
   // Resize listener
   useEffect(() => {

@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./productDetails.css";
-import Cow from "./assets/cow.svg";
+import Cow from "./assets/pure-cow.svg";
 import Protein from "./assets/protein.svg";
 import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
 import { useContext } from "react";
 import { CartContext } from "./cartContext";
 import Words1 from "./assets/words1.svg";
+import Milkbanner from "./assets/Vector (1).png";
 import Raisingprotein from "./assets/high-protein.svg";
 import MMGproduct from "./assets/mmg-product.svg";
 import Paneerproduct from "./assets/paneer-product.svg";
@@ -34,14 +35,17 @@ import FilledStar from "./assets/Star 1.svg"; // Replace with actual path
 import EmptyStar from "./assets/Star 5.svg"; // Replace with actual path
 import moment from "moment";
 import HalfStar from './assets/Frame 215.svg';
+import { gsap } from "gsap";
+import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import Sample from './sample';
 import Copyrightline from './assets/Line 23.svg';
 import CartPanel from "./CartPanel";
 
-const ProductDetails = () => {
+const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
   const { handle } = useParams(); // Extract the product handle from the URL
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const [mainImage, setMainImage] = useState(null);
   const [packQuantity, setPackQuantity] = useState(null); // Default pack quantity
   const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
@@ -83,6 +87,49 @@ const ProductDetails = () => {
     { value: 26, text: "26%\nCALORIES\nFROM\nPROTEIN", icon: "🍫", color: "#FFFFFF" },
     { value: 71, text: "71%\nCALORIES\nFROM\nPROTEIN", icon: "🍼", color: "#FFFFFF" },
   ];
+
+  useEffect(() => {
+    if (!setIsLoaded) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".animation-container",
+        start: "top 80%", // Start animation when 80% of the section is in view
+        end: "bottom 20%", // End when 20% is still visible
+        scrub: 1, // Smooth scrolling effect
+        toggleActions: "play none none reverse", // Play forward and reverse on scroll
+        scroller: ".home-wrapper",
+      },
+      onComplete: () => setIsLoaded(true),
+    });
+
+    // Step 1: Fade in "RAISING" and "THE BAR"
+    tl.fromTo(
+      ".raising, .bar-1",
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+    );
+
+    // Step 2: Move "RAISING" left & "THE BAR" right
+    tl.to(".raising", { x: "-150px", duration: 1, ease: "power2.out" }, "-=0.5");
+    tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
+
+    // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
+    tl.fromTo(
+      ".middle-text",
+      { opacity: 0, scale: 0.5, fontWeight: 400 },
+      {
+        opacity: 1,
+        scale: 1.1,
+        fontWeight: 900,
+        duration: 1,
+        ease: "power2.out",
+      }
+    );
+
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  }, [setIsLoaded]);
+
 
   //Table 
 
@@ -136,17 +183,23 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://147.93.106.149:3001/api/product/${handle}`
+          `http://localhost:3001/api/product/${handle}`
         );
         console.log("Full Response:", response.data);
 
         setProduct(response.data);
 
         // Automatically select the first available variant
-        const firstAvailableVariant = response.data.variants.edges.find(
-          ({ node }) => node.availableForSale
+        const packOfOneVariant = response.data.variants.edges.find(
+          ({ node }) => node.title.toLowerCase().includes("pack of 1") && node.availableForSale
         )?.node;
-        setSelectedVariant(firstAvailableVariant || null);
+
+        setSelectedVariant(packOfOneVariant || null);
+
+        // Set the default main image to the pack of 1 variant image
+        if (packOfOneVariant && packOfOneVariant.image) {
+          setMainImage(packOfOneVariant.image.src);
+        }
 
         // Extract FAQ content from metafields
         const metafields = response.data.metafields || [];
@@ -233,6 +286,13 @@ const ProductDetails = () => {
     fetchReviews();
   }, [handle]);
 
+  const handleVariantClick = (variant) => {
+    setSelectedVariant(variant);
+    if (variant.image) {
+      setMainImage(variant.image.src); // Update the main image based on the selected variant
+    }
+  };
+
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   const averageRating = reviews.length ? (totalRating / reviews.length).toFixed(1) : "0.0";
 
@@ -309,7 +369,7 @@ const ProductDetails = () => {
 
         addItemToCart(item);
       }
-      setCartVisible(true);
+      setCartVisible(true); 
     }
   };
 
@@ -365,42 +425,37 @@ const ProductDetails = () => {
       <div className="product-details-container">
         <div className="product-details-left col-sm-6">
           <div className="main-product-background">
-            {images.edges[0]?.node.src ? (
-              <img
-                src={images.edges[0].node.src}
-                alt={images.edges[0].node.altText || "Product Image"}
-                className="product-details-image"
-              />
-            ) : (
-              <div className="placeholder">No Image Available</div>
-            )}
+            <div className="image-banner">
+              <img src={Milkbanner} alt="" className="milking-banner"/>
+              {mainImage ? (
+                <img
+                  src={mainImage}
+                  alt={selectedVariant?.image?.altText || "Product Image"}
+                  className="product-details-image"
+                />
+              ) : (
+                <div className="placeholder">No Image Available</div>
+              )}
+            </div>
           </div>
-          <div className="product-lisiting-icon">
+          <div className="product-listing-icon">
             <div className="product-icons-list">
-              <img
-                src={MMGproduct}
-                className="mmg-product"
-                alt="mmg-product-image"
-              />
-              <img
-                src={Paneerproduct}
-                className="paneer-product"
-                alt="mmg-product-image"
-              />
-              <img
-                src={Icecreamproduct}
-                className="icecream-product"
-                alt="mmg-product-image"
-              />
-              <img
-                src={Milkproduct}
-                className="milk-product"
-                alt="mmg-product-image"
-              />
+              {product?.variants.edges.map((variant, index) => (
+                <div key={index} onClick={() => handleVariantClick(variant.node)}>
+                  {variant.node.image && variant.node.image.src ? (
+                    <img
+                      src={variant.node.image.src}
+                      alt={variant.node.image.altText || "Variant Image"}
+                      className="image-variant"
+                    />
+                  ) : (
+                    <p>No Image Available</p>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
-
         <div className="product-details-right col-sm-6">
           <h1 className="details-title">
             {title}
@@ -508,64 +563,9 @@ const ProductDetails = () => {
             </button>
           </div>
         </div>
-
         {cartVisible && (
-          <div className="cart-panel">
-            <div className="cart-items-wrapper">
-              <h2 className="close-cart" onClick={toggleCart}>
-                &times;
-              </h2>
-              <h2 className='cart-panel-heading'>Your Cart ({cartItems.reduce((total, item) => total + item.quantity, 0)})</h2>
-              {cartItems.map((item) => {
-                const titleParts = item.title.split(" - "); // Splitting title at " - "
-                const mainTitle = titleParts[0]; // First part of the title
-                const extraInfo = titleParts[1] ? `(${titleParts[1]})` : ""; // Second part in parentheses if exists
-
-                return (
-                  <div key={item.id} className="cart-item">
-                    <img
-                      src={item.image}
-                      alt={item.title || "Product Image"}
-                      className="cart-image"
-                    />
-                    <div className="cart-details">
-                      <div className='cart-selection'>
-                        <h3 className='cart-title'>{mainTitle} {extraInfo}</h3>
-                        <h2 className='remove-items' onClick={() => removeItemFromCart(item.id)}>&times;</h2>
-                      </div>
-                      <p className='qty-container'>
-                        <div className="qty-buttons">
-                          <p className='qty-quantity'>QTY: {item.quantity}</p>
-                          <button className="circle-btn" onClick={() => updateItemQuantity(item.id, item.quantity + 1)}>+</button>
-                          <button className="circle-btn" onClick={() => {
-                            if (item.quantity > 1) {
-                              updateItemQuantity(item.id, item.quantity - 1);
-                            } else {
-                              removeItemFromCart(item.id);
-                            }
-                          }}>-</button>
-                        </div>
-                        <p className='items-price'>₹{(item.price * item.quantity).toFixed(2)}</p>
-                      </p>
-                      {/* <button onClick={() => removeItemFromCart(item.id)}>Remove</button> */}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="checkout-option">
-              <div className='checkout-total'>
-                <p className='subtotal'>
-                  SUB TOTAL
-                </p>
-                <p className='subtotal-amount'>
-                  ₹{cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}
-                </p>
-              </div>
-              <button className="checkout" onClick={proceedToPayment}>Proceed to Payment</button>
-            </div>
-          </div>
-        )}
+        <CartPanel onClose={toggleCart} isOpen={cartVisible} /> 
+      )}
       </div>
       {/* {product.variants.edges.map((variant, index) => {
         const image = variant.node.image; // Extract the image object

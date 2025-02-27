@@ -1,81 +1,81 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from 'react';
 import axios from "axios";
 
 const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  // ✅ Load cart from localStorage on first render
   const [cartItems, setCartItems] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
+    const savedCartItems = sessionStorage.getItem('cartItems');
+    return savedCartItems ? JSON.parse(savedCartItems) : [];
+  });
+  const [cartQuantity, setCartQuantity] = useState(0);
+  const [cartTotal, setCartTotal] = useState(() => {
+    const savedCartTotal = sessionStorage.getItem('cartTotal');
+    return savedCartTotal ? JSON.parse(savedCartTotal) : 0;
   });
 
-  const [cartQuantity, setCartQuantity] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
-
-  // ✅ Update totals & save to localStorage whenever cart changes
   useEffect(() => {
+    // Save cart items to session storage whenever cartItems changes
+    sessionStorage.setItem('cartItems', JSON.stringify(cartItems));
+    sessionStorage.setItem('cartTotal', JSON.stringify(cartTotal));
+
+    // Calculate cart quantity based on cart items
     const newCartQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
-    const newCartTotal = cartItems.reduce((total, item) => total + item.discountedPrice * item.quantity, 0); // ✅ Use discountedPrice
-
     setCartQuantity(newCartQuantity);
-    setCartTotal(newCartTotal);
+  }, [cartItems, cartTotal]);
 
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }, [cartItems]);
-
-  // ✅ Add item to cart (Fixes price issue)
   const addItemToCart = (item) => {
-    setCartItems((prevCart) => {
-      const existingItem = prevCart.find((i) => i.id === item.id);
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
       if (existingItem) {
-        return prevCart.map((i) =>
-          i.id === item.id
-            ? {
-                ...i,
-                quantity: i.quantity + item.quantity,
-                packQuantity: (i.quantity + item.quantity) * i.originalPackQuantity,
-              }
-            : i
-        );
+        existingItem.quantity += item.quantity;
+        return [...prevItems]; // Return a new array reference
+      } else {
+        return [...prevItems, item]; // Add new item
       }
-      return [...prevCart, { ...item, packQuantity: item.quantity * item.originalPackQuantity }];
     });
+    // Removed setCartQuantity from here
+    setCartTotal((prevTotal) => prevTotal + item.price * item.quantity);
   };
-
-  // ✅ Update item quantity (Fixes price calculation)
-  const updateItemQuantity = (id, quantity) => {
-    setCartItems((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity,
-              packQuantity: quantity * item.originalPackQuantity,
-            }
-          : item
-      )
-    );
-  };
-
-  // ✅ Remove item from cart
+ 
   const removeItemFromCart = (id) => {
-    setCartItems((prevCart) => prevCart.filter((item) => item.id !== id));
+    const itemIndex = cartItems.findIndex((i) => i.id === id);
+    if (itemIndex !== -1) {
+      const item = cartItems[itemIndex];
+      cartItems.splice(itemIndex, 1);
+      setCartItems([...cartItems]);
+      setCartQuantity((prevQuantity) => prevQuantity - item.quantity);
+      setCartTotal(cartTotal - item.price * item.quantity);
+    }
   };
 
-  // ✅ Proceed to Payment (Corrects price & quantity)
+  const updateItemQuantity = (id, quantity) => {
+    const itemIndex = cartItems.findIndex((i) => i.id === id);
+    if (itemIndex !== -1) {
+      const item = cartItems[itemIndex];
+      item.quantity = quantity;
+      item.packQuantity = quantity * item.originalPackQuantity;
+      setCartItems([...cartItems]);
+      setCartQuantity((prevQuantity) => prevQuantity - item.quantity + quantity);
+      setCartTotal(cartTotal - item.price * item.quantity + item.price * quantity);
+    }
+  };
+
   const proceedToPayment = async () => {
     try {
-      const response = await axios.post("http://147.93.106.149:3001/api/cart/create", {
-        lines: cartItems.map((item) => ({
-          merchandiseId: item.id,
-          quantity: item.packQuantity, // ✅ Use correct pack quantity
-          price: item.discountedPrice, // ✅ Use correct discounted price
-        })),
-      });
+      const response = await axios.post(
+        "http://localhost:3001/api/cart/create",
+        {
+          lines: cartItems.map((item) => ({
+            merchandiseId: item.id,
+            quantity: item.packQuantity,
+            price: item.price,
+          })),
+        }
+      );
 
       if (response.data && response.data.checkoutUrl) {
-        console.log("Redirecting to Shopify checkout");
+        console.log('Redirecting to Shopify checkout');
         window.location.href = response.data.checkoutUrl;
       } else {
         alert("Error creating cart or fetching checkout URL.");

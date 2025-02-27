@@ -236,8 +236,9 @@
   height: 200vh;
   z-index: -1;
   text-align: center;
-  background-image: url("./assets/background.png");
-  background-size: cover;
+  background-image: url("./assets/homeback.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .mmg-model {
@@ -333,7 +334,7 @@
 
 .svg-order-button-container {
   position: absolute;
-  bottom: 0%;
+  bottom: 7%;
 }
 
 @keyframes floatEffect {
@@ -379,7 +380,7 @@
   flex-direction: column;
   position: absolute;
   right: 6%;
-  bottom: 2%;
+  bottom: 8%;
   cursor: pointer;
   gap: 10px;
   z-index: 10;
@@ -402,6 +403,17 @@
 .paneer-button {
   cursor: pointer;
   pointer-events: auto;
+}
+
+.paneer-button-active {
+  border: 2px solid white;
+  border-radius: 50px;
+  padding: 5px;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+.paneer-button-active:hover{
+  transform: scale(1.1);
 }
 
 .milk-button {
@@ -581,7 +593,7 @@
 
 .container-paradigm {
   background-color: white;
-  padding-bottom: 10%;
+  padding-bottom: 7%;
   padding-top: 8%;
   min-height: 100vh;
 }
@@ -636,6 +648,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: -5%;
 }
 
 .know-button {
@@ -683,7 +696,7 @@
 
 /* Container pure */
 .container-pure {
-  background-image: url("./assets/background.png");
+  background-image: url("./assets/Frame\ 221.png");
   position: relative;
   background-size: cover;
   background-position: center top;
@@ -713,7 +726,7 @@
 }
 
 .row-pure {
-  padding-top: 10%;
+  padding-top: 15%;
 }
 
 .crafted-pure {
@@ -932,7 +945,8 @@
   width: 35%;
   bottom: 4%;
 }
-.weight-lift3{
+
+.weight-lift3 {
   position: absolute;
   width: 35%;
   bottom: 4%;
@@ -1578,7 +1592,8 @@
     margin-right: 0%;
     box-shadow: none;
   }
-  .power-space1{
+
+  .power-space1 {
     width: 100%;
   }
 
@@ -1594,11 +1609,12 @@
     line-height: 2.5rem;
     padding-top: 5%;
   }
-  .power-container{
+
+  .power-container {
     height: 70vh;
   }
 
-  .power-container1{
+  .power-container1 {
     height: 70vh;
     margin-top: 45px;
   }
@@ -1606,9 +1622,11 @@
   .build-text {
     width: 100%;
   }
-  .container-pure{
+
+  .container-pure {
     min-height: 0;
   }
+
   .row-build {
     display: block;
   }
@@ -1618,18 +1636,22 @@
     right: 2%;
     bottom: -5%;
   }
-  .weight-lift3{
+
+  .weight-lift3 {
     width: 85%;
     right: 2%;
     bottom: 30%;
   }
-  .power-space{
+
+  .power-space {
     width: 100%;
   }
-  .power-wrapper{
+
+  .power-wrapper {
     height: 225vh;
   }
-  .power-space2{
+
+  .power-space2 {
     width: 100%;
   }
 
@@ -1716,6 +1738,7 @@
   .milk-image {
     width: 65% !important;
   }
+
   .proteins-container-1 {
     background-position: 100%;
     margin-bottom: 15%;
@@ -1751,14 +1774,41 @@
 
   .lottie-animation {
     top: 21%;
-    width: 65%;
-    left: 18%;
+    width: 55%;
+    left: 23%;
   }
 }
 
 @media only screen and (max-width: 2200px) and (min-width: 1750px) {
   .lava-position {
     left: 17%;
+  }
+
+  .lottie-animation {
+    width: 55%;
+    top: 18%;
+    left: 23%;
+  }
+  .weight-lift{
+    width: 30%;
+  }
+  .power-container1{
+    padding-top: 15%;
+  }
+  .weight-lift1{
+    width: 25%;
+    right: 14%;
+  }
+  .power-container2{
+    padding-top: 17%;
+  }
+  .weight-lift3{
+    width: 25%;
+    bottom: 4%;
+    right: 14%;
+  }
+  .protein-slogan{
+    bottom: -8%;
   }
 }
 

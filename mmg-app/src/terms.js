@@ -86,7 +86,7 @@ function terms() {
                             8. Shipping and Delivery
                         </h3>
                         <p className='terms-para'>
-                            Our shipping and delivery policies are outlined in our <a className="shipping-link" href='#'>Shipping Policy</a>. Please review it for detailed information.
+                            Our shipping and delivery policies are outlined in our <a className="shipping-link" href='/shipping'>Shipping Policy</a>. Please review it for detailed information.
                         </p>
                     </div>
                     <div className='conditions'>
@@ -94,7 +94,7 @@ function terms() {
                             9. Returns and Refunds
                         </h3>
                         <p className='terms-para'>
-                            For information on returns and refunds, please refer to our  <a className="shipping-link" href='#'>Refund and Returns Policy</a>.
+                            For information on returns and refunds, please refer to our  <a className="shipping-link" href='/refund'>Refund and Returns Policy</a>.
                         </p>
                     </div>
                     <div className='conditions'>
