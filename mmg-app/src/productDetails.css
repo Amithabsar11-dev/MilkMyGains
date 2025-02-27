@@ -9,14 +9,14 @@
   --bs-gutter-x: 0rem;
 }
 
-
 .product-details-left {
   display: flex;
   justify-content: center;
   border: 1px solid black;
   border-style: dashed;
   border-left: none;
-  padding: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
   background-image: url("./assets/background.png");
   background-repeat: no-repeat;
   background-position: 65% 30%;
@@ -34,10 +34,10 @@
 
 .milking-banner {
   position: absolute;
-    z-index: -1;
-    width: 58%;
-    left: 25%;
-    top: 5%;
+  z-index: -1;
+  width: 58%;
+  left: 25%;
+  top: 5%;
 }
 
 .product-details-image {
@@ -509,7 +509,6 @@
   color: #fff;
 }
 
-
 /* .checkout {
   padding: 10px 20px;
   background-color: #007bff;
@@ -560,7 +559,6 @@
   left: -2px;
   opacity: 0;
 }
-
 
 .product-details-page {
   display: flex;
@@ -648,6 +646,7 @@
   padding-top: 7%;
   padding-bottom: 7%;
   position: relative;
+  overflow-x: hidden;
 }
 
 .metafield-ingredients {
@@ -800,8 +799,8 @@
   top: 10%;
   left: 0;
 }
-.product-position{}
-
+.product-position {
+}
 
 .review-heading {
   font-family: "Anybody_Condensed";
@@ -877,7 +876,6 @@
   cursor: pointer;
   background: transparent;
 }
-
 
 .rating-number {
   font-family: "Chivo Mono", serif;
@@ -1089,8 +1087,6 @@
   width: 100%;
 }
 
-
-
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .product-details-container {
     display: block;
@@ -1188,7 +1184,7 @@
   }
 
   .nutritional-title-container {
-    width: 90%;
+    width: 100%;
   }
 
   .nutrients-imaging {
@@ -1301,9 +1297,21 @@
   }
 }
 
+@media only screen and (max-width: 1750px) and (min-width: 1500px) {
+  .product-details-right {
+    gap: 4px;
+  }
+  .product-details-image {
+    padding-top: 15%;
+  }
+}
+
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .product-details-left {
     padding: 0px;
+  }
+  .metafield-ingredients {
+    background-position: 50%;
   }
 }
 

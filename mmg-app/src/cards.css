@@ -54,30 +54,33 @@
 }
 
 .carding1 {
-  transform: "rotate(228deg) translateX(67vw) rotate(90deg) ";
+  transform: rotate(228deg) translateX(67vw) rotate(90deg);
 }
 
 .carding2 {
-  transform: "rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw)";
+  transform: rotate(259deg) translateX(64vw) rotate(101deg) translateY(0vw);
 }
 
 .carding3 {
-  transform: "rotate(294deg) translateX(55vw) rotate(109deg)";
+  transform: rotate(294deg) translateX(55vw) rotate(109deg);
 }
 
 .carding4 {
-  transform: "rotate(-19deg) translateX(61vw) rotate(103deg) translateY(18vw)";
+  transform: rotate(-19deg) translateX(61vw) rotate(103deg) translateY(18vw);
 }
 
 .carding5 {
-  transform: "rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw)";
+  transform: rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw);
+}
+.carding6 {
+  transform: rotate(83deg) translateX(44vw) rotate(78deg) translateY(11vw);
 }
 
 @media only screen and (max-width: 1450px) and (min-width: 1400px) {
   .circle-container {
     height: 100vh;
   }
-  .carding3{
+  .carding3 {
     transform: rotate(292deg) translateX(55vw) rotate(109deg);
   }
 }
@@ -86,7 +89,7 @@
   .circle-container {
     height: 100vh;
   }
-  .carding3{
+  .carding3 {
     transform: rotate(292deg) translateX(57vw) rotate(109deg);
   }
 }
@@ -99,7 +102,10 @@
 
 @media only screen and (max-width: 1550px) and (min-width: 1500px) {
   .circle-container {
-    height: 103vh;
+    height: 105vh;
+  }
+  .carding3 {
+    transform: rotate(292deg) translateX(57vw) rotate(109deg);
   }
 }
 

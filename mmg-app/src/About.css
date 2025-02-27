@@ -62,7 +62,7 @@
   font-weight: 900;
 }
 
-.about-challenge{
+.about-challenge {
   padding-top: 8%;
 }
 
@@ -274,9 +274,9 @@
   flex-wrap: nowrap;
 }
 
-.carding1 {
+/* .carding1 {
   transform: translateY(100px) translateX(-80px) rotate(-20deg);
-}
+} */
 
 .carding1,
 .carding2,
@@ -284,9 +284,9 @@
   perspective: 1000px;
 }
 
-.carding3 {
+/* .carding3 {
   transform: translateY(100px) translateX(80px) rotate(20deg);
-}
+} */
 
 .carding-inner {
   width: 350px;
@@ -521,7 +521,10 @@
   .about-protein {
     padding-top: 40%;
   }
-
+  .pin-spacer {
+    padding: 0 !important;
+    height: 550px !important;
+  }
   .carding-inner {
     width: 300px;
     height: 400px;
