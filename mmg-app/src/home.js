@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Milk from "./assets/Slice-3.svg";
-import MilkTM from './assets/Logo-TM.svg';
+import MilkTM from './assets/Logo-TM-1.svg';
 import MMGimage from './assets/MMG-image.svg';
 import MilkBg from "./assets/Vector (1).png";
 import MilkBg1 from "./assets/Vector (2).png";
@@ -56,6 +56,10 @@ import Sample from './sample';
 import Lottie from "lottie-react";
 import paneerAnimation from "./assets/lottie/data-1.json";
 import "./cards.css";
+import Footeranimation from './assets/Home-footer-ani.mp4';
+import Weightliftanimation from './assets/Comp 1_1.mp4';
+import Yogaanimation from './assets/Yoga_2.mp4';
+import Basketballanimation from './assets/BasketBall.mp4';
 import Copyrightline from './assets/Line 23.svg';
 
 /* Pure Protein Section */
@@ -457,7 +461,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   useEffect(() => {
     if (!setIsLoaded) return;
     gsap.to(circleRef.current, {
-      rotation: -127, // Adjust rotation range as needed
+      rotation: -170, // Adjust rotation range as needed
       ease: "none",
       scrollTrigger: {
         trigger: ".parent",
@@ -645,25 +649,34 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <Link to="/product/milk-my-gains-sample-product">
               <img src={MMGimage} className="paneer-button-active" alt="Milk My Gains Sample" />
             </Link>
-            <img
-              src={getButtonImage("milk")}
-              alt="milk-button"
-              className={`milk-button ${currentModel === "/packet_1.glb" ? "active" : ""
-                }`}
-            // onClick={() => handleModelChange("/packet_1.glb", true)} // Next
-            />
-            <img
-              src={getButtonImage("yogart")}
-              alt="order-button"
-              className={`yogart-button ${activeButton === "yogart" ? "active" : ""
-                }`}
-            />
-            <img
-              src={getButtonImage("icecream")}
-              alt="order-button"
-              className={`icecream-button ${activeButton === "icecream" ? "active" : ""
-                }`}
-            />
+            <div className="button-soon">
+              <img
+                src={getButtonImage("milk")}
+                alt="milk-button"
+                className={`milk-button ${currentModel === "/packet_1.glb" ? "active" : ""
+                  }`}
+              // onClick={() => handleModelChange("/packet_1.glb", true)} // Next
+              />
+              <h3 className="coming-soon">coming <br />soon</h3>
+            </div>
+            <div className="button-soon">
+              <img
+                src={getButtonImage("yogart")}
+                alt="order-button"
+                className={`yogart-button ${activeButton === "yogart" ? "active" : ""
+                  }`}
+              />
+              <h3 className="coming-soon">coming <br />soon</h3>
+            </div>
+            <div className="button-soon">
+              <img
+                src={getButtonImage("icecream")}
+                alt="order-button"
+                className={`icecream-button ${activeButton === "icecream" ? "active" : ""
+                  }`}
+              />
+              <h3 className="coming-soon">coming <br />soon</h3>
+            </div>
           </div>
           <div className="mmg-model" ref={mmgModelRef} style={{ opacity: 0 }}>
             <Canvas key={currentModel}>
@@ -901,6 +914,25 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                       </div>
                     </div>
                   </div>
+                  {/* card-7 */}
+                  <div className="box carding7" >
+                    <div className="carding-inner">
+                      <div className="carding-front">
+                        <div className="carding-border">
+                          <img src={MythIcon} alt="Protein Myth" className="carding-icon" />
+                          <p className="carding-text">BREAKING THE<br /> PROTEIN MYTH</p>
+                        </div>
+                      </div>
+                      <div className="carding-back">
+                        <div className="carding-border1">
+                          <h1 className="backing-heading">Breaking the<br /> Protein Myth</h1>
+                          <p className="backing-text">We’re challenging the belief that dairy can’t be high in protein and low in calories. MilkMyGains transforms dairy into a nutritional powerhouse, proving that high-quality protein doesn’t have to come with excess fat.</p>
+                          <img src={MythIcon} alt="Protein Myth" className="carding-icon-image" />
+                          <img src={MythIconline} alt="New Possibilities" className="carding-icon-line2" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   {/* card-1 */}
                   <div className="box carding1">
                     <div className="carding-inner">
@@ -984,6 +1016,14 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                   </textPath>
                 </text>
               </svg>
+            </div>
+            <div className="svg-order-button-container-1">
+              <div className="svg-order-button">
+                <img src={Orderbuttons} alt="order-button-svg" className="order-button-svg" />
+              </div>
+              <div className="liquid-text-container">
+                <a className="liquid-text-1" href="/product/milk-my-gains-sample-product">ORDER <br />NOW</a>
+              </div>
             </div>
 
             {/* <div className="motion-text">
@@ -1105,8 +1145,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <img
-                    src={Weightlift}
+                  <video
+                    autoPlay loop muted playsInline
+                    src={Weightliftanimation}
                     className="weight-lift"
                     alt="weight-lift"
                   />
@@ -1159,8 +1200,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <img
-                    src={Lean}
+                  <video
+                    autoPlay loop muted playsInline
+                    src={Basketballanimation}
                     className="weight-lift1"
                     alt="weight-lift"
                   />
@@ -1210,8 +1252,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <img
-                    src={Yoga}
+                  <video
+                    autoPlay loop muted playsInline
+                    src={Yogaanimation}
                     className="weight-lift3"
                     alt="weight-lift"
                   />
@@ -1362,8 +1405,12 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           />
         </svg> */}
         <div className="milk-pic-container">
-          <img src={Protein} className="protein-image" alt="protein-pic" />
+          <video autoPlay loop muted playsInline className="protein-image">
+            <source src={Footeranimation} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
+
         <div className="milk-pic-container">
           <img src={MilkTM} className="milk-image" alt="milk-pic" />
         </div>

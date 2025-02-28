@@ -63,9 +63,9 @@ const Textanim = ({ setIsLoaded }) => {
     return (
         <div className="text-container-animation">
             {/* SVG Curve Text */}
-            <div style={{ height: '100vh' }}>
+            {/* <div style={{ height: '100vh' }}>
                 <h1>Text Animation</h1>
-            </div>
+            </div> */}
             <div className="svg-container">
                 <svg viewBox="0 0 250 90">
                     <path fill="none" id="curve" d="m0,88.5c61.37,0,61.5-68,126.5-68,58,0,51,68,123,68" />
@@ -81,7 +81,7 @@ const Textanim = ({ setIsLoaded }) => {
             </div>
 
             {/* Logos Scrolling Section */}
-            <div className="logos-container">
+            {/* <div className="logos-container">
                 <div className="logos">
                     <img src="medias/1.jpg" alt="Logo 1" />
                     <img src="medias/2.jpg" alt="Logo 2" />
@@ -92,7 +92,7 @@ const Textanim = ({ setIsLoaded }) => {
             </div>
             <div style={{ height: '100vh' }}>
                 <h1>Text Animation</h1>
-            </div>
+            </div> */}
         </div>
     );
 };

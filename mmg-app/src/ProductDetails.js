@@ -8,7 +8,7 @@ import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
 import { useContext } from "react";
 import { CartContext } from "./cartContext";
-import Words1 from "./assets/words1.svg";
+import Words1 from "./assets/paneer-text.svg";
 import Milkbanner from "./assets/Vector (1).png";
 import Raisingprotein from "./assets/high-protein.svg";
 import MMGproduct from "./assets/mmg-product.svg";
@@ -40,20 +40,24 @@ import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import Sample from './sample';
 import Copyrightline from './assets/Line 23.svg';
 import CartPanel from "./CartPanel";
+import MilkTM from "./assets/Logo-TM-1.svg";
+import "./App.css";
 
-const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
+const ProductDetails = ({ setIsLoaded, isLoaded }) => {
   const { handle } = useParams(); // Extract the product handle from the URL
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [mainImage, setMainImage] = useState(null);
-  const [packQuantity, setPackQuantity] = useState(null); // Default pack quantity
+  const [packQuantity, setPackQuantity] = useState(1); // Default pack quantity
   const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
+  const [selectedWeight, setSelectedWeight] = useState("100g");
   const [error, setError] = useState("");
   const [faqContent, setFaqContent] = useState(null);
   const [nutritionalHighlights, setNutritionalHighlights] = useState(null);
   const [graphData, setGraphData] = useState(null);
   const [comparisonData, setComparisonData] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [ingredients, setIngredients] = useState(null);
   const [accordionContent, setAccordionContent] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -87,48 +91,6 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
     { value: 26, text: "26%\nCALORIES\nFROM\nPROTEIN", icon: "🍫", color: "#FFFFFF" },
     { value: 71, text: "71%\nCALORIES\nFROM\nPROTEIN", icon: "🍼", color: "#FFFFFF" },
   ];
-
-  useEffect(() => {
-    if (!setIsLoaded) return;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".animation-container",
-        start: "top 80%", // Start animation when 80% of the section is in view
-        end: "bottom 20%", // End when 20% is still visible
-        scrub: 1, // Smooth scrolling effect
-        toggleActions: "play none none reverse", // Play forward and reverse on scroll
-        scroller: ".home-wrapper",
-      },
-      onComplete: () => setIsLoaded(true),
-    });
-
-    // Step 1: Fade in "RAISING" and "THE BAR"
-    tl.fromTo(
-      ".raising, .bar-1",
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
-    );
-
-    // Step 2: Move "RAISING" left & "THE BAR" right
-    tl.to(".raising", { x: "-150px", duration: 1, ease: "power2.out" }, "-=0.5");
-    tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
-
-    // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
-    tl.fromTo(
-      ".middle-text",
-      { opacity: 0, scale: 0.5, fontWeight: 400 },
-      {
-        opacity: 1,
-        scale: 1.1,
-        fontWeight: 900,
-        duration: 1,
-        ease: "power2.out",
-      }
-    );
-
-    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  }, [setIsLoaded]);
 
 
   //Table 
@@ -177,7 +139,6 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
       scrollRight.removeEventListener("click", handleScrollRight);
     };
   }, []);
-
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -293,6 +254,57 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
     }
   };
 
+
+  useEffect(() => {
+    if (!setIsLoaded) return;
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".animations-container",
+        start: "top 80%",
+        end: "bottom 20%",
+        scrub: 1,
+        toggleActions: "play none none reverse",
+        scroller: ".home-wrapper",
+      },
+      onComplete: () => setIsLoaded(true),
+    });
+
+    // Step 1: Fade in "RAISING" and "THE BAR"
+    tl.fromTo(
+      ".raising, .bar-1",
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+    );
+
+    // Step 2: Move "RAISING" left & "THE BAR" right
+    tl.to(".raising", { x: "-150px", duration: 1, ease: "power2.out" }, "-=0.5");
+    tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
+
+    // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
+    tl.fromTo(
+      ".middle-text",
+      { opacity: 0, scale: 0.5, fontWeight: 400 },
+      {
+        opacity: 1,
+        scale: 1.1,
+        fontWeight: 900,
+        duration: 1,
+        ease: "power2.out",
+      }
+    );
+
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  }, [setIsLoaded]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
   const averageRating = reviews.length ? (totalRating / reviews.length).toFixed(1) : "0.0";
 
@@ -327,49 +339,66 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
   };
 
 
-
-  const totalPrice =
-    purchaseOption === "subscribe"
-      ? selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity * 0.8).toFixed(2)
-        : 0
-      : selectedVariant
-        ? (selectedVariant.priceV2.amount * packQuantity).toFixed(2)
-        : 0;
-
   const handlePackSelection = (quantity) => {
+    if (!selectedWeight) return;
+
     setPackQuantity(quantity);
-    setPurchaseOption("oneTime");
+
+    const variant = product.variants.edges.find(({ node }) =>
+      node.title.toLowerCase().includes(`pack of ${quantity}`) &&
+      node.title.toLowerCase().includes(selectedWeight)
+    )?.node;
+
+    setSelectedVariant(variant || null);
     setIsActive(!isActive);
   };
+
+  const handleWeightSelection = (weight) => {
+    setSelectedWeight(weight);
+    setPackQuantity(1); // Reset to Pack of 1 when weight changes
+
+    const variant = product.variants.edges.find(({ node }) =>
+      node.title.toLowerCase().includes(`pack of 1`) &&
+      node.title.toLowerCase().includes(weight)
+    )?.node;
+
+    setSelectedVariant(variant || null); // Set the default variant based on the new weight
+  };
+
+
+  const totalPrice = selectedVariant
+    ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) // Use the price directly
+    : 0;
+
 
   const toggleCart = () => {
     setCartVisible(!cartVisible);
   };
 
+
   const handleAddToCart = () => {
     if (selectedVariant) {
       const itemId = `${selectedVariant.id}-${packQuantity}`;
       const existingItem = cartItems.find((item) => item.id === itemId);
+      
       if (existingItem) {
         updateItemQuantity(itemId, existingItem.quantity + 1);
       } else {
         const item = {
           id: itemId,
           title: `${product.title} - Pack of ${packQuantity}`,
-          price:
-            purchaseOption === "subscribe"
-              ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
-              : parseFloat(selectedVariant.priceV2.amount * packQuantity),
+          price: purchaseOption === "subscribe"
+            ? parseFloat(selectedVariant.priceV2.amount * 0.8) // Use the price of the variant directly for subscription
+            : parseFloat(selectedVariant.priceV2.amount), // Use the price of the variant directly
           quantity: 1,
           image: images.edges[0]?.node.src,
           packQuantity: packQuantity,
           originalPackQuantity: packQuantity,
         };
-
+  
         addItemToCart(item);
       }
-      setCartVisible(true); 
+      setCartVisible(true);
     }
   };
 
@@ -393,7 +422,6 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
         quantity: packQuantity,
         image: images.edges[0]?.node.src,
       };
-      addItemToCart(item);
       proceedToPayment();
     }
   };
@@ -426,7 +454,7 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
         <div className="product-details-left col-sm-6">
           <div className="main-product-background">
             <div className="image-banner">
-              <img src={Milkbanner} alt="" className="milking-banner"/>
+              <img src={Milkbanner} alt="" className="milking-banner" />
               {mainImage ? (
                 <img
                   src={mainImage}
@@ -440,26 +468,53 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
           </div>
           <div className="product-listing-icon">
             <div className="product-icons-list">
-              {product?.variants.edges.map((variant, index) => (
-                <div key={index} onClick={() => handleVariantClick(variant.node)}>
-                  {variant.node.image && variant.node.image.src ? (
-                    <img
-                      src={variant.node.image.src}
-                      alt={variant.node.image.altText || "Variant Image"}
-                      className="image-variant"
-                    />
-                  ) : (
-                    <p>No Image Available</p>
-                  )}
-                </div>
-              ))}
+              {product?.variants.edges
+                .filter(
+                  ({ node }) =>
+                    (node.title.toLowerCase().includes("pack of 1") ||
+                      node.title.toLowerCase().includes("pack of 4") ||
+                      node.title.toLowerCase().includes("pack of 6")) &&
+                    node.title.toLowerCase().includes("100g") // Ensure only 100g variants
+                )
+                .map((variant, index) => (
+                  <div key={index} onClick={() => handleVariantClick(variant.node)}>
+                    {variant.node.image && variant.node.image.src ? (
+                      <img
+                        src={variant.node.image.src}
+                        alt={variant.node.image.altText || "Variant Image"}
+                        className="image-variant"
+                      />
+                    ) : (
+                      <p>No Image Available</p>
+                    )}
+                  </div>
+                ))}
             </div>
           </div>
+
         </div>
         <div className="product-details-right col-sm-6">
           <h1 className="details-title">
             {title}
           </h1>
+          <hr className="horizontal-line"></hr>
+          <div className="amount-selection">
+            <h4 className="quantity">Weight</h4>
+            <div className="weight-buttons">
+              <button
+                className={`Subscribe-button-pack ${selectedWeight === "100g" ? "active" : ""}`}
+                onClick={() => handleWeightSelection("100g")}
+              >
+                100g
+              </button>
+              <button
+                className={`Subscribe-button-pack ${selectedWeight === "200g" ? "active" : ""}`}
+                onClick={() => handleWeightSelection("200g")}
+              >
+                200g
+              </button>
+            </div>
+          </div>
           <hr className="horizontal-line"></hr>
 
           <div className="pack-selection">
@@ -467,21 +522,21 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
             <div className="pack-buttons">
               <button
                 className={`Subscribe-button-pack ${packQuantity === 1 ? "active" : ""}`}
-                disabled={selectedVariant?.quantityAvailable < 1}
+                disabled={!selectedWeight || selectedVariant?.quantityAvailable < 1}
                 onClick={() => handlePackSelection(1)}
               >
                 Pack of 1
               </button>
               <button
                 className={`Subscribe-button-pack ${packQuantity === 4 ? "active" : ""}`}
-                disabled={selectedVariant?.quantityAvailable < 4}
+                disabled={!selectedWeight || selectedVariant?.quantityAvailable < 4}
                 onClick={() => handlePackSelection(4)}
               >
                 Pack of 4
               </button>
               <button
                 className={`Subscribe-button-pack ${packQuantity === 6 ? "active" : ""}`}
-                disabled={selectedVariant?.quantityAvailable < 6}
+                disabled={!selectedWeight || selectedVariant?.quantityAvailable < 6}
                 onClick={() => handlePackSelection(6)}
               >
                 Pack of 6
@@ -502,30 +557,25 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
                 <span>One Time Purchase</span>
               </label>
               <span className="price">
-                ₹{(selectedVariant?.priceV2.amount * packQuantity).toFixed(2)}
+                ₹{totalPrice}
               </span>
             </div>
-            {/* {packQuantity > 1 && (
+            {packQuantity > 1 && (
               <div className="purchase-option-row">
-                <label>
+                <label style={{ opacity: 0.5, cursor: "not-allowed" }}>
                   <input
                     type="radio"
                     value="subscribe"
                     checked={purchaseOption === "subscribe"}
-                    onChange={() => setPurchaseOption("subscribe")}
+                    disabled
                   />
                   <span>Subscribe and Save</span>
                 </label>
                 <span className="price">
-                  ₹
-                  {(
-                    selectedVariant?.priceV2.amount *
-                    packQuantity *
-                    0.8
-                  ).toFixed(2)}
+                  ₹{(totalPrice * 0.8).toFixed(2)}
                 </span>
               </div>
-            )} */}
+            )}
           </div>
 
           <div className="feature-icons">
@@ -564,8 +614,8 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
           </div>
         </div>
         {cartVisible && (
-        <CartPanel onClose={toggleCart} isOpen={cartVisible} /> 
-      )}
+          <CartPanel onClose={toggleCart} isOpen={cartVisible} />
+        )}
       </div>
       {/* {product.variants.edges.map((variant, index) => {
         const image = variant.node.image; // Extract the image object
@@ -801,6 +851,33 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
       </div>
 
       {/* Raising the star */}
+      {/* {
+        isMobile ? (
+          <div className="animations-container">
+            <div className="texting-wrapper-1">
+              <h1 className="raising-1">RAISING</h1>
+              <div className="middle-texting">
+                <span className="high-proteins-1">HIGH PROTEINS</span>
+                <br />
+                <span className="low-proteins-1">LOW CALORIES</span>
+              </div>
+              <h1 className="bar-proteins-1">THE BAR</h1>
+            </div>
+          </div>
+        ) : (
+          <div className="animations-container">
+            <div className="text-wrapper">
+              <h1 className="raising">RAISING</h1>
+              <div className="middle-text">
+                <span className="high">HIGH PROTEIN</span>
+                <br />
+                <span className="low">LOW CALORIES</span>
+              </div>
+              <h1 className="bar-1">THE BAR</h1>
+            </div>
+          </div>
+        )
+      } */}
       <div className="animations-container">
         <div className="texting-wrapper-1">
           <h1 className="raising-1">RAISING</h1>
@@ -957,7 +1034,7 @@ const ProductDetails = ({ setIsLoaded , onAddToCart}) => {
           ))}
         </div> */}
         <div className="milk-pic-container">
-          <img src={Milk} className="milk-image-product" alt="milk-pic" />
+          <img src={MilkTM} className="milk-image-product" alt="milk-pic" />
         </div>
         <div className="signup-container">
           <h1 className="signup-heading">SIGNUP TO OUR NEWSLETTER</h1>

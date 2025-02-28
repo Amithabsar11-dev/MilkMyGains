@@ -1,7 +1,7 @@
 import React from 'react';
 import './terms.css';
 import Copyright1 from "./assets/copyright1.svg";
-import MilkTM from './assets/Logo-TM.svg';
+import MilkTM from './assets/Logo-TM-1.svg';
 import Copyrightline from './assets/Line 23.svg';
 
 function terms() {

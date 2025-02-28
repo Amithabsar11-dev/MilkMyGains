@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 import "./contact.css";
 import Protein from "./assets/protein.png";
-import MilkTM from './assets/Logo-TM.svg';
+import MilkTM from './assets/Logo-TM-1.svg';
 import Copyright1 from "./assets/copyright1.svg";
 import Copyrightline from './assets/Line 23.svg';
 

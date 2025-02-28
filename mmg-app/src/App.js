@@ -16,6 +16,7 @@ import Cards from './cards.js';
 import Shipping from './shipping.js';
 import Privacy from './privacy.js';
 import Refund from './refund.js';
+import Textanim from './text-anim.js';
 import Sample from './sample.js';
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
               <Route path="/privacy" element={<Privacy isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/text" element={<Textanim isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
             </Routes>
         </div>
       </div>

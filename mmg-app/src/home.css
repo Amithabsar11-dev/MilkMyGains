@@ -186,6 +186,21 @@
 .liquid-text:hover {
   transform: scale(1.1);
 }
+.liquid-text-1 {
+  position: absolute;
+  font-size: 25px;
+  font-weight: bold;
+  color: #004df0;
+  text-align: center;
+  font-family: "Chivo Mono", serif;
+  cursor: pointer;
+  z-index: 1;
+  bottom: 30%;
+  left: 17%;
+  line-height: 1.5rem;
+  text-decoration: none;
+  transition: transform 0.3s ease-in-out;
+}
 
 @keyframes liquid {
   0% {
@@ -278,6 +293,16 @@
   left: 34%;
   top: 34%;
 }
+.button-soon{
+  position: relative;
+}
+.coming-soon{
+  position: absolute;
+  top: 25%;
+  font-size: 15px;
+  color: white;
+  left: 20%;
+}
 
 .milkbg1 {
   position: absolute;
@@ -337,6 +362,11 @@
 .svg-order-button-container {
   position: absolute;
   bottom: 7%;
+}
+.svg-order-button-container-1 {
+  position: absolute;
+  bottom: 13%;
+  left: 6%;
 }
 
 @keyframes floatEffect {
@@ -399,7 +429,7 @@
 }
 
 .order-buttons img:not(.active) {
-  /* opacity: 0.3; */
+  /* opacity: 0.5; */
 }
 
 .paneer-button {
@@ -422,16 +452,19 @@
   width: 100%;
   cursor: pointer;
   pointer-events: auto;
+  opacity: 0.5;
 }
 
 .yogart-button {
   width: 100%;
   pointer-events: auto;
+  opacity: 0.5;
 }
 
 .icecream-button {
   width: 100%;
   pointer-events: auto;
+  opacity: 0.5;
 }
 
 /* Card Section */
@@ -856,16 +889,17 @@
 }
 
 .power-space {
-  background-color: #cde0fc;
+  background-color:#D4E5FC;
   border-radius: 20px;
   height: 65vh;
   margin-left: 10%;
   margin-right: 10%;
   width: 75%;
+  position: relative;
 }
 
 .power-space1 {
-  background-color: #cde0fc;
+  background-color:#D4E5FC;
   border-radius: 20px;
   height: 65vh;
   width: 75%;
@@ -873,10 +907,11 @@
   margin-right: 10%;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
+  position: relative;
 }
 
 .power-space2 {
-  background-color: #cde0fc;
+  background-color:#D4E5FC;
   border-radius: 20px;
   height: 65vh;
   width: 75%;
@@ -884,6 +919,7 @@
   margin-right: 10%;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease-in-out;
+  position: relative;
 }
 
 .build-text {
@@ -944,19 +980,21 @@
 
 .weight-lift {
   position: absolute;
-  width: 35%;
-  bottom: 4%;
+  width: 48%;
+  right: 0;
+  bottom: 0;
 }
 
 .weight-lift3 {
   position: absolute;
-  width: 35%;
-  bottom: 4%;
+  width: 40%;
+  bottom: 0%;
 }
 
 .weight-lift1 {
   position: absolute;
   bottom: 0;
+  right: 0;
   width: 35%;
 }
 
@@ -1293,9 +1331,11 @@
 }
 
 .proteins-container-1 {
-  background-image: url("./assets/Backgroundmilk.png");
+  background-image: url("./assets/Background-home.png");
   background-size: cover;
   position: relative;
+  background-position: 100% -60%;
+  background-repeat: no-repeat;
 }
 
 .protein-rally {
@@ -1541,6 +1581,7 @@
     justify-content: center;
     right: 0;
     width: 100%;
+    display: none;
   }
 
   .liquid-circle {
@@ -1582,7 +1623,7 @@
 
   .protein-cap {
     width: 32%;
-    top: 23%;
+    top: 33%;
     right: 20%;
   }
 
@@ -1635,13 +1676,11 @@
   .weight-lift {
     width: 85%;
     right: 2%;
-    bottom: -5%;
   }
 
   .weight-lift3 {
     width: 85%;
     right: 2%;
-    bottom: 30%;
   }
 
   .power-space {
@@ -1677,16 +1716,17 @@
   .weight-lift1 {
     width: 72%;
     right: 2%;
-    bottom: -5%;
   }
 
   .protein-slogan {
     width: 90%;
-    bottom: 25%;
   }
 
   .row-pure .words {
     display: none;
+  }
+  .row-pure{
+    padding-top: 25%;
   }
 
   .wholesome-para {
@@ -1775,19 +1815,19 @@
 
   .lottie-animation {
     top: 21%;
-    width: 55%;
-    left: 23%;
+    width: 52%;
+    left: 25%;
   }
   .weight-lift1 {
-    width: 28%;
-    right: 14%;
+    width: 45%;
+    right: 0%;
   }
   .weight-lift3 {
-    width: 28%;
-    right: 14%;
+    width: 45%;
+    right: 0%;
   }
   .protein-slogan {
-    bottom: -10%;
+    bottom: -5%;
   }
 }
 
@@ -1802,22 +1842,22 @@
     left: 23%;
   }
   .weight-lift {
-    width: 30%;
+    width: 35%;
   }
   .power-container1 {
     padding-top: 15%;
   }
   .weight-lift1 {
-    width: 25%;
-    right: 14%;
+    width: 45%;
+    right: 0%;
   }
   .power-container2 {
     padding-top: 17%;
   }
   .weight-lift3 {
-    width: 25%;
-    bottom: 4%;
-    right: 14%;
+    width: 45%;
+    bottom: 0%;
+    right: 0%;
   }
   .protein-slogan {
     bottom: -8%;

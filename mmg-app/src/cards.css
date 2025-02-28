@@ -54,26 +54,29 @@
 }
 
 .carding1 {
-  transform: rotate(228deg) translateX(67vw) rotate(90deg);
+  transform: rotate(228deg) translateX(65vw) rotate(90deg);
 }
 
 .carding2 {
-  transform: rotate(259deg) translateX(64vw) rotate(101deg) translateY(0vw);
+  transform: rotate(261deg) translateX(62vw) rotate(99deg) translateY(0vw);
 }
 
 .carding3 {
-  transform: rotate(294deg) translateX(55vw) rotate(109deg);
+  transform: rotate(295deg) translateX(54vw) rotate(106deg)
 }
 
 .carding4 {
-  transform: rotate(-19deg) translateX(61vw) rotate(103deg) translateY(18vw);
+  transform: rotate(-19deg) translateX(60vw) rotate(102deg) translateY(18vw);
 }
 
 .carding5 {
-  transform: rotate(30deg) translateX(44vw) rotate(97deg) translateY(11vw);
+  transform: rotate(31deg) translateX(43vw) rotate(95deg) translateY(9vw);
 }
 .carding6 {
-  transform: rotate(83deg) translateX(44vw) rotate(78deg) translateY(11vw);
+  transform:  rotate(89deg) translateX(47vw) rotate(81deg) translateY(11vw);
+}
+.carding7 {
+  transform: rotate(135deg) translateX(62vw) rotate(73deg) translateY(17vw);
 }
 
 @media only screen and (max-width: 1450px) and (min-width: 1400px) {

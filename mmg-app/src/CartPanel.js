@@ -34,7 +34,7 @@ const CartPanel = ({ onClose, isOpen }) => {
                 <img src={item.image} alt={item.title || "Product Image"} className="cart-image" />
                 <div className="cart-details">
                   <div className='cart-selection'>
-                    <h3 className='cart-title'>{mainTitle} {extraInfo}</h3>
+                    <h3 className='cart-title'>{item.title}</h3>
                     <h2 className='remove-items' onClick={() => removeItemFromCart(item.id)}>&times;</h2>
                   </div>
                   <div className='qty-container'>

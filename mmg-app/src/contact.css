@@ -185,7 +185,7 @@ textarea {
 }
 
 .proteins-container {
-  padding-top: 10%;
+  padding-top: 0% !important;
   background-image: url("./assets/contact-back.png");
   background-size: cover;
   position: relative;
@@ -212,10 +212,7 @@ textarea {
 
 /* Milk */
 .milk-image2 {
-  padding-left: 5%;
   width: 30%;
-  padding-top: 7%;
-  margin-right: 16%;
 }
 .milk-pic-container {
   display: flex;

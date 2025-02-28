@@ -98,12 +98,13 @@
 }
 
 .protein-image1 {
-  width: 85%;
+  width: 80%;
 }
 
 .milk-image1 {
   width: 30%;
-  padding-top: 8%;
+  padding-top: 5%;
+  margin-bottom: 7%;
 }
 
 .milk-pic-container {
@@ -298,7 +299,11 @@
 
 .carding1:hover .carding-inner,
 .carding2:hover .carding-inner,
-.carding3:hover .carding-inner {
+.carding3:hover .carding-inner,
+.carding4:hover .carding-inner,
+.carding5:hover .carding-inner,
+.carding6:hover .carding-inner,
+.carding7:hover .carding-inner {
   transform: rotateY(180deg);
 }
 
@@ -377,7 +382,7 @@
 }
 
 .carding-text {
-  font-size: 25px;
+  font-size: 34px;
   font-weight: bold;
   font-family: "Anybody_Condensed";
   line-height: 2rem;
@@ -385,7 +390,7 @@
 
 .carding-text-4 {
   margin-bottom: 0;
-  font-size: 25px;
+  font-size: 34px;
   font-weight: bold;
   font-family: "Anybody_Condensed";
   line-height: 2rem;
@@ -623,5 +628,10 @@
 @media only screen and (max-width: 1500px) and (min-width: 1300px) {
   .circle {
     height: 100vw;
+  }
+}
+@media only screen and (max-width: 2200px) and (min-width: 1700px) {
+  .about-join-container{
+    background-position: 100%;
   }
 }

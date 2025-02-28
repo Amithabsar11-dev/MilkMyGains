@@ -17,12 +17,12 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const [isRotating, setIsRotating] = useState(false); // New state to track rotation
   const [rotationX, setRotationX] = useState(0);
   const [rotationY, setRotationY] = useState(1);
-  const [rotationZ, setRotationZ] = useState(-0.2);
+  const [rotationZ, setRotationZ] = useState(0);
   const [positionX, setPositionX] = useState(0);
-  const [positionY, setPositionY] = useState(-0.1);
+  const [positionY, setPositionY] = useState(0.2);
   const [positionZ, setPositionZ] = useState(0);
-  const [rotationOffsetX, setRotationOffsetX] = useState(0);
-  const [rotationOffsetY, setRotationOffsetY] = useState(7.1);
+  const [rotationOffsetX, setRotationOffsetX] = useState(-0.2);
+  const [rotationOffsetY, setRotationOffsetY] = useState(7.05);
   
   // Resize listener
   useEffect(() => {

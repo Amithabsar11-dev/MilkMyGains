@@ -16,7 +16,7 @@ import TransparencyIconline from "./assets/spring-transparancy.svg";
 import MythIconline from "./assets/spring-break.svg";
 import PossibilitiesIconline from "./assets/spring-unlock.svg";
 import Protein from "./assets/About-protein.svg";
-import MilkTM from "./assets/Logo-TM.svg";
+import MilkTM from "./assets/Logo-TM-1.svg";
 import Copyright1 from "./assets/copyright1.svg";
 import Weightlift from "./assets/body builder.svg";
 import Lean from "./assets/basketball.svg";
@@ -26,6 +26,7 @@ import "./cards.css";
 import Sunback from "./assets/Sunback.svg";
 import EyesightIcon from "./assets/EyesightIcon.svg";
 import SunlookIcon from "./assets/SunlookIcon.svg";
+import Aboutfooteranimation from './assets/About-footer-ani.mp4';
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import Copyrightline from "./assets/Line 23.svg";
@@ -699,7 +700,10 @@ function About({ setIsLoaded, isLoaded }) {
             <br /> your gains—naturally, powerfully, and purposefully.
           </p>
           <div className="protein-pic-container">
-            <img src={Protein} className="protein-image1" alt="protein-pic" />
+            <video autoPlay loop muted playsInline className="protein-image1">
+              <source src={Aboutfooteranimation} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
           <div className="milk-pic-container">
             <img src={MilkTM} className="milk-image1" alt="milk-pic" />

@@ -28,16 +28,15 @@ const CartProvider = ({ children }) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((i) => i.id === item.id);
       if (existingItem) {
-        existingItem.quantity += item.quantity;
+        existingItem.quantity += item.quantity; // Update quantity
         return [...prevItems]; // Return a new array reference
       } else {
         return [...prevItems, item]; // Add new item
       }
     });
-    // Removed setCartQuantity from here
     setCartTotal((prevTotal) => prevTotal + item.price * item.quantity);
   };
- 
+
   const removeItemFromCart = (id) => {
     const itemIndex = cartItems.findIndex((i) => i.id === id);
     if (itemIndex !== -1) {
@@ -53,8 +52,7 @@ const CartProvider = ({ children }) => {
     const itemIndex = cartItems.findIndex((i) => i.id === id);
     if (itemIndex !== -1) {
       const item = cartItems[itemIndex];
-      item.quantity = quantity;
-      item.packQuantity = quantity * item.originalPackQuantity;
+      item.quantity = quantity; // Update quantity
       setCartItems([...cartItems]);
       setCartQuantity((prevQuantity) => prevQuantity - item.quantity + quantity);
       setCartTotal(cartTotal - item.price * item.quantity + item.price * quantity);
@@ -68,7 +66,7 @@ const CartProvider = ({ children }) => {
         {
           lines: cartItems.map((item) => ({
             merchandiseId: item.id,
-            quantity: item.packQuantity,
+            quantity: item.quantity, // Use the quantity directly
             price: item.price,
           })),
         }
