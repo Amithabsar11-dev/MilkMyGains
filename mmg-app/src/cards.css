@@ -62,7 +62,7 @@
 }
 
 .carding3 {
-  transform: rotate(295deg) translateX(54vw) rotate(106deg)
+  transform: rotate(295deg) translateX(54vw) rotate(106deg);
 }
 
 .carding4 {
@@ -73,7 +73,7 @@
   transform: rotate(31deg) translateX(43vw) rotate(95deg) translateY(9vw);
 }
 .carding6 {
-  transform:  rotate(89deg) translateX(47vw) rotate(81deg) translateY(11vw);
+  transform: rotate(89deg) translateX(47vw) rotate(81deg) translateY(11vw);
 }
 .carding7 {
   transform: rotate(135deg) translateX(62vw) rotate(73deg) translateY(17vw);
@@ -83,32 +83,61 @@
   .circle-container {
     height: 100vh;
   }
-  .carding3 {
+  /* .carding3 {
     transform: rotate(292deg) translateX(55vw) rotate(109deg);
-  }
+  } */
 }
 
 @media only screen and (max-width: 1500px) and (min-width: 1450px) {
   .circle-container {
     height: 100vh;
   }
-  .carding3 {
+  /* .carding3 {
     transform: rotate(292deg) translateX(57vw) rotate(109deg);
-  }
+  } */
 }
 
 @media only screen and (max-width: 1600px) and (min-width: 1550px) {
   .circle-container {
     height: 100vh;
   }
+  .carding5 {
+    transform: rotate(31deg) translateX(43vw) rotate(96deg) translateY(10vw);
+  }
+  .carding6 {
+    transform: rotate(89deg) translateX(47vw) rotate(81deg) translateY(13vw);
+  }
+  .carding4 {
+    transform: rotate(-21deg) translateX(60vw) rotate(102deg) translateY(18vw);
+  }
+  .carding3 {
+    transform: rotate(293deg) translateX(54vw) rotate(106deg);
+  }
+  .carding2 {
+    transform: rotate(259deg) translateX(62vw) rotate(101deg) translateY(0vw);
+  }
 }
-
 @media only screen and (max-width: 1550px) and (min-width: 1500px) {
   .circle-container {
     height: 105vh;
   }
-  .carding3 {
+  /* .carding3 {
     transform: rotate(292deg) translateX(57vw) rotate(109deg);
+  } */
+  .carding5 {
+    transform: rotate(29deg) translateX(43vw) rotate(96deg) translateY(11vw);
+  }
+  .carding6 {
+    transform: rotate(89deg) translateX(47vw) rotate(81deg) translateY(13vw);
+  }
+  .carding4 {
+    transform: rotate(-24deg) translateX(60vw) rotate(102deg) translateY(18vw);
+  }
+  .carding3 {
+    transform: rotate(292deg) translateX(54vw) rotate(107deg);
+  }
+  .carding2 {
+    transform: rotate(259deg) translateX(62vw) rotate(101deg) translateY(0vw);
   }
 }
 
