@@ -34,14 +34,16 @@ import Graph from "./assets/graph.svg";
 import FilledStar from "./assets/Star 1.svg"; // Replace with actual path
 import EmptyStar from "./assets/Star 5.svg"; // Replace with actual path
 import moment from "moment";
-import HalfStar from './assets/Frame 215.svg';
+import HalfStar from "./assets/Frame 215.svg";
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
-import Sample from './sample';
-import Copyrightline from './assets/Line 23.svg';
+import Sample from "./sample";
+import Copyrightline from "./assets/Line 23.svg";
 import CartPanel from "./CartPanel";
 import MilkTM from "./assets/Logo-TM-1.svg";
 import "./App.css";
+
+gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
 const ProductDetails = ({ setIsLoaded, isLoaded }) => {
   const { handle } = useParams(); // Extract the product handle from the URL
@@ -85,15 +87,39 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
 
   //Graph
   const data = [
-    { value: 76, text: "76%\nCALORIES\nFROM\nPROTEIN", icon: "🏃‍♂️", color: "#E74C3C" },
-    { value: 24, text: "24%\nCALORIES\nFROM\nPROTEIN", icon: "🥗", color: "#FFFFFF" },
-    { value: 72, text: "72%\nCALORIES\nFROM\nPROTEIN", icon: "🍗", color: "#FFFFFF" },
-    { value: 26, text: "26%\nCALORIES\nFROM\nPROTEIN", icon: "🍫", color: "#FFFFFF" },
-    { value: 71, text: "71%\nCALORIES\nFROM\nPROTEIN", icon: "🍼", color: "#FFFFFF" },
+    {
+      value: 76,
+      text: "76%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🏃‍♂️",
+      color: "#E74C3C",
+    },
+    {
+      value: 24,
+      text: "24%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🥗",
+      color: "#FFFFFF",
+    },
+    {
+      value: 72,
+      text: "72%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🍗",
+      color: "#FFFFFF",
+    },
+    {
+      value: 26,
+      text: "26%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🍫",
+      color: "#FFFFFF",
+    },
+    {
+      value: 71,
+      text: "71%\nCALORIES\nFROM\nPROTEIN",
+      icon: "🍼",
+      color: "#FFFFFF",
+    },
   ];
 
-
-  //Table 
+  //Table
 
   const tableContainerRef = useRef(null);
   const scrollRightRef = useRef(null);
@@ -140,6 +166,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     };
   }, []);
 
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -152,7 +179,9 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
 
         // Automatically select the first available variant
         const packOfOneVariant = response.data.variants.edges.find(
-          ({ node }) => node.title.toLowerCase().includes("pack of 1") && node.availableForSale
+          ({ node }) =>
+            node.title.toLowerCase().includes("pack of 1") &&
+            node.availableForSale
         )?.node;
 
         setSelectedVariant(packOfOneVariant || null);
@@ -211,7 +240,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
           setIngredients(ingredientsData);
         }
 
-
         const accordionContentMetafield = metafields.find(
           (metafield) =>
             metafield.key === "accordion_content" &&
@@ -247,19 +275,19 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     fetchReviews();
   }, [handle]);
 
-  const handleVariantClick = (variant) => {
-    setSelectedVariant(variant);
-    if (variant.image) {
-      setMainImage(variant.image.src); // Update the main image based on the selected variant
-    }
-  };
-
-
   useEffect(() => {
-    if (!setIsLoaded) return;
+    const animationsContainer = document.querySelector(".animations-container");
+    if (!animationsContainer) {
+      console.log("Element not found: .animations-container");
+      return;
+    }
+  
+    // Kill existing ScrollTriggers before reinitializing
+    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".animations-container",
+        trigger: animationsContainer,
         start: "top 80%",
         end: "bottom 20%",
         scrub: 1,
@@ -268,33 +296,89 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
       },
       onComplete: () => setIsLoaded(true),
     });
-
-    // Step 1: Fade in "RAISING" and "THE BAR"
+  
+    // Your animation code here
     tl.fromTo(
       ".raising, .bar-1",
       { opacity: 0, scale: 0.9 },
       { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
     );
+  
+    // ... (rest of your animation code)
+  
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, [isLoaded]); // Add isLoaded as a dependency if needed
 
-    // Step 2: Move "RAISING" left & "THE BAR" right
-    tl.to(".raising", { x: "-150px", duration: 1, ease: "power2.out" }, "-=0.5");
-    tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
+  const handleVariantClick = (variant) => {
+    setSelectedVariant(variant);
+    if (variant.image) {
+      setMainImage(variant.image.src); // Update the main image based on the selected variant
+    }
+  };
 
-    // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
-    tl.fromTo(
-      ".middle-text",
-      { opacity: 0, scale: 0.5, fontWeight: 400 },
-      {
-        opacity: 1,
-        scale: 1.1,
-        fontWeight: 900,
-        duration: 1,
-        ease: "power2.out",
+  useEffect(() => {
+    // Ensure GSAP runs only after DOM is fully loaded
+    setTimeout(() => {
+      if (!document.querySelector(".animations-container")) {
+        console.log("Element not found: .animations-container");
+        return;
       }
-    );
 
-    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  }, [setIsLoaded]);
+      // Kill existing ScrollTriggers before reinitializing
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".animations-container",
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 1,
+          toggleActions: "play none none reverse",
+          scroller: ".home-wrapper",
+        },
+        onComplete: () => setIsLoaded(true),
+      });
+
+      // Fade-in effect
+      tl.fromTo(
+        ".raising, .bar-1",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+      );
+
+      // Move "RAISING" left & "THE BAR" right
+      tl.to(
+        ".raising",
+        { x: "-150px", duration: 1, ease: "power2.out" },
+        "-=0.5"
+      );
+      tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
+
+      // Show middle text with zoom effect
+      tl.fromTo(
+        ".middle-text",
+        { opacity: 0, scale: 0.5, fontWeight: 400 },
+        {
+          opacity: 1,
+          scale: 1.1,
+          fontWeight: 900,
+          duration: 1,
+          ease: "power2.out",
+        }
+      );
+
+      // Refresh ScrollTrigger after a delay
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    }, 500); // Delay GSAP execution slightly to wait for React to render
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -304,9 +388,10 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-  const averageRating = reviews.length ? (totalRating / reviews.length).toFixed(1) : "0.0";
+  const averageRating = reviews.length
+    ? (totalRating / reviews.length).toFixed(1)
+    : "0.0";
 
   // Pagination logic
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
@@ -328,25 +413,31 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
 
     for (let i = 0; i < 5; i++) {
       if (i < fullStars) {
-        stars.push(<img key={i} src={FilledStar} className="staring-icon" alt="star" />);
+        stars.push(
+          <img key={i} src={FilledStar} className="staring-icon" alt="star" />
+        );
       } else if (i === fullStars && hasHalfStar) {
-        stars.push(<img key={i} src={HalfStar} className="staring-icon" alt="star" />);
+        stars.push(
+          <img key={i} src={HalfStar} className="staring-icon" alt="star" />
+        );
       } else {
-        stars.push(<img key={i} src={EmptyStar} className="staring-icon" alt="star" />);
+        stars.push(
+          <img key={i} src={EmptyStar} className="staring-icon" alt="star" />
+        );
       }
     }
     return stars;
   };
-
 
   const handlePackSelection = (quantity) => {
     if (!selectedWeight) return;
 
     setPackQuantity(quantity);
 
-    const variant = product.variants.edges.find(({ node }) =>
-      node.title.toLowerCase().includes(`pack of ${quantity}`) &&
-      node.title.toLowerCase().includes(selectedWeight)
+    const variant = product.variants.edges.find(
+      ({ node }) =>
+        node.title.toLowerCase().includes(`pack of ${quantity}`) &&
+        node.title.toLowerCase().includes(selectedWeight)
     )?.node;
 
     setSelectedVariant(variant || null);
@@ -357,45 +448,54 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     setSelectedWeight(weight);
     setPackQuantity(1); // Reset to Pack of 1 when weight changes
 
-    const variant = product.variants.edges.find(({ node }) =>
-      node.title.toLowerCase().includes(`pack of 1`) &&
-      node.title.toLowerCase().includes(weight)
+    const variant = product.variants.edges.find(
+      ({ node }) =>
+        node.title.toLowerCase().includes(`pack of 1`) &&
+        node.title.toLowerCase().includes(weight)
     )?.node;
 
     setSelectedVariant(variant || null); // Set the default variant based on the new weight
   };
 
-
   const totalPrice = selectedVariant
     ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) // Use the price directly
     : 0;
-
 
   const toggleCart = () => {
     setCartVisible(!cartVisible);
   };
 
-
   const handleAddToCart = () => {
     if (selectedVariant) {
       const itemId = `${selectedVariant.id}-${packQuantity}`;
       const existingItem = cartItems.find((item) => item.id === itemId);
-      
+
+      const titleParts = selectedVariant.title.split(" / "); // Extract weight
+      const packTitle = titleParts[0]; // e.g., "Pack of 1"
+      const weight = titleParts[1] || ""; // e.g., "100g"
+
+      // Ensure the full product title is stored
+      const fullTitle = `${product.title} - ${packTitle} ${
+        weight ? `(${weight})` : ""
+      }`.trim();
+
       if (existingItem) {
         updateItemQuantity(itemId, existingItem.quantity + 1);
       } else {
         const item = {
           id: itemId,
-          title: `${product.title} - Pack of ${packQuantity}`,
-          price: purchaseOption === "subscribe"
-            ? parseFloat(selectedVariant.priceV2.amount * 0.8) // Use the price of the variant directly for subscription
-            : parseFloat(selectedVariant.priceV2.amount), // Use the price of the variant directly
+          title: fullTitle, // Store full product title
+          weight: weight,
+          price:
+            purchaseOption === "subscribe"
+              ? parseFloat(selectedVariant.priceV2.amount * 0.8)
+              : parseFloat(selectedVariant.priceV2.amount),
           quantity: 1,
-          image: images.edges[0]?.node.src,
+          image: selectedVariant.image?.src,
           packQuantity: packQuantity,
           originalPackQuantity: packQuantity,
         };
-  
+
         addItemToCart(item);
       }
       setCartVisible(true);
@@ -477,7 +577,10 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                     node.title.toLowerCase().includes("100g") // Ensure only 100g variants
                 )
                 .map((variant, index) => (
-                  <div key={index} onClick={() => handleVariantClick(variant.node)}>
+                  <div
+                    key={index}
+                    onClick={() => handleVariantClick(variant.node)}
+                  >
                     {variant.node.image && variant.node.image.src ? (
                       <img
                         src={variant.node.image.src}
@@ -491,24 +594,25 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 ))}
             </div>
           </div>
-
         </div>
         <div className="product-details-right col-sm-6">
-          <h1 className="details-title">
-            {title}
-          </h1>
+          <h1 className="details-title">{title}</h1>
           <hr className="horizontal-line"></hr>
           <div className="amount-selection">
             <h4 className="quantity">Weight</h4>
             <div className="weight-buttons">
               <button
-                className={`Subscribe-button-pack ${selectedWeight === "100g" ? "active" : ""}`}
+                className={`Subscribe-button-pack ${
+                  selectedWeight === "100g" ? "active" : ""
+                }`}
                 onClick={() => handleWeightSelection("100g")}
               >
                 100g
               </button>
               <button
-                className={`Subscribe-button-pack ${selectedWeight === "200g" ? "active" : ""}`}
+                className={`Subscribe-button-pack ${
+                  selectedWeight === "200g" ? "active" : ""
+                }`}
                 onClick={() => handleWeightSelection("200g")}
               >
                 200g
@@ -521,22 +625,34 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
             <h4 className="quantity">Quantity</h4>
             <div className="pack-buttons">
               <button
-                className={`Subscribe-button-pack ${packQuantity === 1 ? "active" : ""}`}
-                disabled={!selectedWeight || selectedVariant?.quantityAvailable < 1}
+                className={`Subscribe-button-pack ${
+                  packQuantity === 1 ? "active" : ""
+                }`}
+                disabled={
+                  !selectedWeight || selectedVariant?.quantityAvailable < 1
+                }
                 onClick={() => handlePackSelection(1)}
               >
                 Pack of 1
               </button>
               <button
-                className={`Subscribe-button-pack ${packQuantity === 4 ? "active" : ""}`}
-                disabled={!selectedWeight || selectedVariant?.quantityAvailable < 4}
+                className={`Subscribe-button-pack ${
+                  packQuantity === 4 ? "active" : ""
+                }`}
+                disabled={
+                  !selectedWeight || selectedVariant?.quantityAvailable < 4
+                }
                 onClick={() => handlePackSelection(4)}
               >
                 Pack of 4
               </button>
               <button
-                className={`Subscribe-button-pack ${packQuantity === 6 ? "active" : ""}`}
-                disabled={!selectedWeight || selectedVariant?.quantityAvailable < 6}
+                className={`Subscribe-button-pack ${
+                  packQuantity === 6 ? "active" : ""
+                }`}
+                disabled={
+                  !selectedWeight || selectedVariant?.quantityAvailable < 6
+                }
                 onClick={() => handlePackSelection(6)}
               >
                 Pack of 6
@@ -556,9 +672,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 />
                 <span>One Time Purchase</span>
               </label>
-              <span className="price">
-                ₹{totalPrice}
-              </span>
+              <span className="price">₹{totalPrice}</span>
             </div>
             {packQuantity > 1 && (
               <div className="purchase-option-row">
@@ -571,9 +685,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                   />
                   <span>Subscribe and Save</span>
                 </label>
-                <span className="price">
-                  ₹{(totalPrice * 0.8).toFixed(2)}
-                </span>
+                <span className="price">₹{(totalPrice * 0.8).toFixed(2)}</span>
               </div>
             )}
           </div>
@@ -613,9 +725,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
             </button>
           </div>
         </div>
-        {cartVisible && (
-          <CartPanel onClose={toggleCart} isOpen={cartVisible} />
-        )}
+        {cartVisible && <CartPanel onClose={toggleCart} isOpen={cartVisible} />}
       </div>
       {/* {product.variants.edges.map((variant, index) => {
         const image = variant.node.image; // Extract the image object
@@ -645,34 +755,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 </div>
               ))}
             </div>
-            {/* <div className="metafield-QA">
-              <h5 className="metafield-question">What it is?</h5>
-              <p className="metafield-answer">
-                Our high-protein paneer supports your active lifestyle with 31
-                grams
-                <br /> of protein per serving and just two natural ingredients.
-                It’s clean,
-                <br /> wholesome, and perfect for muscle growth, recovery, and
-                weight
-                <br /> management—low in fat, low in calories, and high in
-                quality, without
-                <br /> compromising on taste.
-              </p>
-            </div> */}
-            {/* <div className="metafield-QA">
-              <h5 className="metafield-question">What it is?</h5>
-              <p className="metafield-answer">
-                Our high-protein paneer supports your active lifestyle with 31
-                grams
-                <br /> of protein per serving and just two natural ingredients.
-                It’s clean,
-                <br /> wholesome, and perfect for muscle growth, recovery, and
-                weight
-                <br /> management—low in fat, low in calories, and high in
-                quality, without
-                <br /> compromising on taste.
-              </p>
-            </div> */}
             <img src={Words1} alt="words" className="words-image" />
           </div>
         </div>
@@ -690,7 +772,9 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 alt="nutrients-image"
               />
               <div className="ingredients-title-container">
-                <h1 className="ingredients-title">{nutritionalHighlights.accordion.title}</h1>
+                <h1 className="ingredients-title">
+                  {nutritionalHighlights.accordion.title}
+                </h1>
                 <p className="ingredients-para">
                   {nutritionalHighlights.accordion.content}
                 </p>
@@ -703,14 +787,20 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                   {nutritionalHighlights && (
                     <div className="nutritional-items-total">
                       {nutritionalHighlights.summary.map((item, index) => (
-                        <div key={index} className={`nutritional-items${index === 0 ? "" : index + 1}`}>
-                          <h1 className="nutritional-energy">{item.subheading}</h1>
+                        <div
+                          key={index}
+                          className={`nutritional-items${
+                            index === 0 ? "" : index + 1
+                          }`}
+                        >
+                          <h1 className="nutritional-energy">
+                            {item.subheading}
+                          </h1>
                           <p className="energy-para">{item.heading}</p>
                         </div>
                       ))}
                     </div>
                   )}
-
                 </div>
               </div>
             </div>
@@ -753,13 +843,21 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
             <div className="col-sm-6 spacing-reviews">
               <div className="review-spacing">
                 <div className="review-title">
-                  <img src={Orangestars} className="orange-star" alt="orange-star" />
+                  <img
+                    src={Orangestars}
+                    className="orange-star"
+                    alt="orange-star"
+                  />
                   <h1 className="review-heading">
                     loved <br /> by protein <br />
                     fans <br />
                     everywhere
                   </h1>
-                  <img src={Orangestars} className="orange-star1" alt="orange-star" />
+                  <img
+                    src={Orangestars}
+                    className="orange-star1"
+                    alt="orange-star"
+                  />
                 </div>
                 <p className="rating-para">overall rating</p>
                 <div className="rating-review">
@@ -773,7 +871,9 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                   </div>
                 </div>
                 <div className="review-button">
-                  <button className="review-button-contact">Write a review</button>
+                  <button className="review-button-contact">
+                    Write a review
+                  </button>
                 </div>
               </div>
             </div>
@@ -796,13 +896,17 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                     </div>
 
                     {/* Display Relative Time */}
-                    <p className="reviewer-days">{moment(review.created_at).fromNow()}</p>
+                    <p className="reviewer-days">
+                      {moment(review.created_at).fromNow()}
+                    </p>
 
                     <p className="reviewer-name">{review.reviewer.name}</p>
                   </div>
 
                   <div className="reviewer-title-container">
-                    <h3 className="reviewer-title">{review.title || "No Title"}</h3>
+                    <h3 className="reviewer-title">
+                      {review.title || "No Title"}
+                    </h3>
                     <p className="reviewer-para">{review.body}</p>
                     <hr className="horizontal-line1" />
                   </div>
@@ -826,7 +930,9 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 {pageNumbers.map((pageNum) => (
                   <button
                     key={pageNum}
-                    className={`page-number ${pageNum === currentPage ? "active" : ""}`}
+                    className={`page-number ${
+                      pageNum === currentPage ? "active" : ""
+                    }`}
                     onClick={() => setCurrentPage(pageNum)}
                   >
                     {pageNum}
@@ -851,33 +957,31 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
       </div>
 
       {/* Raising the star */}
-      {/* {
-        isMobile ? (
-          <div className="animations-container">
-            <div className="texting-wrapper-1">
-              <h1 className="raising-1">RAISING</h1>
-              <div className="middle-texting">
-                <span className="high-proteins-1">HIGH PROTEINS</span>
-                <br />
-                <span className="low-proteins-1">LOW CALORIES</span>
-              </div>
-              <h1 className="bar-proteins-1">THE BAR</h1>
+      {/* {isMobile ? (
+        <div className="animations-container">
+          <div className="texting-wrapper-1">
+            <h1 className="raising-1">RAISING</h1>
+            <div className="middle-texting">
+              <span className="high-proteins-1">HIGH PROTEINS</span>
+              <br />
+              <span className="low-proteins-1">LOW CALORIES</span>
             </div>
+            <h1 className="bar-proteins-1">THE BAR</h1>
           </div>
-        ) : (
-          <div className="animations-container">
-            <div className="text-wrapper">
-              <h1 className="raising">RAISING</h1>
-              <div className="middle-text">
-                <span className="high">HIGH PROTEIN</span>
-                <br />
-                <span className="low">LOW CALORIES</span>
-              </div>
-              <h1 className="bar-1">THE BAR</h1>
+        </div>
+      ) : (
+        <div className="animations-container">
+          <div className="text-wrapper">
+            <h1 className="raising">RAISING</h1>
+            <div className="middle-text">
+              <span className="high">HIGH PROTEIN</span>
+              <br />
+              <span className="low">LOW CALORIES</span>
             </div>
+            <h1 className="bar-1">THE BAR</h1>
           </div>
-        )
-      } */}
+        </div>
+      )} */}
       <div className="animations-container">
         <div className="texting-wrapper-1">
           <h1 className="raising-1">RAISING</h1>
@@ -969,8 +1073,12 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
       </div> */}
       <section id="cd-table">
         <header className="cd-table-column">
-          <div className='icon-height'>
-            <img src={Paneericon} className='paneer-icon-active-hidden' alt='' />
+          <div className="icon-height">
+            <img
+              src={Paneericon}
+              className="paneer-icon-active-hidden"
+              alt=""
+            />
           </div>
           <ul className="set-list-active">
             {comparisonData?.table.rows.map((row, rowIndex) => (
@@ -984,9 +1092,11 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
             {comparisonData?.table.columns.map((col, colIndex) => (
               <div
                 key={colIndex}
-                className={`cd-table-column ${colIndex === 0 ? 'column-active' : 'border-column'}`}
+                className={`cd-table-column ${
+                  colIndex === 0 ? "column-active" : "border-column"
+                }`}
               >
-                <div className='icon-height'>
+                <div className="icon-height">
                   <img
                     src={colIndex === 0 ? Activestar : Inactivestar}
                     className={colIndex === 0 ? "active-star" : "inactive-star"}
@@ -1010,15 +1120,12 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
           </div>
         </div>
 
-
         <em className="cd-scroll-right" ref={scrollRightRef}></em>
       </section>
 
       {/* Protein-section */}
       <div className="proteins-container-1 pt-5 pb-5">
-        <h1 className="high-protein-heading">
-          {graphData?.heading}
-        </h1>
+        <h1 className="high-protein-heading">{graphData?.heading}</h1>
         <div className="milk-pic-container">
           <img src={Graph} className="graph-image" alt="graph" />
         </div>
@@ -1054,44 +1161,68 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/product/milk-my-gains-sample-product"
-                >SHOP</a></li>
+                >
+                  SHOP
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/about"
-                >ABOUT US</a></li>
+                >
+                  ABOUT US
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/faq"
-                >FAQ</a></li>
+                >
+                  FAQ
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/contact"
-                >CONTACT</a></li>
+                >
+                  CONTACT
+                </a>
+              </li>
             </ul>
             <ul className="footer-links-1">
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/shipping"
-                >SHIPPING</a></li>
+                >
+                  SHIPPING
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/refund"
-                >REFUND & RETURNS</a></li>
+                >
+                  REFUND & RETURNS
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/terms"
-                >TERMS & CONDITIONS</a></li>
+                >
+                  TERMS & CONDITIONS
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/privacy"
-                >PRIVACY POLICY</a></li>
+                >
+                  PRIVACY POLICY
+                </a>
+              </li>
             </ul>
           </div>
         </div>

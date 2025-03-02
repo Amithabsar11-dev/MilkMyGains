@@ -293,15 +293,30 @@
   left: 34%;
   top: 34%;
 }
-.button-soon{
+.button-soon {
   position: relative;
+  display: inline-block;
 }
-.coming-soon{
+
+.coming-soon {
   position: absolute;
-  top: 25%;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 10px); /* Start slightly lower */
   font-size: 15px;
   color: white;
-  left: 20%;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.button-soon:hover .coming-soon {
+  opacity: 1;
+  transform: translate(-50%, 0); /* Moves up smoothly */
+}
+
+.button-soon:not(:hover) .coming-soon {
+  opacity: 0;
+  transform: translate(-50%, 10px);
 }
 
 .milkbg1 {
@@ -889,7 +904,7 @@
 }
 
 .power-space {
-  background-color:#D4E5FC;
+  background-color: #d4e5fc;
   border-radius: 20px;
   height: 65vh;
   margin-left: 10%;
@@ -899,7 +914,7 @@
 }
 
 .power-space1 {
-  background-color:#D4E5FC;
+  background-color: #d4e5fc;
   border-radius: 20px;
   height: 65vh;
   width: 75%;
@@ -911,7 +926,7 @@
 }
 
 .power-space2 {
-  background-color:#D4E5FC;
+  background-color: #d4e5fc;
   border-radius: 20px;
   height: 65vh;
   width: 75%;
@@ -1725,7 +1740,7 @@
   .row-pure .words {
     display: none;
   }
-  .row-pure{
+  .row-pure {
     padding-top: 25%;
   }
 

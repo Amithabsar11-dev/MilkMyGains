@@ -26,7 +26,7 @@ import "./cards.css";
 import Sunback from "./assets/Sunback.svg";
 import EyesightIcon from "./assets/EyesightIcon.svg";
 import SunlookIcon from "./assets/SunlookIcon.svg";
-import Aboutfooteranimation from './assets/About-footer-ani.mp4';
+import Aboutfooteranimation from "./assets/About-footer-ani.mp4";
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import Copyrightline from "./assets/Line 23.svg";
@@ -76,7 +76,21 @@ function About({ setIsLoaded, isLoaded }) {
   };
   useEffect(() => {
     if (!isLoaded) return;
+
     let sections = gsap.utils.toArray(".card");
+    let lastIndex = sections.length - 1; // Get last card index
+
+    gsap.to(".about-power", {
+      scrollTrigger: {
+        trigger: ".about-sticky",
+        start: "top top",
+        end: "+=150%",
+        scroller: ".home-wrapper",
+        pin: true, // Pins the section
+        pinSpacing: false, // Prevents adding extra space
+        scrub: 1,
+      },
+    });
 
     gsap.to(sections, {
       scrollTrigger: {
@@ -84,13 +98,13 @@ function About({ setIsLoaded, isLoaded }) {
         start: "top top",
         end: "+=150%",
         scroller: ".home-wrapper",
-        pin: true,
         scrub: 1,
         onUpdate: (self) => {
           let index = Math.floor(self.progress * sections.length);
 
           sections.forEach((card, i) => {
-            if (i === index) {
+            if (i === index || (index >= lastIndex && i === lastIndex)) {
+              // Keep last card open when scrolling past it
               gsap.to(card, {
                 scale: 1,
                 opacity: 1,
@@ -100,8 +114,8 @@ function About({ setIsLoaded, isLoaded }) {
               card.classList.add("active");
             } else {
               gsap.to(card, {
-                scale: 0.8,
-                opacity: 0.3,
+                scale: 0.9,
+                opacity: 0.5,
                 duration: 0.7,
                 ease: "power4.out",
               });
@@ -119,7 +133,7 @@ function About({ setIsLoaded, isLoaded }) {
   useEffect(() => {
     if (!setIsLoaded) return;
     gsap.to(circleRef.current, {
-      rotation: -127, // Adjust rotation range as needed
+      rotation: -170, // Adjust rotation range as needed
       ease: "none",
       scrollTrigger: {
         trigger: ".parent",
@@ -579,6 +593,49 @@ function About({ setIsLoaded, isLoaded }) {
                         src={TransparencyIconline}
                         alt="New Possibilities"
                         className="carding-icon-line1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* card-7 */}
+              <div className="box carding7">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border">
+                      <img
+                        src={MythIcon}
+                        alt="Protein Myth"
+                        className="carding-icon"
+                      />
+                      <p className="carding-text">
+                        BREAKING THE
+                        <br /> PROTEIN MYTH
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        Breaking the
+                        <br /> Protein Myth
+                      </h1>
+                      <p className="backing-text">
+                        We’re challenging the belief that dairy can’t be high in
+                        protein and low in calories. MilkMyGains transforms
+                        dairy into a nutritional powerhouse, proving that
+                        high-quality protein doesn’t have to come with excess
+                        fat.
+                      </p>
+                      <img
+                        src={MythIcon}
+                        alt="Protein Myth"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={MythIconline}
+                        alt="New Possibilities"
+                        className="carding-icon-line2"
                       />
                     </div>
                   </div>

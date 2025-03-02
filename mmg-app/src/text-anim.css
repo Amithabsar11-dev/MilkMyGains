@@ -1,55 +1,54 @@
 .text-container-animation {
-    height: 200vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
+  height: 200vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .svg-container {
-    width: 100%;
-    padding-top: 8%;
-
+  width: 100%;
+  padding-top: 8%;
 }
 
 svg {
-    width: 100%;
+  width: 100%;
 }
 
 text {
-    fill: white;
-    font-size: 38px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-family: "Chivo Mono", Sans-serif;
+  fill: white;
+  font-size: 38px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: "Chivo Mono", Sans-serif;
 }
 
 .text-product {
-    fill: #0052f0;
-    font-size: 38px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-family: "Chivo Mono", Sans-serif;
+  fill: #0052f0;
+  font-size: 38px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: "Chivo Mono", Sans-serif;
 }
 
 @media only screen and (max-width: 2200px) and (min-width: 1700px) {
-    .svg-size {
-        top: 9%;
-    }
+  .svg-size {
+    top: 9%;
+  }
 
-    .metafield-container {
-        padding-bottom: 3%;
-    }
+  .metafield-container {
+    padding-bottom: 3%;
+  }
 
-    .product-details-left {
-        padding: 0px;
-    }
+  .product-details-left {
+    padding: 0px;
+  }
 
-    .details-title {
-        font-size: 55px;
-    }
+  .details-title {
+    font-size: 55px;
+  }
 
-    .product-details-right {
-        gap: 16px;
-    }
+  .product-details-right {
+    gap: 16px;
+  }
 }

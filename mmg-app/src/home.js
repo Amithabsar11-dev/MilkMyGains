@@ -60,6 +60,7 @@ import Footeranimation from './assets/Home-footer-ani.mp4';
 import Weightliftanimation from './assets/Comp 1_1.mp4';
 import Yogaanimation from './assets/Yoga_2.mp4';
 import Basketballanimation from './assets/BasketBall.mp4';
+import Paneercubes from './assets/paneer-cubes.svg';
 import Copyrightline from './assets/Line 23.svg';
 
 /* Pure Protein Section */
@@ -388,28 +389,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     };
   }, [setIsLoaded]);
 
-  //Letters Animation
-  useEffect(() => {
-    if (!setIsLoaded) return;
-    const letters = document.querySelectorAll(".letter-paneer");
-
-    gsap.to(letters, {
-      scrollTrigger: {
-        trigger: ".container-pure",
-        start: "top left",
-        end: "bottom top",
-        scrub: 1,
-        scroller: ".home-wrapper",
-      },
-      ease: "power1.out",
-      motionPath: {
-        path: "#customPath",
-        align: "#customPath",
-        alignOrigin: [0.5, 0.5],
-      },
-      stagger: 0.01,
-    });
-  }, [setIsLoaded]);
 
   useEffect(() => {
     if (!setIsLoaded) return;
