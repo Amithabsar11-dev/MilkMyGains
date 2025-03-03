@@ -18,6 +18,8 @@ import Privacy from './privacy.js';
 import Refund from './refund.js';
 import Textanim from './text-anim.js';
 import Sample from './sample.js';
+import Textanimation from './textanimation.js';
+import Raising from './raising.js';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -74,6 +76,8 @@ function App() {
               <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
               <Route path="/text" element={<Textanim isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/textanimation" element={<Textanimation isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+              <Route path="/raising" element={<Raising isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
             </Routes>
         </div>
       </div>

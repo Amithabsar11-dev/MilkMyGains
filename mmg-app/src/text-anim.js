@@ -1,98 +1,83 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import './text-anim.css';
 
 const Textanim = ({ setIsLoaded }) => {
+     const [viewBox, setViewBox] = useState("0 -90 720 543");
     const textPathRefs = useRef([]);
 
     useEffect(() => {
-        console.log('useEffect triggered');
-        
-        // Ensure setIsLoaded is defined before proceeding
-        if (!setIsLoaded) return;
-        console.log('setIsLoaded:', setIsLoaded);
-
-        // Register GSAP ScrollTrigger plugin
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Check if textPathRefs are set
-        console.log("Text Path Refs:", textPathRefs.current);
-
-        // ScrollTrigger for textPath animation
-        const scrollTrigger = ScrollTrigger.create({
-            trigger: '.container-animation',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: true,
-            markers: true, // Enable markers for debugging
-            scroller: ".home-wrapper",
-            onUpdate: (self) => {
-                const progress = self.progress * 100; // Correct way to access progress
-                textPathRefs.current.forEach((path, index) => {
-                    if (path) {
-                        const offset = (progress + index * 40) % 100; // Adjust offset for each path
-                        gsap.set(path, { attr: { startOffset: `${offset}%` } });
-                    } else {
-                        console.warn(`Text path at index ${index} is not defined.`);
-                    }
-                });
-            },
-        });
-
-        // ScrollTrigger for logo scroll animation
-        gsap.to('.logos', {
-            y: -200,
-            scrollTrigger: {
-                trigger: '.logos-container',
-                start: 'top center',
-                end: 'bottom center',
-                scrub: true,
-                scroller: ".home-wrapper",
-                markers: true, // Enable markers for debugging
-            },
-            ease: 'none',
-        });
-
-        // Cleanup on unmount
-        return () => {
-            scrollTrigger.kill();
-        };
+      if (!setIsLoaded) return;
+  
+      gsap.registerPlugin(ScrollTrigger);
+  
+      const mainText = textPathRefs.current[0]; // Main Text
+      const duplicateText = textPathRefs.current[1]; // Duplicate for looping
+  
+      if (!mainText || !duplicateText) return;
+  
+      const textLength = mainText.getComputedTextLength(); // Get text length dynamically
+  
+      console.log("Text Length:", textLength); // Debug log
+  
+      gsap.set([mainText, duplicateText], { attr: { startOffset: "0%" } });
+  
+      const scrollTrigger = ScrollTrigger.create({
+        trigger: ".text-container-animation",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        scroller: ".home-wrapper",
+        onUpdate: (self) => {
+          const progress = self.progress * textLength;
+          const offset = (progress % textLength); // Loop effect
+  
+          console.log("Start Offset:", offset); // Debug log for movement
+  
+          gsap.set(mainText, { attr: { startOffset: `${offset}` } });
+  
+          // Shift duplicate to appear as soon as the first starts disappearing
+          gsap.set(duplicateText, { attr: { startOffset: `${offset - textLength}px` } });
+        },
+      });
+  
+      return () => {
+        scrollTrigger.kill();
+      };
     }, [setIsLoaded]);
+
+     useEffect(() => {
+        const updateViewBox = () => {
+          const width = window.innerWidth;
+          if (width >= 1700 && width <= 2200) {
+            setViewBox("0 -90 910 543");
+          } else {
+            setViewBox("0 -90 720 543");
+          }
+        };
+    
+        updateViewBox(); // Set initial value
+        window.addEventListener("resize", updateViewBox);
+        return () => window.removeEventListener("resize", updateViewBox);
+      }, []);
+  
 
     return (
         <div className="text-container-animation">
-            {/* SVG Curve Text */}
-            {/* <div style={{ height: '100vh' }}>
-                <h1>Text Animation</h1>
-            </div> */}
             <div className="svg-container">
-                <svg viewBox="0 0 250 90">
-                    <path fill="none" id="curve" d="m0,88.5c61.37,0,61.5-68,126.5-68,58,0,51,68,123,68" />
-                    <text>
-                        <textPath ref={el => textPathRefs.current[0] = el} className="text-path" startOffset="0%" href="#curve">
-                            Curabitur mattis efficitur velit
-                        </textPath>
-                        <textPath ref={el => textPathRefs.current[1] = el} className="text-path" startOffset="40%" href="#curve">
-                            Curabitur mattis efficitur velit
-                        </textPath>
-                    </text>
-                </svg>
+              <svg width="681" height="543" viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill="none" id="curve" d="M0.5 174.001C79 -95.4996 332.5 -7.99936 349 155.5C365.5 319 452 337.501 578.5 337.501C705 337.501 692.5 480.334 654 542.501" />
+                <text>
+                  <textPath ref={(el) => (textPathRefs.current[0] = el)} className="text-path" startOffset="0%" href="#curve">
+                    Your daily dairy keeps you energized all day long &nbsp;
+                  </textPath>
+                  <textPath ref={(el) => (textPathRefs.current[1] = el)} className="text-path duplicate-text" startOffset="100%" href="#curve">
+                    Your daily dairy keeps you energized all day long &nbsp;
+                  </textPath>
+                </text>
+              </svg>
             </div>
-
-            {/* Logos Scrolling Section */}
-            {/* <div className="logos-container">
-                <div className="logos">
-                    <img src="medias/1.jpg" alt="Logo 1" />
-                    <img src="medias/2.jpg" alt="Logo 2" />
-                    <img src="medias/3.jpg" alt="Logo 3" />
-                    <img src="medias/4.jpg" alt="Logo 4" />
-                    <img src="medias/5.jpg" alt="Logo 5" />
-                </div>
-            </div>
-            <div style={{ height: '100vh' }}>
-                <h1>Text Animation</h1>
-            </div> */}
         </div>
     );
 };

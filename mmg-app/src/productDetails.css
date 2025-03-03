@@ -653,6 +653,7 @@
   background-image: url("./assets/mmg.png");
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative;
 }
 
 .metafield-total {

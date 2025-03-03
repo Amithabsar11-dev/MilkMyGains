@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./productDetails.css";
@@ -35,17 +35,17 @@ import FilledStar from "./assets/Star 1.svg"; // Replace with actual path
 import EmptyStar from "./assets/Star 5.svg"; // Replace with actual path
 import moment from "moment";
 import HalfStar from "./assets/Frame 215.svg";
+import Textanim from "./textanimation";
+import Raising from "./raising";
 import { gsap } from "gsap";
-import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import Sample from "./sample";
 import Copyrightline from "./assets/Line 23.svg";
 import CartPanel from "./CartPanel";
 import MilkTM from "./assets/Logo-TM-1.svg";
 import "./App.css";
 
-gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
-
-const ProductDetails = ({ setIsLoaded, isLoaded }) => {
+const ProductDetails = ({ setIsLoaded }) => {
   const { handle } = useParams(); // Extract the product handle from the URL
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
@@ -85,40 +85,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     proceedToPayment,
   } = useContext(CartContext);
 
-  //Graph
-  const data = [
-    {
-      value: 76,
-      text: "76%\nCALORIES\nFROM\nPROTEIN",
-      icon: "🏃‍♂️",
-      color: "#E74C3C",
-    },
-    {
-      value: 24,
-      text: "24%\nCALORIES\nFROM\nPROTEIN",
-      icon: "🥗",
-      color: "#FFFFFF",
-    },
-    {
-      value: 72,
-      text: "72%\nCALORIES\nFROM\nPROTEIN",
-      icon: "🍗",
-      color: "#FFFFFF",
-    },
-    {
-      value: 26,
-      text: "26%\nCALORIES\nFROM\nPROTEIN",
-      icon: "🍫",
-      color: "#FFFFFF",
-    },
-    {
-      value: 71,
-      text: "71%\nCALORIES\nFROM\nPROTEIN",
-      icon: "🍼",
-      color: "#FFFFFF",
-    },
-  ];
-
   //Table
 
   const tableContainerRef = useRef(null);
@@ -128,7 +94,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     const tableContainer = tableContainerRef.current;
     const scrollRight = scrollRightRef.current;
 
-    // ✅ Ensure elements exist before adding event listeners
     if (!tableContainer || !scrollRight) return;
 
     const handleScroll = () => {
@@ -166,7 +131,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     };
   }, []);
 
-
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -189,7 +153,10 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
         // Set the default main image to the pack of 1 variant image
         if (packOfOneVariant && packOfOneVariant.image) {
           setMainImage(packOfOneVariant.image.src);
-        }
+          console.log("Main Image Set:", packOfOneVariant.image.src); // ✅ Check if this runs
+      } else {
+          console.log("No image found for variant.");
+      }
 
         // Extract FAQ content from metafields
         const metafields = response.data.metafields || [];
@@ -275,41 +242,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
     fetchReviews();
   }, [handle]);
 
-  useEffect(() => {
-    const animationsContainer = document.querySelector(".animations-container");
-    if (!animationsContainer) {
-      console.log("Element not found: .animations-container");
-      return;
-    }
-  
-    // Kill existing ScrollTriggers before reinitializing
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: animationsContainer,
-        start: "top 80%",
-        end: "bottom 20%",
-        scrub: 1,
-        toggleActions: "play none none reverse",
-        scroller: ".home-wrapper",
-      },
-      onComplete: () => setIsLoaded(true),
-    });
-  
-    // Your animation code here
-    tl.fromTo(
-      ".raising, .bar-1",
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
-    );
-  
-    // ... (rest of your animation code)
-  
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, [isLoaded]); // Add isLoaded as a dependency if needed
 
   const handleVariantClick = (variant) => {
     setSelectedVariant(variant);
@@ -317,68 +249,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
       setMainImage(variant.image.src); // Update the main image based on the selected variant
     }
   };
-
-  useEffect(() => {
-    // Ensure GSAP runs only after DOM is fully loaded
-    setTimeout(() => {
-      if (!document.querySelector(".animations-container")) {
-        console.log("Element not found: .animations-container");
-        return;
-      }
-
-      // Kill existing ScrollTriggers before reinitializing
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".animations-container",
-          start: "top 80%",
-          end: "bottom 20%",
-          scrub: 1,
-          toggleActions: "play none none reverse",
-          scroller: ".home-wrapper",
-        },
-        onComplete: () => setIsLoaded(true),
-      });
-
-      // Fade-in effect
-      tl.fromTo(
-        ".raising, .bar-1",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
-      );
-
-      // Move "RAISING" left & "THE BAR" right
-      tl.to(
-        ".raising",
-        { x: "-150px", duration: 1, ease: "power2.out" },
-        "-=0.5"
-      );
-      tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
-
-      // Show middle text with zoom effect
-      tl.fromTo(
-        ".middle-text",
-        { opacity: 0, scale: 0.5, fontWeight: 400 },
-        {
-          opacity: 1,
-          scale: 1.1,
-          fontWeight: 900,
-          duration: 1,
-          ease: "power2.out",
-        }
-      );
-
-      // Refresh ScrollTrigger after a delay
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-      });
-    }, 500); // Delay GSAP execution slightly to wait for React to render
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -560,6 +430,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                   src={mainImage}
                   alt={selectedVariant?.image?.altText || "Product Image"}
                   className="product-details-image"
+                  crossOrigin="anonymous"
                 />
               ) : (
                 <div className="placeholder">No Image Available</div>
@@ -586,6 +457,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                         src={variant.node.image.src}
                         alt={variant.node.image.altText || "Variant Image"}
                         className="image-variant"
+                        crossOrigin="anonymous"
                       />
                     ) : (
                       <p>No Image Available</p>
@@ -727,22 +599,6 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
         </div>
         {cartVisible && <CartPanel onClose={toggleCart} isOpen={cartVisible} />}
       </div>
-      {/* {product.variants.edges.map((variant, index) => {
-        const image = variant.node.image; // Extract the image object
-        console.log("Full Variant Data:", variant.node);
-        console.log("Variant Image Data:", variant.node.image ? variant.node.image.src : "No image found");
-        return (
-          <div key={index}>
-            {image && image.src ? ( // Check if image and image.src exist
-              <img src={image.src} alt={image.altText || 'Variant Image'} />
-            ) : (
-              <p>No image available</p> // Fallback if no image is available
-            )}
-            <p>{variant.node.title}</p>
-            <p>Price: {variant.node.priceV2.amount} {variant.node.priceV2.currencyCode}</p>
-          </div>
-        );
-      })} */}
       {/* Metafields */}
       <div className="metafield-container">
         <div className="metafield-total">
@@ -755,7 +611,8 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
                 </div>
               ))}
             </div>
-            <img src={Words1} alt="words" className="words-image" />
+            {/* <img src={Words1} alt="words" className="words-image" /> */}
+            <Textanim setIsLoaded={setIsLoaded} className="words-image"/>
           </div>
         </div>
         <div className="metafield-ingredients">
@@ -957,6 +814,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
       </div>
 
       {/* Raising the star */}
+      <Raising setIsLoaded={setIsLoaded} />
       {/* {isMobile ? (
         <div className="animations-container">
           <div className="texting-wrapper-1">
@@ -981,7 +839,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
             <h1 className="bar-1">THE BAR</h1>
           </div>
         </div>
-      )} */}
+      )}
       <div className="animations-container">
         <div className="texting-wrapper-1">
           <h1 className="raising-1">RAISING</h1>
@@ -992,7 +850,7 @@ const ProductDetails = ({ setIsLoaded, isLoaded }) => {
           </div>
           <h1 className="bar-proteins-1">THE BAR</h1>
         </div>
-      </div>
+      </div> */}
       {/* Comparision */}
       {/* <div className="comparison-table">
         <div className="comparison-column labels">
