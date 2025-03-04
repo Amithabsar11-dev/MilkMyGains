@@ -26,7 +26,7 @@ import "./cards.css";
 import Sunback from "./assets/Sunback.svg";
 import EyesightIcon from "./assets/EyesightIcon.svg";
 import SunlookIcon from "./assets/SunlookIcon.svg";
-import Aboutfooteranimation from "./assets/About-footer-ani.mp4";
+import Aboutfooteranimation from "./assets/1.gif";
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import Copyrightline from "./assets/Line 23.svg";
@@ -756,11 +756,14 @@ function About({ setIsLoaded, isLoaded }) {
             what it means to fuel
             <br /> your gains—naturally, powerfully, and purposefully.
           </p>
-          <div className="protein-pic-container">
+          {/* <div className="protein-pic-container">
             <video autoPlay loop muted playsInline className="protein-image1">
-              <source src={Aboutfooteranimation} type="video/mp4" />
+              <source src={Aboutfooteranimation} type="video/gif" />
               Your browser does not support the video tag.
             </video>
+          </div> */}
+           <div className="protein-pic-container">
+            <img src={Aboutfooteranimation} className="protein-image1" />
           </div>
           <div className="milk-pic-container">
             <img src={MilkTM} className="milk-image1" alt="milk-pic" />

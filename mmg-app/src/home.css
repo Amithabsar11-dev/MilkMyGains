@@ -296,6 +296,9 @@
 .button-soon {
   position: relative;
   display: inline-block;
+  border: 2px solid white;
+  border-radius: 50px;
+  padding: 15px;
 }
 
 .coming-soon {
@@ -467,19 +470,19 @@
   width: 100%;
   cursor: pointer;
   pointer-events: auto;
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .yogart-button {
   width: 100%;
   pointer-events: auto;
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .icecream-button {
   width: 100%;
   pointer-events: auto;
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 /* Card Section */
@@ -904,7 +907,7 @@
 }
 
 .power-space {
-  background-color: #d4e5fc;
+  background-color: #cee0fc;
   border-radius: 20px;
   height: 65vh;
   margin-left: 10%;
@@ -914,7 +917,7 @@
 }
 
 .power-space1 {
-  background-color: #d4e5fc;
+  background-color: #cee0fc;
   border-radius: 20px;
   height: 65vh;
   width: 75%;
@@ -926,7 +929,7 @@
 }
 
 .power-space2 {
-  background-color: #d4e5fc;
+  background-color: #cee0fc;
   border-radius: 20px;
   height: 65vh;
   width: 75%;
@@ -1216,6 +1219,15 @@
   line-height: 8rem;
   padding-bottom: 8%;
 }
+.coming-wholesome {
+  font-size: 20px;
+  color: #0051f1;
+  font-family: "Anybody_Condensed";
+  font-weight: 500;
+  font-style: italic;
+  text-transform: uppercase;
+  padding-top: 2%;
+}
 
 .veg-bowl {
   position: absolute;
@@ -1260,7 +1272,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.Subscribe-button1:hover {
+/* .Subscribe-button1:hover {
   transform: translateY(6px);
   box-shadow: none;
   background-color: #0052f0;
@@ -1270,7 +1282,7 @@
   bottom: -2px;
   left: -2px;
   opacity: 0;
-}
+} */
 
 .stickers {
   position: absolute;
@@ -1834,11 +1846,11 @@
     left: 25%;
   }
   .weight-lift1 {
-    width: 45%;
+    width: 50%;
     right: 0%;
   }
   .weight-lift3 {
-    width: 45%;
+    width: 50%;
     right: 0%;
   }
   .protein-slogan {

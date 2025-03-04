@@ -337,6 +337,10 @@
 .purchase-options input[type="radio"] {
   margin-right: 10px;
 }
+.one-time {
+  font-family: "Chivo Mono", Sans-serif;
+  text-transform: uppercase;
+}
 
 .price {
   font-weight: bold;

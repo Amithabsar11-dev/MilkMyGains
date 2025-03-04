@@ -225,7 +225,7 @@ app.get("/api/reviews/:handle", async (req, res) => {
       },
     });
 
-    if (!response.data.reviews || response.data.reviews.length === 0) {
+    if (!response.data.reviews?.length) {
       return res.status(404).json({ message: "No reviews found for this product." });
     }
 

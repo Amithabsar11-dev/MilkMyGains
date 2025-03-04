@@ -47,9 +47,9 @@ import Inactivestar from "./assets/inactive-star.svg";
 import Lean from "./assets/basketball.svg";
 import Yoga from "./assets/yoga.svg";
 import Orderbuttons from './assets/order-now-svg.svg'
-import Milkblur from './assets/milk-blur.png'
-import Yogartblur from './assets/yogart-blur.png'
-import Icecreamblur from './assets/icecream-blur.png';
+import Milkblur from './assets/milk-1.svg'
+import Yogartblur from './assets/yoghurt.svg'
+import Icecreamblur from './assets/ice-cream (3).svg';
 import Raisingfooter1 from './assets/raising-footer-icon-1.svg';
 import Raisingfooter2 from './assets/raising-footer-icon-2.svg';
 import Sample from './sample';
@@ -59,7 +59,7 @@ import "./cards.css";
 import Footeranimation from './assets/Home-footer-ani.mp4';
 import Weightliftanimation from './assets/Comp 1_1.mp4';
 import Yogaanimation from './assets/Yoga_2.mp4';
-import Basketballanimation from './assets/BasketBall.mp4';
+import Basketballanimation from './assets/BasketBall_1.mp4';
 import Paneercubes from './assets/paneer-cubes.svg';
 import Copyrightline from './assets/Line 23.svg';
 
@@ -987,10 +987,10 @@ const Home = ({ setIsLoaded, isLoaded }) => {
               <svg width="681" height="543" viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" id="curve" d="M0.5 174.001C79 -95.4996 332.5 -7.99936 349 155.5C365.5 319 452 337.501 578.5 337.501C705 337.501 692.5 480.334 654 542.501" />
                 <text>
-                  <textPath ref={(el) => (textPathRefs.current[0] = el)} className="text-path" startOffset="0%" href="#curve">
+                  <textPath ref={(el) => (textPathRefs.current[0] = el)} className="" startOffset="0%" href="#curve">
                     Your daily dairy keeps you energized all day long &nbsp;
                   </textPath>
-                  <textPath ref={(el) => (textPathRefs.current[1] = el)} className="text-path duplicate-text" startOffset="100%" href="#curve">
+                  <textPath ref={(el) => (textPathRefs.current[1] = el)} className=" duplicate-text" startOffset="100%" href="#curve">
                     Your daily dairy keeps you energized all day long &nbsp;
                   </textPath>
                 </text>
@@ -1358,6 +1358,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <button className="Subscribe-button1">
               More Recipes On The Blog
             </button>
+            <h3 className="coming-wholesome">Coming soon !!!</h3>
           </div>
           <img src={Stickers} className="stickers" alt="stickers" />
           <p className="muscle-para">

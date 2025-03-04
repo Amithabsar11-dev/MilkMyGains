@@ -153,10 +153,7 @@ const ProductDetails = ({ setIsLoaded }) => {
         // Set the default main image to the pack of 1 variant image
         if (packOfOneVariant && packOfOneVariant.image) {
           setMainImage(packOfOneVariant.image.src);
-          console.log("Main Image Set:", packOfOneVariant.image.src); // ✅ Check if this runs
-      } else {
-          console.log("No image found for variant.");
-      }
+        }
 
         // Extract FAQ content from metafields
         const metafields = response.data.metafields || [];
@@ -301,31 +298,35 @@ const ProductDetails = ({ setIsLoaded }) => {
 
   const handlePackSelection = (quantity) => {
     if (!selectedWeight) return;
-
+  
     setPackQuantity(quantity);
-
+  
     const variant = product.variants.edges.find(
       ({ node }) =>
         node.title.toLowerCase().includes(`pack of ${quantity}`) &&
         node.title.toLowerCase().includes(selectedWeight)
     )?.node;
-
+  
     setSelectedVariant(variant || null);
+    setMainImage(variant?.image?.src || ""); // Update main image
     setIsActive(!isActive);
   };
+  
 
   const handleWeightSelection = (weight) => {
     setSelectedWeight(weight);
     setPackQuantity(1); // Reset to Pack of 1 when weight changes
-
+  
     const variant = product.variants.edges.find(
       ({ node }) =>
         node.title.toLowerCase().includes(`pack of 1`) &&
         node.title.toLowerCase().includes(weight)
     )?.node;
-
-    setSelectedVariant(variant || null); // Set the default variant based on the new weight
+  
+    setSelectedVariant(variant || null);
+    setMainImage(variant?.image?.src || ""); // Update main image to pack of 1 variant
   };
+  
 
   const totalPrice = selectedVariant
     ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) // Use the price directly
@@ -542,7 +543,7 @@ const ProductDetails = ({ setIsLoaded }) => {
                   checked={purchaseOption === "oneTime"}
                   onChange={() => setPurchaseOption("oneTime")}
                 />
-                <span>One Time Purchase</span>
+                <span className="one-time">One Time Purchase</span>
               </label>
               <span className="price">₹{totalPrice}</span>
             </div>
@@ -555,7 +556,7 @@ const ProductDetails = ({ setIsLoaded }) => {
                     checked={purchaseOption === "subscribe"}
                     disabled
                   />
-                  <span>Subscribe and Save</span>
+                  <span className="one-time">Subscribe and Save</span>
                 </label>
                 <span className="price">₹{(totalPrice * 0.8).toFixed(2)}</span>
               </div>

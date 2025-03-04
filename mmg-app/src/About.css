@@ -83,7 +83,7 @@
   background-image: url("./assets/Frame 75.png");
   background-size: cover;
   position: relative;
-  padding-top: 10%;
+  padding-top: 5%;
 }
 
 .about-join-container {
@@ -106,8 +106,7 @@
 
 .milk-image1 {
   width: 30%;
-  padding-top: 5%;
-  margin-bottom: 7%;
+  padding-top: 10%;
 }
 
 .milk-pic-container {
@@ -372,7 +371,7 @@
 .carding-icon {
   width: 90%;
   margin-bottom: 20px;
-  padding: 15px;
+  padding: 35px;
 }
 
 .carding-icon1 {
@@ -382,7 +381,7 @@
 }
 
 .carding-icon-4 {
-  width: 90%;
+  width: 85%;
   margin-bottom: 20px;
   padding-top: 20%;
 }
@@ -400,6 +399,7 @@
   font-weight: bold;
   font-family: "Anybody_Condensed";
   line-height: 2rem;
+  text-transform: uppercase;
 }
 
 .backing-heading {

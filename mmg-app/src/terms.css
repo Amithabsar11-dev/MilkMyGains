@@ -1,5 +1,6 @@
 .terms-conditions {
   padding-top: 12%;
+  background-color: #f3f3f3;
 }
 
 .terms-heading {
@@ -75,7 +76,7 @@
   .terms-spacing {
     padding: 30px;
   }
-  .terms-height{
+  .terms-height {
     line-height: 25px;
   }
 }
