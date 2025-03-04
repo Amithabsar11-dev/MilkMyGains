@@ -2,16 +2,20 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const axios = require("axios");
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+// const mongoose = require("mongoose");
+// const bcrypt = require("bcryptjs");
+// const jwt = require("jsonwebtoken");
+// const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors({
-  origin: "*",  // Allow all domains (for debugging)
-  methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization"
-}));
+app.use(
+  cors({
+    origin: "*", 
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
 // Allow cross-origin image fetching
 app.use((req, res, next) => {
@@ -21,168 +25,401 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // Shopify Storefront API Details
-const SHOPIFY_BASE_URL = "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
+const SHOPIFY_BASE_URL =
+  "https://milk-my-gains.myshopify.com/api/2024-10/graphql.json";
 const STORE_FRONT_ACCESS_TOKEN = "b49fae102098a23e7a2b663dbc0e4d48";
 
 //Omnisend API
-const OMNISEND_API_KEY = "67bc5f6c532625c406fdf16a-kPttxT0hf5yvBAQj770IiAq5hMsJ89PGaEFh16lcQ66HdUYt7V";
+const OMNISEND_API_KEY =
+  "67bc5f6c532625c406fdf16a-kPttxT0hf5yvBAQj770IiAq5hMsJ89PGaEFh16lcQ66HdUYt7V";
 
-// MongoDB URI 
-const MONGO_URI = "mongodb+srv://amithabsar11:amithabsar11@cluster11.klfyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster11";
+// // MongoDB URI
+// const MONGO_URI =
+//   "mongodb+srv://amithabsar11:amithabsar11@cluster11.klfyc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster11";
 
-// Connect to MongoDB Atlas
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("MongoDB Atlas Connected"))
-  .catch(err => console.error("MongoDB Connection Error:", err));
+// // Connect to MongoDB Atlas
+// mongoose
+//   .connect(MONGO_URI)
+//   .then(() => console.log("MongoDB Atlas Connected"))
+//   .catch((err) => console.error("MongoDB Connection Error:", err));
 
-// User Model
-const UserSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  shopifyCustomerId: { type: String }
-});
-const User = mongoose.model("User", UserSchema);
+// // User Model
+// const userSchema = new mongoose.Schema({
+//   name: String,
+//   email: { type: String, unique: true },
+//   phone: String,
+//   password: String,
+//   orders: [
+//     {
+//       orderId: String,
+//       products: [
+//         {
+//           title: String,
+//           quantity: Number,
+//           price: Number,
+//         },
+//       ],
+//       totalAmount: Number,
+//       date: { type: Date, default: Date.now },
+//     },
+//   ],
+// });
+
+// const User = mongoose.model("User", userSchema);
 
 // Judge.me API Details
 const JUDGEME_API_URL = "https://judge.me/api/v1/reviews";
-const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw";  // Replace with your actual Judge.me API token
-const SHOP_DOMAIN = "milk-my-gains.myshopify.com";  // Replace with your actual Shopify domain
+const JUDGEME_PRIVATE_TOKEN = "zZ3TqyUcS2RE6uJ3KtSXWdFtHfw"; // Replace with your actual Judge.me API token
+const SHOP_DOMAIN = "milk-my-gains.myshopify.com"; // Replace with your actual Shopify domain
 
+// const JWT_SECRET = "your_secret_key";
 
-// Signup API
+// // Signup API
+// app.post("/api/signup", async (req, res) => {
+//   const { name, email, phone, password } = req.body;
+
+//   try {
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(400).json({ error: "Email already exists" });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const newUser = new User({ name, email, phone, password: hashedPassword });
+//     await newUser.save();
+
+//     res.status(201).json({ message: "Signup successful" });
+//   } catch (err) {
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// // Login API
+// app.post("/api/login", async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(400).json({ error: "Invalid email or password" });
+//     }
+
+//     const isMatch = await bcrypt.compare(password, user.password); // Added await
+//     if (!isMatch) {
+//       return res.status(400).json({ error: "Invalid email or password" });
+//     }
+
+//     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+//       expiresIn: "7d",
+//     });
+
+//     res.status(200).json({ message: "Login successful", token });
+//   } catch (err) {
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// // Forgot Password API
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: "your_email@gmail.com",
+//     pass: "your_app_password",
+//   },
+// });
+
+// app.post("/api/forgot-password", async (req, res) => {
+//   const { email } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(400).json({ error: "Email not found" });
+//     }
+
+//     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+//       expiresIn: "1h",
+//     });
+
+//     const resetLink = `http://yourfrontend.com/reset-password?token=${token}`; // Link FIXED
+
+//     const mailOptions = {
+//       from: "amith.wings@gmail.com",
+//       to: email,
+//       subject: "Password Reset Request",
+//       html: `<p>You requested to reset your password.</p>
+//             <p>Click the link below to reset your password:</p>
+//             <a href="${resetLink}">${resetLink}</a>
+//             <p>The link is valid for 1 hour.</p>`,
+//     };
+
+//     await transporter.sendMail(mailOptions);
+
+//     res.status(200).json({ message: "Password reset email sent" });
+//   } catch (err) {
+//     console.error("Forgot Password Error:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// //Reset Password
+// app.post("/api/reset-password", async (req, res) => {
+//   const { token, newPassword } = req.body;
+
+//   try {
+//     const decoded = jwt.verify(token, JWT_SECRET);
+//     const user = await User.findById(decoded.userId);
+//     if (!user) {
+//       return res.status(400).json({ error: "Invalid or expired token" });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(newPassword, 10);
+//     user.password = hashedPassword;
+//     await user.save();
+
+//     res.status(200).json({ message: "Password reset successful" });
+//   } catch (err) {
+//     res.status(400).json({ error: "Invalid or expired token" });
+//   }
+// });
+
+// // Fetch User Profile & Order History from Shopify
+// const authenticate = (req, res, next) => {
+//   const token = req.header("Authorization");
+//   if (!token) return res.status(401).json({ error: "Access denied" });
+
+//   try {
+//     const tokenWithoutBearer = token.replace("Bearer ", ""); // FIXED
+//     const verified = jwt.verify(tokenWithoutBearer, JWT_SECRET);
+//     req.user = verified;
+//     next();
+//   } catch (err) {
+//     res.status(400).json({ error: "Invalid token" });
+//   }
+// };
+
+// app.get("/api/profile", authenticate, async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.userId).select("-password");
+//     res.status(200).json(user);
+//   } catch (err) {
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// // Fetch User Orders from Shopify
+// app.get("/api/profile", authenticate, async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.userId).select("-password");
+
+//     const shopifyOrdersQuery = `
+//       {
+//         orders(first: 10, query: "email:${user.email}") {
+//           edges {
+//             node {
+//               id
+//               name
+//               totalPriceV2 {
+//                 amount
+//                 currencyCode
+//               }
+//               lineItems(first: 5) {
+//                 edges {
+//                   node {
+//                     title
+//                     quantity
+//                     originalTotalPrice {
+//                       amount
+//                       currencyCode
+//                     }
+//                   }
+//                 }
+//               }
+//               processedAt
+//             }
+//           }
+//         }
+//       }
+//     `;
+
+//     const shopifyResponse = await shopifyRequest(shopifyOrdersQuery);
+
+//     const orders = shopifyResponse.orders.edges.map((order) => ({
+//       orderId: order.node.name,
+//       totalAmount: order.node.totalPriceV2.amount,
+//       date: order.node.processedAt,
+//       products: order.node.lineItems.edges.map((item) => ({
+//         title: item.node.title,
+//         quantity: item.node.quantity,
+//         price: item.node.originalTotalPrice.amount,
+//       })),
+//     }));
+
+//     res.status(200).json({ user, orders });
+//   } catch (err) {
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// Customer Signup API
+
 app.post("/api/signup", async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
+  const { firstName, lastName, email, password, phone } = req.body;
 
-    let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: "User already exists" });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create Shopify Customer
-    const query = `
-      mutation {
-        customerCreate(input: {
-          firstName: "${name}",
-          email: "${email}",
-          password: "${password}"
-        }) {
-          customer { id }
-          userErrors { field message }
+  const query = `
+    mutation customerCreate($input: CustomerCreateInput!) {
+      customerCreate(input: $input) {
+        customer {
+          id
+          firstName
+          lastName
+          email
+          phone
+        }
+        customerUserErrors {
+          field
+          message
         }
       }
-    `;
+    }
+  `;
 
-    const shopifyResponse = await axios.post(
-      SHOPIFY_BASE_URL,
-      { query },
-      { headers: { "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN, "Content-Type": "application/json" } }
-    );
+  const variables = {
+    input: { firstName, lastName, email, password, phone },
+  };
 
-    const shopifyCustomer = shopifyResponse.data.data.customerCreate.customer;
-    if (!shopifyCustomer) return res.status(400).json({ message: "Failed to create Shopify customer" });
-
-    user = new User({ name, email, password: hashedPassword, shopifyCustomerId: shopifyCustomer.id });
-    await user.save();
-
-    res.status(201).json({ message: "User registered successfully!" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  try {
+    const data = await shopifyRequest(query, variables);
+    if (data.customerCreate.customer) {
+      res.status(201).json({ message: "Signup successful!" });
+    } else {
+      res.status(400).json({ error: data.customerCreate.customerUserErrors });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Signup failed." });
   }
+  console.log("Signup request received:", req.body);
 });
 
-// Login API
+// Customer Login API
+
 app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const query = `
+    mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+      customerAccessTokenCreate(input: $input) {
+        customerAccessToken {
+          accessToken
+          expiresAt
+        }
+        customerUserErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const variables = { input: { email, password } };
+
   try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
-
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
-    res.status(200).json({ token, user });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const data = await shopifyRequest(query, variables);
+    if (data.customerAccessTokenCreate.customerAccessToken) {
+      res.status(200).json(data.customerAccessTokenCreate.customerAccessToken);
+    } else {
+      res
+        .status(400)
+        .json({ error: data.customerAccessTokenCreate.customerUserErrors });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Login failed." });
   }
 });
 
 // Forgot Password API
+
 app.post("/api/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  const query = `
+    mutation customerRecover($email: String!) {
+      customerRecover(email: $email) {
+        customerUserErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
   try {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "User not found" });
-
-    const resetToken = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "15m" });
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: EMAIL_USER, pass: EMAIL_PASS }
-    });
-
-    const mailOptions = {
-      from: EMAIL_USER,
-      to: email,
-      subject: "Password Reset",
-      text: `Click the link to reset your password: http://localhost:3000/reset-password/${resetToken}`
-    };
-
-    transporter.sendMail(mailOptions, (error) => {
-      if (error) return res.status(500).json({ error: "Failed to send email" });
-      res.status(200).json({ message: "Reset email sent" });
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const data = await shopifyRequest(query, { email });
+    if (!data.customerRecover.customerUserErrors.length) {
+      res.status(200).json({ message: "Password reset email sent!" });
+    } else {
+      res.status(400).json({ error: data.customerRecover.customerUserErrors });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to send reset email." });
   }
 });
 
-// Fetch User Order History from Shopify
-app.get("/api/order-history", async (req, res) => {
-  try {
-    const { userId } = req.query;
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
+// Profile API (User Info + Order History)
 
-    const query = `
-      query {
-        customer(id: "${user.shopifyCustomerId}") {
-          orders(first: 5) {
-            edges {
-              node {
-                name
-                totalPriceV2 { amount currencyCode }
-                lineItems(first: 5) {
-                  edges {
-                    node {
-                      title quantity originalTotalPrice { amount }
+app.get("/api/profile", async (req, res) => {
+  const accessToken = req.headers.authorization;
+
+  if (!accessToken) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const query = `
+    {
+      customer(customerAccessToken: "${accessToken}") {
+        firstName
+        lastName
+        email
+        phone
+        orders(first: 10) {
+          edges {
+            node {
+              name
+              totalPriceV2 {
+                amount
+                currencyCode
+              }
+              processedAt
+              lineItems(first: 10) {
+                edges {
+                  node {
+                    title
+                    quantity
+                    originalTotalPrice {
+                      amount
+                      currencyCode
                     }
                   }
                 }
-                processedAt
               }
             }
           }
         }
       }
-    `;
+    }
+  `;
 
-    const shopifyResponse = await axios.post(
-      SHOPIFY_BASE_URL,
-      { query },
-      { headers: { "X-Shopify-Access-Token": STORE_FRONT_ACCESS_TOKEN, "Content-Type": "application/json" } }
-    );
-
-    res.status(200).json(shopifyResponse.data.data.customer.orders.edges);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  try {
+    const data = await shopifyRequest(query);
+    if (data.customer) {
+      res.status(200).json(data.customer);
+    } else {
+      res.status(400).json({ error: "Failed to fetch profile." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Profile fetch failed." });
   }
-
 });
 
 // Helper to call Shopify Storefront API
@@ -226,16 +463,20 @@ app.get("/api/reviews/:handle", async (req, res) => {
     });
 
     if (!response.data.reviews?.length) {
-      return res.status(404).json({ message: "No reviews found for this product." });
+      return res
+        .status(404)
+        .json({ message: "No reviews found for this product." });
     }
 
     res.status(200).json(response.data.reviews);
   } catch (error) {
-    console.error("Error fetching reviews:", error.response?.data || error.message);
+    console.error(
+      "Error fetching reviews:",
+      error.response?.data || error.message
+    );
     res.status(500).json({ error: "Failed to fetch reviews from Judge.me." });
   }
 });
-
 
 // Helper function to get Judge.me product ID using Shopify product ID
 const getJudgeMeProductId = async (shopifyProductId) => {
@@ -257,7 +498,10 @@ const getJudgeMeProductId = async (shopifyProductId) => {
       throw new Error("Product ID not found in Judge.me response.");
     }
   } catch (error) {
-    console.error("Error fetching Judge.me product ID:", error.response?.data || error.message);
+    console.error(
+      "Error fetching Judge.me product ID:",
+      error.response?.data || error.message
+    );
     throw new Error("Failed to fetch Judge.me product ID.");
   }
 };
@@ -274,7 +518,14 @@ app.post("/api/reviews", async (req, res) => {
   } = req.body;
 
   // Validate input fields
-  if (!shopify_product_id || !review_title || !review_body || !reviewer_name || !reviewer_email || !rating) {
+  if (
+    !shopify_product_id ||
+    !review_title ||
+    !review_body ||
+    !reviewer_name ||
+    !reviewer_email ||
+    !rating
+  ) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
@@ -282,7 +533,9 @@ app.post("/api/reviews", async (req, res) => {
     // Fetch Judge.me product ID
     const product_id = await getJudgeMeProductId(shopify_product_id);
     if (!product_id) {
-      return res.status(500).json({ error: "Unable to map Shopify product to Judge.me product." });
+      return res
+        .status(500)
+        .json({ error: "Unable to map Shopify product to Judge.me product." });
     }
 
     const payload = {
@@ -316,7 +569,10 @@ app.post("/api/reviews", async (req, res) => {
       message: "Review is being processed and will appear shortly.",
     });
   } catch (error) {
-    console.error("Error submitting review:", error.response?.data || error.message);
+    console.error(
+      "Error submitting review:",
+      error.response?.data || error.message
+    );
     res.status(500).json({ error: "Failed to submit review." });
   }
 });
@@ -365,7 +621,8 @@ app.get("/api/products", async (req, res) => {
       const product = edge.node;
       return {
         ...product,
-        handle: product.handle || product.title.toLowerCase().replace(/\s+/g, "-"),
+        handle:
+          product.handle || product.title.toLowerCase().replace(/\s+/g, "-"),
       };
     });
     res.status(200).json(products);
@@ -430,36 +687,41 @@ app.get("/api/product/:handle", async (req, res) => {
     const data = await shopifyRequest(query);
     const product = data.productByHandle;
 
-    console.log('Raw Metafields:', product.metafields);
+    console.log("Raw Metafields:", product.metafields);
 
     // Parse the metafield value if it exists
     if (product.metafields && product.metafields.length > 0) {
-      console.log('Raw Metafields:', product.metafields);
+      console.log("Raw Metafields:", product.metafields);
 
       product.metafields = product.metafields
         .filter((metafield) => metafield !== null)
         .map((metafield) => {
           if (metafield.value) {
             try {
-              console.log(`Parsing metafield: ${metafield.namespace}.${metafield.key}`, metafield.value);
+              console.log(
+                `Parsing metafield: ${metafield.namespace}.${metafield.key}`,
+                metafield.value
+              );
               metafield.value = JSON.parse(metafield.value); // Parse JSON
             } catch (error) {
-              console.error(`Error parsing metafield ${metafield.namespace}.${metafield.key}:`, error);
+              console.error(
+                `Error parsing metafield ${metafield.namespace}.${metafield.key}:`,
+                error
+              );
               metafield.value = metafield.value; // Keep as raw string if parsing fails
             }
           }
           return metafield;
         });
 
-      console.log('Parsed Metafields:', product.metafields);
+      console.log("Parsed Metafields:", product.metafields);
     }
 
-
-    console.log('Parsed Metafields:', product.metafields);
-    console.log('Final Product Data:', product);
+    console.log("Parsed Metafields:", product.metafields);
+    console.log("Final Product Data:", product);
 
     // Add some additional logging to see where the metafields data is being reset
-    console.log('Metafields before sending response:', product.metafields);
+    console.log("Metafields before sending response:", product.metafields);
 
     res.status(200).json(product);
   } catch (error) {
@@ -515,18 +777,16 @@ app.post("/api/cart/create", async (req, res) => {
         attributes: [
           {
             key: "discountedPrice",
-            value: line?.price ? line.price.toString() : "0" // Default to "0" if price is undefined
+            value: line?.price ? line.price.toString() : "0", // Default to "0" if price is undefined
           },
           {
             key: "purchaseOption",
-            value: line?.purchaseOption || "N/A" // Default to "N/A" if purchaseOption is undefined
+            value: line?.purchaseOption || "N/A", // Default to "N/A" if purchaseOption is undefined
           },
         ],
       })),
     },
   };
-
-
 
   try {
     const data = await shopifyRequest(query, variables);
@@ -534,7 +794,9 @@ app.post("/api/cart/create", async (req, res) => {
     console.log("Cart Creation Response:", data);
 
     if (data.cartCreate.userErrors.length > 0) {
-      throw new Error(data.cartCreate.userErrors.map((e) => e.message).join(", "));
+      throw new Error(
+        data.cartCreate.userErrors.map((e) => e.message).join(", ")
+      );
     }
     res.status(200).json(data.cartCreate.cart);
   } catch (error) {
@@ -547,7 +809,8 @@ app.post("/api/cart/add", async (req, res) => {
   const { cartId, variantId, quantity } = req.body;
   if (!cartId || !variantId || !quantity) {
     return res.status(400).json({
-      error: "Invalid request. 'cartId', 'variantId', and 'quantity' are required.",
+      error:
+        "Invalid request. 'cartId', 'variantId', and 'quantity' are required.",
     });
   }
 
@@ -638,13 +901,13 @@ app.post("/api/cart/view", async (req, res) => {
   }
 });
 
-
 // Update cart item
 app.post("/api/cart/update", async (req, res) => {
   const { cartId, lineItemId, quantity } = req.body;
   if (!cartId || !lineItemId || !quantity) {
     return res.status(400).json({
-      error: "Invalid request. 'cartId', 'lineItemId', and 'quantity' are required.",
+      error:
+        "Invalid request. 'cartId', 'lineItemId', and 'quantity' are required.",
     });
   }
 
@@ -727,7 +990,7 @@ app.post("/api/cart/remove", async (req, res) => {
   }
 });
 
-//Newsletter 
+//Newsletter
 
 app.post("/subscribe", async (req, res) => {
   const { email } = req.body;
@@ -747,21 +1010,23 @@ app.post("/subscribe", async (req, res) => {
       },
       {
         headers: {
-          "Authorization": `Bearer ${OMNISEND_API_KEY}`,
-          "Content-Type": "application/json"
-        }
+          Authorization: `Bearer ${OMNISEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
     res.json({
-      message: "Subscription successful! Thank you for subscribing."
+      message: "Subscription successful! Thank you for subscribing.",
     });
-
   } catch (error) {
-    console.error("Error subscribing user:", error.response?.data || error.message);
+    console.error(
+      "Error subscribing user:",
+      error.response?.data || error.message
+    );
     res.status(500).json({
       error: "Subscription failed. Please try again later.",
-      details: error.response?.data || error.message
+      details: error.response?.data || error.message,
     });
   }
 });

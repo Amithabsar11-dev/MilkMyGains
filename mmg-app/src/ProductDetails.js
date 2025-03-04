@@ -38,7 +38,7 @@ import HalfStar from "./assets/Frame 215.svg";
 import Textanim from "./textanimation";
 import Raising from "./raising";
 import { gsap } from "gsap";
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import ScrollTrigger from "gsap/ScrollTrigger";
 import Sample from "./sample";
 import Copyrightline from "./assets/Line 23.svg";
 import CartPanel from "./CartPanel";
@@ -64,6 +64,8 @@ const ProductDetails = ({ setIsLoaded }) => {
   const [accordionContent, setAccordionContent] = useState(null);
   const [isActive, setIsActive] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [fadeClass, setFadeClass] = useState("fade-in");
+  const [showImage, setShowImage] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageGroupStart, setPageGroupStart] = useState(1); // Controls the first page in the row
   const reviewsPerPage = 3;
@@ -239,11 +241,10 @@ const ProductDetails = ({ setIsLoaded }) => {
     fetchReviews();
   }, [handle]);
 
-
   const handleVariantClick = (variant) => {
     setSelectedVariant(variant);
     if (variant.image) {
-      setMainImage(variant.image.src); // Update the main image based on the selected variant
+      updateMainImage(variant.image.src); // Update the main image based on the selected variant
     }
   };
 
@@ -296,37 +297,48 @@ const ProductDetails = ({ setIsLoaded }) => {
     return stars;
   };
 
+  const updateMainImage = (newImage) => {
+    setFadeClass("fade-out"); // Start fade-out effect
+    setShowImage(true); // Ensure the image is shown during fade-out
+
+    setTimeout(() => {
+      setMainImage(newImage);
+      setFadeClass("fade-in"); // Start fade-in effect after image update
+      setTimeout(() => {
+        setShowImage(true); // Show the new image after fade-in
+      }, 400); // Delay should match CSS transition time
+    }, 400); // Delay should match CSS transition time for fade-out
+  };
+
   const handlePackSelection = (quantity) => {
     if (!selectedWeight) return;
-  
+
     setPackQuantity(quantity);
-  
+
     const variant = product.variants.edges.find(
       ({ node }) =>
         node.title.toLowerCase().includes(`pack of ${quantity}`) &&
         node.title.toLowerCase().includes(selectedWeight)
     )?.node;
-  
+
     setSelectedVariant(variant || null);
-    setMainImage(variant?.image?.src || ""); // Update main image
+    updateMainImage(variant?.image?.src || "");
     setIsActive(!isActive);
   };
-  
 
   const handleWeightSelection = (weight) => {
     setSelectedWeight(weight);
     setPackQuantity(1); // Reset to Pack of 1 when weight changes
-  
+
     const variant = product.variants.edges.find(
       ({ node }) =>
         node.title.toLowerCase().includes(`pack of 1`) &&
         node.title.toLowerCase().includes(weight)
     )?.node;
-  
+
     setSelectedVariant(variant || null);
-    setMainImage(variant?.image?.src || ""); // Update main image to pack of 1 variant
+    updateMainImage(variant?.image?.src || ""); // Update main image to pack of 1 variant
   };
-  
 
   const totalPrice = selectedVariant
     ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) // Use the price directly
@@ -428,9 +440,10 @@ const ProductDetails = ({ setIsLoaded }) => {
               <img src={Milkbanner} alt="" className="milking-banner" />
               {mainImage ? (
                 <img
+                  key={mainImage} // Forces React to treat the image as a new element
                   src={mainImage}
                   alt={selectedVariant?.image?.altText || "Product Image"}
-                  className="product-details-image"
+                  className={`product-details-image ${fadeClass}`}
                   crossOrigin="anonymous"
                 />
               ) : (
@@ -472,7 +485,7 @@ const ProductDetails = ({ setIsLoaded }) => {
           <h1 className="details-title">{title}</h1>
           <hr className="horizontal-line"></hr>
           <div className="amount-selection">
-            <h4 className="quantity">Weight</h4>
+            <h4 className="quantity">Size</h4>
             <div className="weight-buttons">
               <button
                 className={`Subscribe-button-pack ${
@@ -613,7 +626,7 @@ const ProductDetails = ({ setIsLoaded }) => {
               ))}
             </div>
             {/* <img src={Words1} alt="words" className="words-image" /> */}
-            <Textanim setIsLoaded={setIsLoaded} className="words-image"/>
+            <Textanim setIsLoaded={setIsLoaded} className="words-image" />
           </div>
         </div>
         <div className="metafield-ingredients">

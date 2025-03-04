@@ -26,7 +26,7 @@ import "./cards.css";
 import Sunback from "./assets/Sunback.svg";
 import EyesightIcon from "./assets/EyesightIcon.svg";
 import SunlookIcon from "./assets/SunlookIcon.svg";
-import Aboutfooteranimation from "./assets/1.gif";
+import Aboutfooteranimation from "./assets/About-footer.gif";
 import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import Copyrightline from "./assets/Line 23.svg";

@@ -101,12 +101,12 @@
 }
 
 .protein-image1 {
-  width: 80%;
+  width: 100%;
 }
 
 .milk-image1 {
   width: 30%;
-  padding-top: 10%;
+  padding-top: 5%;
 }
 
 .milk-pic-container {
@@ -539,6 +539,9 @@
   .carding-inner {
     width: 300px;
     height: 400px;
+  }
+  .about-power {
+    height: 60vh;
   }
 
   .milk-image1 {

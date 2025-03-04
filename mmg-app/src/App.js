@@ -31,7 +31,7 @@ function App() {
     const shouldShowPreload = location.pathname === '/'; // Only show preload on home page
 
     if (shouldShowPreload) {
-      const timer = setTimeout(() => setIsLoaded(true), 4000);
+      const timer = setTimeout(() => setIsLoaded(true), 6000);
       return () => clearTimeout(timer);
     } else {
       setIsLoaded(true); // Skip preload if not on home page

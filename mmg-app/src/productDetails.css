@@ -47,6 +47,18 @@
   object-fit: cover;
   padding-left: 3%;
   padding-top: 10%;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-in;
 }
 
 .product-details-right {
@@ -1031,7 +1043,7 @@
 
 .milk-image-product {
   width: 30%;
-  padding-top: 8%;
+  padding-top: 6%;
 }
 
 .chart-container {
@@ -1137,6 +1149,9 @@
 
   .Subscribe-button-pack {
     width: 28%;
+  }
+  .image-variant {
+    width: 30%;
   }
 
   .purchase-option-row {

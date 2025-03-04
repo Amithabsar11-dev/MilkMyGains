@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
 import Milk from "./assets/Slice-3.svg";
-import MilkTM from './assets/Logo-TM-1.svg';
-import MMGimage from './assets/MMG-image.svg';
+import MilkTM from "./assets/Logo-TM-1.svg";
+import MMGimage from "./assets/MMG-image.svg";
 import MilkBg from "./assets/Vector (1).png";
 import MilkBg1 from "./assets/Vector (2).png";
 import MilkBg2 from "./assets/Vector (3).png";
@@ -46,26 +46,26 @@ import Activestar from "./assets/active-star.svg";
 import Inactivestar from "./assets/inactive-star.svg";
 import Lean from "./assets/basketball.svg";
 import Yoga from "./assets/yoga.svg";
-import Orderbuttons from './assets/order-now-svg.svg'
-import Milkblur from './assets/milk-1.svg'
-import Yogartblur from './assets/yoghurt.svg'
-import Icecreamblur from './assets/ice-cream (3).svg';
-import Raisingfooter1 from './assets/raising-footer-icon-1.svg';
-import Raisingfooter2 from './assets/raising-footer-icon-2.svg';
-import Sample from './sample';
+import Orderbuttons from "./assets/order-now-svg.svg";
+import Milkblur from "./assets/milk-1.svg";
+import Yogartblur from "./assets/yoghurt.svg";
+import Icecreamblur from "./assets/ice-cream (3).svg";
+import Raisingfooter1 from "./assets/raising-footer-icon-1.svg";
+import Raisingfooter2 from "./assets/raising-footer-icon-2.svg";
+import Sample from "./sample";
 import Lottie from "lottie-react";
 import paneerAnimation from "./assets/lottie/data-1.json";
 import "./cards.css";
-import Footeranimation from './assets/Home-footer-ani.mp4';
-import Weightliftanimation from './assets/Comp 1_1.mp4';
-import Yogaanimation from './assets/Yoga_2.mp4';
-import Basketballanimation from './assets/BasketBall_1.mp4';
-import Paneercubes from './assets/paneer-cubes.svg';
-import Copyrightline from './assets/Line 23.svg';
+import Footeranimation from "./assets/Home-footer.gif";
+import Weightliftanimation from "./assets/Weight-lift.gif";
+import Yogaanimation from "./assets/Yoga.gif";
+import Basketballanimation from "./assets/BasketBall.gif";
+import Paneercubes from "./assets/paneer-cubes.svg";
+import Copyrightline from "./assets/Line 23.svg";
 
 /* Pure Protein Section */
 import ProteinCap from "./assets/protein-cap.svg";
-import './text-anim.css';
+import "./text-anim.css";
 
 /* Word Animation Section */
 import Splitting from "splitting";
@@ -86,8 +86,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   const [nextModel, setNextModel] = useState(null);
   const [isScalingUp, setIsScalingUp] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const handlePaneerClick = () =>
-    handleModelChange("/mmg1.glb", false);
+  const handlePaneerClick = () => handleModelChange("/mmg1.glb", false);
   const handleMilkClick = () => handleModelChange("/packet_1.glb", true);
   const [scrollDirection, setScrollDirection] = useState(0);
   const homeWrapperRef = useRef(null);
@@ -99,18 +98,18 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       return button === "paneer"
         ? OrderButton
         : button === "milk"
-          ? Order2Button
-          : button === "yogart"
-            ? Order2Button
-            : Order4Button;
+        ? Order2Button
+        : button === "yogart"
+        ? Order2Button
+        : Order4Button;
     } else {
       return button === "paneer"
         ? Milkblur
         : button === "milk"
-          ? Milkblur
-          : button === "yogart"
-            ? Yogartblur
-            : Icecreamblur;
+        ? Milkblur
+        : button === "yogart"
+        ? Yogartblur
+        : Icecreamblur;
     }
   };
 
@@ -125,7 +124,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   //   curve1: "M0,100 C30,90 70,90 100,100", // First smooth curve
   //   curve2: "M0,100 C50,80 50,80 100,100", // More pronounced bend
   // };
-
 
   // useEffect(() => {
   //   if (!setIsLoaded) return;
@@ -159,7 +157,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   //     .to(".overlay-path1", { attr: { d: path.curve2 }, duration: 1.5, ease: "power2.out" });
   // }, [setIsLoaded]);
 
-
   // const path = {
   //   start: "M 0 0 V 0 Q 50 0 100 0 V 0 Z", // Flat at the top
   //   curve1: "M 0 0 V 10 Q 50 20 100 10 V 0 Z", // Smaller curve
@@ -180,7 +177,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     window.addEventListener("resize", updateViewBox);
     return () => window.removeEventListener("resize", updateViewBox);
   }, []);
-
 
   const handleModelChange = (modelPath, next = true) => {
     if (currentModel !== modelPath && !isTransitioning) {
@@ -235,10 +231,14 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  //Fade In Effect 
+  //Fade In Effect
   useEffect(() => {
     if (isLoaded) {
-      gsap.to(mmgModelRef.current, { opacity: 1, duration: 1.5, ease: "power2.out" });
+      gsap.to(mmgModelRef.current, {
+        opacity: 1,
+        duration: 1.5,
+        ease: "power2.out",
+      });
     } else {
       gsap.set(mmgModelRef.current, { opacity: 0 });
     }
@@ -389,7 +389,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     };
   }, [setIsLoaded]);
 
-
   useEffect(() => {
     if (!setIsLoaded) return;
 
@@ -413,7 +412,11 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     );
 
     // Step 2: Move "RAISING" left & "THE BAR" right
-    tl.to(".raising", { x: "-150px", duration: 1, ease: "power2.out" }, "-=0.5");
+    tl.to(
+      ".raising",
+      { x: "-150px", duration: 1, ease: "power2.out" },
+      "-=0.5"
+    );
     tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
 
     // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
@@ -492,28 +495,29 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     });
   }, [setIsLoaded]);
 
-
   //home Bg
 
   useEffect(() => {
     if (!setIsLoaded) return;
-    gsap.utils.toArray('.lottie-animation, .milkbg1, .milkbg2, .milkbg3').forEach((element) => {
-      gsap.fromTo(
-        element,
-        { y: 0 },
-        {
-          y: -200,
-          scrollTrigger: {
-            trigger: element,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-            scroller: ".home-wrapper",
-            markers: false,
-          },
-        }
-      );
-    });
+    gsap.utils
+      .toArray(".lottie-animation, .milkbg1, .milkbg2, .milkbg3")
+      .forEach((element) => {
+        gsap.fromTo(
+          element,
+          { y: 0 },
+          {
+            y: -200,
+            scrollTrigger: {
+              trigger: element,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+              scroller: ".home-wrapper",
+              markers: false,
+            },
+          }
+        );
+      });
   }, [setIsLoaded]);
 
   //Words animation
@@ -544,14 +548,16 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       scroller: ".home-wrapper",
       onUpdate: (self) => {
         const progress = self.progress * textLength;
-        const offset = (progress % textLength); // Loop effect
+        const offset = progress % textLength; // Loop effect
 
         console.log("Start Offset:", offset); // Debug log for movement
 
         gsap.set(mainText, { attr: { startOffset: `${offset}` } });
 
         // Shift duplicate to appear as soon as the first starts disappearing
-        gsap.set(duplicateText, { attr: { startOffset: `${offset - textLength}px` } });
+        gsap.set(duplicateText, {
+          attr: { startOffset: `${offset - textLength}px` },
+        });
       },
     });
 
@@ -573,7 +579,11 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
           <img src={MilkBg3} alt="milk-bg3" className="milkbg3" /> */}
           <div className="lottie-animation">
-            <Lottie id="lottie-anim" animationData={paneerAnimation} loop={true} />
+            <Lottie
+              id="lottie-anim"
+              animationData={paneerAnimation}
+              loop={true}
+            />
           </div>
           {/* <div className="liquid-container">
             <svg
@@ -608,10 +618,20 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div> */}
           <div className="svg-order-button-container">
             <div className="svg-order-button">
-              <img src={Orderbuttons} alt="order-button-svg" className="order-button-svg" />
+              <img
+                src={Orderbuttons}
+                alt="order-button-svg"
+                className="order-button-svg"
+              />
             </div>
             <div className="liquid-text-container">
-              <a className="liquid-text" href="/product/milk-my-gains-sample-product">ORDER <br />NOW</a>
+              <a
+                className="liquid-text"
+                href="/product/milk-my-gains-sample-product"
+              >
+                ORDER <br />
+                NOW
+              </a>
             </div>
           </div>
 
@@ -626,35 +646,51 @@ const Home = ({ setIsLoaded, isLoaded }) => {
               } 
             /> */}
             <Link to="/product/milk-my-gains-sample-product">
-              <img src={MMGimage} className="paneer-button-active" alt="Milk My Gains Sample" />
+              <img
+                src={MMGimage}
+                className="paneer-button-active"
+                alt="Milk My Gains Sample"
+              />
             </Link>
             <div className="button-soon">
               <img
                 src={getButtonImage("milk")}
                 alt="milk-button"
-                className={`milk-button ${currentModel === "/packet_1.glb" ? "active" : ""
-                  }`}
-              // onClick={() => handleModelChange("/packet_1.glb", true)} // Next
+                className={`milk-button ${
+                  currentModel === "/packet_1.glb" ? "active" : ""
+                }`}
+                // onClick={() => handleModelChange("/packet_1.glb", true)} // Next
               />
-              <h3 className="coming-soon">coming <br />soon</h3>
+              <h3 className="coming-soon">
+                coming <br />
+                soon
+              </h3>
             </div>
             <div className="button-soon">
               <img
                 src={getButtonImage("yogart")}
                 alt="order-button"
-                className={`yogart-button ${activeButton === "yogart" ? "active" : ""
-                  }`}
+                className={`yogart-button ${
+                  activeButton === "yogart" ? "active" : ""
+                }`}
               />
-              <h3 className="coming-soon">coming <br />soon</h3>
+              <h3 className="coming-soon">
+                coming <br />
+                soon
+              </h3>
             </div>
             <div className="button-soon">
               <img
                 src={getButtonImage("icecream")}
                 alt="order-button"
-                className={`icecream-button ${activeButton === "icecream" ? "active" : ""
-                  }`}
+                className={`icecream-button ${
+                  activeButton === "icecream" ? "active" : ""
+                }`}
               />
-              <h3 className="coming-soon">coming <br />soon</h3>
+              <h3 className="coming-soon">
+                coming <br />
+                soon
+              </h3>
             </div>
           </div>
           <div className="mmg-model" ref={mmgModelRef} style={{ opacity: 0 }}>
@@ -717,244 +753,527 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <br /> Active Lifestyle
           </p>
         </div>
-        {
-          isMobile ? (
-            <div className="mobile-cards-container">
-              <div className="mobile-cards">
-                <div className="mobile-carding1">
+        {isMobile ? (
+          <div className="mobile-cards-container">
+            <div className="mobile-cards">
+              <div className="mobile-carding1">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border">
+                      <img
+                        src={TransparencyIcon}
+                        alt="Transparency"
+                        className="carding-icon"
+                      />
+                      <p className="carding-text">
+                        TRANSPARENCY <br /> IN EVERY DROP
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        Transparency
+                        <br /> in every drop
+                      </h1>
+                      <p className="backing-text">
+                        No secrets, no surprises. We’re upfront about every
+                        ingredient and every process, empowering you to make
+                        informed choices about your nutrition.
+                      </p>
+                      <img
+                        src={TransparencyIcon}
+                        alt="Transparency"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={TransparencyIconline}
+                        alt="New Possibilities"
+                        className="carding-icon-line1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mobile-carding2">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border">
+                      <img
+                        src={MythIcon}
+                        alt="Protein Myth"
+                        className="carding-icon"
+                      />
+                      <p className="carding-text">
+                        BREAKING THE
+                        <br /> PROTEIN MYTH
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        Breaking the
+                        <br /> Protein Myth
+                      </h1>
+                      <p className="backing-text">
+                        We’re challenging the belief that dairy can’t be high in
+                        protein and low in calories. MilkMyGains transforms
+                        dairy into a nutritional powerhouse, proving that
+                        high-quality protein doesn’t have to come with excess
+                        fat.
+                      </p>
+                      <img
+                        src={MythIcon}
+                        alt="Protein Myth"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={MythIconline}
+                        alt="New Possibilities"
+                        className="carding-icon-line2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mobile-carding3">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border">
+                      <img
+                        src={PossibilitiesIcon}
+                        alt="New Possibilities"
+                        className="carding-icon1"
+                      />
+                      <p className="carding-text">
+                        UNLOCKING NEW <br /> POSSIBILITIES
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        Unlocking new
+                        <br /> possibilities
+                      </h1>
+                      <p className="backing-text">
+                        By pushing the boundaries of dairy science, we’ve
+                        crafted products with exceptional protein levels that
+                        were once thought impossible. We’re redefining what’s
+                        achievable using only natural ingredients.
+                      </p>
+                      <img
+                        src={PossibilitiesIcon}
+                        alt="New Possibilities"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={PossibilitiesIconline}
+                        alt="New Possibilities"
+                        className="carding-icon-line3"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mobile-carding1">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border-4">
+                      <img
+                        src={EyesightIcon}
+                        alt="EyeCard"
+                        className="carding-icon-4"
+                      />
+                      <p className="carding-text-4">
+                        Tracebility you <br />
+                        can trust{" "}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        Tracebility you <br />
+                        can trust{" "}
+                      </h1>
+                      <p className="backing-text">
+                        No We believe you have the
+                        <br /> right to know where your <br />
+                        food comes from. Our <br /> transparent supply chain
+                        lets you trace each <br />
+                        product from farm to
+                        <br /> table, providing peace of
+                        <br /> mind with every bite.
+                      </p>
+                      <img
+                        src={MythIcon}
+                        alt="EyeCard"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={MythIconline}
+                        alt="eyecard-line"
+                        className="carding-icon-line1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mobile-carding1">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border-4">
+                      <img
+                        src={SunlookIcon}
+                        alt="Protein Myth"
+                        className="carding-icon-4"
+                      />
+                      <p className="carding-text-4">
+                        QUALITY BEGINS
+                        <br /> AT SOURCE
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        QUALITY BEGINS
+                        <br />
+                        AT SOURCE
+                      </h1>
+                      <p className="backing-text">
+                        Excellence is our standard <br />
+                        from start to finish. We
+                        <br /> source only the finest raw
+                        <br /> materials to ensure that
+                        <br /> every MilkMyGains product
+                        <br /> offers superior nutrition and
+                        <br /> taste.
+                      </p>
+                      <img
+                        src={Sunback}
+                        alt="Protein Myth"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={TransparencyIconline}
+                        alt="New Possibilities"
+                        className="carding-icon-line5"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="parent">
+            <div className="circle-container">
+              <div className="circle" ref={circleRef}>
+                {/* card-3 */}
+                <div className="box carding3">
                   <div className="carding-inner">
                     <div className="carding-front">
                       <div className="carding-border">
-                        <img src={TransparencyIcon} alt="Transparency" className="carding-icon" />
-                        <p className="carding-text">TRANSPARENCY <br /> IN EVERY DROP</p>
+                        <img
+                          src={PossibilitiesIcon}
+                          alt="New Possibilities"
+                          className="carding-icon1"
+                        />
+                        <p className="carding-text">
+                          UNLOCKING NEW <br /> POSSIBILITIES
+                        </p>
                       </div>
                     </div>
                     <div className="carding-back">
                       <div className="carding-border1">
-                        <h1 className="backing-heading">Transparency<br /> in every drop</h1>
-                        <p className="backing-text">No secrets, no surprises. We’re upfront about every ingredient and every process, empowering you to make informed choices about your nutrition.</p>
-                        <img src={TransparencyIcon} alt="Transparency" className="carding-icon-image" />
-                        <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line1" />
+                        <h1 className="backing-heading">
+                          Unlocking new
+                          <br /> possibilities
+                        </h1>
+                        <p className="backing-text">
+                          By pushing the boundaries of dairy science, we’ve
+                          crafted products with exceptional protein levels that
+                          were once thought impossible. We’re redefining what’s
+                          achievable using only natural ingredients.
+                        </p>
+                        <img
+                          src={PossibilitiesIcon}
+                          alt="New Possibilities"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={PossibilitiesIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line3"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="mobile-carding2">
-                  <div className="carding-inner">
-                    <div className="carding-front">
-                      <div className="carding-border">
-                        <img src={MythIcon} alt="Protein Myth" className="carding-icon" />
-                        <p className="carding-text">BREAKING THE<br /> PROTEIN MYTH</p>
-                      </div>
-                    </div>
-                    <div className="carding-back">
-                      <div className="carding-border1">
-                        <h1 className="backing-heading">Breaking the<br /> Protein Myth</h1>
-                        <p className="backing-text">We’re challenging the belief that dairy can’t be high in protein and low in calories. MilkMyGains transforms dairy into a nutritional powerhouse, proving that high-quality protein doesn’t have to come with excess fat.</p>
-                        <img src={MythIcon} alt="Protein Myth" className="carding-icon-image" />
-                        <img src={MythIconline} alt="New Possibilities" className="carding-icon-line2" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mobile-carding3">
-                  <div className="carding-inner">
-                    <div className="carding-front">
-                      <div className="carding-border">
-                        <img src={PossibilitiesIcon} alt="New Possibilities" className="carding-icon1" />
-                        <p className="carding-text">UNLOCKING NEW <br /> POSSIBILITIES</p>
-                      </div>
-                    </div>
-                    <div className="carding-back">
-                      <div className="carding-border1">
-                        <h1 className="backing-heading">Unlocking new<br /> possibilities</h1>
-                        <p className="backing-text">By pushing the boundaries of dairy science, we’ve crafted products with exceptional protein levels that were once thought impossible. We’re redefining what’s achievable using only natural ingredients.</p>
-                        <img src={PossibilitiesIcon} alt="New Possibilities" className="carding-icon-image" />
-                        <img src={PossibilitiesIconline} alt="New Possibilities" className="carding-icon-line3" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mobile-carding1">
+                {/* card-4 */}
+                <div className="box carding4">
                   <div className="carding-inner">
                     <div className="carding-front">
                       <div className="carding-border-4">
-                        <img src={EyesightIcon} alt="EyeCard" className="carding-icon-4" />
-                        <p className="carding-text-4">Tracebility you <br />can trust </p>
+                        <img
+                          src={EyesightIcon}
+                          alt="EyeCard"
+                          className="carding-icon-4"
+                        />
+                        <p className="carding-text-4">
+                          Tracebility you <br />
+                          can trust{" "}
+                        </p>
                       </div>
                     </div>
                     <div className="carding-back">
                       <div className="carding-border1">
-                        <h1 className="backing-heading">Tracebility you <br />can trust </h1>
-                        <p className="backing-text">No We believe you have the<br /> right to know where your <br />food comes from. Our <br /> transparent supply chain lets you trace each <br />product from farm to<br /> table, providing peace of<br /> mind with every bite.</p>
-                        <img src={MythIcon} alt="EyeCard" className="carding-icon-image" />
-                        <img src={MythIconline} alt="eyecard-line" className="carding-icon-line1" />
+                        <h1 className="backing-heading">
+                          Tracebility you <br />
+                          can trust{" "}
+                        </h1>
+                        <p className="backing-text">
+                          No We believe you have the
+                          <br /> right to know where your <br />
+                          food comes from. Our <br /> transparent supply chain
+                          lets you trace each <br />
+                          product from farm to
+                          <br /> table, providing peace of
+                          <br /> mind with every bite.
+                        </p>
+                        <img
+                          src={MythIcon}
+                          alt="EyeCard"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={MythIconline}
+                          alt="eyecard-line"
+                          className="carding-icon-line1"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="mobile-carding1">
+                {/* card-5 */}
+                <div className="box carding5">
                   <div className="carding-inner">
                     <div className="carding-front">
                       <div className="carding-border-4">
-                        <img src={SunlookIcon} alt="Protein Myth" className="carding-icon-4" />
-                        <p className="carding-text-4">QUALITY BEGINS<br /> AT SOURCE</p>
+                        <img
+                          src={SunlookIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-4"
+                        />
+                        <p className="carding-text-4">
+                          QUALITY BEGINS
+                          <br /> AT SOURCE
+                        </p>
                       </div>
                     </div>
                     <div className="carding-back">
                       <div className="carding-border1">
-                        <h1 className="backing-heading">QUALITY BEGINS<br />AT SOURCE</h1>
-                        <p className="backing-text">Excellence is our standard <br />from start to finish. We<br /> source only the finest raw<br /> materials to ensure that<br /> every MilkMyGains product<br /> offers superior nutrition and<br /> taste.</p>
-                        <img src={Sunback} alt="Protein Myth" className="carding-icon-image" />
-                        <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line5" />
+                        <h1 className="backing-heading">
+                          QUALITY BEGINS
+                          <br />
+                          AT SOURCE
+                        </h1>
+                        <p className="backing-text">
+                          Excellence is our standard <br />
+                          from start to finish. We
+                          <br /> source only the finest raw
+                          <br /> materials to ensure that
+                          <br /> every MilkMyGains product
+                          <br /> offers superior nutrition and
+                          <br /> taste.
+                        </p>
+                        <img
+                          src={Sunback}
+                          alt="Protein Myth"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={TransparencyIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line5"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* card-6 */}
+                <div className="box carding6">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          TRANSPARENCY <br /> IN EVERY DROP
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Transparency
+                          <br /> in every drop
+                        </h1>
+                        <p className="backing-text">
+                          No secrets, no surprises. We’re upfront about every
+                          ingredient and every process, empowering you to make
+                          informed choices about your nutrition.
+                        </p>
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={TransparencyIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* card-7 */}
+                <div className="box carding7">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          BREAKING THE
+                          <br /> PROTEIN MYTH
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Breaking the
+                          <br /> Protein Myth
+                        </h1>
+                        <p className="backing-text">
+                          We’re challenging the belief that dairy can’t be high
+                          in protein and low in calories. MilkMyGains transforms
+                          dairy into a nutritional powerhouse, proving that
+                          high-quality protein doesn’t have to come with excess
+                          fat.
+                        </p>
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={MythIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* card-1 */}
+                <div className="box carding1">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          TRANSPARENCY <br /> IN EVERY DROP
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Transparency
+                          <br /> in every drop
+                        </h1>
+                        <p className="backing-text">
+                          No secrets, no surprises. We’re upfront about every
+                          ingredient and every process, empowering you to make
+                          informed choices about your nutrition.
+                        </p>
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={TransparencyIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* card-2 */}
+                <div className="box carding2">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          BREAKING THE
+                          <br /> PROTEIN MYTH
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Breaking the
+                          <br /> Protein Myth
+                        </h1>
+                        <p className="backing-text">
+                          We’re challenging the belief that dairy can’t be high
+                          in protein and low in calories. MilkMyGains transforms
+                          dairy into a nutritional powerhouse, proving that
+                          high-quality protein doesn’t have to come with excess
+                          fat.
+                        </p>
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={MythIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line2"
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="parent">
-              <div className="circle-container">
-                <div className="circle" ref={circleRef}>
-                  {/* card-3 */}
-                  <div className="box carding3">
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border">
-                          <img src={PossibilitiesIcon} alt="New Possibilities" className="carding-icon1" />
-                          <p className="carding-text">UNLOCKING NEW <br /> POSSIBILITIES</p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">Unlocking new<br /> possibilities</h1>
-                          <p className="backing-text">By pushing the boundaries of dairy science, we’ve crafted products with exceptional protein levels that were once thought impossible. We’re redefining what’s achievable using only natural ingredients.</p>
-                          <img src={PossibilitiesIcon} alt="New Possibilities" className="carding-icon-image" />
-                          <img src={PossibilitiesIconline} alt="New Possibilities" className="carding-icon-line3" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* card-4 */}
-                  <div className="box carding4" >
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border-4">
-                          <img src={EyesightIcon} alt="EyeCard" className="carding-icon-4" />
-                          <p className="carding-text-4">Tracebility you <br />can trust </p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">Tracebility you <br />can trust </h1>
-                          <p className="backing-text">No We believe you have the<br /> right to know where your <br />food comes from. Our <br /> transparent supply chain lets you trace each <br />product from farm to<br /> table, providing peace of<br /> mind with every bite.</p>
-                          <img src={MythIcon} alt="EyeCard" className="carding-icon-image" />
-                          <img src={MythIconline} alt="eyecard-line" className="carding-icon-line1" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* card-5 */}
-                  <div className="box carding5">
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border-4">
-                          <img src={SunlookIcon} alt="Protein Myth" className="carding-icon-4" />
-                          <p className="carding-text-4">QUALITY BEGINS<br /> AT SOURCE</p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">QUALITY BEGINS<br />AT SOURCE</h1>
-                          <p className="backing-text">Excellence is our standard <br />from start to finish. We<br /> source only the finest raw<br /> materials to ensure that<br /> every MilkMyGains product<br /> offers superior nutrition and<br /> taste.</p>
-                          <img src={Sunback} alt="Protein Myth" className="carding-icon-image" />
-                          <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line5" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* card-6 */}
-                  <div className="box carding6">
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border">
-                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon" />
-                          <p className="carding-text">TRANSPARENCY <br /> IN EVERY DROP</p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">Transparency<br /> in every drop</h1>
-                          <p className="backing-text">No secrets, no surprises. We’re upfront about every ingredient and every process, empowering you to make informed choices about your nutrition.</p>
-                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon-image" />
-                          <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line1" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* card-7 */}
-                  <div className="box carding7" >
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border">
-                          <img src={MythIcon} alt="Protein Myth" className="carding-icon" />
-                          <p className="carding-text">BREAKING THE<br /> PROTEIN MYTH</p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">Breaking the<br /> Protein Myth</h1>
-                          <p className="backing-text">We’re challenging the belief that dairy can’t be high in protein and low in calories. MilkMyGains transforms dairy into a nutritional powerhouse, proving that high-quality protein doesn’t have to come with excess fat.</p>
-                          <img src={MythIcon} alt="Protein Myth" className="carding-icon-image" />
-                          <img src={MythIconline} alt="New Possibilities" className="carding-icon-line2" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* card-1 */}
-                  <div className="box carding1">
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border">
-                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon" />
-                          <p className="carding-text">TRANSPARENCY <br /> IN EVERY DROP</p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">Transparency<br /> in every drop</h1>
-                          <p className="backing-text">No secrets, no surprises. We’re upfront about every ingredient and every process, empowering you to make informed choices about your nutrition.</p>
-                          <img src={TransparencyIcon} alt="Transparency" className="carding-icon-image" />
-                          <img src={TransparencyIconline} alt="New Possibilities" className="carding-icon-line1" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* card-2 */}
-                  <div className="box carding2" >
-                    <div className="carding-inner">
-                      <div className="carding-front">
-                        <div className="carding-border">
-                          <img src={MythIcon} alt="Protein Myth" className="carding-icon" />
-                          <p className="carding-text">BREAKING THE<br /> PROTEIN MYTH</p>
-                        </div>
-                      </div>
-                      <div className="carding-back">
-                        <div className="carding-border1">
-                          <h1 className="backing-heading">Breaking the<br /> Protein Myth</h1>
-                          <p className="backing-text">We’re challenging the belief that dairy can’t be high in protein and low in calories. MilkMyGains transforms dairy into a nutritional powerhouse, proving that high-quality protein doesn’t have to come with excess fat.</p>
-                          <img src={MythIcon} alt="Protein Myth" className="carding-icon-image" />
-                          <img src={MythIconline} alt="New Possibilities" className="carding-icon-line2" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        }
+          </div>
+        )}
         <div className="know-button-container">
           <button class="know-button">KNOW MORE</button>
         </div>
@@ -984,13 +1303,33 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             </h1>
             {/* <img src={Words} alt="words" className=" words" /> */}
             <div className="svg-container">
-              <svg width="681" height="543" viewBox={viewBox} fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill="none" id="curve" d="M0.5 174.001C79 -95.4996 332.5 -7.99936 349 155.5C365.5 319 452 337.501 578.5 337.501C705 337.501 692.5 480.334 654 542.501" />
+              <svg
+                width="681"
+                height="543"
+                viewBox={viewBox}
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="none"
+                  id="curve"
+                  d="M0.5 174.001C79 -95.4996 332.5 -7.99936 349 155.5C365.5 319 452 337.501 578.5 337.501C705 337.501 692.5 480.334 654 542.501"
+                />
                 <text>
-                  <textPath ref={(el) => (textPathRefs.current[0] = el)} className="" startOffset="0%" href="#curve">
+                  <textPath
+                    ref={(el) => (textPathRefs.current[0] = el)}
+                    className=""
+                    startOffset="0%"
+                    href="#curve"
+                  >
                     Your daily dairy keeps you energized all day long &nbsp;
                   </textPath>
-                  <textPath ref={(el) => (textPathRefs.current[1] = el)} className=" duplicate-text" startOffset="100%" href="#curve">
+                  <textPath
+                    ref={(el) => (textPathRefs.current[1] = el)}
+                    className=" duplicate-text"
+                    startOffset="100%"
+                    href="#curve"
+                  >
                     Your daily dairy keeps you energized all day long &nbsp;
                   </textPath>
                 </text>
@@ -998,10 +1337,20 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             </div>
             <div className="svg-order-button-container-1">
               <div className="svg-order-button">
-                <img src={Orderbuttons} alt="order-button-svg" className="order-button-svg" />
+                <img
+                  src={Orderbuttons}
+                  alt="order-button-svg"
+                  className="order-button-svg"
+                />
               </div>
               <div className="liquid-text-container">
-                <a className="liquid-text-1" href="/product/milk-my-gains-sample-product">ORDER <br />NOW</a>
+                <a
+                  className="liquid-text-1"
+                  href="/product/milk-my-gains-sample-product"
+                >
+                  ORDER <br />
+                  NOW
+                </a>
               </div>
             </div>
 
@@ -1040,37 +1389,33 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
           <div className="col-sm-6">
             <img src={ProteinCap} alt="protein-cap" className="protein-cap" />
-            {
-              isMobile ? (
-                <div class="content-protein">
-                  <h1
-                    className="pure-heading"
-                  >
-                    PURE
-                    <br /> PROTEIN.
-                    <br /> ZERO
-                    <br /> COMPRO-
-                    <br />
-                    MISE.
-                  </h1>
-                </div>
-              ) : (
-                <div class="content">
-                  <h1
-                    className="pure-heading content__title"
-                    data-splitting
-                    data-effect18
-                  >
-                    PURE
-                    <br /> PROTEIN.
-                    <br /> ZERO
-                    <br /> COMPRO-
-                    <br />
-                    MISE.
-                  </h1>
-                </div>
-              )
-            }
+            {isMobile ? (
+              <div class="content-protein">
+                <h1 className="pure-heading">
+                  PURE
+                  <br /> PROTEIN.
+                  <br /> ZERO
+                  <br /> COMPRO-
+                  <br />
+                  MISE.
+                </h1>
+              </div>
+            ) : (
+              <div class="content">
+                <h1
+                  className="pure-heading content__title"
+                  data-splitting
+                  data-effect18
+                >
+                  PURE
+                  <br /> PROTEIN.
+                  <br /> ZERO
+                  <br /> COMPRO-
+                  <br />
+                  MISE.
+                </h1>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -1078,33 +1423,29 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       {/* Power Of Protein*/}
       <div className="power-wrapper">
         <div className="power-container bg-white">
-          <h1 className="power-space-heading">THE POWER OF<br /> PROTEIN</h1>
+          <h1 className="power-space-heading">
+            THE POWER OF
+            <br /> PROTEIN
+          </h1>
           <div className="power-space-width">
             <div className="power-space">
               <div className="row row-build">
                 <div className="col-sm-6 build-text">
-                  {
-                    isMobile ? (
-                      <div className="content-power">
-                        <h1
-                          className="power-heading"
-                        >
-                          BUILD
-                          MUSCLE
-                        </h1>
-                      </div>
-                    ) : (
-                      <div className="content">
-                        <h1
-                          className="power-heading content__title content__title--small"
-                          data-splitting
-                          data-effect1
-                        >
-                          BUILD MUSCLE
-                        </h1>
-                      </div>
-                    )
-                  }
+                  {isMobile ? (
+                    <div className="content-power">
+                      <h1 className="power-heading">BUILD MUSCLE</h1>
+                    </div>
+                  ) : (
+                    <div className="content">
+                      <h1
+                        className="power-heading content__title content__title--small"
+                        data-splitting
+                        data-effect1
+                      >
+                        BUILD MUSCLE
+                      </h1>
+                    </div>
+                  )}
                   <div className="build-container">
                     {/* <div className="star-container">
                     <img src={Starbuild} className="star-build" />
@@ -1124,8 +1465,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <video
-                    autoPlay loop muted playsInline
+                  <img
                     src={Weightliftanimation}
                     className="weight-lift"
                     alt="weight-lift"
@@ -1141,46 +1481,37 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <div className="power-space1">
               <div className="row row-build">
                 <div className="col-sm-6 build-text">
-                  {
-                    isMobile ? (
-                      <div className="content-power">
-                        <h1
-                          className="power-heading"
-                        >
-                          STAY LEAN
-                        </h1>
-                      </div>
-                    ) : (
-                      <div className="content">
-                        <h1
-                          className="power-heading content__title content__title--small"
-                          data-splitting
-                          data-effect1
-                        >
-                          STAY LEAN
-                        </h1>
-                      </div>
-                    )
-                  }
+                  {isMobile ? (
+                    <div className="content-power">
+                      <h1 className="power-heading">STAY LEAN</h1>
+                    </div>
+                  ) : (
+                    <div className="content">
+                      <h1
+                        className="power-heading content__title content__title--small"
+                        data-splitting
+                        data-effect1
+                      >
+                        STAY LEAN
+                      </h1>
+                    </div>
+                  )}
                   <div className="build-container build-para-align">
                     {/* <div className="star-container">
                     <img src={Starbuild} className="star-build" />
                     <h1 className="build">STAY LEAN</h1>
                   </div> */}
                     <p className="build-para">
-                      Protein aids fat loss by increasing
-                      fullness and boosting metabolism. It
-                      requires more energy to digest than carbs
-                      or fats, making it doubly effective for
-                      fat loss. The most satiating
-                      macronutrient that supports a lean and
-                      healthier body composition.
+                      Protein aids fat loss by increasing fullness and boosting
+                      metabolism. It requires more energy to digest than carbs
+                      or fats, making it doubly effective for fat loss. The most
+                      satiating macronutrient that supports a lean and healthier
+                      body composition.
                     </p>
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <video
-                    autoPlay loop muted playsInline
+                  <img
                     src={Basketballanimation}
                     className="weight-lift1"
                     alt="weight-lift"
@@ -1196,43 +1527,35 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <div className="power-space2">
               <div className="row row-build">
                 <div className="col-sm-6 build-text">
-                  {
-                    isMobile ? (
-                      <div className="content-power">
-                        <h1
-                          className="power-heading"
-                        >ENHANCE BEAUTY
-                        </h1>
-                      </div>
-                    ) : (
-                      <div className="content">
-                        <h1
-                          className="power-heading content__title content__title--small"
-                          data-splitting
-                          data-effect1
-                        >
-                          ENHANCE BEAUTY
-                        </h1>
-                      </div>
-                    )
-                  }
+                  {isMobile ? (
+                    <div className="content-power">
+                      <h1 className="power-heading">ENHANCE BEAUTY</h1>
+                    </div>
+                  ) : (
+                    <div className="content">
+                      <h1
+                        className="power-heading content__title content__title--small"
+                        data-splitting
+                        data-effect1
+                      >
+                        ENHANCE BEAUTY
+                      </h1>
+                    </div>
+                  )}
                   <div className="build-container build-para-align">
                     {/* <div className="star-container">
                     <img src={Starbuild} className="star-build" />
                     <h1 className="build">ENHANCE BEAUTY</h1>
                   </div> */}
                     <p className="build-para">
-                      A high-protein diet nourishes skin,
-                      strengthens nails, and promotes vibrant
-                      hair, enhancing beauty from within and
-                      contributing to a radiant, healthy
-                      appearance.
+                      A high-protein diet nourishes skin, strengthens nails, and
+                      promotes vibrant hair, enhancing beauty from within and
+                      contributing to a radiant, healthy appearance.
                     </p>
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <video
-                    autoPlay loop muted playsInline
+                  <img
                     src={Yogaanimation}
                     className="weight-lift3"
                     alt="weight-lift"
@@ -1252,42 +1575,56 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       </div>
 
       {/* Raising the star */}
-      {
-        isMobile ? (
-          <div className="animations-container">
-            <div className="texting-wrapper-1">
-              <h1 className="raising-1">RAISING</h1>
-              <div className="middle-texting">
-                <span className="high-proteins-1">HIGH PROTEINS</span>
-                <br />
-                <span className="low-proteins-1">LOW CALORIES</span>
-              </div>
-              <h1 className="bar-proteins-1">THE BAR</h1>
+      {isMobile ? (
+        <div className="animations-container">
+          <div className="texting-wrapper-1">
+            <h1 className="raising-1">RAISING</h1>
+            <div className="middle-texting">
+              <span className="high-proteins-1">HIGH PROTEINS</span>
+              <br />
+              <span className="low-proteins-1">LOW CALORIES</span>
             </div>
+            <h1 className="bar-proteins-1">THE BAR</h1>
           </div>
-        ) : (
-          <div className="animation-container">
-            <div className="text-wrapper">
-              <h1 className="raising">RAISING</h1>
-              <div className="middle-text">
-                <span className="high">HIGH PROTEIN</span>
-                <br />
-                <span className="low">LOW CALORIES</span>
-              </div>
-              <h1 className="bar-1">THE BAR</h1>
+        </div>
+      ) : (
+        <div className="animation-container">
+          <div className="text-wrapper">
+            <h1 className="raising">RAISING</h1>
+            <div className="middle-text">
+              <span className="high">HIGH PROTEIN</span>
+              <br />
+              <span className="low">LOW CALORIES</span>
             </div>
+            <h1 className="bar-1">THE BAR</h1>
           </div>
-        )
-      }
+        </div>
+      )}
       {/* Comparision Table */}
       <Sample />
 
       {/* Table Icon */}
       <div className="table-icons">
-        <img src={Raisingfooter1} className="raising-footer-1" alt="raising-footer" />
-        <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
-        <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
-        <img src={Raisingfooter2} className="raising-footer-2" alt="raising-footer" />
+        <img
+          src={Raisingfooter1}
+          className="raising-footer-1"
+          alt="raising-footer"
+        />
+        <img
+          src={Raisingfooter2}
+          className="raising-footer-2"
+          alt="raising-footer"
+        />
+        <img
+          src={Raisingfooter2}
+          className="raising-footer-2"
+          alt="raising-footer"
+        />
+        <img
+          src={Raisingfooter2}
+          className="raising-footer-2"
+          alt="raising-footer"
+        />
       </div>
 
       {/* <div className="table-container">
@@ -1341,7 +1678,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
         </table>
       </div> */}
 
-
       {/* Wholesome Section */}
       <div className="wholesome-container pb-5">
         <div className="wholesome-heading">
@@ -1385,10 +1721,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           />
         </svg> */}
         <div className="milk-pic-container">
-          <video autoPlay loop muted playsInline className="protein-image">
-            <source src={Footeranimation} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <img src={Footeranimation} className="protein-image" />
         </div>
 
         <div className="milk-pic-container">
@@ -1412,44 +1745,68 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/product/milk-my-gains-sample-product"
-                >SHOP</a></li>
+                >
+                  SHOP
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/about"
-                >ABOUT US</a></li>
+                >
+                  ABOUT US
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/faq"
-                >FAQ</a></li>
+                >
+                  FAQ
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/contact"
-                >CONTACT</a></li>
+                >
+                  CONTACT
+                </a>
+              </li>
             </ul>
             <ul className="footer-links-1">
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/shipping"
-                >SHIPPING</a></li>
+                >
+                  SHIPPING
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/refund"
-                >REFUND & RETURNS</a></li>
+                >
+                  REFUND & RETURNS
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/terms"
-                >TERMS & CONDITIONS</a></li>
+                >
+                  TERMS & CONDITIONS
+                </a>
+              </li>
               <li>
                 <a
                   style={{ textDecoration: "none", color: "white" }}
                   href="/privacy"
-                >PRIVACY POLICY</a></li>
+                >
+                  PRIVACY POLICY
+                </a>
+              </li>
             </ul>
           </div>
         </div>
