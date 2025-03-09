@@ -26,32 +26,25 @@ function App() {
   const [isPreloadEnabled, setIsPreloadEnabled] = useState(true);
   const location = useLocation();
 
-  // Handle preloading logic for the home page
   useEffect(() => {
-    const shouldShowPreload = location.pathname === '/'; // Only show preload on home page
-
-    if (shouldShowPreload) {
-      const timer = setTimeout(() => setIsLoaded(true), 6000);
-      return () => clearTimeout(timer);
-    } else {
-      setIsLoaded(true); // Skip preload if not on home page
+    const shouldShowPreload = location.pathname === '/';
+    setIsPreloadEnabled(shouldShowPreload);
+  
+    if (!shouldShowPreload) {
+      setIsLoaded(true); // Ensure non-home pages are always visible
     }
-  }, [location.pathname, isPreloadEnabled]);
-
+  }, [location.pathname]);
+  
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 768px)');
-    setIsPreloadEnabled(mediaQuery.matches);
-
-    const listener = (event) => {
-      setIsPreloadEnabled(event.matches);
-    };
-
-    mediaQuery.addEventListener('change', listener);
-
-    return () => {
-      mediaQuery.removeEventListener('change', listener);
-    };
-  }, []);
+    if (isPreloadEnabled) {
+      const timer = setTimeout(() => {
+        setIsLoaded(true);
+      }, 6000);
+  
+      return () => clearTimeout(timer);  // ✅ Cleanup timer to avoid memory leaks
+    }
+  }, [isPreloadEnabled]);
+  
 
   return (
     <CartProvider>
@@ -61,24 +54,24 @@ function App() {
             <Preload />
           </div>
         )}
-        <div className={`home-wrapper ${isLoaded ? 'visible' : ''}`}>
-            <Header />
-            <Routes>
-              <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/products" element={<ProductPage isLoaded={isLoaded} setIsLoaded={setIsLoaded}/>} />
-              <Route path="/product/:handle" element={<ProductDetails isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/faq" element={<FAQ isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/about" element={<About isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/contact" element={<Contact isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/terms" element={<Terms isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/shipping" element={<Shipping isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/privacy" element={<Privacy isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/text" element={<Textanim isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/textanimation" element={<Textanimation isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-              <Route path="/raising" element={<Raising isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
-            </Routes>
+        <div className={`home-wrapper ${isLoaded? 'visible' : ''}`}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/products" element={<ProductPage isLoaded={isLoaded} setIsLoaded={setIsLoaded}/>} />
+            <Route path="/product/:handle" element={<ProductDetails isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/faq" element={<FAQ isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/about" element={<About isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/contact" element={<Contact isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/terms" element={<Terms isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/shipping" element={<Shipping isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/privacy" element={<Privacy isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/refund" element={<Refund isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/cards" element={<Cards isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/text" element={<Textanim isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/textanimation" element={<Textanimation isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+            <Route path="/raising" element={<Raising isLoaded={isLoaded} setIsLoaded={setIsLoaded} />} />
+          </Routes>
         </div>
       </div>
     </CartProvider>

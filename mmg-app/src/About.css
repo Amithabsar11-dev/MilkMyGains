@@ -31,8 +31,10 @@
 }
 
 .about-protein {
-  background: url("./assets//background.png");
+  background: url("./assets//about\ page.png");
   padding-top: 15%;
+  background-size: auto;
+  background-repeat: no-repeat;
 }
 
 .about-para {
@@ -66,7 +68,7 @@
 }
 
 .about-challenge {
-  padding-top: 8%;
+  /* padding-top: 8%; */
 }
 
 .about-nutrition {
@@ -80,10 +82,10 @@
 }
 
 .about-join-container {
-  background-image: url("./assets/Frame 75.png");
+  background-image: url("./assets/about\ page\ -\ footer.png");
   background-size: cover;
   position: relative;
-  padding-top: 5%;
+  padding-top: 25%;
 }
 
 .about-join-container {
@@ -106,7 +108,7 @@
 
 .milk-image1 {
   width: 30%;
-  padding-top: 5%;
+  padding-top: 4%;
 }
 
 .milk-pic-container {
@@ -120,7 +122,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 5%;
-  padding-bottom: 10%;
+  padding-bottom: 20%;
   position: sticky;
   top: 10%;
 }
@@ -385,6 +387,18 @@
   margin-bottom: 20px;
   padding-top: 20%;
 }
+.carding-icon-6 {
+  width: 100%;
+  margin-bottom: 75px;
+  padding: 20px;
+  padding-top: 60px;
+}
+.carding-icon-5 {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 35px;
+  padding-top: 55px;
+}
 
 .carding-text {
   font-size: 34px;
@@ -394,7 +408,6 @@
 }
 
 .carding-text-4 {
-  margin-bottom: 0;
   font-size: 34px;
   font-weight: bold;
   font-family: "Anybody_Condensed";
@@ -443,7 +456,7 @@
 }
 
 .carding-icon-line2 {
-  width: 70%;
+  width: 50%;
   position: absolute;
   bottom: 27%;
 }
@@ -451,7 +464,7 @@
 .carding-icon-line3 {
   width: 25%;
   position: absolute;
-  bottom: 20%;
+  bottom: 16%;
 }
 
 .carding-icon-line5 {
@@ -468,9 +481,53 @@
   transform: rotateY(180deg);
 }
 .mobile-cards-container {
-  display: flex;
-  padding-left: 15%;
+  position: relative;
+  height: 55vh;
+  overflow: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Hide scrollbar */
 }
+.carousel-container {
+  position: relative;
+}
+.arrow {
+  top: 38%;
+}
+
+.mobile-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 70px;
+  height: 50%;
+  padding-left: 17%;
+  padding-right: 15%;
+  width: max-content;
+  will-change: transform; /* Optimized animation */
+}
+
+.arrow img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  /* bottom: 100%; */
+  /* border: 1px solid black; */
+  border-radius: 50px;
+}
+
+.arrow.left {
+  left: 0%;
+}
+
+.arrow.right {
+  right: 8%;
+}
+
+.arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .mobile-carding1,
 .mobile-carding2,
 .mobile-carding3,
@@ -526,26 +583,31 @@
 
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .about-heading {
-    font-size: 50px;
-    line-height: 3rem;
+    font-size: 40px;
+    line-height: 2.5rem;
+    font-style: normal;
   }
   .about-protein {
-    padding-top: 40%;
+    padding-top: 60%;
+    /* background-image: url("./assets/iPhone\ mobb.png"); */
+    height: 185vh;
+    background-size: 145% 100%;
+    background-position: top center;
   }
   .pin-spacer {
     padding: 0 !important;
     height: 550px !important;
   }
   .carding-inner {
-    width: 300px;
-    height: 400px;
+    width: 260px;
+    height: 370px;
   }
   .about-power {
-    height: 60vh;
+    height: 65vh;
   }
 
   .milk-image1 {
-    width: 60%;
+    width: 55%;
   }
 
   .star-icon,
@@ -555,26 +617,70 @@
   .drop-icon {
     width: 5%;
   }
+  .icon-paradigm {
+    display: none;
+  }
 
+  .carding-text {
+    font-size: 25px;
+    font-family: "Anybody_Condensed";
+    line-height: 1.5rem;
+  }
+  .carding-text-4 {
+    font-size: 25px;
+    font-family: "Anybody_Condensed";
+    line-height: 1.5rem;
+  }
+
+  .mobile-carding1 {
+    transform: none !important;
+  }
   .about-para {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.3rem;
     padding: 5px;
+    padding-left: 4%;
+    padding-right: 4%;
+  }
+
+  .backing-text {
+    font-size: 13px;
+    line-height: 1.6rem;
+  }
+
+  .about-lifestyle {
+    padding-bottom: 30%;
   }
 
   .about-header {
-    font-size: 50px;
-    line-height: 3rem;
+    font-size: 40px;
+    line-height: 2.5rem;
+    font-style: normal;
+    padding-top: 10%;
   }
-
+  .carding-front,
+  .carding-back {
+    height: 96%;
+  }
+  .carding-text,
+  .carding-text-4 {
+    margin-bottom: 2rem;
+  }
   .card.active {
     width: fit-content;
     display: block;
+  }
+  #card-2 .card-image {
+    width: 110px;
+  }
+  .about-challenge {
+    padding-bottom: 15%;
   }
 
   .card.active .text-section {
     width: 100% !important;
     height: auto !important;
+    border: none;
   }
 
   .card-image {
@@ -582,13 +688,17 @@
   }
 
   .card-text {
-    font-size: 12px;
+    font-size: 8px;
   }
 
   .card.active .card-title {
     left: 8%;
     padding-top: 10px;
     font-size: 20px;
+  }
+  .card-title,
+  .card-number {
+    font-style: normal;
   }
 
   .card.active .card-text {
@@ -610,27 +720,46 @@
   }
 
   #card-3 .card-image {
-    width: 215px;
+    width: 150px;
     transform: none;
   }
 
   .about-subheading {
-    font-size: 20px;
+    font-size: 18px;
+    font-style: normal;
   }
 
   .about-nutrition {
-    font-size: 50px;
-    line-height: 3rem;
+    font-size: 40px;
+    line-height: 2.5rem;
+    font-style: normal;
   }
-
+  .backing-heading {
+    font-size: 25px;
+    font-family: "Anybody_Condensed";
+    margin-bottom: 0;
+  }
   .about-para1 {
-    font-size: 15px;
-    padding-top: 0%;
+    font-size: 14px;
     line-height: 1.5rem;
+    padding-left: 3%;
+    padding-right: 3%;
   }
   .about-join-container {
     background-position: 100%;
+    background-image: url("./assets//about-curve.png");
     margin-bottom: 16%;
+    position: relative;
+    background-size: 100% 112%;
+  }
+  .protein-image1 {
+    width: 115%;
+  }
+  .footer-about-shop {
+    margin-bottom: 20% !important;
+  }
+  .signup-about {
+    bottom: -3% !important;
   }
 }
 
@@ -642,5 +771,10 @@
 @media only screen and (max-width: 2200px) and (min-width: 1700px) {
   .about-join-container {
     background-position: 100%;
+  }
+}
+@media only screen and (max-width: 1750px) and (min-width: 1650px) {
+  .milk-image1 {
+    padding-top: 2%;
   }
 }

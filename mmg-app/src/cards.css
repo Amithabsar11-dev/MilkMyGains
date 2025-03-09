@@ -153,9 +153,30 @@ body {
   }
 }
 
-@media only screen and (max-width: 1700px) and (min-width: 1650px) {
+@media only screen and (max-width: 1750px) and (min-width: 1650px) {
   .circle-container {
     height: 100vh;
+  }
+  .carding2 {
+    transform: rotate(261deg) translateX(60vw) rotate(99deg) translateY(-16vw);
+  }
+  .carding1 {
+    transform: rotate(219deg) translateY(10vw) translateX(76vw) rotate(90deg);
+  }
+  .carding3 {
+    transform: rotate(301deg) translateY(0vw) translateX(65vw) rotate(105deg);
+  }
+  .carding4 {
+    transform: rotate(-12deg) translateX(62vw) rotate(102deg) translateY(10vw);
+  }
+  .carding5 {
+    transform: rotate(40deg) translateX(53vw) rotate(91deg) translateY(9vw);
+  }
+  .carding6 {
+    transform: rotate(88deg) translateX(57vw) rotate(82deg) translateY(11vw);
+  }
+  .carding7 {
+    transform: rotate(131deg) translateX(67vw) rotate(80deg) translateY(14vw);
   }
 }
 
@@ -173,11 +194,11 @@ body {
 
 @media only screen and (max-width: 2000px) and (min-width: 1800px) {
   .circle-container {
-    height: 100vh;
+    height: 90vh;
   }
 }
 @media only screen and (max-width: 2460px) and (min-width: 2000px) {
   .circle-container {
-    height: 113vh;
+    height: 100vh;
   }
 }

@@ -1,15 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { CartContext } from './cartContext';
-import { useLocation } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './header.css';
-import Logo from './assets/Logo.png';
-import Cart from './assets/cart.svg';
-import CartPanel from './CartPanel';
-import StarTop from './assets/startop.svg';
+import React, { useState, useContext, useEffect } from "react";
+import { CartContext } from "./cartContext";
+import { useLocation } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./header.css";
+import Logo from "./assets/Logo.png";
+import Cart from "./assets/cart.svg";
+import CartPanel from "./CartPanel";
+import StarTop from "./assets/startop.svg";
 import AltLogo from "./assets/logo-blue.svg";
 import BlackLogo from "./assets/black-logo.svg";
 import FaqStar from "./assets/bluestar-shipping.svg";
+import ProductCart from "./assets/product-cart.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +23,8 @@ const Header = () => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
-  const navigate = useNavigate();  // Create navigate function
+  const navigate = useNavigate(); // Create navigate function
   const targetProductId = "gid://shopify/Product/7528878702676";
-
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth > 768);
@@ -54,21 +54,53 @@ const Header = () => {
       body.classList.add("product-page");
       body.classList.remove("faq-page", "contact-page");
     } else {
-      body.classList.remove("faq-page", "contact-page", "product-page", "terms-page");
+      body.classList.remove(
+        "faq-page",
+        "contact-page",
+        "product-page",
+        "terms-page"
+      );
     }
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      body.classList.remove("faq-page", "contact-page", "product-page", "shipping-page", "terms-page", "privacy-page");
+      body.classList.remove(
+        "faq-page",
+        "contact-page",
+        "product-page",
+        "shipping-page",
+        "terms-page",
+        "privacy-page"
+      );
     };
   }, [location.pathname]);
 
-  const whiteBgPages = ["/faq", "/contact", "/product", "/terms", "/shipping", "/privacy", "/refund"];
-  const isWhiteBg = ["/faq", "/contact", "/terms", "/shipping", "/privacy", "/refund"].includes(location.pathname) || location.pathname.startsWith("/product/");
+  useEffect(() => {
+    setIsNavOpen(false); // Close the toggler when route changes
+  }, [location.pathname]);
+
+  const whiteBgPages = [
+    "/faq",
+    "/contact",
+    "/product",
+    "/terms",
+    "/shipping",
+    "/privacy",
+    "/refund",
+  ];
+  const isWhiteBg =
+    ["/faq", "/contact", "/terms", "/shipping", "/privacy", "/refund"].includes(
+      location.pathname
+    ) || location.pathname.startsWith("/product/");
 
   // Check if the current page is FAQ, Contact, or Product/Paneer
   const isFaqOrContact =
-    location.pathname === "/faq" || location.pathname === "/contact" || location.pathname === "/terms" || location.pathname === "/shipping" || location.pathname === "/privacy" || location.pathname === "/refund";
+    location.pathname === "/faq" ||
+    location.pathname === "/contact" ||
+    location.pathname === "/terms" ||
+    location.pathname === "/shipping" ||
+    location.pathname === "/privacy" ||
+    location.pathname === "/refund";
   const isProductPaneer = location.pathname.startsWith("/product/");
 
   // Show free shipping on all pages except the product/paneer page
@@ -78,7 +110,9 @@ const Header = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://147.93.106.149:3001/api/products");
+        const response = await axios.get(
+          "http://147.93.106.149:3001/api/products"
+        );
         console.log("Fetched products:", response.data);
         setProducts(response.data);
       } catch (err) {
@@ -108,8 +142,9 @@ const Header = () => {
   const imageSrc = product.images.edges[0]?.node?.src;
   return (
     <header
-      className={`header ${isWhiteBg ? "white-bg" : ""} ${isFaqOrContact ? "sandal-bg" : ""
-        }`}
+      className={`header ${isWhiteBg ? "white-bg" : ""} ${
+        isFaqOrContact ? "sandal-bg" : ""
+      }`}
     >
       {showFreeShipping && (
         <>
@@ -153,64 +188,119 @@ const Header = () => {
                   className={`navbar-toggler ${isNavOpen ? "open" : ""}`}
                   onClick={() => setIsNavOpen(!isNavOpen)}
                 >
-                  <div className={`bar ${location.pathname.startsWith("/product/") ? "product-bar" : isFaqOrContact ? "faq-bar" : ""}`}></div>
-                  <div className={`bar ${location.pathname.startsWith("/product/") ? "product-bar" : isFaqOrContact ? "faq-bar" : ""}`}></div>
-                  <div className={`bar ${location.pathname.startsWith("/product/") ? "product-bar" : isFaqOrContact ? "faq-bar" : ""}`}></div>
+                  <div
+                    className={`bar ${
+                      location.pathname.startsWith("/product/")
+                        ? "product-bar"
+                        : isFaqOrContact
+                        ? "faq-bar"
+                        : ""
+                    }`}
+                  ></div>
+                  <div
+                    className={`bar ${
+                      location.pathname.startsWith("/product/")
+                        ? "product-bar"
+                        : isFaqOrContact
+                        ? "faq-bar"
+                        : ""
+                    }`}
+                  ></div>
+                  <div
+                    className={`bar ${
+                      location.pathname.startsWith("/product/")
+                        ? "product-bar"
+                        : isFaqOrContact
+                        ? "faq-bar"
+                        : ""
+                    }`}
+                  ></div>
                 </button>
               )}
               <div
-                className={`navbar-menu ${isNavOpen || isDesktop ? "active" : ""}`}
+                className={`navbar-menu ${
+                  isNavOpen || isDesktop ? "active" : ""
+                }`}
               >
-                <ul className="navbar-nav">
-                  <li className="content__item nav-item">
-                    <a
-                      className={`link link--elara ${isWhiteBg ? "nav-dark" : ""}`}
-                      onClick={() => navigate(`/product/${product.handle}`)}
-                    >
-                      <span className="nav-fonts">Products</span>
-                    </a>
-                  </li>
-                  <li className="content__item nav-item">
-                    <a
-                      className={`link link--elara ${isWhiteBg ? "nav-dark" : ""}`}
-                      href="/about"
-                    >
-                      <span className="nav-fonts">About</span>
-                    </a>
-                  </li>
-                  <li className="content__item nav-item">
-                    <a
-                      className={`link link--elara ${isWhiteBg ? "nav-dark" : ""}`}
-                      href="/faq"
-                    >
-                      <span className="nav-fonts">Faq</span>
-                    </a>
-                  </li>
-                  <li className="content__item nav-item">
-                    <a
-                      className={`link link--elara ${isWhiteBg ? "nav-dark" : ""}`}
-                      href="/contact"
-                    >
-                      <span className="nav-fonts">Contact</span>
-                    </a>
-                  </li>
-                  <li>
-                    <div style={{ position: 'relative' }}>
-                      <img src={Cart} alt="cart" className="cart-icon" onClick={() => setCartPanelOpen(true)} />
-                      {cartQuantity > 0 && (
-                        <span className="cartquantity">
-                          {cartQuantity}
-                        </span>
-                      )}
+                {!isDesktop && isNavOpen && (
+                  <Link to="/" className="menu-logo">
+                    <img src={Logo} alt="Logo" className="mobile-logo" />
+                  </Link>
+                )}
+                <div>
+                  <ul className="navbar-nav">
+                    <div>
+                      <li className="content__item nav-item">
+                        <a
+                          className={`link link--elara ${
+                            isWhiteBg ? "nav-dark" : ""
+                          }`}
+                          onClick={() => navigate(`/product/${product.handle}`)}
+                        >
+                          <span className="nav-fonts">Products</span>
+                        </a>
+                      </li>
                     </div>
-                  </li>
-                </ul>
+                    <li className="content__item nav-item">
+                      <a
+                        className={`link link--elara ${
+                          isWhiteBg ? "nav-dark" : ""
+                        }`}
+                        href="/about"
+                      >
+                        <span className="nav-fonts">About</span>
+                      </a>
+                    </li>
+                    <li className="content__item nav-item">
+                      <a
+                        className={`link link--elara ${
+                          isWhiteBg ? "nav-dark" : ""
+                        }`}
+                        href="/faq"
+                      >
+                        <span className="nav-fonts">Faq</span>
+                      </a>
+                    </li>
+                    <li className="content__item nav-item">
+                      <a
+                        className={`link link--elara ${
+                          isWhiteBg ? "nav-dark" : ""
+                        }`}
+                        href="/contact"
+                      >
+                        <span className="nav-fonts">Contact</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="icon-placement">
+                <li style={{ listStyle: "none" }}>
+                  <div style={{ position: "relative" }}>
+                    <img
+                      src={
+                        location.pathname.startsWith("/product/")
+                          ? ProductCart
+                          : Cart
+                      }
+                      alt="cart"
+                      className="cart-icon"
+                      onClick={() => setCartPanelOpen(true)}
+                    />
+                    {cartQuantity > 0 && (
+                      <span className="cartquantity">{cartQuantity}</span>
+                    )}
+                  </div>
+                </li>
               </div>
             </nav>
           </div>
         </div>
       </div>
-      <CartPanel onClose={() => setCartPanelOpen(false)} isOpen={cartPanelOpen} />
+      <CartPanel
+        onClose={() => setCartPanelOpen(false)}
+        isOpen={cartPanelOpen}
+      />
     </header>
   );
 };

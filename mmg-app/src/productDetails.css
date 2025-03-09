@@ -100,9 +100,9 @@
 }
 
 .image-variant {
-  width: 100%;
+  /* width: 100%; */
   height: 70px;
-  border: 1px solid white;
+  border: 1px solid #d9d9d9;
   padding: 8px;
   border-radius: 50px;
   cursor: pointer;
@@ -499,6 +499,40 @@
   margin-bottom: 10px;
 }
 
+.milking-banner {
+  /* transition: opacity 0.3s ease-in-out; */
+}
+
+.milking-banner.hide-banner {
+  display: none;
+}
+
+.product-details-left.no-background {
+  background-image: none;
+}
+
+.image-navigation {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 8px;
+  position: absolute;
+  bottom: 5%;
+}
+
+.nav-bar {
+  width: 40px; /* Adjust width based on design */
+  height: 6px;
+  background-color: #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-bar.active {
+  background-color: #ff5a36; /* Highlighted color */
+}
+
 .items-price {
   font-size: 18px;
   font-family: "Chivo Mono", serif;
@@ -700,7 +734,7 @@
   width: 20% !important;
   position: absolute;
   right: 10%;
-  top: -15%;
+  top: -18%;
 }
 
 .ingredients-row {
@@ -808,7 +842,7 @@
   width: 80%;
   position: absolute;
   left: 15%;
-  top: 5%;
+  /* top: 5%; */
 }
 
 .words-image {
@@ -1043,7 +1077,7 @@
 
 .milk-image-product {
   width: 30%;
-  padding-top: 6%;
+  padding-top: 7%;
 }
 
 .chart-container {
@@ -1077,8 +1111,7 @@
 .bar {
   width: 100%;
   height: 300px;
-  /* Full height */
-  border: 2px dashed white;
+  border: 2px solid white;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1109,7 +1142,7 @@
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .product-details-container {
     display: block;
-    padding-top: 22%;
+    padding-top: 28%;
   }
 
   .product-details-left {
@@ -1117,13 +1150,31 @@
     padding: 0px;
     background-repeat: repeat;
   }
+  .product-details-image {
+    width: 93%;
+    padding-left: 2%;
+    padding-top: 10%;
+  }
+  .milking-banner {
+    left: 17%;
+    width: 65%;
+  }
+  .static-image {
+    width: 100%;
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  .product-icons-list {
+    display: none;
+  }
 
   .product-lisiting-icon {
     display: none;
   }
 
   .product-details-right {
-    padding: 0px;
+    padding: 20px;
     display: block;
   }
 
@@ -1135,25 +1186,51 @@
   .Subscribe-button-buy {
     width: 45%;
   }
+  .review-button {
+    padding-bottom: 10%;
+  }
 
   .metafield-total {
     margin: 0;
     padding-left: 2%;
     padding-right: 2%;
+    padding-bottom: 20%;
+  }
+  .footers-product {
+    margin-top: 4%;
   }
 
   .details-title {
     font-size: 35px;
     padding-top: 5%;
+    line-height: 2rem;
   }
 
   .Subscribe-button-pack {
-    width: 28%;
-  }
-  .image-variant {
     width: 30%;
   }
+  .image-variant {
+    /* width: 30%; */
+  }
+  .chemical-image,
+  .farm-image,
+  .protein-arm-image,
+  .cow-image {
+    margin-bottom: 0px !important;
+  }
+  .cow-image {
+    margin-top: 10px !important;
+  }
+  .protein-arm-image {
+    padding-top: 9px;
+  }
+  .reviews-row {
+    padding-top: 15%;
+  }
 
+  .ingredients-para {
+    width: 100%;
+  }
   .purchase-option-row {
     padding: 10px 10px;
   }
@@ -1176,8 +1253,12 @@
   }
 
   .metafield-answer {
-    padding-bottom: 0%;
+    padding-bottom: 1%;
+    font-size: 14px;
   }
+  /* .metafield-border {
+    border-bottom: 1px dashed black;
+  } */
 
   .words-image {
     display: none;
@@ -1186,7 +1267,10 @@
   .ingredients-row {
     padding: 20px;
   }
-
+  .close-cart {
+    top: 6px;
+    right: -20px;
+  }
   .nutrition-lift {
     width: 45% !important;
     right: 0%;
@@ -1207,6 +1291,14 @@
 
   .nutritional-title-container {
     width: 100%;
+    padding: 15px;
+  }
+  .review-heading {
+    font-size: 50px;
+    line-height: 3rem;
+  }
+  .review-button-contact {
+    width: 65%;
   }
 
   .nutrients-imaging {
@@ -1243,21 +1335,28 @@
   }
 
   .texting-wrapper-1 {
-    /* display: block; */
+    display: block;
   }
 
   .raising-1,
   .bar-proteins-1 {
-    font-size: 35px;
+    font-size: 50px;
+    font-family: "Anybody_Condensed";
+    font-style: normal;
+    margin-bottom: 0;
   }
 
   .animations-container {
     text-align: center;
+    padding-bottom: 10%;
   }
 
   .high-proteins-1,
   .low-proteins-1 {
     font-size: 15px;
+    font-family: "Anybody_Condensed";
+    font-style: normal;
+    margin-bottom: 0;
   }
 
   .comparison-table {
@@ -1282,7 +1381,7 @@
   }
 
   .high-protein-heading {
-    font-size: 26px;
+    font-size: 28px;
   }
 
   .proteins-container-1 {
@@ -1300,6 +1399,9 @@
 
   .metafield-container {
     overflow: hidden;
+    padding: 10px;
+    padding-bottom: 15%;
+    padding-top: 10%;
   }
 
   .reviewer-days,
@@ -1314,8 +1416,9 @@
 
 @media only screen and (max-width: 1900px) and (min-width: 1600px) {
   .details-title {
-    font-size: 55px;
-    line-height: 4rem;
+    font-size: 35px;
+    padding-top: 5%;
+    line-height: 2rem;
   }
 }
 
@@ -1331,6 +1434,7 @@
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .product-details-left {
     padding: 0px;
+    height: 55vh;
   }
   .metafield-ingredients {
     background-position: 50%;
@@ -1343,5 +1447,10 @@
   }
   .ingredients-list {
     width: 70%;
+  }
+}
+@media only screen and (max-width: 1750px) and (min-width: 1600px) {
+  .milk-image-product {
+    padding-top: 5%;
   }
 }

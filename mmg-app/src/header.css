@@ -5,6 +5,9 @@
   z-index: 9999;
   width: 100%;
 }
+.container {
+  position: relative;
+}
 
 .header.white-bg {
   background-color: white !important;
@@ -17,7 +20,8 @@
 }
 
 .navbar-nav {
-  gap: 55px !important;
+  gap: 40px !important;
+  padding-right: 15%;
 }
 
 .nav-dark span {
@@ -216,42 +220,85 @@
 /* Mobile Styles (Below 768px) */
 @media (max-width: 768px) {
   .logo {
-    width: 40%;
+    width: 35%;
   }
 
   .free-shipping {
     gap: 0px;
   }
-
+  .star-top {
+    width: 4%;
+  }
   .free-heading {
     font-size: 12px;
   }
 
+  .navbar-nav {
+    padding-right: 0;
+  }
+
   .navbar-menu {
     position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.9);
+    top: -1000px;
+    left: 50%;
+    width: 95%;
+    height: 85vh;
+    transform: translateX(-50%);
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    transition: left 0.3s ease-in-out;
+    border-radius: 0 0 15px 15px;
+    /* align-items: center; */
+    transition: all 1s ease-in-out;
     z-index: 1000;
   }
   .nav-fonts {
-    font-size: 25px;
+    font-size: 18px;
+    color: #000;
+    padding-left: 5%;
+  }
+  .link--elara:hover::before {
+    clip-path: none;
+  }
+  .nav-dark:before {
+    background-color: transparent !important;
+  }
+  .navbar-toggler.open .bar {
+    background-color: black !important;
+    width: 40px;
+    height: 20px;
+  }
+  .menu-logo {
+    filter: invert(1);
+    position: absolute;
+    top: 4%;
+    left: 5%;
+  }
+
+  .mobile-logo {
+    width: 75%;
   }
 
   .navbar-menu.active {
-    left: 0;
+    top: 7px; /* Moves down to reveal */
+    opacity: 1;
+    visibility: visible;
   }
 
   .navbar-nav {
     list-style: none;
-    text-align: center;
+    /* text-align: center; */
+  }
+  .content__item {
+    display: block;
+  }
+
+  .nav-item {
+    border-bottom: 1px solid black !important;
+  }
+  .header.white-bg {
+    padding-top: 6%;
   }
 
   .navbar-nav .nav-item {
@@ -268,7 +315,7 @@
   /* Toggle Button */
   .navbar-toggler {
     width: 40px;
-    height: 30px;
+    height: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -282,11 +329,15 @@
   }
 
   .bar {
-    width: 35px;
+    width: 28px;
     height: 0px;
     background-color: white;
     border-radius: 2px;
     transition: all 0.4s ease-in-out;
+  }
+  .icon-placement {
+    position: absolute;
+    right: 85px;
   }
 
   /* For Product Page */
@@ -303,7 +354,7 @@
 
   /* Toggle Button Animation */
   .navbar-toggler.open .bar:nth-child(1) {
-    transform: translateY(12px) rotate(45deg);
+    transform: translateY(5px) rotate(45deg);
   }
 
   .navbar-toggler.open .bar:nth-child(2) {
@@ -323,6 +374,12 @@
   }
 }
 
+@media only screen and (max-width: 2700px) and (min-width: 700px) {
+  .icon-placement-1 {
+    display: none;
+  }
+}
+
 /* Desktop Styles (Above 768px) */
 @media (min-width: 769px) {
   .navbar-menu {
@@ -331,6 +388,7 @@
     background: none;
     height: auto;
     justify-content: flex-end;
+    margin-left: -25%;
   }
 
   .navbar-toggler {

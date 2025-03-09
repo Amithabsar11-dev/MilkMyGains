@@ -10,37 +10,38 @@ const Preload = () => {
   const [showMask, setShowMask] = useState(false);
   const [startMaskAnimation, setStartMaskAnimation] = useState(false);
   const [showWhiteText, setShowWhiteText] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const translateValues = [
-    [
-      [30, 20],
-      [20, 20],
-      [10, 20],
-      [0, 20],
-      [0, 20],
-    ], // Word 0 (PURE)
-    [
-      [80, 20],
-      [70, 20],
-      [60, 20],
-      [50, 20],
-      [40, 20],
-      [30, 20],
-      [20, 20],
-      [10, 20],
-      [0, 20],
-    ], // Word 1 (POWERFUL)
-    [
-      [60, 20],
-      [50, 20],
-      [40, 20],
-      [30, 20],
-      [20, 20],
-      [10, 20],
-      [0, 20],
-      [0, 20],
-    ], // Word 2 (PROTEIN)
-  ];
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const translateValues = isMobile
+    ? [
+        [
+          [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
+        ], // PURE (Reset positions)
+        [
+          [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
+        ], // POWERFUL (Reset positions)
+        [
+          [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0],
+        ], // PROTEIN (Reset positions)
+      ]
+    : [
+        [
+          [30, 20], [20, 20], [10, 20], [0, 20], [0, 20],
+        ], // PURE
+        [
+          [80, 20], [70, 20], [60, 20], [50, 20], [40, 20], [30, 20], [20, 20], [10, 20], [0, 20],
+        ], // POWERFUL
+        [
+          [60, 20], [50, 20], [40, 20], [30, 20], [20, 20], [10, 20], [0, 20], [0, 20],
+        ], // PROTEIN
+      ];
 
   useEffect(() => {
     // Show the mask as soon as the text animation completes

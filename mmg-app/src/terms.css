@@ -2,7 +2,6 @@
   padding-top: 12%;
   background-color: #f3f3f3;
 }
-
 .terms-heading {
   text-align: center;
   padding-bottom: 5%;
@@ -23,11 +22,10 @@
   margin-top: 30px;
   font-weight: bold;
   font-family: "Chivo Mono", Sans-serif;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 .terms-para {
   font-size: 16px;
-  text-transform: uppercase;
   font-family: "Chivo Mono", Sans-serif;
   padding-left: 40px;
   margin-top: 4%;
@@ -63,6 +61,17 @@
   padding-left: 2rem;
   padding-top: 1%;
 }
+.top {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  z-index: 999;
+}
+.top-image {
+  cursor: pointer;
+  filter: invert(1);
+}
+
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .terms-heading {
     font-size: 35px;
@@ -72,6 +81,12 @@
   }
   .terms-para {
     padding-left: 0%;
+    font-size: 14px;
+  }
+  .terms-title {
+    font-size: 19px;
+    display: flex;
+    justify-content: space-between;
   }
   .terms-spacing {
     padding: 30px;

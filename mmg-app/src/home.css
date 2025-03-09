@@ -299,6 +299,7 @@
   border: 2px solid white;
   border-radius: 50px;
   padding: 15px;
+  width: 100%;
 }
 
 .coming-soon {
@@ -383,7 +384,7 @@
 }
 .svg-order-button-container-1 {
   position: absolute;
-  bottom: 13%;
+  bottom: 7%;
   left: 6%;
 }
 
@@ -649,6 +650,7 @@
   padding-bottom: 7%;
   padding-top: 8%;
   min-height: 100vh;
+  position: relative;
 }
 
 .icon-paradigm {
@@ -752,11 +754,11 @@
   background-image: url("./assets/Frame\ 221.png");
   position: relative;
   background-size: cover;
-  background-position: center top;
+  background-position: 100% 20%;
   transition: background-position 0.5s ease-in-out,
     background-size 0.5s ease-in-out;
   overflow: hidden;
-  min-height: 100vh;
+  height: 120vh;
 }
 
 .svg-overlay {
@@ -1063,6 +1065,19 @@
 }
 
 .middle-text {
+  text-align: center;
+  font-size: 30px;
+  font-style: italic;
+  color: #ff5733;
+  transform: scale(0.5);
+  position: absolute;
+  left: 51%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.2;
+  font-family: "Anybody", serif;
+}
+.middle-text-1 {
   text-align: center;
   font-size: 30px;
   font-style: italic;
@@ -1553,13 +1568,51 @@
     height: 35%;
     top: 65%;
   }
-
+  .content {
+    margin-left: 0;
+  }
+  .text-wrapper h1 {
+    font-size: 30px;
+  }
+  .text-wrapper {
+    padding-top: 60%;
+  }
+  .text-anim-wrapper {
+    padding-top: 5% !important;
+  }
+  .middle-text {
+    font-size: 14px;
+  }
+  .raising {
+    transform: translate(-70px, 0px) !important;
+  }
+  .bar-1 {
+    transform: translate(75px, 0px) !important;
+  }
+  .middle-text {
+    transform: translate(-50%, 295%) !important;
+  }
+  .middle-text-1 {
+    font-size: 12px;
+    transform: translate(-50%, -25%) !important;
+  }
   .svg-container {
-    display: none;
+    /* display: none; */
+  }
+  .middling {
+    left: 51% !important;
+    top: -143% !important;
   }
 
   .paneer-button {
     width: 15%;
+  }
+  .paneer-button-active {
+    border: 2px solid white;
+    border-radius: 50px;
+    padding: 0px;
+    transition: all 0.3s ease-in-out;
+    width: 85%;
   }
 
   .milk-button {
@@ -1573,15 +1626,24 @@
   .icecream-button {
     width: 15%;
   }
-
+  .paradigm-heading {
+    margin-top: 12%;
+  }
   .svg-order-button-container {
     position: absolute;
-    bottom: 10%;
+    bottom: 32%;
     left: -15%;
+  }
+  .slider-container {
+    background-size: 99% 100%;
+    background-position: center;
+    background-repeat: round;
+    height: 100vh !important;
+    background-image: url("./assets/iPhone\ mobb.png");
   }
 
   .order-button-svg {
-    width: 50%;
+    width: 36%;
   }
 
   .milkbg3 {
@@ -1602,13 +1664,20 @@
   }
 
   .order-buttons {
-    flex-direction: row;
-    bottom: 2%;
-    gap: 15px;
+    bottom: 17%;
+    gap: 25px;
     justify-content: center;
     right: 0;
     width: 100%;
-    display: none;
+    display: flex;
+    flex-direction: row;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .milk-button,
+  .yogart-button,
+  .icecream-button {
+    width: 100%;
   }
 
   .liquid-circle {
@@ -1617,44 +1686,91 @@
     left: 40%;
   }
   .svg-order-button-container-1 {
-    display: none;
+    /* display: none; */
+    position: absolute;
+    bottom: 2%;
+    left: 3%;
+  }
+  .container-paradigm {
+    padding-top: 0%;
+    margin-top: -10%;
+    height: 85vh;
+  }
+  .wholesome-heading {
+    padding-top: 20%;
   }
 
   .liquid-text {
-    bottom: 24%;
-    left: 37%;
+    bottom: 26%;
+    left: 39%;
     line-height: 1rem;
-    font-size: 16px;
+    font-size: 14px;
+  }
+  .pin-spacer {
+    height: 430px !important;
   }
 
   .main-heading {
-    font-size: 55px;
-    line-height: 3rem;
+    font-size: 40px;
+    line-height: 2.5rem;
+    font-family: "Anybody_Condensed_bold";
+    font-style: normal;
   }
 
   .main-para {
-    font-size: 14px;
+    font-size: 13px;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .know-button {
     width: 40%;
     padding: 8px;
+    position: absolute;
+    bottom: 10%;
   }
 
+  .paradigm-para {
+    padding-bottom: 10%;
+  }
   .crafted-pure {
-    font-size: 20px;
-    margin-left: 0%;
+    font-size: 14px;
+    padding-top: 20%;
+    position: absolute;
+    right: 0;
+    padding-right: 10%;
+    width: 60%;
   }
 
   .pure-heading {
-    font-size: 60px;
-    padding-left: 3%;
+    font-size: 40px;
+    padding-left: 5%;
+    line-height: 2.3rem;
+    font-family: "Anybody_Condensed";
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: baseline;
+    padding-top: 8%;
+  }
+  .content-protein {
+    position: absolute;
+    top: 15%;
+    width: 100%;
   }
 
   .protein-cap {
     width: 32%;
     top: 33%;
-    right: 20%;
+    right: 0%;
+    display: none;
+  }
+  .liquid-text-1 {
+    left: 7%;
+    bottom: 22%;
+    font-size: 15px;
+    line-height: 1rem;
   }
 
   .power-space,
@@ -1664,22 +1780,30 @@
     margin-right: 0%;
     box-shadow: none;
   }
+  .power-space {
+    height: 65vh;
+  }
 
   .power-space1 {
     width: 100%;
   }
 
   .power-heading {
-    font-size: 50px;
+    font-size: 35px;
     white-space: nowrap;
-    line-height: 2.6rem;
-    padding-left: 4%;
+    line-height: 2.4rem;
+    padding-left: 10%;
+    font-family: "Anybody_Condensed";
+    font-style: normal;
   }
 
   .power-space-heading {
-    font-size: 50px;
+    font-size: 40px;
     line-height: 2.5rem;
-    padding-top: 5%;
+    font-family: "Anybody_Condensed";
+    font-style: normal;
+    padding-top: 10%;
+    padding-bottom: 10%;
   }
 
   .power-container {
@@ -1688,7 +1812,11 @@
 
   .power-container1 {
     height: 70vh;
-    margin-top: 45px;
+    /* margin-top: 45px; */
+    padding-top: 50%;
+  }
+  .power-container2 {
+    padding-top: 75%;
   }
 
   .build-text {
@@ -1696,7 +1824,8 @@
   }
 
   .container-pure {
-    min-height: 0;
+    height: 50vh;
+    background-position: center;
   }
 
   .row-build {
@@ -1733,6 +1862,7 @@
     padding-top: 5%;
     padding-left: 10%;
     justify-content: flex-start;
+    width: 90%;
   }
 
   .build {
@@ -1740,38 +1870,49 @@
   }
 
   .build-para-align {
-    padding-left: 15%;
+    padding-left: 10%;
   }
 
   .weight-lift1 {
-    width: 72%;
-    right: 2%;
+    width: 82%;
   }
 
   .protein-slogan {
     width: 90%;
+    bottom: -5%;
   }
 
   .row-pure .words {
     display: none;
   }
   .row-pure {
-    padding-top: 25%;
+    padding-top: 40%;
   }
 
   .wholesome-para {
-    font-size: 65px;
-    line-height: 4rem;
+    font-size: 55px;
+    line-height: 3rem;
+    font-family: "Anybody_Condensed";
+    font-style: normal;
+  }
+  .coming-wholesome {
+    font-family: "Anybody_Condensed";
+    font-style: normal;
+    padding-top: 5%;
   }
 
   .stickers {
-    top: 28%;
-    left: 15%;
+    top: 40%;
+    left: 7%;
     width: 20%;
+    transform: none !important;
   }
 
   .protein-packed {
     font-size: 15px;
+  }
+  .animation-container {
+    margin-top: 0;
   }
 
   .subscribe-container .Subscribe-button1 {
@@ -1779,40 +1920,52 @@
     width: 56%;
     padding: 10px;
   }
+  .animations-container-1 {
+    padding-top: 50%;
+    text-align: center;
+  }
 
   .muscle-para {
-    right: 0%;
+    right: 26%;
     bottom: 16%;
     font-size: 12px;
+    text-align: center;
   }
 
   .subscribe-container {
-    padding-top: 15%;
+    padding-top: 25%;
   }
 
   .arrow-point {
-    bottom: 8%;
+    /* bottom: 8%;
     right: 30%;
-    height: 8vh;
+    height: 8vh; */
+    display: none;
   }
 
   .veg-bowl {
-    top: 17%;
+    top: 30%;
     width: 40%;
     right: 30%;
+    /* transform: none !important; */
   }
 
   .protein-image {
-    width: 100% !important;
+    width: 120% !important;
   }
 
   .milk-image {
-    width: 65% !important;
+    width: 55% !important;
   }
 
   .proteins-container-1 {
     background-position: 100%;
-    margin-bottom: 15%;
+    margin-bottom: 20%;
+  }
+  .copyright-text {
+    text-align: center;
+    padding-top: 2%;
+    font-size: 10px;
   }
 }
 
@@ -1884,6 +2037,9 @@
   .power-container2 {
     padding-top: 17%;
   }
+  .container-pure {
+    height: 100vh;
+  }
   .weight-lift3 {
     width: 45%;
     bottom: 0%;
@@ -1900,11 +2056,19 @@
   }
 }
 
-@media only screen and (max-width: 800px) and (min-width: 320px) {
+@media only screen and (max-width: 600px) and (min-width: 320px) {
   .lottie-animation {
     width: 100%;
-    top: 25%;
+    top: 20%;
     left: 0%;
     transform: none !important;
+  }
+  .mmg-model {
+    height: 80vh;
+  }
+}
+@media only screen and (max-width: 1750px) and (min-width: 1650px) {
+  .container-pure {
+    height: 100vh;
   }
 }

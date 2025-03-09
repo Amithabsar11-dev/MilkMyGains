@@ -22,7 +22,7 @@ import Whey from "./assets/powder.svg";
 import Energybar from "./assets/ricebag.svg";
 import Palakpaneer from "./assets/paneercubes.svg";
 import LiftSticker from "./assets/nutrition-sticker.svg";
-import INGREDIENTS from "./assets/ingredients-list.svg";
+import INGREDIENTS from "./assets/Nutritional-final.svg";
 import Nutrients from "./assets/nutrients-icon.svg";
 import Stars from "./assets/stars.svg";
 import Orangestars from "./assets/reviews-orange.svg";
@@ -43,6 +43,7 @@ import Sample from "./sample";
 import Copyrightline from "./assets/Line 23.svg";
 import CartPanel from "./CartPanel";
 import MilkTM from "./assets/Logo-TM-1.svg";
+import Imagecarousal from "./assets/paneer-cups.png";
 import "./App.css";
 
 const ProductDetails = ({ setIsLoaded }) => {
@@ -50,6 +51,8 @@ const ProductDetails = ({ setIsLoaded }) => {
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [isStaticImage, setIsStaticImage] = useState(false);
+  const staticImage = Imagecarousal;
   const [packQuantity, setPackQuantity] = useState(1); // Default pack quantity
   const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
@@ -70,6 +73,8 @@ const ProductDetails = ({ setIsLoaded }) => {
   const [pageGroupStart, setPageGroupStart] = useState(1); // Controls the first page in the row
   const reviewsPerPage = 3;
   const pagesPerRow = 3; // How many page numbers to show at a time
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
   const [newReview, setNewReview] = useState({
     review_title: "",
     review_body: "",
@@ -241,9 +246,33 @@ const ProductDetails = ({ setIsLoaded }) => {
     fetchReviews();
   }, [handle]);
 
+  const handleImageSwitch = (isStatic) => {
+    setIsStaticImage(isStatic);
+    if (!isStatic && mainImage) {
+      updateMainImage(mainImage); // Ensure switching back to the original image
+    }
+  };
+
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      handleImageSwitch(true); // Swipe left → Show static image
+    } else if (touchEnd - touchStart > 50) {
+      handleImageSwitch(false); // Swipe right → Show main image
+    }
+  };
+
   const handleVariantClick = (variant) => {
     setSelectedVariant(variant);
     if (variant.image) {
+      setIsStaticImage(false);
       updateMainImage(variant.image.src); // Update the main image based on the selected variant
     }
   };
@@ -434,22 +463,46 @@ const ProductDetails = ({ setIsLoaded }) => {
   return (
     <div className="product-details-page">
       <div className="product-details-container">
-        <div className="product-details-left col-sm-6">
+        <div
+          className={`product-details-left col-sm-6 ${
+            isStaticImage ? "no-background" : ""
+          }`}
+        >
           <div className="main-product-background">
             <div className="image-banner">
-              <img src={Milkbanner} alt="" className="milking-banner" />
-              {mainImage ? (
-                <img
-                  key={mainImage} // Forces React to treat the image as a new element
-                  src={mainImage}
-                  alt={selectedVariant?.image?.altText || "Product Image"}
-                  className={`product-details-image ${fadeClass}`}
-                  crossOrigin="anonymous"
-                />
-              ) : (
-                <div className="placeholder">No Image Available</div>
-              )}
+              {/* Hide this banner when static image is displayed */}
+              <img
+                src={Milkbanner}
+                alt=""
+                className={`milking-banner ${
+                  isStaticImage ? "hide-banner" : ""
+                }`}
+              />
+              <img
+                src={isStaticImage ? staticImage : mainImage}
+                alt="Product Image"
+                className={`product-details-image ${
+                  isStaticImage ? "static-image" : "rendered-image"
+                } ${isMobile ? "" : fadeClass}`} // Remove fadeClass for mobile
+                crossOrigin="anonymous"
+              />
             </div>
+          </div>
+          {/* Progress Bar Navigation */}
+          <div
+            className="image-navigation"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <span
+              className={`nav-bar ${!isStaticImage ? "active" : ""}`}
+              onClick={() => handleImageSwitch(false)}
+            ></span>
+            <span
+              className={`nav-bar ${isStaticImage ? "active" : ""}`}
+              onClick={() => handleImageSwitch(true)}
+            ></span>
           </div>
           <div className="product-listing-icon">
             <div className="product-icons-list">
@@ -459,14 +512,14 @@ const ProductDetails = ({ setIsLoaded }) => {
                     (node.title.toLowerCase().includes("pack of 1") ||
                       node.title.toLowerCase().includes("pack of 4") ||
                       node.title.toLowerCase().includes("pack of 6")) &&
-                    node.title.toLowerCase().includes("100g") // Ensure only 100g variants
+                    node.title.toLowerCase().includes("100g")
                 )
                 .map((variant, index) => (
                   <div
                     key={index}
                     onClick={() => handleVariantClick(variant.node)}
                   >
-                    {variant.node.image && variant.node.image.src ? (
+                    {variant.node.image?.src ? (
                       <img
                         src={variant.node.image.src}
                         alt={variant.node.image.altText || "Variant Image"}
@@ -576,27 +629,68 @@ const ProductDetails = ({ setIsLoaded }) => {
             )}
           </div>
 
-          <div className="feature-icons">
-            <div className="feature-item">
-              <img src={Cow} alt="Pure Cow Milk" />
-              <p className="text-family">Pure Cow Milk</p>
+          {isMobile ? (
+            <>
+              <div className="feature-icons">
+                <div className="feature-item">
+                  <img src={Cow} alt="Pure Cow Milk" className="cow-image" />
+                  <p className="text-family">Pure Cow Milk</p>
+                </div>
+                <div className="feature-item">
+                  <img
+                    src={Chemical}
+                    alt="No Chemicals"
+                    className="chemical-image"
+                  />
+                  <p className="text-family">No Chemicals/ Preservatives</p>
+                </div>
+              </div>
+              <div className="feature-icons">
+                <div className="feature-item">
+                  <img src={Farm} alt="Farm Fresh" className="farm-image" />
+                  <p className="text-family">Farm-Fresh Sourced</p>
+                </div>
+                <div className="feature-item">
+                  <img
+                    src={Protein}
+                    alt="High Protein"
+                    className="protein-arm-image"
+                  />
+                  <p className="text-family">High Protein</p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="feature-icons">
+              <div className="feature-item">
+                <img src={Cow} alt="Pure Cow Milk" className="cow-image" />
+                <p className="text-family">Pure Cow Milk</p>
+              </div>
+              <div className="feature-item">
+                <img
+                  src={Chemical}
+                  alt="No Chemicals"
+                  className="chemical-image"
+                />
+                <p className="text-family">
+                  No Chemicals/ <br />
+                  Preservatives
+                </p>
+              </div>
+              <div className="feature-item">
+                <img src={Farm} alt="Farm Fresh" className="farm-image" />
+                <p className="text-family">Farm-Fresh Sourced</p>
+              </div>
+              <div className="feature-item">
+                <img
+                  src={Protein}
+                  alt="High Protein"
+                  className="protein-arm-image"
+                />
+                <p className="text-family">High Protein</p>
+              </div>
             </div>
-            <div className="feature-item">
-              <img src={Chemical} alt="No Chemicals" />
-              <p className="text-family">
-                No Chemicals/ <br />
-                Preservatives
-              </p>
-            </div>
-            <div className="feature-item">
-              <img src={Farm} alt="Farm Fresh" />
-              <p className="text-family">Farm-Fresh Sourced</p>
-            </div>
-            <div className="feature-item">
-              <img src={Protein} alt="High Protein" />
-              <p className="text-family">High Protein</p>
-            </div>
-          </div>
+          )}
 
           <div className="button-row">
             <button
@@ -619,7 +713,7 @@ const ProductDetails = ({ setIsLoaded }) => {
           <div className="metafield-items">
             <div className="metafield-QA">
               {faqContent?.map((item, index) => (
-                <div key={index}>
+                <div key={index} className="metafield-border">
                   <h5 className="metafield-question">{item.question}</h5>
                   <p className="metafield-answer">{item.answer}</p>
                 </div>
@@ -1100,7 +1194,7 @@ const ProductDetails = ({ setIsLoaded }) => {
         </div>
       </div>
       {/* Footer Section */}
-      <div className="footers mb-3">
+      <div className="footers footers-product mb-3">
         <p className="copyright-text">Copyright © 2025. All rights reserved</p>
       </div>
     </div>

@@ -1,4 +1,4 @@
-.icon-height{
+.icon-height {
   height: 32vh;
   display: flex;
   justify-content: center;
@@ -14,27 +14,31 @@
 .paneer-icon-active {
   height: 8vh;
 }
-.palak-icon-active , .proteins-icon-active, .energy-icon-active , .whey-icon-active{
+.palak-icon-active,
+.proteins-icon-active,
+.energy-icon-active,
+.whey-icon-active {
   max-height: 100%;
 }
-ol, ul {
+ol,
+ul {
   padding-left: 0rem;
 }
-.column-active{
-  background-color: #0052F0;
+.column-active {
+  background-color: #0052f0;
   color: #fff;
 }
-.paneer-icon-active-hidden{
- opacity: 0;
+.paneer-icon-active-hidden {
+  opacity: 0;
 }
 #cd-table {
   position: relative;
   width: 85%;
   margin: 1em auto;
   font-size: 14px;
-  border-right: 1px solid #E6E7F1;
+  border-right: 1px solid #e6e7f1;
 }
-.set-list{
+.set-list {
   list-style-type: none;
   flex: 1 1;
   font-family: Chivo Mono, Sans-serif;
@@ -45,14 +49,14 @@ ol, ul {
   text-transform: uppercase;
   padding-left: 0;
 }
-.cd-table-wrapper{
+.cd-table-wrapper {
   display: flex;
-    gap: 10px;
+  gap: 10px;
 }
-.border-column{
-  border: 1px solid #E0E0E0
+.border-column {
+  border: 1px solid #e0e0e0;
 }
-.set-list-paneer{
+.set-list-paneer {
   list-style-type: none;
   flex: 1 1;
   font-family: Chivo Mono, Sans-serif;
@@ -62,10 +66,10 @@ ol, ul {
   gap: 25px;
   text-transform: uppercase;
 }
-.set-list-active{
+.set-list-active {
   list-style-type: none;
   align-items: start;
-  color:#0052f0 !important;
+  color: #0052f0 !important;
   flex: 1 1;
   font-family: Chivo Mono, Sans-serif;
   font-size: 20px;
@@ -75,18 +79,18 @@ ol, ul {
   text-transform: uppercase;
 }
 #cd-table::after {
-  content: '';
+  content: "";
   display: table;
   clear: both;
 }
 #cd-table::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: -1px;
   height: 100%;
   width: 35px;
-  background: linear-gradient(to left, #FFF 10%, rgba(255, 255, 255, 0));
+  background: linear-gradient(to left, #fff 10%, rgba(255, 255, 255, 0));
   z-index: 5;
   pointer-events: none;
 }
@@ -111,7 +115,8 @@ ol, ul {
 .cd-table-column:last-child {
   border-right: none;
 }
-h2, ul > li {
+h2,
+ul > li {
   position: relative;
   /* text-align: center; */
   padding: 0 1em;
@@ -120,7 +125,9 @@ h2, ul > li {
   line-height: 42px;
   /* background-color: #FFF; */
 }
-.set-list-paneer, .set-list ,.set-list-active{
+.set-list-paneer,
+.set-list,
+.set-list-active {
   text-align: center;
   padding: 0;
 }
@@ -139,7 +146,8 @@ ul > li:nth-child(odd) {
 ul > li:last-child {
   border-bottom: none;
 }
-.cd-unchecked span, .cd-checked span {
+.cd-unchecked span,
+.cd-checked span {
   position: absolute;
   width: 16px;
   height: 16px;
@@ -147,7 +155,7 @@ ul > li:last-child {
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
-  background-image: url('https://svgshare.com/i/NDN.svg');
+  background-image: url("https://svgshare.com/i/NDN.svg");
   background-repeat: no-repeat;
   background-position: 0 0;
   background-size: 32px 16px;
@@ -177,14 +185,15 @@ header.cd-table-column {
   box-shadow: 2px 0 0 rgba(0, 0, 0, 0.1); */
   pointer-events: none;
 }
-header.cd-table-column h2, header.cd-table-column li {
+header.cd-table-column h2,
+header.cd-table-column li {
   background-color: transparent;
   text-align: left;
-  color:#0052f0;
+  color: #0052f0;
   border-bottom-color: transparent;
 }
 header.cd-table-column h2 {
-  color: #D2D7E3;
+  color: #d2d7e3;
 }
 header.cd-table-column li:nth-child(odd) {
   /* background-color: rgba(108, 116, 137, 0.95); */
@@ -200,7 +209,7 @@ header.cd-table-column li:last-child {
   right: 0;
   top: 50%;
   margin-top: -8px;
-  background: url('https://svgshare.com/i/NEg.svg') no-repeat center center;
+  background: url("https://svgshare.com/i/NEg.svg") no-repeat center center;
   z-index: 6;
   animation: cd-scroll-right 1.5s infinite;
 }
@@ -220,7 +229,7 @@ header.cd-table-column li:last-child {
     width: 20%;
   }
   .cd-table-column:last-child {
-    border-right: 1px solid #E6E7F1;
+    border-right: 1px solid #e6e7f1;
   }
   header.cd-table-column {
     width: 16.6667%;
@@ -238,7 +247,8 @@ header.cd-table-column li:last-child {
   }
 }
 @keyframes cd-scroll-right {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   50% {
@@ -256,10 +266,13 @@ header.cd-table-column li:last-child {
     width: max-content;
     padding-left: 60px;
   }
+
   .cd-table-column {
     width: 33.33%; /* Ensure 3 columns are visible */
   }
-  .set-list, .set-list-paneer, .set-list-active {
+  .set-list,
+  .set-list-paneer,
+  .set-list-active {
     font-size: 12px; /* Reduce font size */
     gap: 8px; /* Reduce spacing */
     padding: 0;
@@ -277,28 +290,31 @@ header.cd-table-column li:last-child {
   }
 }
 @media only screen and (max-width: 768px) {
-  .set-list, .set-list-paneer, .set-list-active {
-      font-size: 12px;
-      gap: 0px;
+  .set-list,
+  .set-list-paneer,
+  .set-list-active {
+    font-size: 12px;
+    gap: 0px;
   }
 }
-.cd-table-column {
+.column-active {
   width: 20%; /* Reduce width to fit 3 columns */
-  min-width: 100px; /* Ensure it doesn't shrink too much */
+  min-width: 120px; /* Ensure it doesn't shrink too much */
 }
 @media only screen and (max-width: 768px) {
   .icon-height {
-      height: 8vh;
+    height: 8vh;
   }
   .paneer-active-image-1 {
     height: 8vh !important;
   }
- .header .cd-table-column {
+  .header .cd-table-column {
     margin-left: -50px !important;
   }
 }
 
-
-
-
-
+@media only screen and (max-width: 500px) and (min-width: 320px) {
+  #cd-table {
+    padding-top: 10%;
+  }
+}

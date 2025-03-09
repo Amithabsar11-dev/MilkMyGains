@@ -53,12 +53,11 @@
   margin-top: 30px;
   font-weight: bold;
   font-family: "Chivo Mono", Sans-serif;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 
 .faq-item p {
   font-size: 16px;
-  text-transform: uppercase;
   font-family: "Chivo Mono", Sans-serif;
   padding-left: 40px;
   margin-top: 4%;
@@ -107,6 +106,17 @@
   border-radius: 12px;
   z-index: 1;
   transition: all 0.2s ease-in-out;
+}
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer; /* Change cursor to pointer for better UX */
+}
+
+.plus-icon {
+  margin-left: 10px; /* Space between question and icon */
+  font-size: 20px; /* Adjust icon size */
 }
 
 /* Remove the border effect when inactive */
@@ -297,12 +307,28 @@
   opacity: 0;
 }
 
+.top {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  z-index: 999;
+}
+.top-image {
+  cursor: pointer;
+  filter: invert(1);
+}
+
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .frequent-heading {
     font-size: 35px;
     padding-top: 40%;
   }
-
+  .faq-item h3 {
+    font-size: 19px;
+  }
+  .faq-item p {
+    font-size: 14px;
+  }
   .main-container {
     padding: 15px;
   }
@@ -311,6 +337,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    position: static;
   }
 
   .tab-button {
@@ -322,21 +349,21 @@
   }
 
   .nav-dark span {
-    color: white !important;
+    /* color: white !important; */
   }
 
   .signup-heading {
     font-size: 12px !important;
   }
   .email-placing {
-    padding: 5px !important;
-    width: 50vw !important;
+    padding: 7px !important;
+    width: 75vw !important;
   }
   .Subscribe-button {
     font-size: 10px !important;
-    width: 60% !important;
+    width: 30% !important;
     padding: 6px !important;
-    right: -70% !important;
+    right: 1%;
   }
   .proteins-container {
     background-position: 100%;
@@ -350,4 +377,22 @@
     padding-right: 0% !important;
     padding-bottom: 3rem !important;
   }
+}
+
+@media only screen and (max-width: 500px) and (min-width: 320px) {
+  .faq-item p {
+    display: block; /* Hide answers by default */
+  }
+  .faq-item.active p {
+    display: block; /* Show answer when active */
+  }
+}
+
+@media only screen and (max-width: 2500px) and (min-width: 501px) {
+  .faq-item p {
+    display: block; /* Show answers by default */
+  }
+  /* .plus-icon {
+    display: none; 
+  } */
 }

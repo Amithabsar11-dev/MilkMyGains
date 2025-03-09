@@ -52,3 +52,13 @@ text {
     gap: 16px;
   }
 }
+
+@media only screen and (max-width: 500px) and (min-width: 320px) {
+  svg {
+    height: 22vh;
+    width: 65%;
+  }
+  .svg-container {
+    padding-top: 20%;
+  }
+}

@@ -60,6 +60,9 @@ import Footeranimation from "./assets/Home-footer.gif";
 import Weightliftanimation from "./assets/Weight-lift.gif";
 import Yogaanimation from "./assets/Yoga.gif";
 import Basketballanimation from "./assets/BasketBall.gif";
+import LeftArrowIcon from "./assets/CaretCircleRight-1.svg"; // Your left arrow SVG
+import RightArrowIcon from "./assets/CaretCircleRight.svg";
+import { useNavigate } from "react-router-dom";
 import Paneercubes from "./assets/paneer-cubes.svg";
 import Copyrightline from "./assets/Line 23.svg";
 
@@ -76,22 +79,28 @@ gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
 const Home = ({ setIsLoaded, isLoaded }) => {
   const [currentModel, setCurrentModel] = useState("/mmg1.glb");
+  const navigate = useNavigate();
   const [isNext, setIsNext] = useState(true);
   const [scrolling, setScrolling] = useState(false);
   const [viewBox, setViewBox] = useState("0 -90 720 543");
   const [activeButton, setActiveButton] = useState("paneer");
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setIsMobile] = useState(false);
   const [step, setStep] = useState(0);
   const [transitionProgress, setTransitionProgress] = useState(1);
   const [nextModel, setNextModel] = useState(null);
   const [isScalingUp, setIsScalingUp] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const handlePaneerClick = () => handleModelChange("/mmg1.glb", false);
-  const handleMilkClick = () => handleModelChange("/packet_1.glb", true);
+  // const handlePaneerClick = () => handleModelChange("/mmg1.glb", false);
+  // const handleMilkClick = () => handleModelChange("/packet_1.glb", true);
   const [scrollDirection, setScrollDirection] = useState(0);
   const homeWrapperRef = useRef(null);
   const mmgModelRef = useRef();
+  const mobileCardsRef = useRef(null);
+  const mobileCardsContainerRef = useRef(null);
+  const [cardWidth, setCardWidth] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const homeContainerRef = useRef();
+  const animationRef = useRef(null);
 
   const getButtonImage = (button) => {
     if (button === activeButton) {
@@ -119,50 +128,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     curve2: "M 0 100 V 95 Q 50 80 100 95 V 100 Z", // Even more subtle curve
   };
 
-  // const path = {
-  //   start: "M0,100 L100,100", // Initial flat path
-  //   curve1: "M0,100 C30,90 70,90 100,100", // First smooth curve
-  //   curve2: "M0,100 C50,80 50,80 100,100", // More pronounced bend
-  // };
-
-  // useEffect(() => {
-  //   if (!setIsLoaded) return;
-  //   gsap
-  //     .timeline({
-  //       scrollTrigger: {
-  //         trigger: ".slider-container",
-  //         start: "bottom bottom",
-  //         end: "bottom+=200 bottom", // Increase the scroll range for a smoother transition
-  //         scrub: 2, // Slightly increase scrub value for fluid motion
-  //         scroller: ".home-wrapper",
-  //       },
-  //     })
-  //     .to(".overlay-path", { attr: { d: path.curve1 }, duration: 1.5, ease: "power2.out" }) // Easing added
-  //     .to(".overlay-path", { attr: { d: path.curve2 }, duration: 1.5, ease: "power2.out" }); // Easing added
-  // }, [setIsLoaded]);
-
-  // useEffect(() => {
-  //   if (!setIsLoaded) return;
-  //   gsap
-  //     .timeline({
-  //       scrollTrigger: {
-  //         trigger: ".proteins-container",
-  //         start: "top bottom",
-  //         end: "bottom top",
-  //         scrub: 2,
-  //         scroller: ".home-wrapper",
-  //       },
-  //     })
-  //     .to(".overlay-path1", { attr: { d: path.curve1 }, duration: 1.5, ease: "power2.out" })
-  //     .to(".overlay-path1", { attr: { d: path.curve2 }, duration: 1.5, ease: "power2.out" });
-  // }, [setIsLoaded]);
-
-  // const path = {
-  //   start: "M 0 0 V 0 Q 50 0 100 0 V 0 Z", // Flat at the top
-  //   curve1: "M 0 0 V 10 Q 50 20 100 10 V 0 Z", // Smaller curve
-  //   curve2: "M 0 0 V 20 Q 50 40 100 20 V 0 Z", // Larger curve, bends more in the middle
-  // };
-
   useEffect(() => {
     const updateViewBox = () => {
       const width = window.innerWidth;
@@ -178,58 +143,202 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     return () => window.removeEventListener("resize", updateViewBox);
   }, []);
 
-  const handleModelChange = (modelPath, next = true) => {
-    if (currentModel !== modelPath && !isTransitioning) {
-      setIsTransitioning(true);
-      setIsScalingUp(false);
-      setIsNext(next); // Set direction for smooth rotation
+  // const handleModelChange = (modelPath, next = true) => {
+  //   if (currentModel !== modelPath && !isTransitioning) {
+  //     setIsTransitioning(true);
+  //     setIsScalingUp(false);
+  //     setIsNext(next); // Set direction for smooth rotation
 
-      const tl = gsap.timeline({
-        onComplete: () => {
-          setCurrentModel(modelPath);
-          setTransitionProgress(0); // Ensure new model starts at scale 0
+  //     const tl = gsap.timeline({
+  //       onComplete: () => {
+  //         setCurrentModel(modelPath);
+  //         setTransitionProgress(0); // Ensure new model starts at scale 0
 
-          setTimeout(() => {
-            setIsScalingUp(true);
-            gsap.to(
-              {},
-              {
-                duration: 1,
-                ease: "power2.out",
-                onUpdate: function () {
-                  setTransitionProgress(this.progress());
-                },
-                onComplete: () => setIsTransitioning(false),
-              }
-            );
-          }, 100); // Delay ensures new model appears smoothly before old one disappears
-        },
-      });
+  //         setTimeout(() => {
+  //           setIsScalingUp(true);
+  //           gsap.to(
+  //             {},
+  //             {
+  //               duration: 1,
+  //               ease: "power2.out",
+  //               onUpdate: function () {
+  //                 setTransitionProgress(this.progress());
+  //               },
+  //               onComplete: () => setIsTransitioning(false),
+  //             }
+  //           );
+  //         }, 100); // Delay ensures new model appears smoothly before old one disappears
+  //       },
+  //     });
 
-      tl.to(
-        {},
-        {
-          duration: 1,
-          ease: "power2.inOut",
-          onUpdate: function () {
-            setTransitionProgress(1 - this.progress());
-          },
-        }
-      );
-    }
-  };
+  //     tl.to(
+  //       {},
+  //       {
+  //         duration: 1,
+  //         ease: "power2.inOut",
+  //         onUpdate: function () {
+  //           setTransitionProgress(1 - this.progress());
+  //         },
+  //       }
+  //     );
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   console.log("Current Model Path:", currentModel);
+  // }, [currentModel]);
 
   useEffect(() => {
-    console.log("Current Model Path:", currentModel);
-  }, [currentModel]);
-
-  useEffect(() => {
+    if (isLoaded) return;
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, [isLoaded]);
+
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     const container = mobileCardsContainerRef.current;
+  //     const cardsWrapper = document.querySelector(".mobile-cards-container");
+  //     cardsWrapper.scrollLeft += 50; // Move right
+  //     console.log("Force Scroll Left:", cardsWrapper.scrollLeft);
+
+  //     const cards = cardsWrapper.children;
+  //     const totalCards = cards.length;
+
+  //     if (!container || !cardsWrapper || totalCards === 0) return;
+
+  //     // Calculate total width of the scrolling container
+  //     const totalWidth = cardsWrapper.scrollWidth;
+
+  //     console.log("Total Width:", totalWidth);
+  //     console.log("Window Width:", window.innerWidth);
+
+  //     // ScrollTrigger Setup
+  //     ScrollTrigger.create({
+  //       trigger: container,
+  //       start: "top top",
+  //       end: `+=${totalWidth - window.innerWidth}`,
+  //       pin: true,
+  //       scrub: 1,
+  //       anticipatePin: 1,
+  //       onEnter: () => {
+  //         console.log("Entered Mobile Cards Section - Locking Scroll");
+  //         document.body.style.overflowY = "hidden";
+  //       },
+  //       onUpdate: (self) => {
+  //         console.log("Scroll Progress:", self.progress);
+  //         if (self.progress >= 1) {
+  //           ScrollTrigger.getById("mobileCards")?.kill();
+  //           document.body.style.overflowY = "auto";
+  //           console.log("Reached End - Unlocking Scroll");
+  //         }
+  //       },
+  //       onLeave: () => {
+  //         document.body.style.overflowY = "auto";
+  //         console.log("Leaving Mobile Cards Section");
+  //       },
+  //       id: "mobileCards",
+  //     });
+
+  //     // Animate horizontal scroll
+  //     gsap.to(cardsWrapper, {
+  //       scrollLeft: totalWidth, // Move horizontally instead of translating
+  //       ease: "none",
+  //       scrollTrigger: {
+  //         trigger: container,
+  //         start: "top top",
+  //         end: `+=${totalWidth}`,
+  //         scrub: 1,
+  //       },
+  //     });
+  //     console.log("Scroll Left Position:", cardsWrapper.scrollLeft);
+
+  //     // Handle Wheel Scrolling
+  //     const handleScroll = (event) => {
+  //       if (container) {
+  //         event.preventDefault();
+  //         cardsWrapper.scrollLeft += event.deltaY * 2; // Adjust scroll speed
+  //         console.log("Wheel Scrolling: ", event.deltaY);
+  //       }
+  //     };
+
+  //     container.addEventListener("wheel", handleScroll, { passive: false });
+
+  //     return () => {
+  //       container.removeEventListener("wheel", handleScroll);
+  //       ScrollTrigger.getById("mobileCards")?.kill();
+  //     };
+  //   }
+  // }, [isMobile]);
+
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     const cards = mobileCardsRef.current.children;
+  //     const totalCards = cards.length;
+
+  //     // Calculate the total width needed for all cards
+  //     const totalWidth = Array.from(cards).reduce((acc, card) => acc + card.offsetWidth, 0);
+
+  //     gsap.to(mobileCardsRef.current, {
+  //       xPercent: -100 * (totalCards - 1), // Move cards to the left based on total width
+  //       ease: "none",
+  //       scrollTrigger: {
+  //         trigger: mobileCardsContainerRef.current,
+  //         start: "top top",
+  //         end: `+=${totalWidth}`, // Control the scroll range
+  //         scrub: true,
+  //         pin: true, // Keep the section pinned
+  //         scroller: ".home-wrapper",
+  //         anticipatePin: 1,
+  //         onEnter: () => {
+  //           document.body.style.overflowY = "hidden"; // Lock vertical scroll
+  //         },
+  //         onLeave: () => {
+  //           document.body.style.overflowY = "auto"; // Unlock when done
+  //         },
+  //         onLeaveBack: () => {
+  //           document.body.style.overflowY = "auto"; // Unlock when scrolling back up
+  //         },
+  //       },
+  //     });
+  //   }
+  // }, [isMobile]);
+
+  useEffect(() => {
+    if (mobileCardsContainerRef.current) {
+      const firstCard =
+        mobileCardsContainerRef.current.querySelector(".mobile-carding1");
+      if (firstCard) {
+        setCardWidth(firstCard.offsetWidth + 70); // Card width + gap
+      }
+    }
   }, []);
+
+  const scrollToCard = (index) => {
+    if (mobileCardsContainerRef.current) {
+      const scrollAmount = index * cardWidth;
+      mobileCardsContainerRef.current.scrollTo({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+      setCurrentIndex(index);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < 4) {
+      // Assuming 6 cards (adjust if needed)
+      scrollToCard(currentIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      scrollToCard(currentIndex - 1);
+    }
+  };
 
   //Fade In Effect
   useEffect(() => {
@@ -262,11 +371,11 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     }, 1000);
   };
 
-  //pure protein animation
+  // Pure protein animation
   useEffect(() => {
     const cap = document.querySelector(".protein-cap");
 
-    gsap.fromTo(
+    const animation = gsap.fromTo(
       cap,
       { rotation: 0, x: 0 },
       {
@@ -283,11 +392,19 @@ const Home = ({ setIsLoaded, isLoaded }) => {
         },
       }
     );
+
+    return () => {
+      if (animation.scrollTrigger) {
+        animation.scrollTrigger.kill(); // Cleanup ScrollTrigger
+      }
+    };
   }, []);
 
+  // Overlay path animation
   useEffect(() => {
     if (!setIsLoaded) return;
-    gsap
+
+    const timeline = gsap
       .timeline({
         scrollTrigger: {
           trigger: ".container-pure",
@@ -299,6 +416,10 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       })
       .to(".overlay-path", { attr: { d: paths.curve1 }, duration: 1 })
       .to(".overlay-path", { attr: { d: paths.curve2 }, duration: 1 });
+
+    return () => {
+      timeline.scrollTrigger.kill(); // Cleanup ScrollTrigger
+    };
   }, [setIsLoaded]);
 
   const paths = {
@@ -308,7 +429,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   };
 
   // Words Animation
-
   useEffect(() => {
     if (!setIsLoaded) return;
     Splitting();
@@ -320,7 +440,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     fx1Titles.forEach((title) => {
       const chars = title.querySelectorAll(".char");
 
-      gsap.fromTo(
+      const animation = gsap.fromTo(
         chars,
         {
           "will-change": "opacity, transform",
@@ -343,10 +463,13 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           },
         }
       );
+
+      return () => {
+        if (animation.scrollTrigger) {
+          animation.scrollTrigger.kill(); // Cleanup ScrollTrigger
+        }
+      };
     });
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
   }, [setIsLoaded]);
 
   useEffect(() => {
@@ -362,7 +485,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
       chars.forEach((char) => gsap.set(char.parentNode, { perspective: 1000 }));
 
-      gsap.fromTo(
+      const animation = gsap.fromTo(
         chars,
         {
           "will-change": "opacity, transform",
@@ -383,10 +506,61 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           },
         }
       );
+
+      return () => {
+        if (animation.scrollTrigger) {
+          animation.scrollTrigger.kill(); // Cleanup ScrollTrigger
+        }
+      };
     });
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+  }, [setIsLoaded]);
+
+  useEffect(() => {
+    if (!setIsLoaded) return;
+
+    let ctx = gsap.context(() => {
+      const highProtein = document.querySelector(".high-proteins-1");
+      const lowCalories = document.querySelector(".low-proteins-1");
+
+      gsap.fromTo(
+        highProtein,
+        { x: -100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".middle-texting",
+            start: "top 80%", // Adjusted for better timing
+            end: "top 50%",
+            scroller: ".home-wrapper",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        lowCalories,
+        { x: 100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: "power4.out",
+          scrollTrigger: {
+            trigger: ".middle-texting",
+            start: "top 80%",
+            end: "top 50%",
+            scroller: ".home-wrapper",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    });
+
+    return () => ctx.revert(); // Cleanup on unmount
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, [setIsLoaded]);
 
   useEffect(() => {
@@ -437,12 +611,12 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
   // Footer - background
 
-  //Card Animation
+  // Card Animation
   const circleRef = useRef(null);
 
   useEffect(() => {
     if (!setIsLoaded) return;
-    gsap.to(circleRef.current, {
+    const animation = gsap.to(circleRef.current, {
       rotation: -170, // Adjust rotation range as needed
       ease: "none",
       scrollTrigger: {
@@ -453,12 +627,18 @@ const Home = ({ setIsLoaded, isLoaded }) => {
         scroller: ".home-wrapper",
       },
     });
+
+    return () => {
+      if (animation.scrollTrigger) {
+        animation.scrollTrigger.kill(); // Cleanup ScrollTrigger
+      }
+    };
   }, [setIsLoaded]);
 
-  //Wholesome sticker
-
+  // Wholesome sticker
   useEffect(() => {
     if (!setIsLoaded) return;
+
     gsap.to(".stickers", {
       rotation: 10,
       transformOrigin: "center",
@@ -472,16 +652,21 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       },
     });
 
-    gsap.to(".veg-bowl", {
-      rotation: 20,
-      scrollTrigger: {
-        trigger: ".wholesome-container",
-        start: "top center",
-        end: "bottom center",
-        scrub: true,
-        scroller: ".home-wrapper",
-      },
-    });
+    gsap.fromTo(
+      ".veg-bowl",
+      { x: "100vw", rotation: 0 },
+      {
+        x: 0,
+        rotation: -300,
+        scrollTrigger: {
+          trigger: ".wholesome-container",
+          start: "top 90%",
+          end: "bottom center",
+          scrub: true,
+          scroller: ".home-wrapper",
+        },
+      }
+    );
 
     gsap.to(".wholesome-para", {
       y: "70",
@@ -495,8 +680,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     });
   }, [setIsLoaded]);
 
-  //home Bg
-
+  // Home Background
   useEffect(() => {
     if (!setIsLoaded) return;
     gsap.utils
@@ -520,8 +704,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       });
   }, [setIsLoaded]);
 
-  //Words animation
-
+  // Words animation
   const textPathRefs = useRef([]);
 
   useEffect(() => {
@@ -562,7 +745,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     });
 
     return () => {
-      scrollTrigger.kill();
+      scrollTrigger.kill(); // Cleanup ScrollTrigger
     };
   }, [setIsLoaded]);
 
@@ -636,15 +819,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
 
           <div className="order-buttons">
-            {/* <img
-              src={getButtonImage("paneer")}
-              alt="paneer-button"
-              className={`paneer-button ${currentModel === "/mmg1.glb" ? "active" : ""
-                }`}
-              onClick={() =>
-                handleModelChange("/mmg1.glb", false)
-              } 
-            /> */}
             <Link to="/product/milk-my-gains-sample-product">
               <img
                 src={MMGimage}
@@ -694,7 +868,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             </div>
           </div>
           <div className="mmg-model" ref={mmgModelRef} style={{ opacity: 0 }}>
-            <Canvas key={currentModel}>
+            <Canvas key={currentModel} gl={{ antialias: true }} dpr={[1, 2]}>
               <MilkMyGain
                 modelPath={currentModel}
                 transitionProgress={transitionProgress}
@@ -732,13 +906,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       </div>
       {/* Card Section */}
       <div className="container-paradigm">
-        <div className="icon-paradigm">
-          <img src={Star} alt="Star" className="star-icon" />
-          <img src={Eyestar} alt="Diamond" className="diamond-icon" />
-          <img src={Eye} alt="Eye" className="eye-icon" />
-          <img src={Signal} alt="Shop" className="shop-icon" />
-          <img src={Drop} alt="Drop" className="drop-icon" />
-        </div>
         <div className="paradigm-heading">
           <h1 className="main-heading">
             <span>CHANGING</span>
@@ -747,226 +914,254 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </h1>
         </div>
         <div className="paradigm-para">
-          <p className="main-para">
-            Transforming Vegetarian Nutrition: <br />
-            Accessible, High-Protein Solutions for an
-            <br /> Active Lifestyle
-          </p>
+          {window.innerWidth < 768 ? (
+            <p className="main-para">
+              Healthy Living should be effortless - and delicious. Our protein
+              packet solutions deliver on taste and convenience for every
+              lifestyle.
+            </p>
+          ) : (
+            <p className="main-para">
+              Healthy Living should be effortless - and delicious.
+              <br />
+              Our protein packet solutions deliver
+              <br /> on taste and convenience for every lifestyle.
+            </p>
+          )}
         </div>
-        {isMobile ? (
-          <div className="mobile-cards-container">
-            <div className="mobile-cards">
-              <div className="mobile-carding1">
-                <div className="carding-inner">
-                  <div className="carding-front">
-                    <div className="carding-border">
-                      <img
-                        src={TransparencyIcon}
-                        alt="Transparency"
-                        className="carding-icon"
-                      />
-                      <p className="carding-text">
-                        TRANSPARENCY <br /> IN EVERY DROP
-                      </p>
+        {window.innerWidth < 768 ? (
+          <div className="carousel-container">
+            <button
+              className="arrow left"
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+            >
+              <img src={LeftArrowIcon} alt="Previous" />
+            </button>
+            <div
+              className="mobile-cards-container"
+              ref={mobileCardsContainerRef}
+            >
+              <div className="mobile-cards" ref={mobileCardsRef}>
+                <div className="mobile-carding1">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          TRANSPARENCY <br /> IN EVERY DROP
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="carding-back">
-                    <div className="carding-border1">
-                      <h1 className="backing-heading">
-                        Transparency
-                        <br /> in every drop
-                      </h1>
-                      <p className="backing-text">
-                        No secrets, no surprises. We’re upfront about every
-                        ingredient and every process, empowering you to make
-                        informed choices about your nutrition.
-                      </p>
-                      <img
-                        src={TransparencyIcon}
-                        alt="Transparency"
-                        className="carding-icon-image"
-                      />
-                      <img
-                        src={TransparencyIconline}
-                        alt="New Possibilities"
-                        className="carding-icon-line1"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mobile-carding2">
-                <div className="carding-inner">
-                  <div className="carding-front">
-                    <div className="carding-border">
-                      <img
-                        src={MythIcon}
-                        alt="Protein Myth"
-                        className="carding-icon"
-                      />
-                      <p className="carding-text">
-                        BREAKING THE
-                        <br /> PROTEIN MYTH
-                      </p>
-                    </div>
-                  </div>
-                  <div className="carding-back">
-                    <div className="carding-border1">
-                      <h1 className="backing-heading">
-                        Breaking the
-                        <br /> Protein Myth
-                      </h1>
-                      <p className="backing-text">
-                        We’re challenging the belief that dairy can’t be high in
-                        protein and low in calories. MilkMyGains transforms
-                        dairy into a nutritional powerhouse, proving that
-                        high-quality protein doesn’t have to come with excess
-                        fat.
-                      </p>
-                      <img
-                        src={MythIcon}
-                        alt="Protein Myth"
-                        className="carding-icon-image"
-                      />
-                      <img
-                        src={MythIconline}
-                        alt="New Possibilities"
-                        className="carding-icon-line2"
-                      />
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Transparency
+                          <br /> in every drop
+                        </h1>
+                        <p className="backing-text">
+                          No secrets, no surprises. We’re upfront about every
+                          ingredient and every process, empowering you to make
+                          informed choices about your nutrition.
+                        </p>
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={TransparencyIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line1"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="mobile-carding3">
-                <div className="carding-inner">
-                  <div className="carding-front">
-                    <div className="carding-border">
-                      <img
-                        src={PossibilitiesIcon}
-                        alt="New Possibilities"
-                        className="carding-icon1"
-                      />
-                      <p className="carding-text">
-                        UNLOCKING NEW <br /> POSSIBILITIES
-                      </p>
+                <div className="mobile-carding2">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          BREAKING THE
+                          <br /> PROTEIN MYTH
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="carding-back">
-                    <div className="carding-border1">
-                      <h1 className="backing-heading">
-                        Unlocking new
-                        <br /> possibilities
-                      </h1>
-                      <p className="backing-text">
-                        By pushing the boundaries of dairy science, we’ve
-                        crafted products with exceptional protein levels that
-                        were once thought impossible. We’re redefining what’s
-                        achievable using only natural ingredients.
-                      </p>
-                      <img
-                        src={PossibilitiesIcon}
-                        alt="New Possibilities"
-                        className="carding-icon-image"
-                      />
-                      <img
-                        src={PossibilitiesIconline}
-                        alt="New Possibilities"
-                        className="carding-icon-line3"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mobile-carding1">
-                <div className="carding-inner">
-                  <div className="carding-front">
-                    <div className="carding-border-4">
-                      <img
-                        src={EyesightIcon}
-                        alt="EyeCard"
-                        className="carding-icon-4"
-                      />
-                      <p className="carding-text-4">
-                        Tracebility you <br />
-                        can trust{" "}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="carding-back">
-                    <div className="carding-border1">
-                      <h1 className="backing-heading">
-                        Tracebility you <br />
-                        can trust{" "}
-                      </h1>
-                      <p className="backing-text">
-                        No We believe you have the
-                        <br /> right to know where your <br />
-                        food comes from. Our <br /> transparent supply chain
-                        lets you trace each <br />
-                        product from farm to
-                        <br /> table, providing peace of
-                        <br /> mind with every bite.
-                      </p>
-                      <img
-                        src={MythIcon}
-                        alt="EyeCard"
-                        className="carding-icon-image"
-                      />
-                      <img
-                        src={MythIconline}
-                        alt="eyecard-line"
-                        className="carding-icon-line1"
-                      />
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Breaking the
+                          <br /> Protein Myth
+                        </h1>
+                        <p className="backing-text">
+                          We’re challenging the belief that dairy can’t be high
+                          in protein and low in calories. MilkMyGains transforms
+                          dairy into a nutritional powerhouse, proving that
+                          high-quality protein doesn’t have to come with excess
+                          fat.
+                        </p>
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={MythIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line2"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="mobile-carding1">
-                <div className="carding-inner">
-                  <div className="carding-front">
-                    <div className="carding-border-4">
-                      <img
-                        src={SunlookIcon}
-                        alt="Protein Myth"
-                        className="carding-icon-4"
-                      />
-                      <p className="carding-text-4">
-                        QUALITY BEGINS
-                        <br /> AT SOURCE
-                      </p>
+                <div className="mobile-carding3">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={PossibilitiesIcon}
+                          alt="New Possibilities"
+                          className="carding-icon1"
+                        />
+                        <p className="carding-text">
+                          UNLOCKING NEW <br /> POSSIBILITIES
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Unlocking new
+                          <br /> possibilities
+                        </h1>
+                        <p className="backing-text">
+                          By pushing the boundaries of dairy science, we’ve
+                          crafted products with exceptional protein levels that
+                          were once thought impossible. We’re redefining what’s
+                          achievable using only natural ingredients.
+                        </p>
+                        <img
+                          src={PossibilitiesIcon}
+                          alt="New Possibilities"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={PossibilitiesIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line3"
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="carding-back">
-                    <div className="carding-border1">
-                      <h1 className="backing-heading">
-                        QUALITY BEGINS
-                        <br />
-                        AT SOURCE
-                      </h1>
-                      <p className="backing-text">
-                        Excellence is our standard <br />
-                        from start to finish. We
-                        <br /> source only the finest raw
-                        <br /> materials to ensure that
-                        <br /> every MilkMyGains product
-                        <br /> offers superior nutrition and
-                        <br /> taste.
-                      </p>
-                      <img
-                        src={Sunback}
-                        alt="Protein Myth"
-                        className="carding-icon-image"
-                      />
-                      <img
-                        src={TransparencyIconline}
-                        alt="New Possibilities"
-                        className="carding-icon-line5"
-                      />
+                </div>
+                <div className="mobile-carding2">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={EyesightIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-6"
+                        />
+                        <p className="carding-text-4">
+                          Tracebility you <br />
+                          can trust{" "}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Tracebility you <br />
+                          can trust{" "}
+                        </h1>
+                        <p className="backing-text">
+                          We believe you have the
+                          <br /> right to know where your <br />
+                          food comes from. Our <br /> transparent supply chain
+                          lets you trace each <br />
+                          product from farm to
+                          <br /> table, providing peace of
+                          <br /> mind with every bite.
+                        </p>
+                        <img
+                          src={MythIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={MythIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mobile-carding2">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={SunlookIcon}
+                          alt="Protein Myth"
+                          className="carding-icon-5"
+                        />
+                        <p className="carding-text">
+                          QUALITY BEGINS
+                          <br /> AT SOURCE
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          QUALITY BEGINS
+                          <br />
+                          AT SOURCE
+                        </h1>
+                        <p className="backing-text">
+                          Excellence is our standard <br />
+                          from start to finish. We
+                          <br /> source only the finest raw
+                          <br /> materials to ensure that
+                          <br /> every MilkMyGains product
+                          <br /> offers superior nutrition and
+                          <br /> taste.
+                        </p>
+                        <img
+                          src={Sunback}
+                          alt="Protein Myth"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={TransparencyIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line2"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <button
+              className="arrow right"
+              onClick={handleNext}
+              disabled={currentIndex === 5}
+            >
+              <img src={RightArrowIcon} alt="Next" />
+            </button>
           </div>
         ) : (
           <div className="parent">
@@ -1036,7 +1231,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                           can trust{" "}
                         </h1>
                         <p className="backing-text">
-                          No We believe you have the
+                          We believe you have the
                           <br /> right to know where your <br />
                           food comes from. Our <br /> transparent supply chain
                           lets you trace each <br />
@@ -1275,7 +1470,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
         )}
         <div className="know-button-container">
-          <button class="know-button">KNOW MORE</button>
+          <button className="know-button" onClick={() => navigate("/about")}>
+            KNOW MORE
+          </button>
         </div>
       </div>
       {/* Pure Protein Zero */}
@@ -1295,12 +1492,19 @@ const Home = ({ setIsLoaded, isLoaded }) => {
         </svg> */}
         <div className="row row-pure">
           <div className="col-sm-6">
-            <h1 className="crafted-pure">
-              crafted with a purpose: it’s
-              <br /> high in protein, low in fat,
-              <br /> and low in calories—without
-              <br /> compromising on taste.
-            </h1>
+          {window.innerWidth < 768 ? (
+              <h1 className="crafted-pure">
+                crafted with a purpose: it’s high in protein, low in fat, and
+                low in calories—without compromising on taste.
+              </h1>
+            ) : (
+              <h1 className="crafted-pure">
+                crafted with a purpose: it’s
+                <br /> high in protein, low in fat,
+                <br /> and low in calories—without
+                <br /> compromising on taste.
+              </h1>
+            )}
             {/* <img src={Words} alt="words" className=" words" /> */}
             <div className="svg-container">
               <svg
@@ -1322,7 +1526,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     startOffset="0%"
                     href="#curve"
                   >
-                    Your daily dairy keeps you energized all day long &nbsp;
+                    Products that keep you feeling energised all day&nbsp;
                   </textPath>
                   <textPath
                     ref={(el) => (textPathRefs.current[1] = el)}
@@ -1330,7 +1534,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     startOffset="100%"
                     href="#curve"
                   >
-                    Your daily dairy keeps you energized all day long &nbsp;
+                    Products that keep you feeling energised all day&nbsp;
                   </textPath>
                 </text>
               </svg>
@@ -1389,15 +1593,12 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
           <div className="col-sm-6">
             <img src={ProteinCap} alt="protein-cap" className="protein-cap" />
-            {isMobile ? (
+            {window.innerWidth < 768 ? (
               <div class="content-protein">
                 <h1 className="pure-heading">
-                  PURE
-                  <br /> PROTEIN.
-                  <br /> ZERO
-                  <br /> COMPRO-
+                  PURE PROTEIN.
                   <br />
-                  MISE.
+                  ZERO COMPROMISE.
                 </h1>
               </div>
             ) : (
@@ -1451,17 +1652,25 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     <img src={Starbuild} className="star-build" />
                     <h1 className="build">BUILD MUSCLE</h1>
                   </div> */}
-                    <p className="build-para">
-                      Protein builds muscle <br />
-                      and bone, supporting <br />
-                      agility and resilience. <br />
-                      It’s essential for <br />
-                      vitality and longevity,
-                      <br />
-                      fueling an active,
-                      <br />
-                      enduring lifestyle.
-                    </p>
+                    {isMobile ? (
+                      <p className="build-para">
+                        Protein builds muscle and bone, supporting agility and
+                        resilience. It’s essential for vitality and longevity,
+                        fueling an active, enduring lifestyle.
+                      </p>
+                    ) : (
+                      <p className="build-para">
+                        Protein builds muscle <br />
+                        and bone, supporting <br />
+                        agility and resilience. <br />
+                        It’s essential for <br />
+                        vitality and longevity,
+                        <br />
+                        fueling an active,
+                        <br />
+                        enduring lifestyle.
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="col-sm-6">
@@ -1576,15 +1785,15 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
       {/* Raising the star */}
       {isMobile ? (
-        <div className="animations-container">
+        <div className="animations-container-1">
           <div className="texting-wrapper-1">
-            <h1 className="raising-1">RAISING</h1>
+            <h1 className="raising-1">RAISING THE BAR</h1>
             <div className="middle-texting">
               <span className="high-proteins-1">HIGH PROTEINS</span>
-              <br />
+              {/* <br /> */} &nbsp;
               <span className="low-proteins-1">LOW CALORIES</span>
             </div>
-            <h1 className="bar-proteins-1">THE BAR</h1>
+            {/* <h1 className="bar-proteins-1">THE BAR</h1> */}
           </div>
         </div>
       ) : (
