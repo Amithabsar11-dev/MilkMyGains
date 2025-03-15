@@ -33,7 +33,7 @@
 .about-protein {
   background: url("./assets//about\ page.png");
   padding-top: 15%;
-  background-size: auto;
+  background-size: 100% 110%;
   background-repeat: no-repeat;
 }
 
@@ -108,7 +108,7 @@
 
 .milk-image1 {
   width: 30%;
-  padding-top: 4%;
+  padding-top: 5%;
 }
 
 .milk-pic-container {
@@ -198,11 +198,12 @@
   font-style: normal;
   text-transform: uppercase;
   display: none;
+  opacity: 1;
+  transition: none;
 }
 
 .card.active .card-text {
   display: block;
-  transition: opacity 0.5s ease-in, transform 0.5s ease-in;
 }
 
 .image-section {
@@ -464,13 +465,19 @@
 .carding-icon-line3 {
   width: 25%;
   position: absolute;
-  bottom: 16%;
+  bottom: 18%;
 }
 
 .carding-icon-line5 {
   width: 30%;
   position: absolute;
   top: 43%;
+}
+.carding-icon-line6 {
+  position: absolute;
+  width: 30%;
+  left: 30%;
+  top: 59%;
 }
 
 /* Mobile card section */
@@ -580,6 +587,28 @@
   left: -2px;
   opacity: 0;
 }
+.social-media-containers-1 {
+  display: flex;
+  margin-right: 14%;
+  height: 7vh;
+  margin-bottom: -2%;
+  cursor: pointer;
+  position: absolute;
+  bottom: 2.5%;
+  right: 30%;
+  gap: 15px;
+}
+
+.social-media-containers-1 img {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  filter: drop-shadow(2px 3px 0px black);
+}
+
+.social-media-containers-1 img:hover {
+  transform: translateY(2px);
+  filter: none;
+}
 
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .about-heading {
@@ -588,7 +617,7 @@
     font-style: normal;
   }
   .about-protein {
-    padding-top: 60%;
+    padding-top: 50%;
     /* background-image: url("./assets/iPhone\ mobb.png"); */
     height: 185vh;
     background-size: 145% 100%;
@@ -620,6 +649,9 @@
   .icon-paradigm {
     display: none;
   }
+  .social-media-containers-1 {
+    display: none;
+  }
 
   .carding-text {
     font-size: 25px;
@@ -644,10 +676,21 @@
   }
 
   .backing-text {
-    font-size: 13px;
-    line-height: 1.6rem;
+    font-size: 11px;
+    line-height: 1.5rem;
   }
-
+  .carding-icon-image {
+    bottom: 7%;
+  }
+  .carding-icon-line1 {
+    top: 53%;
+  }
+  .carding-icon-line2 {
+    bottom: 24%;
+  }
+  .carding-icon-line3 {
+    bottom: 17%;
+  }
   .about-lifestyle {
     padding-bottom: 30%;
   }
@@ -675,6 +718,7 @@
   }
   .about-challenge {
     padding-bottom: 15%;
+    margin-top: -20%;
   }
 
   .card.active .text-section {
@@ -692,7 +736,7 @@
   }
 
   .card.active .card-title {
-    left: 8%;
+    /* left: 8%; */
     padding-top: 10px;
     font-size: 20px;
   }
@@ -735,7 +779,7 @@
     font-style: normal;
   }
   .backing-heading {
-    font-size: 25px;
+    font-size: 20px;
     font-family: "Anybody_Condensed";
     margin-bottom: 0;
   }
@@ -775,6 +819,13 @@
 }
 @media only screen and (max-width: 1750px) and (min-width: 1650px) {
   .milk-image1 {
-    padding-top: 2%;
+    padding-top: 6%;
+  }
+  .about-protein {
+    /* background-size: 100% 120%; */
+  }
+  .about-join-container {
+    padding-top: 14%;
+    background-size: 100% 108%;
   }
 }

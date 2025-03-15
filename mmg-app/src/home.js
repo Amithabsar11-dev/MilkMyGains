@@ -6,46 +6,24 @@ import "./cards.css";
 import { Link } from "react-router-dom";
 import MilkMyGain from "./MilkMyGains";
 import { Canvas } from "@react-three/fiber";
-import Milk from "./assets/Slice-3.svg";
 import MilkTM from "./assets/Logo-TM-1.svg";
 import MMGimage from "./assets/MMG-image.svg";
-import MilkBg from "./assets/Vector (1).png";
-import MilkBg1 from "./assets/Vector (2).png";
-import MilkBg2 from "./assets/Vector (3).png";
-import MilkBg3 from "./assets/Vector (4).png";
 import OrderButton from "./assets/paneerorder.svg";
 import Order2Button from "./assets/milk-button.svg";
 import Order4Button from "./assets/icecream-button.svg";
-import Weightlift from "./assets/body builder.svg";
 import ProteinSlogan from "./assets/protein-slogan.svg";
-import Paneericon from "./assets/Panner-icon.svg";
-import Proteins from "./assets/meat.svg";
-import Whey from "./assets/powder.svg";
-import Energybar from "./assets/ricebag.svg";
-import Palakpaneer from "./assets/paneercubes.svg";
 import Vegbowl from "./assets/vegbowl.svg";
 import Stickers from "./assets/Stickers.svg";
 import Arrowpoint from "./assets/arrowpoint.svg";
-import Copyright1 from "./assets/copyrights-reserved.svg";
-import Protein from "./assets/protein.png";
 import TransparencyIcon from "./assets/Transparancy-card.svg";
 import MythIcon from "./assets/myth-card.svg";
 import PossibilitiesIcon from "./assets/unlocking-card.svg";
 import TransparencyIconline from "./assets/spring-transparancy.svg";
 import MythIconline from "./assets/spring-break.svg";
 import PossibilitiesIconline from "./assets/spring-unlock.svg";
-import Eyestar from "./assets/eyediamond.svg";
-import Signal from "./assets/shopicon.svg";
-import Star from "./assets/staricon.svg";
-import Eye from "./assets/eyeicon.svg";
-import Drop from "./assets/dropicon.svg";
 import Sunback from "./assets/Sunback.svg";
 import EyesightIcon from "./assets/EyesightIcon.svg";
 import SunlookIcon from "./assets/SunlookIcon.svg";
-import Activestar from "./assets/active-star.svg";
-import Inactivestar from "./assets/inactive-star.svg";
-import Lean from "./assets/basketball.svg";
-import Yoga from "./assets/yoga.svg";
 import Orderbuttons from "./assets/order-now-svg.svg";
 import Milkblur from "./assets/milk-1.svg";
 import Yogartblur from "./assets/yoghurt.svg";
@@ -62,9 +40,10 @@ import Yogaanimation from "./assets/Yoga.gif";
 import Basketballanimation from "./assets/BasketBall.gif";
 import LeftArrowIcon from "./assets/CaretCircleRight-1.svg"; // Your left arrow SVG
 import RightArrowIcon from "./assets/CaretCircleRight.svg";
+import Instagramheader from "./assets/instagram-header.svg";
+import LinkedInheader from "./assets/linked-in-icon.svg";
+import Facebookheader from "./assets/facebook-header.svg";
 import { useNavigate } from "react-router-dom";
-import Paneercubes from "./assets/paneer-cubes.svg";
-import Copyrightline from "./assets/Line 23.svg";
 
 /* Pure Protein Section */
 import ProteinCap from "./assets/protein-cap.svg";
@@ -102,6 +81,12 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   const homeContainerRef = useRef();
   const animationRef = useRef(null);
 
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "auto" }); // Force top scroll after navigation
+    }, 50); // Small delay to ensure the page has rendered
+  }, []);
+
   const getButtonImage = (button) => {
     if (button === activeButton) {
       return button === "paneer"
@@ -131,8 +116,11 @@ const Home = ({ setIsLoaded, isLoaded }) => {
   useEffect(() => {
     const updateViewBox = () => {
       const width = window.innerWidth;
+
       if (width >= 1700 && width <= 2200) {
         setViewBox("0 -90 910 543");
+      } else if (width < 768) {
+        setViewBox("40 -60 910 543");
       } else {
         setViewBox("0 -90 720 543");
       }
@@ -143,51 +131,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     return () => window.removeEventListener("resize", updateViewBox);
   }, []);
 
-  // const handleModelChange = (modelPath, next = true) => {
-  //   if (currentModel !== modelPath && !isTransitioning) {
-  //     setIsTransitioning(true);
-  //     setIsScalingUp(false);
-  //     setIsNext(next); // Set direction for smooth rotation
-
-  //     const tl = gsap.timeline({
-  //       onComplete: () => {
-  //         setCurrentModel(modelPath);
-  //         setTransitionProgress(0); // Ensure new model starts at scale 0
-
-  //         setTimeout(() => {
-  //           setIsScalingUp(true);
-  //           gsap.to(
-  //             {},
-  //             {
-  //               duration: 1,
-  //               ease: "power2.out",
-  //               onUpdate: function () {
-  //                 setTransitionProgress(this.progress());
-  //               },
-  //               onComplete: () => setIsTransitioning(false),
-  //             }
-  //           );
-  //         }, 100); // Delay ensures new model appears smoothly before old one disappears
-  //       },
-  //     });
-
-  //     tl.to(
-  //       {},
-  //       {
-  //         duration: 1,
-  //         ease: "power2.inOut",
-  //         onUpdate: function () {
-  //           setTransitionProgress(1 - this.progress());
-  //         },
-  //       }
-  //     );
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   console.log("Current Model Path:", currentModel);
-  // }, [currentModel]);
-
   useEffect(() => {
     if (isLoaded) return;
     const handleResize = () => {
@@ -196,115 +139,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isLoaded]);
-
-  // useEffect(() => {
-  //   if (isMobile) {
-  //     const container = mobileCardsContainerRef.current;
-  //     const cardsWrapper = document.querySelector(".mobile-cards-container");
-  //     cardsWrapper.scrollLeft += 50; // Move right
-  //     console.log("Force Scroll Left:", cardsWrapper.scrollLeft);
-
-  //     const cards = cardsWrapper.children;
-  //     const totalCards = cards.length;
-
-  //     if (!container || !cardsWrapper || totalCards === 0) return;
-
-  //     // Calculate total width of the scrolling container
-  //     const totalWidth = cardsWrapper.scrollWidth;
-
-  //     console.log("Total Width:", totalWidth);
-  //     console.log("Window Width:", window.innerWidth);
-
-  //     // ScrollTrigger Setup
-  //     ScrollTrigger.create({
-  //       trigger: container,
-  //       start: "top top",
-  //       end: `+=${totalWidth - window.innerWidth}`,
-  //       pin: true,
-  //       scrub: 1,
-  //       anticipatePin: 1,
-  //       onEnter: () => {
-  //         console.log("Entered Mobile Cards Section - Locking Scroll");
-  //         document.body.style.overflowY = "hidden";
-  //       },
-  //       onUpdate: (self) => {
-  //         console.log("Scroll Progress:", self.progress);
-  //         if (self.progress >= 1) {
-  //           ScrollTrigger.getById("mobileCards")?.kill();
-  //           document.body.style.overflowY = "auto";
-  //           console.log("Reached End - Unlocking Scroll");
-  //         }
-  //       },
-  //       onLeave: () => {
-  //         document.body.style.overflowY = "auto";
-  //         console.log("Leaving Mobile Cards Section");
-  //       },
-  //       id: "mobileCards",
-  //     });
-
-  //     // Animate horizontal scroll
-  //     gsap.to(cardsWrapper, {
-  //       scrollLeft: totalWidth, // Move horizontally instead of translating
-  //       ease: "none",
-  //       scrollTrigger: {
-  //         trigger: container,
-  //         start: "top top",
-  //         end: `+=${totalWidth}`,
-  //         scrub: 1,
-  //       },
-  //     });
-  //     console.log("Scroll Left Position:", cardsWrapper.scrollLeft);
-
-  //     // Handle Wheel Scrolling
-  //     const handleScroll = (event) => {
-  //       if (container) {
-  //         event.preventDefault();
-  //         cardsWrapper.scrollLeft += event.deltaY * 2; // Adjust scroll speed
-  //         console.log("Wheel Scrolling: ", event.deltaY);
-  //       }
-  //     };
-
-  //     container.addEventListener("wheel", handleScroll, { passive: false });
-
-  //     return () => {
-  //       container.removeEventListener("wheel", handleScroll);
-  //       ScrollTrigger.getById("mobileCards")?.kill();
-  //     };
-  //   }
-  // }, [isMobile]);
-
-  // useEffect(() => {
-  //   if (isMobile) {
-  //     const cards = mobileCardsRef.current.children;
-  //     const totalCards = cards.length;
-
-  //     // Calculate the total width needed for all cards
-  //     const totalWidth = Array.from(cards).reduce((acc, card) => acc + card.offsetWidth, 0);
-
-  //     gsap.to(mobileCardsRef.current, {
-  //       xPercent: -100 * (totalCards - 1), // Move cards to the left based on total width
-  //       ease: "none",
-  //       scrollTrigger: {
-  //         trigger: mobileCardsContainerRef.current,
-  //         start: "top top",
-  //         end: `+=${totalWidth}`, // Control the scroll range
-  //         scrub: true,
-  //         pin: true, // Keep the section pinned
-  //         scroller: ".home-wrapper",
-  //         anticipatePin: 1,
-  //         onEnter: () => {
-  //           document.body.style.overflowY = "hidden"; // Lock vertical scroll
-  //         },
-  //         onLeave: () => {
-  //           document.body.style.overflowY = "auto"; // Unlock when done
-  //         },
-  //         onLeaveBack: () => {
-  //           document.body.style.overflowY = "auto"; // Unlock when scrolling back up
-  //         },
-  //       },
-  //     });
-  //   }
-  // }, [isMobile]);
 
   useEffect(() => {
     if (mobileCardsContainerRef.current) {
@@ -515,96 +349,116 @@ const Home = ({ setIsLoaded, isLoaded }) => {
     });
   }, [setIsLoaded]);
 
+  // useEffect(() => {
+  //   if (!setIsLoaded) return;
+
+  //   let ctx = gsap.context(() => {
+  //     const highProtein = document.querySelector(".high-proteins-1");
+  //     const lowCalories = document.querySelector(".low-proteins-1");
+
+  //     gsap.fromTo(
+  //       highProtein,
+  //       { x: -100, opacity: 0 },
+  //       {
+  //         x: 0,
+  //         opacity: 1,
+  //         duration: 1.2,
+  //         ease: "power4.out",
+  //         scrollTrigger: {
+  //           trigger: ".middle-texting",
+  //           start: "top 80%", // Adjusted for better timing
+  //           end: "top 50%",
+  //           scroller: ".home-wrapper",
+  //           toggleActions: "play none none reverse",
+  //         },
+  //       }
+  //     );
+
+  //     gsap.fromTo(
+  //       lowCalories,
+  //       { x: 100, opacity: 0 },
+  //       {
+  //         x: 0,
+  //         opacity: 1,
+  //         duration: 1.2,
+  //         ease: "power4.out",
+  //         scrollTrigger: {
+  //           trigger: ".middle-texting",
+  //           start: "top 80%",
+  //           end: "top 50%",
+  //           scroller: ".home-wrapper",
+  //           toggleActions: "play none none reverse",
+  //         },
+  //       }
+  //     );
+  //   });
+
+  //   return () => ctx.revert(); // Cleanup on unmount
+  //   return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  // }, [setIsLoaded]);
+
   useEffect(() => {
     if (!setIsLoaded) return;
 
-    let ctx = gsap.context(() => {
-      const highProtein = document.querySelector(".high-proteins-1");
-      const lowCalories = document.querySelector(".low-proteins-1");
-
-      gsap.fromTo(
-        highProtein,
-        { x: -100, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: ".middle-texting",
-            start: "top 80%", // Adjusted for better timing
-            end: "top 50%",
-            scroller: ".home-wrapper",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        lowCalories,
-        { x: 100, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: ".middle-texting",
-            start: "top 80%",
-            end: "top 50%",
-            scroller: ".home-wrapper",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    });
-
-    return () => ctx.revert(); // Cleanup on unmount
-    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-  }, [setIsLoaded]);
-
-  useEffect(() => {
-    if (!setIsLoaded) return;
+    const isMobile = window.innerWidth < 768;
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".animation-container",
-        start: "top 80%", // Start animation when 80% of the section is in view
-        end: "bottom 20%", // End when 20% is still visible
-        scrub: 1, // Smooth scrolling effect
-        toggleActions: "play none none reverse", // Play forward and reverse on scroll
+        start: "top 80%",
+        end: "bottom 20%",
+        scrub: 1,
+        toggleActions: "play none none reverse",
         scroller: ".home-wrapper",
       },
       onComplete: () => setIsLoaded(true),
     });
 
-    // Step 1: Fade in "RAISING" and "THE BAR"
-    tl.fromTo(
-      ".raising, .bar-1",
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
-    );
+    if (isMobile) {
+      // Keep "RAISING" and "THE BAR" in the same line
+      gsap.set(".raising, .bar-1", { x: 0, opacity: 1 });
 
-    // Step 2: Move "RAISING" left & "THE BAR" right
-    tl.to(
-      ".raising",
-      { x: "-150px", duration: 1, ease: "power2.out" },
-      "-=0.5"
-    );
-    tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
+      // Move "HIGH PROTEIN" from left to center
+      tl.fromTo(
+        ".high",
+        { x: "-150%", opacity: 0 },
+        { x: "0%", opacity: 1, duration: 1.5, ease: "power2.out" }
+      );
 
-    // Step 3: Show "HIGH PROTEINS LOW CALORIES" with zoom effect
-    tl.fromTo(
-      ".middle-text",
-      { opacity: 0, scale: 0.5, fontWeight: 400 },
-      {
-        opacity: 1,
-        scale: 1.1,
-        fontWeight: 900,
-        duration: 1,
-        ease: "power2.out",
-      }
-    );
+      // Move "LOW CALORIES" from right to center
+      tl.fromTo(
+        ".low",
+        { x: "150%", opacity: 0 },
+        { x: "0%", opacity: 1, duration: 1.5, ease: "power2.out" },
+        "-=1.2" // Overlapping animation for smooth effect
+      );
+    } else {
+      // Existing Desktop Animation
+      tl.fromTo(
+        ".raising, .bar-1",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 1, ease: "power2.out" }
+      );
+
+      tl.to(
+        ".raising",
+        { x: "-150px", duration: 1, ease: "power2.out" },
+        "-=0.5"
+      );
+      tl.to(".bar-1", { x: "160px", duration: 1, ease: "power2.out" }, "-=1");
+
+      tl.fromTo(
+        ".middle-text",
+        { opacity: 0, scale: 0.5, fontWeight: 400 },
+        {
+          opacity: 1,
+          scale: 1.1,
+          fontWeight: 900,
+          duration: 1,
+          ease: "power2.out",
+        }
+      );
+    }
 
     return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, [setIsLoaded]);
@@ -757,10 +611,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           style={{ height: "100vh" }}
           onWheel={handleScroll}
         >
-          {/* <img src={MilkBg} alt="milk-bg" className="milkbg" />
-          <img src={MilkBg1} alt="milk-bg1" className="milkbg1" />
-          <img src={MilkBg2} alt="milk-bg2" className="milkbg2" />
-          <img src={MilkBg3} alt="milk-bg3" className="milkbg3" /> */}
           <div className="lottie-animation">
             <Lottie
               id="lottie-anim"
@@ -768,37 +618,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
               loop={true}
             />
           </div>
-          {/* <div className="liquid-container">
-            <svg
-              className="liquid-circle"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 456.693 403.543"
-            >
-              <defs>
-                <linearGradient
-                  id="linear-gradient"
-                  x1="0.188"
-                  y1="0.12"
-                  x2="0.821"
-                  y2="0.902"
-                  gradientUnits="objectBoundingBox"
-                >
-                  <stop offset="0" stopColor="#fff" />
-                  <stop offset="1" stopColor="#fff" />
-                </linearGradient>
-              </defs>
-              <path
-                id="Tracé_86"
-                data-name="Tracé 86"
-                d="M277.4,118.337C360.852,71.222,461.5,76.65,532.573,130.99c58.115,44.432,103.589,127.017,82.247,210.89C588.626,444.824,475.8,494.607,389.168,489.5c-78.527-4.627-130.937-54.085-151.841-73.812-27.112-25.585-75.222-70.986-73.811-134.97,1.063-48.2,29.742-84.784,44.287-103.336A229.741,229.741,0,0,1,277.4,118.337Z"
-                transform="translate(-163.486 -86.316)"
-                fill="url(#linear-gradient)"
-              />
-            </svg>
-            <div className="liquid-text">
-              ORDER <br /> NOW
-            </div>
-          </div> */}
           <div className="svg-order-button-container">
             <div className="svg-order-button">
               <img
@@ -833,7 +652,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                 className={`milk-button ${
                   currentModel === "/packet_1.glb" ? "active" : ""
                 }`}
-                // onClick={() => handleModelChange("/packet_1.glb", true)} // Next
               />
               <h3 className="coming-soon">
                 coming <br />
@@ -882,12 +700,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
               />
             </Canvas>
           </div>
-          {/* <div className="lava-position">
-            <Milklava />
-          </div> */}
-          {/* <div className="lava-position">
-            <MilkSplash />
-          </div> */}
           <svg
             className="svg-overlay-bottom"
             width="100%"
@@ -917,14 +729,14 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           {window.innerWidth < 768 ? (
             <p className="main-para">
               Healthy Living should be effortless - and delicious. Our protein
-              packet solutions deliver on taste and convenience for every
+              packed solutions deliver on taste and convenience for every
               lifestyle.
             </p>
           ) : (
             <p className="main-para">
               Healthy Living should be effortless - and delicious.
               <br />
-              Our protein packet solutions deliver
+              Our protein packed solutions deliver
               <br /> on taste and convenience for every lifestyle.
             </p>
           )}
@@ -943,45 +755,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
               ref={mobileCardsContainerRef}
             >
               <div className="mobile-cards" ref={mobileCardsRef}>
-                <div className="mobile-carding1">
-                  <div className="carding-inner">
-                    <div className="carding-front">
-                      <div className="carding-border">
-                        <img
-                          src={TransparencyIcon}
-                          alt="Transparency"
-                          className="carding-icon"
-                        />
-                        <p className="carding-text">
-                          TRANSPARENCY <br /> IN EVERY DROP
-                        </p>
-                      </div>
-                    </div>
-                    <div className="carding-back">
-                      <div className="carding-border1">
-                        <h1 className="backing-heading">
-                          Transparency
-                          <br /> in every drop
-                        </h1>
-                        <p className="backing-text">
-                          No secrets, no surprises. We’re upfront about every
-                          ingredient and every process, empowering you to make
-                          informed choices about your nutrition.
-                        </p>
-                        <img
-                          src={TransparencyIcon}
-                          alt="Transparency"
-                          className="carding-icon-image"
-                        />
-                        <img
-                          src={TransparencyIconline}
-                          alt="New Possibilities"
-                          className="carding-icon-line1"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <div className="mobile-carding2">
                   <div className="carding-inner">
                     <div className="carding-front">
@@ -1147,7 +920,46 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                         <img
                           src={TransparencyIconline}
                           alt="New Possibilities"
-                          className="carding-icon-line2"
+                          className="carding-icon-line5"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mobile-carding1">
+                  <div className="carding-inner">
+                    <div className="carding-front">
+                      <div className="carding-border">
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon"
+                        />
+                        <p className="carding-text">
+                          TRANSPARENCY <br /> IN EVERY DROP
+                        </p>
+                      </div>
+                    </div>
+                    <div className="carding-back">
+                      <div className="carding-border1">
+                        <h1 className="backing-heading">
+                          Transparency
+                          <br /> in every drop
+                        </h1>
+                        <p className="backing-text">
+                          No secrets, no surprises. We’re upfront about every
+                          ingredient and every process, empowering you to make
+                          informed choices about your nutrition.
+                        </p>
+                        <img
+                          src={TransparencyIcon}
+                          alt="Transparency"
+                          className="carding-icon-image"
+                        />
+                        <img
+                          src={TransparencyIconline}
+                          alt="New Possibilities"
+                          className="carding-icon-line1"
                         />
                       </div>
                     </div>
@@ -1247,7 +1059,7 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                         <img
                           src={MythIconline}
                           alt="eyecard-line"
-                          className="carding-icon-line1"
+                          className="carding-icon-line6"
                         />
                       </div>
                     </div>
@@ -1470,42 +1282,39 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
         )}
         <div className="know-button-container">
-          <button className="know-button" onClick={() => navigate("/about")}>
-            KNOW MORE
+          <button
+            href="/about"
+            className="know-button"
+          >
+            <a
+              className="know-text"
+              href="/about"
+            >
+            Know more
+            </a>
           </button>
         </div>
       </div>
       {/* Pure Protein Zero */}
       <div className="container-pure">
-        {/* <svg
-          className="svg-overlay"
-          width="100%"
-          height="100%"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path
-            className="overlay-path"
-            vectorEffect="non-scaling-stroke"
-            d={paths.start}
-          />
-        </svg> */}
         <div className="row row-pure">
           <div className="col-sm-6">
-          {window.innerWidth < 768 ? (
+            {window.innerWidth < 768 ? (
               <h1 className="crafted-pure">
-                crafted with a purpose: it’s high in protein, low in fat, and
-                low in calories—without compromising on taste.
+                crafted with a purpose: Our products are high in protein, low in
+                fat, and low in calories—without compromising on taste.
               </h1>
             ) : (
               <h1 className="crafted-pure">
-                crafted with a purpose: it’s
-                <br /> high in protein, low in fat,
-                <br /> and low in calories—without
-                <br /> compromising on taste.
+                crafted with a purpose:
+                <br />
+                Our products are high in protein,
+                <br />
+                low in fat, and low in calories
+                <br />
+                without compromising on taste.
               </h1>
             )}
-            {/* <img src={Words} alt="words" className=" words" /> */}
             <div className="svg-container">
               <svg
                 width="681"
@@ -1557,39 +1366,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                 </a>
               </div>
             </div>
-
-            {/* <div className="motion-text">
-              {[
-                "P A N E E R",
-                "T H A T",
-                "W O R K S",
-                "A S",
-                "H A R D",
-                "A S",
-                "Y O U",
-                "D O",
-              ].map((word, index) => (
-                <span className="word-paneer" key={index}>
-                  {word.split("").map((char, i) => (
-                    <span className="letter-paneer" key={i}>
-                      {char}
-                    </span>
-                  ))}
-                </span>
-              ))}
-            </div> */}
-
-            {/* <svg id="motionPath" width="250" height="300" viewBox="0 0 200 300">
-              <g transform="scale(-1, 1) translate(-500, 0)">
-                <path
-                  id="customPath"
-                  fill="none"
-                  stroke="transparent"
-                  strokeWidth="2"
-                  d="M20,300 C50,200 150,100 250,200 S400,300 500,100"
-                />
-              </g>
-            </svg> */}
           </div>
           <div className="col-sm-6">
             <img src={ProteinCap} alt="protein-cap" className="protein-cap" />
@@ -1648,10 +1424,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     </div>
                   )}
                   <div className="build-container">
-                    {/* <div className="star-container">
-                    <img src={Starbuild} className="star-build" />
-                    <h1 className="build">BUILD MUSCLE</h1>
-                  </div> */}
                     {isMobile ? (
                       <p className="build-para">
                         Protein builds muscle and bone, supporting agility and
@@ -1706,10 +1478,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     </div>
                   )}
                   <div className="build-container build-para-align">
-                    {/* <div className="star-container">
-                    <img src={Starbuild} className="star-build" />
-                    <h1 className="build">STAY LEAN</h1>
-                  </div> */}
                     <p className="build-para">
                       Protein aids fat loss by increasing fullness and boosting
                       metabolism. It requires more energy to digest than carbs
@@ -1752,10 +1520,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                     </div>
                   )}
                   <div className="build-container build-para-align">
-                    {/* <div className="star-container">
-                    <img src={Starbuild} className="star-build" />
-                    <h1 className="build">ENHANCE BEAUTY</h1>
-                  </div> */}
                     <p className="build-para">
                       A high-protein diet nourishes skin, strengthens nails, and
                       promotes vibrant hair, enhancing beauty from within and
@@ -1776,6 +1540,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                   src={ProteinSlogan}
                   className="protein-slogan"
                   alt="protein-slogan"
+                  onClick={() =>
+                    navigate("/product/milk-my-gains-sample-product")
+                  }
                 />
               </div>
             </div>
@@ -1784,31 +1551,21 @@ const Home = ({ setIsLoaded, isLoaded }) => {
       </div>
 
       {/* Raising the star */}
-      {isMobile ? (
-        <div className="animations-container-1">
-          <div className="texting-wrapper-1">
-            <h1 className="raising-1">RAISING THE BAR</h1>
-            <div className="middle-texting">
-              <span className="high-proteins-1">HIGH PROTEINS</span>
-              {/* <br /> */} &nbsp;
-              <span className="low-proteins-1">LOW CALORIES</span>
-            </div>
-            {/* <h1 className="bar-proteins-1">THE BAR</h1> */}
-          </div>
-        </div>
-      ) : (
-        <div className="animation-container">
-          <div className="text-wrapper">
+      <div className="animation-container">
+        <div className="text-wrapper text-anim">
+          <div>
             <h1 className="raising">RAISING</h1>
-            <div className="middle-text">
-              <span className="high">HIGH PROTEIN</span>
-              <br />
-              <span className="low">LOW CALORIES</span>
-            </div>
+          </div>
+          <div className="middle-text">
+            <span className="high">HIGH PROTEIN</span>
+            <br />
+            <span className="low">LOW CALORIES</span>
+          </div>
+          <div>
             <h1 className="bar-1">THE BAR</h1>
           </div>
         </div>
-      )}
+      </div>
       {/* Comparision Table */}
       <Sample />
 
@@ -1836,57 +1593,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
         />
       </div>
 
-      {/* <div className="table-container">
-        <table className="custom-table">
-          <thead>
-            <tr>
-              <th>
-                <div className="empty-space"></div>
-              </th>
-              <th><img src={Paneericon} alt="Paneer" /></th>
-              <th><img src={Palakpaneer} alt="Palak Paneer" /></th>
-              <th><img src={Proteins} alt="Proteins" /></th>
-              <th><img src={Energybar} alt="Energy Bar" /></th>
-              <th><img src={Whey} alt="Whey" /></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>PROTEIN</td>
-              <td>31G</td>
-              <td>18G</td>
-              <td>31G</td>
-              <td>25G</td>
-              <td>37G</td>
-            </tr>
-            <tr>
-              <td>FAT</td>
-              <td>5G</td>
-              <td>5G</td>
-              <td>5G</td>
-              <td>5G</td>
-              <td>5G</td>
-            </tr>
-            <tr>
-              <td>CALORIES</td>
-              <td>160</td>
-              <td>160</td>
-              <td>160</td>
-              <td>160</td>
-              <td>160</td>
-            </tr>
-            <tr>
-              <td>PRICE</td>
-              <td>$</td>
-              <td>₹</td>
-              <td>₹₹</td>
-              <td>₹₹₹</td>
-              <td>₹₹₹₹</td>
-            </tr>
-          </tbody>
-        </table>
-      </div> */}
-
       {/* Wholesome Section */}
       <div className="wholesome-container pb-5">
         <div className="wholesome-heading">
@@ -1907,8 +1613,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
           <img src={Stickers} className="stickers" alt="stickers" />
           <p className="muscle-para">
-            Protein builds muscle and <br /> bone, supporting agility <br /> and
-            resilience.
+            Protein packed meals
+            <br /> that taste as good as they
+            <br /> make you feel.
           </p>
           <img src={Arrowpoint} className="arrow-point" alt="arrow-point" />
         </div>
@@ -1916,19 +1623,6 @@ const Home = ({ setIsLoaded, isLoaded }) => {
 
       {/* Proteins Section */}
       <div className="proteins-container-1 pt-5 pb-5">
-        {/* <svg
-          className="svg-overlay"
-          width="100%"
-          height="100%"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <path
-            className="overlay-path1"
-            vectorEffect="non-scaling-stroke"
-            d={path.start}
-          />
-        </svg> */}
         <div className="milk-pic-container">
           <img src={Footeranimation} className="protein-image" />
         </div>
@@ -1947,6 +1641,11 @@ const Home = ({ setIsLoaded, isLoaded }) => {
             <button class="Subscribe-button">Subscribe</button>
           </div>
         </div>
+        {/* <div className="social-media-containers">
+          <img src={LinkedInheader} className="linked-in" alt="" />
+          <img src={Facebookheader} className="facebook" alt="" />
+          <img src={Instagramheader} className="instagram" alt="" />
+        </div> */}
         <div className="footers-column shop-footers mt-5">
           <div className="footer-column-links">
             <ul className="footers-links">

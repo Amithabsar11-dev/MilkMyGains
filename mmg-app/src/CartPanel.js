@@ -9,10 +9,14 @@ const CartPanel = ({ onClose, isOpen }) => {
     removeItemFromCart,
     proceedToPayment,
   } = useContext(CartContext);
-  
+
   const [isVisible, setIsVisible] = useState(isOpen);
   const [isOpenState, setIsOpenState] = useState(false);
-
+  
+  const rawTotalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const isDeliveryFeeApplied = cartItems.length > 0 && rawTotalPrice < 500;
+  const adjustedTotalPrice = isDeliveryFeeApplied ? rawTotalPrice + 50 : rawTotalPrice;
+  
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
@@ -32,13 +36,16 @@ const CartPanel = ({ onClose, isOpen }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="cart-items-wrapper">
-          <h2 className="close-cart" onClick={onClose}>&times;</h2>
+          <h2 className="close-cart" onClick={onClose}>
+            &times;
+          </h2>
           <h2 className="cart-panel-heading">
-            Your Cart ({cartItems.reduce((total, item) => total + item.quantity, 0)})
+            Your Cart (
+            {cartItems.reduce((total, item) => total + item.quantity, 0)})
           </h2>
           {cartItems.map((item) => {
             const titleParts = item.title.split(" - ");
-            const productName = titleParts[0]; 
+            const productName = titleParts[0];
             const packAndWeight = titleParts[1] || "";
 
             return (
@@ -87,17 +94,25 @@ const CartPanel = ({ onClose, isOpen }) => {
             );
           })}
         </div>
+
         <div className="checkout-option">
+          {/* Display delivery fee conditionally */}
+          {isDeliveryFeeApplied && (
+            <><div className="checkout-total">
+              <p className="subtotal">DELIVERING FEE</p>
+              <p className="subtotal-amount">₹50.00</p>
+            </div><hr /></>
+          )}
+          
           <div className="checkout-total">
             <p className="subtotal">SUB TOTAL</p>
-            <p className="subtotal-amount">
-              ₹
-              {cartItems
-                .reduce((total, item) => total + item.price * item.quantity, 0)
-                .toFixed(2)}
-            </p>
+            <p className="subtotal-amount">₹{adjustedTotalPrice.toFixed(2)}</p>
           </div>
-          <button className="checkout" onClick={proceedToPayment}>
+
+          <button
+            className="checkout"
+            onClick={() => proceedToPayment(adjustedTotalPrice)}
+          >
             Proceed to Payment
           </button>
         </div>

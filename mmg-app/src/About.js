@@ -31,6 +31,9 @@ import { gsap } from "gsap";
 import { ScrollTrigger, MotionPathPlugin } from "gsap/all";
 import LeftArrowIcon from "./assets/CaretCircleRight-1.svg"; // Your left arrow SVG
 import RightArrowIcon from "./assets/CaretCircleRight.svg";
+import Instagramheader from "./assets/instagram-header.svg";
+import LinkedInheader from "./assets/linkedin-header.svg";
+import Facebookheader from "./assets/facebook-header.svg";
 import Copyrightline from "./assets/Line 23.svg";
 
 gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
@@ -77,6 +80,20 @@ function About({ setIsLoaded, isLoaded }) {
 
   const handleCardClick = (id) => {
     setActiveCard(activeCard === id ? null : id); // Toggle active card on click
+
+    if (isMobile) {
+      // Wait for state update and animate the text
+      setTimeout(() => {
+        const card = document.getElementById(`card-${id}`);
+        if (card && activeCard !== id) {
+          gsap.fromTo(
+            card.querySelector(".card-text"),
+            { opacity: 0, x: -50 },
+            { opacity: 1, x: 0, duration: 0.6, ease: "power2.out", delay: 0.2 }
+          );
+        }
+      }, 50);
+    }
   };
 
   useEffect(() => {
@@ -115,6 +132,13 @@ function About({ setIsLoaded, isLoaded }) {
                 ease: "power4.out",
               });
               card.classList.add("active");
+
+              // Fade in text when card becomes active
+              gsap.to(card.querySelector(".card-text"), {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out",
+              });
             } else {
               gsap.to(card, {
                 scale: 0.9,
@@ -123,6 +147,13 @@ function About({ setIsLoaded, isLoaded }) {
                 ease: "power4.out",
               });
               card.classList.remove("active");
+
+              // Hide text when card is inactive
+              gsap.to(card.querySelector(".card-text"), {
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.out",
+              });
             }
           });
         },
@@ -186,11 +217,11 @@ function About({ setIsLoaded, isLoaded }) {
     <div className="about-container">
       <div className="about-protein">
         <div className="icon-paradigm">
-          <img src={Star} alt="Star" className="star-icon" />
+          {/* <img src={Star} alt="Star" className="star-icon" />
           <img src={Eyestar} alt="Diamond" className="diamond-icon" />
           <img src={Eye} alt="Eye" className="eye-icon" />
           <img src={Signal} alt="Shop" className="shop-icon" />
-          <img src={Drop} alt="Drop" className="drop-icon" />
+          <img src={Drop} alt="Drop" className="drop-icon" /> */}
         </div>
         <div className="about-lifestyle">
           <h1 className="about-heading">
@@ -204,20 +235,20 @@ function About({ setIsLoaded, isLoaded }) {
               to bridge India’s protein gap with products that are both natural
               and accessible – without compromising on taste. More than just
               another brand, our mission is to empower people—one high-protein
-              bite at a time. Healthier living Happy Eating.
+              bite at a time.
+              <br /> <br /> Healthier living. <br /> <br /> Happy Eating.
             </p>
           ) : (
             <p className="about-para">
               At MilkMyGains, we believe everyone deserves access to
-              high-quality protein
-              <br /> that fits seamlessly into an active lifestyle. Recognizing
-              the limited options
-              <br /> available, we set out to bridge India’s protein gap with
-              products
-              <br /> that are both natural and accessible – without compromising
-              on taste. <br /> More than just another brand, our mission is to
-              empower <br /> people—one high-protein bite at a time. Healthier
-              living Happy Eating.
+              high-quality protein that fits
+              <br /> seamlessly into an active lifestyle. Recognizing the
+              limited options available, <br /> we set out to bridge India’s
+              protein gap with products that are both natural <br /> and
+              accessible – without compromising on taste.More than just another
+              brand, <br /> our mission is to empower people—one high-protein
+              bite at a time. <br /> <br /> Healthier living. <br /> <br />{" "}
+              Happy Eating.
             </p>
           )}
         </div>
@@ -232,7 +263,7 @@ function About({ setIsLoaded, isLoaded }) {
                 key={card.id}
                 id={`card-${card.id}`}
                 className={`card ${activeCard === card.id ? "active" : ""}`}
-                onClick={() => handleCardClick(card.id)} // Allow clicking on mobile
+                onClick={() => handleCardClick(card.id)}
               >
                 <div className="text-section">
                   <h2 className="card-title">{card.title}</h2>
@@ -256,14 +287,14 @@ function About({ setIsLoaded, isLoaded }) {
         </h1>
         {isMobile ? (
           <p className="about-para1">
-            In an industry dominated by carb-heavy, fat-laden dairy products,
-            we’re here to rewrite the rules. Our approach isn’t about
-            compromise; it’s about transformation. We are here to redefine
-            nutrition for modern high-performance living.
+            In an industry dominated by carb-heavy, fat-laden products, we’re
+            here to rewrite the rules. Our approach isn’t about compromise; it’s
+            about transformation. We are here to redefine nutrition for modern
+            high-performance living.
           </p>
         ) : (
           <p className="about-para1">
-            In an industry dominated by carb-heavy, fat-laden dairy products,
+            In an industry dominated by carb-heavy, fat-laden products,
             <br /> we’re here to rewrite the rules. Our approach isn’t about
             <br /> compromise; it’s about transformation. We are here to
             redefine
@@ -282,45 +313,6 @@ function About({ setIsLoaded, isLoaded }) {
           </button>
           <div className="mobile-cards-container" ref={mobileCardsContainerRef}>
             <div className="mobile-cards" ref={mobileCardsRef}>
-              <div className="mobile-carding1">
-                <div className="carding-inner">
-                  <div className="carding-front">
-                    <div className="carding-border">
-                      <img
-                        src={TransparencyIcon}
-                        alt="Transparency"
-                        className="carding-icon"
-                      />
-                      <p className="carding-text">
-                        TRANSPARENCY <br /> IN EVERY DROP
-                      </p>
-                    </div>
-                  </div>
-                  <div className="carding-back">
-                    <div className="carding-border1">
-                      <h1 className="backing-heading">
-                        Transparency
-                        <br /> in every drop
-                      </h1>
-                      <p className="backing-text">
-                        No secrets, no surprises. We’re upfront about every
-                        ingredient and every process, empowering you to make
-                        informed choices about your nutrition.
-                      </p>
-                      <img
-                        src={TransparencyIcon}
-                        alt="Transparency"
-                        className="carding-icon-image"
-                      />
-                      <img
-                        src={TransparencyIconline}
-                        alt="New Possibilities"
-                        className="carding-icon-line1"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="mobile-carding2">
                 <div className="carding-inner">
                   <div className="carding-front">
@@ -486,7 +478,46 @@ function About({ setIsLoaded, isLoaded }) {
                       <img
                         src={TransparencyIconline}
                         alt="New Possibilities"
-                        className="carding-icon-line2"
+                        className="carding-icon-line5"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mobile-carding1">
+                <div className="carding-inner">
+                  <div className="carding-front">
+                    <div className="carding-border">
+                      <img
+                        src={TransparencyIcon}
+                        alt="Transparency"
+                        className="carding-icon"
+                      />
+                      <p className="carding-text">
+                        TRANSPARENCY <br /> IN EVERY DROP
+                      </p>
+                    </div>
+                  </div>
+                  <div className="carding-back">
+                    <div className="carding-border1">
+                      <h1 className="backing-heading">
+                        Transparency
+                        <br /> in every drop
+                      </h1>
+                      <p className="backing-text">
+                        No secrets, no surprises. We’re upfront about every
+                        ingredient and every process, empowering you to make
+                        informed choices about your nutrition.
+                      </p>
+                      <img
+                        src={TransparencyIcon}
+                        alt="Transparency"
+                        className="carding-icon-image"
+                      />
+                      <img
+                        src={TransparencyIconline}
+                        alt="New Possibilities"
+                        className="carding-icon-line1"
                       />
                     </div>
                   </div>
@@ -586,7 +617,7 @@ function About({ setIsLoaded, isLoaded }) {
                       <img
                         src={MythIconline}
                         alt="eyecard-line"
-                        className="carding-icon-line1"
+                        className="carding-icon-line6"
                       />
                     </div>
                   </div>
@@ -870,6 +901,11 @@ function About({ setIsLoaded, isLoaded }) {
               <button className="Subscribe-button">Subscribe</button>
             </div>
           </div>
+          {/* <div className="social-media-containers-1">
+            <img src={LinkedInheader} className="linked-in" alt="" />
+            <img src={Facebookheader} className="facebook" alt="" />
+            <img src={Instagramheader} className="instagram" alt="" />
+          </div> */}
           <div className="footers-column shop-footers footer-about-shop mt-5">
             <div className="footer-column-links">
               <ul className="footers-links">

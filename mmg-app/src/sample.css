@@ -317,4 +317,7 @@ header.cd-table-column li:last-child {
   #cd-table {
     padding-top: 10%;
   }
+  .set-list-active {
+    padding-top: 34%;
+  }
 }

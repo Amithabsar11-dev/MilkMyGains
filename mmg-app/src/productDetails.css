@@ -20,7 +20,6 @@
   background-image: url("./assets/background.png");
   background-repeat: no-repeat;
   background-position: 65% 30%;
-  /* background-size: 60%; */
   position: relative;
   z-index: 1;
 }
@@ -35,8 +34,8 @@
 .milking-banner {
   position: absolute;
   z-index: -1;
-  width: 58%;
-  left: 25%;
+  width: 90%;
+  left: -2%;
   top: 5%;
 }
 
@@ -106,6 +105,9 @@
   padding: 8px;
   border-radius: 50px;
   cursor: pointer;
+}
+.static-image {
+  padding-top: 0 !important;
 }
 
 .product-icons-list {
@@ -250,6 +252,50 @@
   left: -2px;
   opacity: 0;
 }
+
+.Subscribe-button-pack-100 {
+  font-family: "Chivo Mono", Sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000000;
+  background-color: white;
+  border: none;
+  width: 20%;
+  padding: 8px;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  /* opacity: 0.5; */
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #000000;
+  /* margin-bottom: 10%; */
+  position: relative;
+  box-shadow: -5px 5px;
+}
+
+/* .Subscribe-button-pack-100:hover {
+  transform: translateY(6px);
+  box-shadow: none;
+  background-color: grey;
+  box-shadow: none;
+  color: white;
+}
+
+.Subscribe-button-pack-100.active {
+  transform: translateY(6px);
+  box-shadow: none;
+  background-color: #f04e2a;
+  box-shadow: none;
+  color: white;
+}
+
+.Subscribe-button-pack-100:hover::after {
+  bottom: -2px;
+  left: -2px;
+  opacity: 0;
+} */
 
 .feature-icons {
   display: flex;
@@ -418,7 +464,7 @@
 
 .close-cart {
   position: absolute;
-  top: 20px;
+  top: 5px;
   right: 20px;
   font-size: 40px;
   color: #0052f0;
@@ -1077,7 +1123,7 @@
 
 .milk-image-product {
   width: 30%;
-  padding-top: 7%;
+  padding-top: 6%;
 }
 
 .chart-container {
@@ -1142,7 +1188,10 @@
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .product-details-container {
     display: block;
-    padding-top: 28%;
+    padding-top: 20%;
+  }
+  .social-links-container {
+    display: none;
   }
 
   .product-details-left {
@@ -1156,8 +1205,8 @@
     padding-top: 10%;
   }
   .milking-banner {
-    left: 17%;
-    width: 65%;
+    left: -15%;
+    width: 105%;
   }
   .static-image {
     width: 100%;
@@ -1434,7 +1483,7 @@
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   .product-details-left {
     padding: 0px;
-    height: 55vh;
+    /* height: 55vh; */
   }
   .metafield-ingredients {
     background-position: 50%;
@@ -1449,8 +1498,17 @@
     width: 70%;
   }
 }
-@media only screen and (max-width: 1750px) and (min-width: 1600px) {
+@media only screen and (max-width: 1750px) and (min-width: 1650px) {
   .milk-image-product {
-    padding-top: 5%;
+    padding-top: 8%;
+  }
+  .rendered-image {
+    padding-left: 8% !important;
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 2800px) and (min-width: 500px) {
+  .image-navigation {
+    display: none;
   }
 }

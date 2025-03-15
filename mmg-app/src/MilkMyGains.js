@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
   const groupRef = useRef();
   const { scene } = useGLTF(modelPath, true);
-  const [defaultScale, setDefaultScale] = useState(window.innerWidth < 768 ? 2.1 : 2.65);
+  const [defaultScale, setDefaultScale] = useState(window.innerWidth < 768 ? 2.2 : 2.65);
   const [scale, setScale] = useState(1); // Set scale to 1 immediately
   const rotationDirection = useRef(isNext ? 1 : -1);
   const targetRotation = useRef({ x: 0, y: 0 });
@@ -140,15 +140,6 @@ const MilkMyGain = ({ modelPath, transitionProgress, isNext, isLoaded }) => {
       }
     }
   });
-  // scene.traverse((child) => {
-  //   if (child.isMesh) {
-  //     child.material.roughness = 0.1; // Reduce roughness for more clarity
-  //     child.material.metalness = 0.1; // Increase metalness for better reflections
-  //     child.material.needsUpdate = true;
-  //   }
-  // });
-  
-  
 
   return (
     <group ref={groupRef} dispose={null}>

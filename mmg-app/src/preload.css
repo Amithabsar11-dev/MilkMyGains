@@ -7,7 +7,7 @@
   height: 100vh;
   background-color: #fff;
   line-height: 1em;
-  font-family: "Anybody_Condensed";
+  font-family: "Anybody_Condensed_bold";
   font-size: 200px;
   text-align: center;
   font-weight: 900;
@@ -107,7 +107,27 @@
   .preload-container {
     font-size: 55px;
   }
+  .word-alignment {
+    padding-bottom: 20%;
+  }
   /* .letter {
     padding-left: 0;
   } */
+  .extra-powerful,
+  .extra-protein {
+    margin-right: 22%;
+  }
+  .extra-pure {
+    margin-right: 8%;
+  }
+}
+
+@media only screen and (max-width: 1750px) and (min-width: 1650px) {
+  .extra-powerful,
+  .extra-protein {
+    margin-right: 10%;
+  }
+  .extra-pure {
+    margin-right: 1%;
+  }
 }

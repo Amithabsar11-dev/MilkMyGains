@@ -3,6 +3,9 @@ import "./faq.css";
 import Protein from "./assets/protein.png";
 import MilkTM from "./assets/Logo-TM-1.svg";
 import Top from "./assets/Top.png";
+import Instagramheader from "./assets/instagram-header.svg";
+import LinkedInheader from "./assets/linkedin-header.svg";
+import Facebookheader from "./assets/facebook-header.svg";
 import Copyright1 from "./assets/copyright1.svg";
 import Copyrightline from "./assets/Line 23.svg";
 
@@ -324,10 +327,10 @@ const Faq = () => {
                   >
                     {item.question}
                     {window.innerWidth < 500 && (
-                    <span className="plus-icon">
-                      {activeIndex === index ? "-" : "+"}
-                    </span>
-                       )}
+                      <span className="plus-icon">
+                        {activeIndex === index ? "-" : "+"}
+                      </span>
+                    )}
                   </h3>
                   {/* Only show the answer if the screen width is less than 500px and the question is active */}
                   {(window.innerWidth < 500 ? activeIndex === index : true) && (
@@ -382,6 +385,11 @@ const Faq = () => {
                 <button className="Subscribe-button">Subscribe</button>
               </div>
             </div>
+            {/* <div className="social-media-containers-2">
+              <img src={LinkedInheader} className="linked-in" alt="" />
+              <img src={Facebookheader} className="facebook" alt="" />
+              <img src={Instagramheader} className="instagram" alt="" />
+            </div> */}
             <div className="footers-column shop-footers mt-5">
               <div className="footer-column-links">
                 <ul className="footers-links">

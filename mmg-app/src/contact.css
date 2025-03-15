@@ -274,6 +274,7 @@ textarea {
 }
 .footer-column-links {
   display: flex;
+  /* margin-bottom: 2%; */
 }
 
 .footers {
@@ -404,6 +405,9 @@ textarea {
   }
   .contact-container {
     padding-top: 38%;
+  }
+  .footer-column-links {
+    margin-bottom: 0;
   }
   .footer-links-1 {
     font-size: 12px;

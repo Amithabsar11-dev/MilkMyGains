@@ -9,6 +9,27 @@
   position: relative;
 }
 
+.social-media-containers-header {
+  display: flex;
+  height: 6vh;
+  margin-bottom: 5%;
+  cursor: pointer;
+  gap: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 0 !important;
+}
+.social-media-containers-header img {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  filter: drop-shadow(2px 3px 0px black);
+}
+
+.social-media-containers-header img:hover {
+  transform: translateY(2px);
+  filter: none;
+}
+
 .header.white-bg {
   background-color: white !important;
   background-image: none;
@@ -242,16 +263,17 @@
     top: -1000px;
     left: 50%;
     width: 95%;
-    height: 85vh;
+    height: 70vh;
     transform: translateX(-50%);
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    border-radius: 0 0 15px 15px;
+    /* justify-content: center; */
+    border-radius: 25px;
     /* align-items: center; */
     transition: all 1s ease-in-out;
     z-index: 1000;
+    box-shadow: 1px 1px 1px 1px grey;
   }
   .nav-fonts {
     font-size: 18px;
@@ -266,13 +288,19 @@
   }
   .navbar-toggler.open .bar {
     background-color: black !important;
-    width: 40px;
-    height: 20px;
+    width: 35px;
+    height: 5px;
+    border: none;
+    position: fixed;
+    margin-top: 5%;
+  }
+  .product-page .navbar-toggler.open .bar {
+    margin-top: 15%;
   }
   .menu-logo {
     filter: invert(1);
     position: absolute;
-    top: 4%;
+    top: 6%;
     left: 5%;
   }
 
@@ -284,10 +312,12 @@
     top: 7px; /* Moves down to reveal */
     opacity: 1;
     visibility: visible;
+    padding-top: 35%;
   }
 
   .navbar-nav {
     list-style: none;
+    gap: 0px !important;
     /* text-align: center; */
   }
   .content__item {
@@ -298,11 +328,11 @@
     border-bottom: 1px solid black !important;
   }
   .header.white-bg {
-    padding-top: 6%;
+    /* padding-top: 6%; */
   }
 
   .navbar-nav .nav-item {
-    margin-bottom: 20px;
+    margin-bottom: 8px;
   }
 
   .navbar-nav .nav-link {
@@ -333,7 +363,7 @@
     height: 0px;
     background-color: white;
     border-radius: 2px;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.7s ease-in-out;
   }
   .icon-placement {
     position: absolute;
@@ -354,7 +384,7 @@
 
   /* Toggle Button Animation */
   .navbar-toggler.open .bar:nth-child(1) {
-    transform: translateY(5px) rotate(45deg);
+    transform: translateY(-11px) rotate(45deg);
   }
 
   .navbar-toggler.open .bar:nth-child(2) {
@@ -414,5 +444,10 @@
 @media only screen and (max-width: 1200px) and (min-width: 770px) {
   .cart-icon {
     width: 100%;
+  }
+}
+@media only screen and (max-width: 2800px) and (min-width: 501px) {
+  .social-media-containers-header {
+    display: none;
   }
 }

@@ -40,7 +40,6 @@ function App() {
       const timer = setTimeout(() => {
         setIsLoaded(true);
       }, 6000);
-  
       return () => clearTimeout(timer);  // ✅ Cleanup timer to avoid memory leaks
     }
   }, [isPreloadEnabled]);

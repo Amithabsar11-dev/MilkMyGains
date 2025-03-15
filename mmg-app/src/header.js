@@ -11,6 +11,9 @@ import AltLogo from "./assets/logo-blue.svg";
 import BlackLogo from "./assets/black-logo.svg";
 import FaqStar from "./assets/bluestar-shipping.svg";
 import ProductCart from "./assets/product-cart.svg";
+import Instagramheader from "./assets/instagram-header.svg";
+import LinkedInheader from "./assets/linkedin-header.svg";
+import Facebookheader from "./assets/facebook-header.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -111,7 +114,7 @@ const Header = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "http://147.93.106.149:3001/api/products"
+          "https://api.milkmygains.com/api/products"
         );
         console.log("Fetched products:", response.data);
         setProducts(response.data);
@@ -273,6 +276,11 @@ const Header = () => {
                     </li>
                   </ul>
                 </div>
+                {/* <div className="social-media-containers-header">
+                  <img src={LinkedInheader} className="linked-in" alt="" />
+                  <img src={Facebookheader} className="facebook" alt="" />
+                  <img src={Instagramheader} className="instagram" alt="" />
+                </div> */}
               </div>
               <div className="icon-placement">
                 <li style={{ listStyle: "none" }}>

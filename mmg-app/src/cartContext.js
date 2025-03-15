@@ -62,7 +62,7 @@ const CartProvider = ({ children }) => {
   const proceedToPayment = async () => {
     try {
       const response = await axios.post(
-        "http://147.93.106.149:3001/api/cart/create",
+        "https://api.milkmygains.com/api/cart/create",
         {
           lines: cartItems.map((item) => ({
             merchandiseId: item.id,

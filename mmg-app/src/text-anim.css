@@ -55,8 +55,8 @@ text {
 
 @media only screen and (max-width: 500px) and (min-width: 320px) {
   svg {
-    height: 22vh;
-    width: 65%;
+    height: 35vh;
+    width: 100%;
   }
   .svg-container {
     padding-top: 20%;

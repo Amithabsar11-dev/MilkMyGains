@@ -6,10 +6,11 @@ import Cow from "./assets/pure-cow.svg";
 import Protein from "./assets/protein.svg";
 import Farm from "./assets/farm.svg";
 import Chemical from "./assets/chemical.svg";
+import { useSwipeable } from "react-swipeable";
 import { useContext } from "react";
 import { CartContext } from "./cartContext";
 import Words1 from "./assets/paneer-text.svg";
-import Milkbanner from "./assets/Vector (1).png";
+import Milkbanner from "./assets/milk-image-banner.png";
 import Raisingprotein from "./assets/high-protein.svg";
 import MMGproduct from "./assets/mmg-product.svg";
 import Paneerproduct from "./assets/paneer-product.svg";
@@ -43,12 +44,17 @@ import Sample from "./sample";
 import Copyrightline from "./assets/Line 23.svg";
 import CartPanel from "./CartPanel";
 import MilkTM from "./assets/Logo-TM-1.svg";
-import Imagecarousal from "./assets/paneer-cups.png";
+import Imagecarousal from "./assets/imagebox-paneer.png";
 import "./App.css";
+import Instagramheader from "./assets/instagram-header.svg";
+import LinkedInheader from "./assets/linkedin-header.svg";
+import Facebookheader from "./assets/facebook-header.svg";
 
 const ProductDetails = ({ setIsLoaded }) => {
   const { handle } = useParams(); // Extract the product handle from the URL
   const [product, setProduct] = useState(null);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [mainImage, setMainImage] = useState(null);
   const [isStaticImage, setIsStaticImage] = useState(false);
@@ -70,6 +76,7 @@ const ProductDetails = ({ setIsLoaded }) => {
   const [fadeClass, setFadeClass] = useState("fade-in");
   const [showImage, setShowImage] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [pageGroupStart, setPageGroupStart] = useState(1); // Controls the first page in the row
   const reviewsPerPage = 3;
   const pagesPerRow = 3; // How many page numbers to show at a time
@@ -142,7 +149,7 @@ const ProductDetails = ({ setIsLoaded }) => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://147.93.106.149:3001/api/product/${handle}`
+          `https://api.milkmygains.com/api/product/${handle}`
         );
         console.log("Full Response:", response.data);
 
@@ -151,6 +158,7 @@ const ProductDetails = ({ setIsLoaded }) => {
         // Automatically select the first available variant
         const packOfOneVariant = response.data.variants.edges.find(
           ({ node }) =>
+            node.title.toLowerCase().includes("100g") &&
             node.title.toLowerCase().includes("pack of 1") &&
             node.availableForSale
         )?.node;
@@ -232,7 +240,7 @@ const ProductDetails = ({ setIsLoaded }) => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(
-          `http://147.93.106.149:3001/api/reviews/${handle}`
+          `https://api.milkmygains.com/api/reviews/${handle}`
         );
         const sortedReviews = response.data.sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
@@ -246,35 +254,44 @@ const ProductDetails = ({ setIsLoaded }) => {
     fetchReviews();
   }, [handle]);
 
+  const imageArray = [mainImage, staticImage];
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (!isStaticImage) {
+        // ✅ Move to static image
+        handleImageSwitch(true);
+      } else {
+        // ✅ Already at static image, move back to main image
+        handleImageSwitch(false);
+      }
+    },
+    onSwipedRight: () => {
+      if (isStaticImage) {
+        // ✅ Move back to main image
+        handleImageSwitch(false);
+      } else {
+        // ✅ Already at main image, move to static image
+        handleImageSwitch(true);
+      }
+    },
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+  });
+
   const handleImageSwitch = (isStatic) => {
     setIsStaticImage(isStatic);
-    if (!isStatic && mainImage) {
-      updateMainImage(mainImage); // Ensure switching back to the original image
-    }
-  };
 
-  const handleTouchStart = (e) => {
-    setTouchStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 50) {
-      handleImageSwitch(true); // Swipe left → Show static image
-    } else if (touchEnd - touchStart > 50) {
-      handleImageSwitch(false); // Swipe right → Show main image
+    if (!isStatic) {
+      setMainImage(product?.variants.edges[0]?.node.image?.src || mainImage); // ✅ Ensures main image is restored
+    } else {
+      setMainImage(staticImage); // ✅ Switch to static image
     }
   };
 
   const handleVariantClick = (variant) => {
-    setSelectedVariant(variant);
-    if (variant.image) {
-      setIsStaticImage(false);
-      updateMainImage(variant.image.src); // Update the main image based on the selected variant
-    }
+    setIsStaticImage(false); // Ensure we are switching to a dynamic image
+    updateMainImage(variant.image?.src);
   };
 
   useEffect(() => {
@@ -351,7 +368,16 @@ const ProductDetails = ({ setIsLoaded }) => {
     )?.node;
 
     setSelectedVariant(variant || null);
-    updateMainImage(variant?.image?.src || "");
+
+    // If static image is active, switch back to dynamic mode
+    if (isStaticImage) {
+      setIsStaticImage(false);
+    }
+
+    if (variant?.image?.src) {
+      updateMainImage(variant.image.src);
+    }
+
     setIsActive(!isActive);
   };
 
@@ -369,10 +395,26 @@ const ProductDetails = ({ setIsLoaded }) => {
     updateMainImage(variant?.image?.src || ""); // Update main image to pack of 1 variant
   };
 
+
+  const roundToNearestFive = (num) => {
+    return Math.round(num / 5) * 5;
+  };
+  
+  const singlePackVariant = product?.variants?.edges.find(
+    ({ node }) => node.title.toLowerCase().includes(`pack of 1`) &&
+                  node.title.toLowerCase().includes(selectedWeight)
+  )?.node;
+  
+  const singlePackPrice = singlePackVariant 
+    ? parseFloat(singlePackVariant.priceV2.amount) 
+    : 0;
+  
   const totalPrice = selectedVariant
     ? parseFloat(selectedVariant.priceV2.amount).toFixed(2) // Use the price directly
     : 0;
-
+  
+  const subscribeAndSavePrice = roundToNearestFive(singlePackPrice * packQuantity * 0.9).toFixed(2);
+  
   const toggleCart = () => {
     setCartVisible(!cartVisible);
   };
@@ -424,19 +466,49 @@ const ProductDetails = ({ setIsLoaded }) => {
 
   const handleBuyNow = async () => {
     if (selectedVariant) {
+      let finalPrice =
+        purchaseOption === "subscribe"
+          ? parseFloat(selectedVariant.priceV2.amount * 0.8)
+          : parseFloat(selectedVariant.priceV2.amount);
+  
+      if (finalPrice < 500) {
+        finalPrice += 50; // Add ₹50 if below ₹500
+      }
+  
       const item = {
         id: selectedVariant.id,
         title: product.title,
-        price:
-          purchaseOption === "subscribe"
-            ? parseFloat(selectedVariant.priceV2.amount * packQuantity * 0.8)
-            : parseFloat(selectedVariant.priceV2.amount * packQuantity),
-        quantity: packQuantity,
+        price: finalPrice, // Use the adjusted price
+        quantity: 1,
         image: images.edges[0]?.node.src,
       };
-      proceedToPayment();
+  
+      try {
+        const response = await axios.post(
+          "https://api.milkmygains.com/api/cart/create",
+          {
+            lines: [
+              {
+                merchandiseId: item.id,
+                quantity: 1,
+                price: item.price,
+              },
+            ],
+          }
+        );
+  
+        if (response.data && response.data.checkoutUrl) {
+          window.location.href = response.data.checkoutUrl;
+        } else {
+          alert("Error creating cart or fetching checkout URL.");
+        }
+      } catch (err) {
+        console.error("Error proceeding to payment:", err);
+        alert("There was an error with the checkout process.");
+      }
     }
   };
+  
   const { title, description, images } = product;
 
   // const Accordion = ({ title, content }) => {
@@ -464,6 +536,7 @@ const ProductDetails = ({ setIsLoaded }) => {
     <div className="product-details-page">
       <div className="product-details-container">
         <div
+          {...handlers}
           className={`product-details-left col-sm-6 ${
             isStaticImage ? "no-background" : ""
           }`}
@@ -489,12 +562,7 @@ const ProductDetails = ({ setIsLoaded }) => {
             </div>
           </div>
           {/* Progress Bar Navigation */}
-          <div
-            className="image-navigation"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className="image-navigation">
             <span
               className={`nav-bar ${!isStaticImage ? "active" : ""}`}
               onClick={() => handleImageSwitch(false)}
@@ -506,6 +574,7 @@ const ProductDetails = ({ setIsLoaded }) => {
           </div>
           <div className="product-listing-icon">
             <div className="product-icons-list">
+              {/* Display dynamic variants */}
               {product?.variants.edges
                 .filter(
                   ({ node }) =>
@@ -531,6 +600,19 @@ const ProductDetails = ({ setIsLoaded }) => {
                     )}
                   </div>
                 ))}
+              {/* Add the static image as the first option */}
+              <div
+                style={{ width: "100%" }}
+                onClick={() => handleImageSwitch(true)}
+              >
+                <img
+                  src={staticImage}
+                  alt="Static Image"
+                  className="image-variant"
+                  crossOrigin="anonymous"
+                  style={{ width: "100%" }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -622,13 +704,12 @@ const ProductDetails = ({ setIsLoaded }) => {
                     checked={purchaseOption === "subscribe"}
                     disabled
                   />
-                  <span className="one-time">Subscribe and Save</span>
+                  <span className="one-time">Subscribe and Save (10% discount)</span>
                 </label>
-                <span className="price">₹{(totalPrice * 0.8).toFixed(2)}</span>
+                <span className="price">₹{subscribeAndSavePrice}</span>
               </div>
             )}
           </div>
-
           {isMobile ? (
             <>
               <div className="feature-icons">
@@ -923,120 +1004,7 @@ const ProductDetails = ({ setIsLoaded }) => {
 
       {/* Raising the star */}
       <Raising setIsLoaded={setIsLoaded} />
-      {/* {isMobile ? (
-        <div className="animations-container">
-          <div className="texting-wrapper-1">
-            <h1 className="raising-1">RAISING</h1>
-            <div className="middle-texting">
-              <span className="high-proteins-1">HIGH PROTEINS</span>
-              <br />
-              <span className="low-proteins-1">LOW CALORIES</span>
-            </div>
-            <h1 className="bar-proteins-1">THE BAR</h1>
-          </div>
-        </div>
-      ) : (
-        <div className="animations-container">
-          <div className="text-wrapper">
-            <h1 className="raising">RAISING</h1>
-            <div className="middle-text">
-              <span className="high">HIGH PROTEIN</span>
-              <br />
-              <span className="low">LOW CALORIES</span>
-            </div>
-            <h1 className="bar-1">THE BAR</h1>
-          </div>
-        </div>
-      )}
-      <div className="animations-container">
-        <div className="texting-wrapper-1">
-          <h1 className="raising-1">RAISING</h1>
-          <div className="middle-texting">
-            <span className="high-proteins-1">HIGH PROTEIN</span>
-            <br />
-            <span className="low-proteins-1">LOW CALORIES</span>
-          </div>
-          <h1 className="bar-proteins-1">THE BAR</h1>
-        </div>
-      </div> */}
-      {/* Comparision */}
-      {/* <div className="comparison-table">
-        <div className="comparison-column labels">
-          <div className="product-label">
-            <img src={Paneericon} alt="Product 1" className="product1" />
-          </div>
-          <div className="label">PROTEINS</div>
-          <div className="label">FAT</div>
-          <div className="label">CALORIES</div>
-          <div className="label">PRICE</div>
-        </div>
-        <div className="comparison-column highlighted">
-          <img src={Activestar} className="active-star" alt="active star" />
-          <div className="product product-highlight">
-            <img src={Paneericon} alt="Product 1" />
-          </div>
-          <div className="value">31G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">$</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Proteins} alt="Product 2" className="product2" />
-          </div>
-          <div className="value">18G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Whey} alt="Product 3" className="product3" />
-          </div>
-          <div className="value">31G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Energybar} alt="Product 4" className="product4" />
-          </div>
-          <div className="value">25G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹₹</div>
-        </div>
-        <div className="comparison-column">
-          <img
-            src={Inactivestar}
-            className="inactive-star"
-            alt="inactive star"
-          />
-          <div className="icon">
-            <img src={Palakpaneer} alt="Product 5" className="product5" />
-          </div>
-          <div className="value">37G</div>
-          <div className="value">5G</div>
-          <div className="value">160</div>
-          <div className="value">₹₹₹₹</div>
-        </div>
-      </div> */}
+      {/* Table */}
       <section id="cd-table">
         <header className="cd-table-column">
           <div className="icon-height">
@@ -1120,6 +1088,11 @@ const ProductDetails = ({ setIsLoaded }) => {
             <button class="Subscribe-button">Subscribe</button>
           </div>
         </div>
+        {/* <div className="social-media-containers">
+          <img src={LinkedInheader} className="linked-in" alt="" />
+          <img src={Facebookheader} className="facebook" alt="" />
+          <img src={Instagramheader} className="instagram" alt="" />
+        </div> */}
         <div className="footers-column shop-footers mt-5">
           <div className="footer-column-links">
             <ul className="footers-links">

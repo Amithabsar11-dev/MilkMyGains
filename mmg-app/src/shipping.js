@@ -3,6 +3,9 @@ import "./terms.css";
 import Copyright1 from "./assets/copyright1.svg";
 import MilkTM from "./assets/Logo-TM.svg";
 import Top from "./assets/Top.png";
+import Instagramheader from "./assets/instagram-header.svg";
+import LinkedInheader from "./assets/linkedin-header.svg";
+import Facebookheader from "./assets/facebook-header.svg";
 import Copyrightline from "./assets/Line 23.svg";
 
 function Shipping() {
@@ -222,6 +225,11 @@ function Shipping() {
             <button className="Subscribe-button">Subscribe</button>
           </div>
         </div>
+        {/* <div className="social-media-containers-2">
+          <img src={LinkedInheader} className="linked-in" alt="" />
+          <img src={Facebookheader} className="facebook" alt="" />
+          <img src={Instagramheader} className="instagram" alt="" />
+        </div> */}
         <div className="footers-column shop-footers mt-5">
           <div className="footer-column-links">
             <ul className="footers-links">
