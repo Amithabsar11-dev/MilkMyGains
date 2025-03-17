@@ -62,7 +62,7 @@ const ProductDetails = ({ setIsLoaded }) => {
   const [packQuantity, setPackQuantity] = useState(1); // Default pack quantity
   const [purchaseOption, setPurchaseOption] = useState("oneTime"); // Default: One Time Purchase
   const [cartVisible, setCartVisible] = useState(false);
-  const [selectedWeight, setSelectedWeight] = useState("100g");
+  const [selectedWeight, setSelectedWeight] = useState("200g");
   const [error, setError] = useState("");
   const [faqContent, setFaqContent] = useState(null);
   const [nutritionalHighlights, setNutritionalHighlights] = useState(null);
@@ -158,7 +158,7 @@ const ProductDetails = ({ setIsLoaded }) => {
         // Automatically select the first available variant
         const packOfOneVariant = response.data.variants.edges.find(
           ({ node }) =>
-            node.title.toLowerCase().includes("100g") &&
+            node.title.toLowerCase().includes("200g") &&
             node.title.toLowerCase().includes("pack of 1") &&
             node.availableForSale
         )?.node;
@@ -623,10 +623,10 @@ const ProductDetails = ({ setIsLoaded }) => {
             <h4 className="quantity">Size</h4>
             <div className="weight-buttons">
               <button
-                className={`Subscribe-button-pack ${
+                className={`Subscribe-button-pack-100 ${
                   selectedWeight === "100g" ? "active" : ""
                 }`}
-                onClick={() => handleWeightSelection("100g")}
+                // onClick={() => handleWeightSelection("100g")}
               >
                 100g
               </button>
