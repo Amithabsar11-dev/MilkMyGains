@@ -1,62 +1,48 @@
-// src/components/Signup.js
-import React, { useState } from "react";
-import "./Signup.css";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import './signup.css';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+    phone: "",
   });
+  const navigate = useNavigate(); // For redirection
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const response = await axios.post("http://localhost:3001/api/signup", formData);
+      if (response.data.message === "Signup successful!") {
+        // alert("Signup successful! Please log in.");
+        navigate("/login"); // Redirect to login page
+      }
+    } catch (error) {
+      console.error("Signup failed:", error.response?.data);
+      alert("Signup failed. Check your details.");
+    }
   };
 
   return (
-    <div className="signup-container">
+    <div className="signup">
       <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button type="submit">Sign Up</button>
+      <form onSubmit={handleSignup}>
+        <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} required />
+        <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} required />
+        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <input type="text" name="phone" placeholder="Phone (+911234567890)" onChange={handleChange} required />
+        <button type="submit">Signup</button>
       </form>
+      <p>Already have an account? <a href="/login">Login</a></p>
     </div>
   );
 };

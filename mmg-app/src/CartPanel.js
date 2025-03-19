@@ -99,7 +99,7 @@ const CartPanel = ({ onClose, isOpen }) => {
           {/* Display delivery fee conditionally */}
           {isDeliveryFeeApplied && (
             <><div className="checkout-total">
-              <p className="subtotal">DELIVERING FEE</p>
+              <p className="subtotal">DELIVERY FEE</p>
               <p className="subtotal-amount">₹50.00</p>
             </div><hr /></>
           )}

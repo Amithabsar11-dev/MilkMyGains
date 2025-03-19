@@ -1936,3 +1936,27 @@
     padding-top: 3%;
   }
 }
+
+@media only screen and (max-width: 400px) and (min-width: 350px) and (max-height: 700px) and (min-height: 600px) {
+  .lottie-animation {
+    width: 85%;
+    top: 20%;
+    left: 10%;
+    transform: none !important;
+  }
+  .know-button-container {
+    position: relative;
+    top: 10%;
+  }
+  .weight-lift {
+    width: 65%;
+    right: 2%;
+  }
+  .weight-lift1 {
+    width: 55%;
+  }
+  .weight-lift3 {
+    width: 65%;
+    right: 2%;
+  }
+}

@@ -1282,15 +1282,9 @@ const Home = ({ setIsLoaded, isLoaded }) => {
           </div>
         )}
         <div className="know-button-container">
-          <button
-            href="/about"
-            className="know-button"
-          >
-            <a
-              className="know-text"
-              href="/about"
-            >
-            Know more
+          <button href="/about" className="know-button">
+            <a className="know-text" href="/about">
+              Know more
             </a>
           </button>
         </div>
@@ -1331,19 +1325,20 @@ const Home = ({ setIsLoaded, isLoaded }) => {
                 <text>
                   <textPath
                     ref={(el) => (textPathRefs.current[0] = el)}
-                    className=""
                     startOffset="0%"
                     href="#curve"
                   >
-                    Products that keep you feeling energised all day&nbsp;
+                    Products that keep you feeling energised all day
+                    &nbsp;
                   </textPath>
                   <textPath
                     ref={(el) => (textPathRefs.current[1] = el)}
-                    className=" duplicate-text"
-                    startOffset="100%"
+                    className="duplicate-text"
+                    startOffset="200%" // Shift it slightly further
                     href="#curve"
                   >
-                    Products that keep you feeling energised all day&nbsp;
+                    Products that keep you feeling energised all day
+                    &nbsp;
                   </textPath>
                 </text>
               </svg>

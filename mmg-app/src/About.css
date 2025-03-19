@@ -829,3 +829,8 @@
     background-size: 100% 108%;
   }
 }
+@media only screen and (max-width: 400px) and (min-width: 350px) and (max-height: 700px) and (min-height: 600px) {
+  .about-protein {
+    height: 215vh;
+  }
+}

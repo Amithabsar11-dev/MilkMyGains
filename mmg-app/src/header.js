@@ -17,6 +17,8 @@ import Facebookheader from "./assets/facebook-header.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Whiteicon from "./assets/white-username.png";
+import Blackicon from "./assets/black-user.png";
 
 const Header = () => {
   const { cartQuantity } = useContext(CartContext);
@@ -56,12 +58,16 @@ const Header = () => {
     } else if (location.pathname.startsWith("/product/")) {
       body.classList.add("product-page");
       body.classList.remove("faq-page", "contact-page");
+    } else if (location.pathname === "/login") {
+      body.classList.add("shipping-page");
+      body.classList.remove("faq-page", "product-page");
     } else {
       body.classList.remove(
         "faq-page",
         "contact-page",
         "product-page",
-        "terms-page"
+        "terms-page" ,
+        "login-page"
       );
     }
 
@@ -73,7 +79,8 @@ const Header = () => {
         "product-page",
         "shipping-page",
         "terms-page",
-        "privacy-page"
+        "privacy-page" ,
+        "login-page"
       );
     };
   }, [location.pathname]);
@@ -90,9 +97,10 @@ const Header = () => {
     "/shipping",
     "/privacy",
     "/refund",
+    "/login",
   ];
   const isWhiteBg =
-    ["/faq", "/contact", "/terms", "/shipping", "/privacy", "/refund"].includes(
+    ["/faq", "/contact", "/terms", "/shipping", "/privacy", "/refund" ,"/login"].includes(
       location.pathname
     ) || location.pathname.startsWith("/product/");
 
@@ -103,6 +111,7 @@ const Header = () => {
     location.pathname === "/terms" ||
     location.pathname === "/shipping" ||
     location.pathname === "/privacy" ||
+    location.pathname === "/login" ||
     location.pathname === "/refund";
   const isProductPaneer = location.pathname.startsWith("/product/");
 
@@ -282,6 +291,16 @@ const Header = () => {
                   <img src={Instagramheader} className="instagram" alt="" />
                 </div> */}
               </div>
+              <img
+                src={
+                  location.pathname.startsWith("/product/")
+                    ? Blackicon
+                    : Whiteicon
+                }
+                alt="cart"
+                className="cart-icon"
+                onClick={() => navigate("/login")}
+              />
               <div className="icon-placement">
                 <li style={{ listStyle: "none" }}>
                   <div style={{ position: "relative" }}>

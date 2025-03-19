@@ -326,6 +326,8 @@ app.post("/api/login", async (req, res) => {
 
   try {
     const data = await shopifyRequest(query, variables);
+    console.log("Login Response:", data);
+
     if (data.customerAccessTokenCreate.customerAccessToken) {
       res.status(200).json(data.customerAccessTokenCreate.customerAccessToken);
     } else {
@@ -375,9 +377,11 @@ app.get("/api/profile", async (req, res) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
+  const token = accessToken.replace("Bearer ", "");
+
   const query = `
     {
-      customer(customerAccessToken: "${accessToken}") {
+       customer(customerAccessToken: "${token}") { 
         firstName
         lastName
         email
