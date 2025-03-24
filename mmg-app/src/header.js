@@ -291,7 +291,7 @@ const Header = () => {
                   <img src={Instagramheader} className="instagram" alt="" />
                 </div> */}
               </div>
-              <img
+              {/* <img
                 src={
                   location.pathname.startsWith("/product/")
                     ? Blackicon
@@ -300,7 +300,7 @@ const Header = () => {
                 alt="cart"
                 className="cart-icon"
                 onClick={() => navigate("/login")}
-              />
+              /> */}
               <div className="icon-placement">
                 <li style={{ listStyle: "none" }}>
                   <div style={{ position: "relative" }}>
